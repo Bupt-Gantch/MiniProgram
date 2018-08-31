@@ -1,0 +1,42 @@
+<!--pages/home/home.wxml-->
+<import src='../tpls/products/products-tpl.wxml'/>
+<import src='../tpls/recentgoods/recentgoods-tpl.wxml'/>
+
+<view class='container'>
+
+  <!-- 前端固定banner -->
+  <swiper indicator-dots='true' autoplay='true' class='swiper'> 
+    <block wx:for='{{[1,2,3]}}'>
+
+       <swiper-item class="banner-item">
+         <image mode="aspectFill" class="item-image" 
+            src='{{bannerImageUrl}}{{item}}.png'></image> 
+      </swiper-item> 
+
+    </block>
+  </swiper>
+
+  <view class='home-main'>
+
+    <view class='home-main-theme'>
+      <view class='home-main-header'>分类</view>
+      <view class='theme-box'>
+        <block wx:for='{{[1,2,3,4,5,6]}}'>
+          <view class='category-item' bindtap='onCategoryTap' 
+          data-index='{{index}}' data-name='{{categoryName[index]}}'>
+            <image class='category-item-image' 
+            src='{{categoryImgUrl}}{{item}}.png' mode='aspectFit'></image>
+            <view class='category-name'>{{categoryName[index]}}</view>
+          </view>
+        </block>
+        
+      </view>
+    </view>
+
+    <view class='home-main-goods'>
+      <view class='home-main-header'>最新发布</view>
+      <template is='recentgoods' 
+     data='{{goods:productsArr,baseImageUrl,userInfo:userInfo}}'></template>
+    </view>
+  </view>
+</view>

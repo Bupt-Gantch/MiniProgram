@@ -1,0 +1,58 @@
+<!--pages/pulish/publish.wxml-->
+<view class='container'>
+  <form class='publish-form' bindsubmit='formSubmit' name='goodsInfo'>
+    <view class='goodsName'>
+      <input name='titleInput' placeholder='标题' maxlength='20'></input>
+    </view>
+
+    <view class='goodsDescription'>
+      <textarea placeholder='描述一下你的宝贝，如品牌，原价，成色等,还有联系方式哦'
+           name='textarea' maxlength='100'></textarea>
+    </view>
+
+    <view class='goodsPrice'>
+      <input name='priceInput' placeholder='请输入您的预期价格(RMB)' 
+          cursor-spacing='100' type='number'></input>
+    </view>
+
+    <view class='addPhotos'>
+      <view class="{{'addPhotoTap'}}{{photoCount==0 ? '' : '-choosedPic'}}">
+        <view class='icon'>
+          <image class='addPhotoIcon' src='../../imgs/icon/camera.png' 
+             bindtap='addPhotoTap' mode='aspectFit'></image>
+          <text class='addPhotoTitle'>添加图片</text>
+        </view> 
+        <view class='showPic'>
+          <block wx:for="{{choosedPhotosList}}">
+             <image src='{{item}}' bindtap='onPreviewTap' data-index='{{index}}'></image> 
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <view class='campus'>
+      <view class='campus-title'>请选择校区</view>
+      <picker class='campus-picker' bindchange='bindCampusChange' range='{{allCampus}}'>
+       <view>
+         <view class='pickedCampus'>{{pickedCampus}}</view> 
+         <image class='campus-picker-image'
+            src='../../imgs/icon/arrow@right.png' mode='aspectFill' ></image>
+       </view>
+      </picker>
+    </view>
+
+    <view class='chooseCategory'>
+      <view class='categoryTitle'>请选择分类</view>
+      <picker class='categoryPicker' bindchange='bindCategoryChange' range='{{categoryName}}'>
+       <view>
+        <view class='pickedCategory'>{{pickedCategory}}</view>
+        <image src='../../imgs/icon/arrow@right.png' mode='aspectFill'></image>
+       </view>
+      </picker>
+    </view>
+
+    <view class='publishButton'>
+      <button form-type='submit' type='primary'>发布</button>
+    </view>
+  </form>
+</view>

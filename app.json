@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/product/product",
+    "pages/theme/theme",
+    "pages/publish/publish",
+    "pages/category/category",
+    "pages/my/my",
+    "pages/contact/contact",
+    "pages/goodsdetail/goodsdetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#AB956D",
+    "navigationBarTitleText": "北邮闲鱼",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#eeeeee"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "imgs/toolbar/home.png",
+        "selectedIconPath": "imgs/toolbar/home@selected.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布",
+        "iconPath": "imgs/toolbar/publish.png",
+        "selectedIconPath": "imgs/toolbar/publish@selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "imgs/toolbar/my.png",
+        "selectedIconPath": "imgs/toolbar/my@selected.png"
+      }
+    ],
+    "borderStyle": "#AB956D",
+    "selectedColor": "#AB956D",
+    "color": "#989898",
+    "backgroundColor": "#F5F5F5"
+  }
+}

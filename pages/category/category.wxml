@@ -1,0 +1,55 @@
+<!--pages/category/category.wxml-->
+<import src="../tpls/category/category-tpl.wxml"/>
+<import src="../tpls/categoods/categoods-tpl.wxml"/>
+
+<view class='container category-container'> 
+  <view class='category-box'>
+    <view class='left-box'>
+      <block wx:for="{{categoryName}}">
+         <view class="menu-item {{currentTabsIndex==index?'selected':''}}"
+           bindtap='onTabCategory' data-index='{{index}}' 
+           data-name='{{categoryName[index]}}'> 
+          {{categoryName[index]}}
+         </view> 
+      </block>
+    </view>
+    <view class='right-box {{transClassArr[currentTabsIndex]}}'>
+    <!--动画效果，需要7个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+
+      <view class='foods-type-box'>
+         <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template> 
+        <template is="categoods"
+       data="{{baseImageUrl,goods:[0,1,2,3,4,5,6,7]}}"></template>  
+                              <!--把goods替换成从后台拿到的数组 <-->
+      </view>
+
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+      <view class='foods-type-box'>
+        <template is="categorytop" 
+      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
+      </view>
+
+    </view>
+  </view>
+</view>
+

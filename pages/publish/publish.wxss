@@ -1,0 +1,196 @@
+@import "../tpls/base.wxss";
+.publish-form{
+  height: 100vh;
+  width:100%;
+  background-color: #F5F6F5;
+  font-family: "Microsoft Yahei";
+  font-size: 30rpx;
+
+}
+.publish-form input{
+  width: 100%;
+}
+.publish-form textarea{
+  width: 100%;
+}
+
+.goodsName{
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.goodsDescription{
+  height: 240rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.goodsPrice{
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.campus{
+  display: flex;
+  flex-direction: row;
+  height: 90rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.campus-title{
+  width: 50%;
+  text-align: center;
+  line-height: 90rpx;
+  
+}
+.campus-picker{
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  margin: 0 auto;
+  height: 100%;
+  width: 50%;
+  color: #000;
+} 
+.campus picker view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100rpx;
+}
+.pickedCampus{
+  
+  width: 100%;
+  margin-right: 20rpx;
+}
+.campus-picker-image{
+  height: 48rpx;
+  width: 48rpx;
+}
+
+
+.chooseCategory{
+  display: flex;
+  flex-direction: row;
+  height: 90rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 50rpx;
+  border: 2rpx solid #AB956D;
+}
+.categoryTitle{
+  width: 50%;
+  text-align: center;
+  line-height: 90rpx;
+}
+.categoryPicker{
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  margin: 0 auto;
+  height: 100%;
+  width: 50%;
+  color: #000;
+} 
+.chooseCategory picker view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100rpx;
+}
+
+.pickedCategory{
+  width: 100%;
+  margin-right: 20rpx;
+}
+.chooseCategory picker view image{
+  height: 48rpx;
+  width: 48rpx;
+}
+
+.addPhotoTap{
+  display: flex;
+  align-content: center;
+  justify-content: center; 
+  height: 260rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.addPhotoTap-choosedPic{
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: center; 
+  height: 260rpx;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid #AB956D;
+}
+.addPhotoTap view.icon,.addPhotoTap-choosedPic view.icon{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items:center;
+  height: 260rpx;
+  width: 260rpx;
+}
+.addPhotoTap-choosedPic view.showPic{
+  display: flex;
+  flex-direction: row;
+  justify-content: left; 
+  align-items:center;
+  height: 100%;
+  width: 100%;
+}
+.showPic image{
+  width:25%;
+  height: 200rpx;
+  margin: 10rpx;
+}
+
+.addPhotoTitle{
+  text-align: center;
+  font-size: 30rpx;
+}
+.addPhotoIcon{
+  height: 40%;
+  width: 40%;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+
+
+
+
+
