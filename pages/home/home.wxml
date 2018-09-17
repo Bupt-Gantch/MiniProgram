@@ -1,42 +1,31 @@
-<!--pages/home/home.wxml-->
-<import src='../tpls/products/products-tpl.wxml'/>
-<import src='../tpls/recentgoods/recentgoods-tpl.wxml'/>
-
+<!--index.wxml-->
 <view class='container'>
 
-  <!-- 前端固定banner -->
-  <swiper indicator-dots='true' autoplay='true' class='swiper'> 
-    <block wx:for='{{[1,2,3]}}'>
-
-       <swiper-item class="banner-item">
-         <image mode="aspectFill" class="item-image" 
-            src='{{bannerImageUrl}}{{item}}.png'></image> 
-      </swiper-item> 
-
-    </block>
-  </swiper>
-
-  <view class='home-main'>
-
-    <view class='home-main-theme'>
-      <view class='home-main-header'>分类</view>
-      <view class='theme-box'>
-        <block wx:for='{{[1,2,3,4,5,6]}}'>
-          <view class='category-item' bindtap='onCategoryTap' 
-          data-index='{{index}}' data-name='{{categoryName[index]}}'>
-            <image class='category-item-image' 
-            src='{{categoryImgUrl}}{{item}}.png' mode='aspectFit'></image>
-            <view class='category-name'>{{categoryName[index]}}</view>
-          </view>
-        </block>
-        
-      </view>
-    </view>
-
-    <view class='home-main-goods'>
-      <view class='home-main-header'>最新发布</view>
-      <template is='recentgoods' 
-     data='{{goods:productsArr,baseImageUrl,userInfo:userInfo}}'></template>
-    </view>
+  <!-- 仪表盘容器 -->
+  <view class='gauge_container'>
+      <ec-canvas id="temperature" canvas-id="mychart-gauge" ec="{{ ec_temp }}"></ec-canvas>
+      <ec-canvas id="humidity" canvas-id="mychart-gauge" ec="{{ ec_hum }}"></ec-canvas>
+      <ec-canvas id="pm25" canvas-id="mychart-gauge" ec="{{ ec_pm25 }}"></ec-canvas>
   </view>
+
+  <!-- 饼图容器 -->
+  <view class='count_container'>
+    <ec-canvas id="pie_count" canvas-id="mychart-pie" ec="{{ ec_piecount }}" bind:init="echartInit"></ec-canvas>
+  </view>
+
+  <!-- 折线图容器 -->
+  <view class='history_container'>
+
+    <!-- <view class='time_container'>
+      <picker class='time_picker' mode='date' start="2015-09-01">
+        <view class='time_title'>请选择时间
+      </view>
+          <image class='time-picker-image'
+                  src='../../imgs/icon/arrow@down2.png' mode='aspectFill' ></image>
+      </picker>
+    </view> -->
+
+    <ec-canvas id="history" canvas-id="mychart-line" ec="{{ ec_history }}"></ec-canvas>
+  </view>
+
 </view>

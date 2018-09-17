@@ -1,5 +1,5 @@
 @import "../tpls/category/category-tpl.wxss";
-@import "../tpls/categoods/categoods-tpl.wxss";
+
 
 
 .category-container{

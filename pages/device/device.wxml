@@ -1,0 +1,38 @@
+<!--pages/device/device.wxml-->
+<view class='container detail-container'>
+  <view class='detail-header'>
+    <view class='icon'>
+      <image src='{{deviceDetail.imgUrl}}' mode="aspectFit"></image>
+    </view>
+    <view class='title'>名称</view>
+    <view class='name'>{{deviceDetail.name}}</view>
+  </view>
+
+  <view class='detail-main'>
+    <view class='deviceInfo'>
+
+      <view class='status'>
+        <view class='title'>状态</view>
+        <view class='currentStatus'>{{deviceStatus.status}}</view>
+      </view>
+      <view class='fangchai'>
+        <view class='title'>防拆</view>
+        <view class='currentStatus'>{{deviceStatus.fangchai}}</view>
+      </view>
+      <view class='battery'>
+        <view class='title'>电量</view>
+        <view class='currentStatus'>{{deviceStatus.battery}}</view>
+      </view>
+    </view>
+
+    <view class='bottom'>
+      <button class='warningRecord'></button>
+      <view class='msgPublish'>
+        <view class='title'>消息推送</view>
+        <switch bindchange="switchChange"></switch>
+      </view>
+    </view>
+  </view>
+
+  
+</view>

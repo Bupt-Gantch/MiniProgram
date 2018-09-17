@@ -10,8 +10,5 @@
   <view class='contact-bottom'>
     <text class='create'>Created By CJX</text> 
   </view>
-  <text class='contact-need' decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;谢谢你能看到这里。这个小程序是我在课余时间写的，初衷是为了方便北邮人二手货物的买卖。因为开学的时候我想买个二手显示器，闲鱼上的有的外地，就算本地的也懒的不想去取，所以很想买一个北邮校内的，而且那时候快逢毕业季，要卖二手的人也多。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我当时淘了很多小东西，书立、支架什么的，又便宜又方便，而且北邮校内的同学也比较放心。论坛上跳蚤板块藏得比较深，而且不是很方便，于是我就产生了自己做一个小程序的想法。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前前端部分基本上完成了，但是我后台基础不是很好，而且后面由于项目的原因没有太多时间，所有想找一个后端基础好一点，且对这个想法感兴趣的同学，我们一起完成后端部分。那么这个小程序就能够很快的上线啦，希望它能够方便BYR的生活。后端语言不限，PHP,NODE,JAVA都行，PHP最好~
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果有兴趣的话就联系我吧。:)</text>
+  
 </view>

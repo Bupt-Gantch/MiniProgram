@@ -1,105 +1,132 @@
-@import "../tpls/base.wxss";
-@import "../tpls/products/products-tpl.wxss";
-@import "../tpls/recentgoods/recentgoods-tpl.wxss";
-.food-container{
+/* pages/gauge/gauge.wxss */
 
-}
-.swiper{
-  height: 400rpx;
-  width: 100%;
-}
-.swiper-box{
-  overflow-x: hidden;
-}
-.banner-item{
+/* echarts图表的container要用绝对定位，因为ec-canvas标签内没有内容，不能撑开container，所以显示不出来*/
+/* 用绝对定位让container显示出来才行*/
+/* 第一个container从2%位置开始，占20%高度*/
+
+.container{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 100%;
   width: 100%;
 }
-.banner-item image{
-  height: 100%;
+.gauge_container { /* 温度计container*/
+  position: absolute;
+  top: 5%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
   width: 100%;
-}
-.home-main{
-  width: 96%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
   
+} 
+#temperature{
+  width: 33%;
+  height: 100%;
 }
-.home-main-goods{
-  display: flex;
-  background-color: #fff;
-  flex-direction:column;
-  align-items: center;
-  justify-content: center;
-  margin: 20rpx 0;
+#humidity{
+  width: 33%;
+  height: 100%;
 }
-
-.home-main-header{
-  display: flex;
-  height: 60rpx;
-  color: #AB956D;
-  background-color: #fff;
-  font-size: 32rpx;
-  align-items: center;
-  justify-content: center;
-  margin: 0rpx 0rpx 20rpx 0rpx;
+#pm25{
+  width: 33%;
+  height: 100%;
 }
 
-.theme-box{
+/* 饼图容器从25%高度开始，占35*/
+.count_container{
+  position: absolute;
+  top: 25%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  width: 100%;
+
   display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
-}
-.theme-item{
-  display: flex;
-  height:375rpx;
-  width: 50%;
-  border-bottom: 4rpx solid #fff;
-  position: relative;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
   box-sizing: border-box;
 }
-.category-item{
-  display:flex;
-  height: 130rpx;
-  width: 33%;
-  margin-bottom:10rpx; 
-  flex-direction: column;
-  align-items: center;
-  
-}
-.category-item image{
-   height: 100%;
-   width: 100%;
-}
-.category-name{
-  font-size: 30rpx;
-  color: #333;
-}
-.theme-item:first-child{
-  border-right:4rpx solid #fff;
-}
-.theme-item.big{
+
+#pie_count{
   width: 100%;
-}
-.theme-item.big .theme-icon view{
-  margin: 0 auto;
-  width: 150rpx;
-  height: 60rpx;
-  border-radius: 60rpx;
-  line-height: 60rpx;
-  border:1rpx solid #fff;
-  text-align: center;
-  font-size: 24rpx;
-}
-.theme-item image{
   height: 100%;
+}
+
+/* 折线图容器，从62%开始，占35%高度，留底3%*/
+.history_container{
+  position: absolute;
+  top: 62%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
   width: 100%;
+
+  /* display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box; */
 }
-.theme-icon{
-  margin-top:10rpx;
-  height: 48rpx;
+
+#history{
+  width: 100%;
+  height: 100%;
 }
-.theme-icon image{
+
+
+/* 时间选择组件 */
+.time_container{
+  position: absolute;
+  top: 0;
+  right: 0%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 10;
+ 
+  color: #000;
+} 
+.time_title{
+  font-size: 16px;
+}
+.time-picker{
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center; 
+  margin: 0 auto;
+  height: 100%;
+  width: 50%;
+  color: #000;
+} 
+.time_container picker view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* height: 100rpx; */
+}
+/* .pickedCampus{
+  
+  width: 100%;
+  margin-right: 20rpx;
+} */
+.time-picker-image{
   height: 48rpx;
   width: 48rpx;
 }
-
 

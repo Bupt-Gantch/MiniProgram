@@ -1,18 +1,15 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/product/product",
-    "pages/theme/theme",
-    "pages/publish/publish",
+    "pages/device/device",
     "pages/category/category",
     "pages/my/my",
-    "pages/contact/contact",
-    "pages/goodsdetail/goodsdetail"
+    "pages/contact/contact"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#AB956D",
-    "navigationBarTitleText": "北邮闲鱼",
+    "navigationBarTitleText": "冠川智能家居",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
     "backgroundColor": "#eeeeee"
@@ -26,7 +23,13 @@
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
       {
-        "pagePath": "pages/publish/publish",
+        "pagePath": "pages/category/category",
+        "text": "设备",
+        "iconPath": "imgs/toolbar/home.png",
+        "selectedIconPath": "imgs/toolbar/home@selected.png"
+      },
+      {
+        "pagePath": "pages/category/category",
         "text": "发布",
         "iconPath": "imgs/toolbar/publish.png",
         "selectedIconPath": "imgs/toolbar/publish@selected.png"

@@ -25,6 +25,22 @@ class Category extends Base{
     this.request(param);
   }
 
+  turnSwitch(deviceId,data,sCallback,fCallback){
+    var param = {
+      url:'.../' + deviceId,
+      type:'POST',
+      data:data,
+      sCallback: function(res){
+        sCallback && sCallback(res);
+      },
+      fCallback: function(err){
+        fCallback && fCallback(err);
+      } 
+    };
+
+    this.request_post(param);
+  }
+
 }
 
 export {Category};

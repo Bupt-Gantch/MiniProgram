@@ -14,41 +14,18 @@
       </block>
     </view>
     <view class='right-box {{transClassArr[currentTabsIndex]}}'>
-    <!--动画效果，需要7个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
+    <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
+      <block wx:for="{{categoryName}}">
 
-      <view class='foods-type-box'>
-         <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template> 
-        <template is="categoods"
-       data="{{baseImageUrl,goods:[0,1,2,3,4,5,6,7]}}"></template>  
-                              <!--把goods替换成从后台拿到的数组 <-->
-      </view>
+        <view  class='foods-type-box'>
+          <template wx:if="{{index == 0}}" is="categorytop" 
+        data="{{baseImageUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable}}"></template>
+          <template wx:if="{{index != 0}}" is="categorytop" 
+          data="{{baseImageUrl,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable}}"></template>
+          <!-- <status表示开关或插座的状态> -->
+        </view>
 
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
-      <view class='foods-type-box'>
-        <template is="categorytop" 
-      data="{{baseImageUrl,topInfo:bannerTitle}}"></template>
-      </view>
-
+      </block>
     </view>
   </view>
 </view>

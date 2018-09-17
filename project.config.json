@@ -11,7 +11,7 @@
 	"libVersion": "2.2.4",
 	"appid": "wx5ef2de2111a9a82a",
 	"projectname": "gantch",
-	"isGameTourist": false,     
+	"isGameTourist": false,
 	"condition": {
 		"search": {
 			"current": -1,
@@ -30,19 +30,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
 					"name": "商品详情",
 					"pathName": "pages/product/product",
 					"query": "id=11"
-				},
-				{
-					"id": 1,
-					"name": "发布",
-					"pathName": "pages/publish/publish",
-					"query": ""
 				},
 				{
 					"id": -1,
@@ -65,7 +59,26 @@
 				{
 					"id": -1,
 					"name": "货物详情",
-					"pathName": "pages/goodsdetail/goodsdetail"
+					"pathName": "pages/goodsdetail/goodsdetail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "设备分类页",
+					"pathName": "pages/category/category",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "gauge",
+					"pathName": "pages/gauge/gauge",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "设备详情页",
+					"pathName": "pages/device/device",
+					"query": ""
 				}
 			]
 		}
