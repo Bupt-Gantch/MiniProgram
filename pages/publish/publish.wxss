@@ -1,0 +1,167 @@
+/* pages/publish/publish.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  font-size: 30rpx;
+}
+.container {
+  background-color: #f2f2f2;
+  min-height: 100%;
+}
+
+swiper {
+  width: 100%;
+  height: 340rpx;
+}
+
+swiper image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.search-view {
+  opacity: 0.5;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 500;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-content {
+  background: white;
+  width: 650rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: auto;
+  padding-left: 20rpx;
+  padding-bottom: auto;
+  margin: auto;
+  height: 70rpx;
+  border-radius: 20px 20px;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.search-input {
+  width: 500rpx;
+  font-size: 28rpx;
+}
+
+.circle-float {
+  position: fixed;
+  display: flex;
+  bottom: 10rpx;
+  right: 10rpx;
+  width: 89rpx;
+  height: 89rpx;
+}
+
+.items-list{
+  overflow: hidden;
+  padding: 20rpx;
+}
+
+.info-user{
+  overflow: hidden;
+}
+.info-pic{
+  float: left;
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.info-nati{
+  margin-left: 120rpx;
+}
+
+.info-name{
+  font-size: 40rpx;
+  font-weight: bold;
+  font-family: cursive;
+  color: #001F56;
+}
+
+.info-time{
+  font-size: 25rpx;
+  color: rgb(67, 68, 68);
+}
+
+.info-detail{
+  word-break:break-all;
+  font-size: 28rpx;
+}
+
+.div{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.info-pictures{
+  width: 32%;
+}
+
+.info-pictures image{
+  width: 100%;
+  padding: 5rpx;
+}
+
+.info-place{
+  font-size: 25rpx;
+  color: rgb(67, 68, 68);
+}
+
+.info-up{
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.info-comment{
+  width: 35rpx;
+  height: 35rpx;
+  margin-left: 20rpx;
+}
+
+.info-footer{
+  overflow: hidden;
+}
+
+.info-uc{
+  float: right;
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.uppeople image{
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.uppeople text{
+  color: rgb(214, 118, 118);
+  font-size: 30rpx
+}
+
+.comments{
+  font-size: 25rpx;
+  color: rgb(67, 68, 68);
+}
+
+.comment-box input{
+  width:100%;
+  height: 30rpx;
+  border: 1rpx solid rgb(174, 200, 247);
+  border-radius: 10rpx;
+}

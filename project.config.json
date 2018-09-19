@@ -33,12 +33,6 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "商品详情",
-					"pathName": "pages/product/product",
-					"query": "id=11"
-				},
-				{
 					"id": -1,
 					"name": "分类",
 					"pathName": "pages/category/category",
@@ -52,32 +46,14 @@
 				},
 				{
 					"id": -1,
-					"name": "test",
-					"pathName": "pages/test/test",
+					"name": "publish",
+					"pathName": "pages/publish/publish",
 					"query": ""
 				},
 				{
 					"id": -1,
-					"name": "货物详情",
-					"pathName": "pages/goodsdetail/goodsdetail",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "设备分类页",
-					"pathName": "pages/category/category",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "gauge",
-					"pathName": "pages/gauge/gauge",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "设备详情页",
-					"pathName": "pages/device/device",
+					"name": "release",
+					"pathName": "pages/release/release",
 					"query": ""
 				}
 			]

@@ -4,7 +4,9 @@
     "pages/device/device",
     "pages/category/category",
     "pages/my/my",
-    "pages/contact/contact"
+    "pages/contact/contact",
+    "pages/release/release",
+    "pages/publish/publish"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,7 +31,7 @@
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
       {
-        "pagePath": "pages/category/category",
+        "pagePath": "pages/publish/publish",
         "text": "发布",
         "iconPath": "imgs/toolbar/publish.png",
         "selectedIconPath": "imgs/toolbar/publish@selected.png"

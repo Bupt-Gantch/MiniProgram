@@ -1,0 +1,21 @@
+<!--pages/release/release.wxml-->
+<view>
+  <form bindsubmit="formSubmit" bindreset="formReset" name="detail">
+    <view class="description">
+      <textarea placeholder='您要发布的内容' name='textarea' maxlength='200'></textarea>
+    </view>
+    <view class='showPic'>
+      <block wx:for="{{imageList}}" wx:for-item="image">
+        <image mode='aspectFill' src="{{image}}" data-src="image" bindtap="previewImage"></image>
+      </block>
+    </view>
+    <view class='picture'>
+      <image src="/imgs/icon/addpicture.png" bindtap='chooseImg'></image>
+    </view>
+    <view class="line"></view>
+    <view bindtap='addPlace'>{{place}}</view>
+    <view class="btn-publish">
+      <button formType="submit">发布</button>
+    </view>
+  </form>
+</view>
