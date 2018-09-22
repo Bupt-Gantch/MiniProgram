@@ -1,0 +1,9 @@
+<!--pages/loading/loading.wxml-->
+<view class='loading-container'>
+   <image class="loading-image" mode="scaleToFill" src="/imgs/swiper/swiper-02.jpg"></image>
+</view>
+
+<view class="enter-container">
+  <button plain="true" class="enter-button" type='primary' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 开启智能家居之旅 
+  </button>
+</view>

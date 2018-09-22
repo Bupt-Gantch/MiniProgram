@@ -19,4 +19,6 @@ Config.campus = ['校本部','沙河校区','宏福校区'];
 //debug
 Config.debug = true;
 
+Config.test = '2';
+
 export {Config};

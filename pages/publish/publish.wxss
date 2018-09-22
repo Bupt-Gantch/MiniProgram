@@ -58,6 +58,10 @@ swiper image {
   font-size: 28rpx;
 }
 
+/* .scroll-view{
+  height: 800rpx;
+} */
+
 .circle-float {
   position: fixed;
   display: flex;

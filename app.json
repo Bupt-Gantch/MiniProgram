@@ -1,12 +1,16 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/loading/loading",
     "pages/device/device",
     "pages/category/category",
     "pages/my/my",
     "pages/contact/contact",
     "pages/release/release",
-    "pages/publish/publish"
+    "pages/publish/publish",
+    "pages/mypublish/mypublish",
+    "pages/myup/myup",
+    "pages/mycomment/mycomment"
   ],
   "window": {
     "backgroundTextStyle": "light",

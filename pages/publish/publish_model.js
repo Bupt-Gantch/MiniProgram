@@ -12,6 +12,39 @@ class Publish extends Base{
     };
     this.request(param);
   }
+
+  addComment(data,callback){
+    var param = {
+      url:'',
+      data:data.data,
+      method:'POST',
+      sCallback:function(data){
+        callback&&callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  addUp(data,callback){
+    var param = {
+      url:'',
+      data:data.data,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param)
+  }
+
+  deleteUp(data, callback) {
+    var param = {
+      url: '',
+      data: data.data,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+  }
 }
 
 export {Publish}

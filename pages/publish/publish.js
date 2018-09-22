@@ -1,9 +1,10 @@
 // pages/publish/publish.js
-var app = getApp();
-var API = require('../../utils/api.js')
 import { Config } from '../../utils/config.js';
 import { Publish } from 'publish_model.js';
 var publish = new Publish();
+var app = getApp();
+var page = 0; 
+var info  =[]
 
 Page({
 
@@ -11,7 +12,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imageup: '/imgs/icon/up.png',
     imgUrls: [
       '/imgs/swiper/swiper-01.jpg',
       '/imgs/swiper/swiper-02.jpg',
@@ -19,33 +19,38 @@ Page({
     ],
     statusTable: {},
     commentTable: {},
+    // infolist:[{
+    //   pictures:[
+    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
+    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
+    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png'
+    //   ]
+    // }]
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (option) {
+  onLoad: function(option) {
+    Config.test = '1';
+    info = []
     /**
      * 通过后台服务器获取数据
      */
-    // var page = 1;
-    // this._loadInfoList(page);
-    // 使用 Mock
-    var that = this
-    API.ajax('', function (res) {
-      //这里既可以获取模拟的res
-      that.setData({
-        infolist: res.data
-      })
+    page  = 1;
+    this._loadInfoList(page);
+    info.push(this.data.infoList)
+    this.setData({
+      infolist:info[0]
     })
   },
 
   /**
    * 获取信息列表/按页显示
    */
-  _loadInfoList:function(page){
-    publish.getInfoList(page,(data)=>{
+  _loadInfoList: function(page) {
+    publish.getInfoList(page, (res) => {
       this.setData({
-        infolist: data.data
+        infoList: res.data
       });
     })
   },
@@ -53,28 +58,33 @@ Page({
   /**
    * 跳转到发布信息页
    */
-  addNews: function (e) {
+  addNews: function(e) {
     wx.navigateTo({
       url: '/pages/release/release'
     })
+  },
+  //搜索获取数据
+  searchNews:function(e){
+    this._loadInfoList(e.detail.value)
   },
 
   /**
    * 点击图片查看
    */
-  imageClick: function (e) {
+  imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
-    var userid = e.currentTarget.dataset.userid;
-    console.log(userid);
+    var pictures = e.currentTarget.dataset.pictures.pictures;
+    var that = this
+    console.log(pictures)
     wx.previewImage({
       current: src,
-      urls: [src],
+      urls: pictures,
     })
   },
   /**
    * 评论
    */
-  clickComment: function (e) {
+  clickComment: function(e) {
     var userid = e.currentTarget.dataset.userid;
     if (this.data.commentTable[userid] === undefined || this.data.commentTable[userid] === false) {
       this.data.commentTable[userid] = true;
@@ -89,12 +99,27 @@ Page({
   /**
    * 点赞
    */
-  clickUp: function (e) {
+  clickUp: function(e) {
     var userid = e.currentTarget.dataset.userid;
     if (this.data.statusTable[userid] === undefined || this.data.statusTable[userid] === false) {
       this.data.statusTable[userid] = true;
+      var addUp = {
+        avatarUrl: app.globalData.userInfo.avatarUrl,
+        id:userid,
+        oppenid:'',
+      };
+      publish.addUp(addUp,(res)=>{
+
+      })
     } else {
       this.data.statusTable[userid] = false;
+      var deleteUp = {
+        id:userid,
+        oppenid:'',
+      }
+      publish.deleteUp(deleteUp,(res)=>{
+
+      })
     }
     var newStatusTable = this.data.statusTable;
     this.setData({
@@ -104,58 +129,73 @@ Page({
   /**
    * 发表评论
    */
-  add: function (e) {
+  add: function(e) {
     var userid = e.currentTarget.dataset.userid;
     this.data.commentTable[userid] = false;
     var newcommentTable = this.data.commentTable;
     this.setData({
       commentTable: newcommentTable
     })
-  },
-  // onPullDownRefresh:function(){
-
-  // }, 
-  // 下拉刷新
-  onReachTop: function () {
-    // 显示顶部刷新图标
-    wx.showNavigationBarLoading();
-    var that = this;
-    wx.request({
-      url: 'https://xxx',
-      method: "GET",
-      header: {
-        'content-type': 'application/text'
-      },
-      success: function (res) {
-        // 隐藏导航栏加载框
-        wx.hideNavigationBarLoading();
-        // 停止下拉动作
-        wx.stopPullDownRefresh();
-      }
+    var comment = {
+      nickname:app.globalData.userInfo.nickName,
+      detail:e.detail.value,
+      id:userid,
+      oppenid:'',
+    }
+    publish.addComment(comment,(res)=>{
+      
     })
   },
+  // 下拉刷新
+  // onReachTop: function() {
+  //   page = 1;
+  //   // 显示顶部刷新图标
+  //   wx.showNavigationBarLoading();
+  //   // this._loadInfoList(page);
+  //   // 使用 Mock获取假数据
+  //   var that = this
+  //   API.ajax('', function (res) {
+  //     that.setData({
+  //       infolist: res.data
+  //     })
+  //   })
+  //   //隐藏导航栏加载框
+  //   wx.hideNavigationBarLoading();
+  //   // 停止下拉动作
+  //   wx.stopPullDownRefresh();
+  // },
+  onPullDownRefresh: function() {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+
+    page = 1;
+    this._loadInfoList(page);
+    this.setData({
+      infolist: this.data.infoList
+    })
+
+    // 隐藏导航栏加载框
+    wx.hideNavigationBarLoading();
+    // 停止下拉动作
+    wx.stopPullDownRefresh();
+  },
+
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-    var that = this;
+  onReachBottom: function() {
+    page = page + 1;
     // 显示加载图标
     wx.showLoading({
       title: '加载中',
     })
-    wx.request({
-      url: 'https://xxx/?page=' + page,
-      method: "GET",
-      // 请求头部
-      header: {
-        'content-type': 'application/text'
-      },
-      success: function (res) {
-        // 隐藏加载框
-        wx.hideLoading();
-      }
+    this._loadInfoList(page);
+    for(var i=0;i<this.data.infoList.length;i++)
+    info[0].push(this.data.infoList[i])
+    this.setData({
+      infolist: info[0]
     })
-
+    // 隐藏加载框
+    wx.hideLoading();
   },
-
 })

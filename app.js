@@ -10,6 +10,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        this.globalData.code = res.code
         
       }
     })
@@ -33,23 +34,18 @@ App({
             }
           })
         }else{
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
+          wx.navigateTo({
+            url: '/pages/loading/loading'
           })
         }
       }
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openid:null,
+    code:null,
+    appid:'wx5ef2de2111a9a82a',
+    secret:'e3658cc08939eb93cf45238c536ec1e6',
   }
 })

@@ -10,16 +10,17 @@
   </view>
 
   <view class="my-main">
-    <view class="my-item">
+    <view class="my-item" bindtap='myPublish'>
       <text>我发布的</text>
     </view>
-    <view class="my-item">
-      <text>点赞留言</text>
+    <view class="my-item" bindtap='myUp'>
+      <text>获得点赞</text>
+    </view>
+    <view class="my-item" bindtap='myComment'>
+      <text>用户评论</text>
     </view>
     <view class="my-item" bindtap='onContactTap'>
       <text>意见反馈</text>
     </view>
   </view>
 </view>
-
-
