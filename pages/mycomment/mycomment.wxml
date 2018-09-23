@@ -1,22 +1,6 @@
-<!--pages/publish/publish.wxml-->
-<view>
-  <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
-    <block wx:for="{{imgUrls}}">
-      <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150" />
-      </swiper-item>
-    </block>
-  </swiper>
-
-  <view class="search-view">
-    <view class="search-content">
-      <image src="/imgs/icon/search-pic.png" class="search-icon" />
-      <input placeholder="请输入搜索内容" class="search-input" maxlength="30" bindconfirm="searchNews">
-      </input>
-    </view>
-  </view>
-
-  <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
+<!--pages/mycomment/mycomment.wxml-->
+<!--pages/mypublish/mypublish.wxml-->
+ <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
     <view class='items-list' wx:for="{{infolist}}" wx:for-index="index" data-index="{{index}}">
       <view class='info-user'>
         <image src='/imgs/icon/one.png' class='info-pic'></image>
@@ -42,9 +26,7 @@
       </view>
       <view class='info-footer'>
         <view class='info-uc'>
-          <image wx:if="{{statusTable[item.id]}}" src="/imgs/icon/up@success.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-userid="{{item.id}}"></image>
-          <image wx:else src="/imgs/icon/up.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-userid="{{item.id}}"></image>
-          <image src='/imgs/icon/comment.png' class='info-comment' bindtap='clickComment' data-userid="{{item.id}}"></image>
+        <image class='info-delete' data-userid="{{item.id}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
         </view>
       </view>
 
@@ -70,7 +52,3 @@
     </view>
   </scroll-view>
 
-  <view>
-    <image class="circle-float" src='/imgs/icon/insert.png' bindtap='addNews'></image>
-  </view>
-</view>

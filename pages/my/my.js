@@ -1,10 +1,12 @@
 //my.js
 //获取应用实例
+import { Config } from '../../utils/config.js';
+import { My } from 'my_model.js';
+var my = new My();
 const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -50,6 +52,24 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+
+  myPublish:function(e){
+        wx.navigateTo({
+          url: '/pages/mypublish/mypublish',
+        })
+  },
+
+  myUp:function(e){
+      wx.navigateTo({
+        url: '/pages/myup/myup',
+      })
+  },
+
+  myComment:function(e){
+      wx.navigateTo({
+        url: '/pages/mycomment/mycomment',
+      })
   },
 
   onContactTap:function(event){

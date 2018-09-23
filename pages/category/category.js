@@ -23,6 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    Config.test = '2';
     var index = -1;   //从tab栏跳转过来
     var id = Number(options.index)+Number(2);    
     var name = this.data.categoryName[0]; //从tab栏跳转过来
