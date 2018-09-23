@@ -48,7 +48,7 @@ class Base{
       var res = Mock.mock({
         'error_code': '',
         'error_msg': '',
-        'data': [{
+        'data|30': [{
           'id|+1': 1,
           'title': '@ctitle(3,8)',
           'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x','红外宝','摄像头'],   //test
@@ -133,9 +133,10 @@ class Base{
           'online|1': true,
         }]
       })
+      
       // 成功调用成功回调，失败调用失败回调
-      params.sCallback && params.sCallback(res);
-      //params.fCallback && params.fCallback();
+      //params.sCallback && params.sCallback(res);
+      params.fCallback && params.fCallback();
     }
   }
 

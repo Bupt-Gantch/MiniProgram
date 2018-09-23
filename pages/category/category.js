@@ -125,13 +125,16 @@ Page({
     var status = event.detail.value;
     var currentId = Number(event.currentTarget.id);
     var deviceId = category.getDataSet(event, 'deviceid');
-    this.data.statusTable[deviceId] = status;
-    var newStatusTable = this.data.statusTable;
-    this.setData({
-      currentId : currentId,
-      statusTable: newStatusTable
-    });
+
+    // this.data.statusTable[deviceId] = status;
+    // var newStatusTable = this.data.statusTable;
+    // this.setData({
+    //   currentId : currentId,
+    //   statusTable: newStatusTable
+    // }); 
+    /**放在成功的回调中 */
     var data = {
+      deviceId:deviceId,
       status:status
     };
 
@@ -141,6 +144,13 @@ Page({
         icon: 'success',
         duration: 1000,
         // mask: true
+      });
+      /**应用成功后再改变图片 */
+      this.data.statusTable[deviceId] = status;
+      var newStatusTable = this.data.statusTable;
+      this.setData({
+        currentId: currentId,
+        statusTable: newStatusTable
       });
     },(err) => {
       wx.showToast({
