@@ -46,7 +46,7 @@ class Base {
         }
       })
 
-<<<<<<< HEAD
+
       var res = Mock.mock({
         'error_code': '',
         'error_msg': '',
@@ -87,8 +87,7 @@ class Base {
         }]
       })
 
-=======
->>>>>>> master
+
       if (Config.test === '1') {
         //消息列表模拟数据
         var res = Mock.mock({
@@ -112,11 +111,8 @@ class Base {
         var res = Mock.mock({
           'error_code': '',
           'error_msg': '',
-<<<<<<< HEAD
+
           'data|30': [{
-=======
-          'data': [{
->>>>>>> master
             'id|+1': 1,
             'title': '@ctitle(3,8)',
             'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'], //test
@@ -153,14 +149,12 @@ class Base {
           }]
         })
       }
-<<<<<<< HEAD
+
+
 
       // 输出结果
       //console.log(res);
-=======
-      // 输出结果
-      // console.log(res);
->>>>>>> master
+
       params.sCallback && params.sCallback(res);
     }
   }
