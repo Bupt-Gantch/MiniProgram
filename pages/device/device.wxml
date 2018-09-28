@@ -1,14 +1,18 @@
 <!--pages/device/device.wxml-->
 <view class='detail-container'>
+  <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
     <view class='content'>
-      <image src='../../imgs/test/switch@on.png' mode="aspectFit"></image>
+      <image src='{{deviceImgUrl[deviceType]}}' mode="aspectFit"></image>
       <view class='title'>名称</view>
       <!-- <view class='name'>{{deviceDetail.name}}</view> -->
-      <view class='name'>传感器</view>
+      <view class='name'>{{deviceType}}</view>
     </view>
   </view>
 
+  <!-- 根据设备类型显示面板，用block分隔 -->
+  <!-- IASZone -->
+  <block wx:if="{{deviceType === 'IASZone'}}">
   <view class='detail-main'>
     <view class='deviceInfo'>
 
@@ -35,9 +39,27 @@
       </view>
     </view>
   </view>
+  </block>
 
-  <view class='history-data'>
+  <!-- PM2.5 或 temperature -->
+  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5'}}">
+  <view class='detail-main'>
+    <view class='deviceInfo'>
+
+      <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+        <view class='status'>
+          <view class='title'>{{item.key}}</view>
+          <view class='currentStatus'>{{item.value}}</view>
+        </view>
+      </block>
+      
+    </view>
+
   </view>
+  </block>
+
+  <!-- <view class='history-data'>
+  </view> -->
 
   
 </view>

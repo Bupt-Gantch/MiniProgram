@@ -13,6 +13,25 @@ class Device extends Base{
     };
     this.request(param);
   }
+
+  /**获取设备实时数据 */
+  getRealtimeData(deviceId, sConCb, fConCb,onDataCb){
+    var param = {
+      url : "",
+      deviceId : deviceId,
+      sConnectCb : function(res){
+        sConCb && sConCb(res);
+      },
+      fConnectCb : function(err){
+        fConCb && fConCb (err);
+      },
+      onMsgCb : function(data){
+        onDataCb: onDataCb(data);
+      }
+    };
+
+    return this.realTimeDevice(param);
+  }
 };
 
 export {Device};

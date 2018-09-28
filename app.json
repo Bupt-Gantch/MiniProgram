@@ -11,6 +11,7 @@
     "pages/mypublish/mypublish",
     "pages/myup/myup",
     "pages/mycomment/mycomment"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
