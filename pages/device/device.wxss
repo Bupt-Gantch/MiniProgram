@@ -44,8 +44,44 @@
   
 }
 .deviceInfo{
-  margin: 10px 10px 30px 10px;
+  padding: 10px 10px 30px 10px;
+  width: 100%;
 }
+.firstLine,.lines{
+  width: 95%;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*table */
+.IASZtable{
+  margin-bottom: 20px; 
+  background-color: #24292e;
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.td {
+    width:40%;
+    justify-content: center;
+    text-align: center;
+}
+
+.th {
+  width: 40%;
+  justify-content: center;
+  color: #fff;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+} 
+/* end*/
 .detail-main view.status{
   display: flex;
   flex-direction: row;

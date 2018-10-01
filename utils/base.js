@@ -114,7 +114,7 @@ class Base {
           'error_code': '',
           'error_msg': '',
 
-          'data|30': [{
+          'data': [{
             'id|+1': 1,
             'title': '@ctitle(3,8)',
             'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'], //test
@@ -125,6 +125,9 @@ class Base {
             'deviceId': function() {
               return Random.string(6)
             },
+            'tempra|-20-40': 0,
+            'humi|0-100':0,
+            'pm2.5|10-200':0,
             'imgUrl': function() {
               let type = this.deviceType;
               switch (type) {

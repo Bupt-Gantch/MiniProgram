@@ -11,12 +11,12 @@ Page({
    */
   data: {
     transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5','tanslate6'],
-    baseImageUrl: Config.imagesUrl,
+    switchOnImg: Config.switchOnUrl,
     categoryName: Config.categoryName,
     categoryType: Config.categoryType,
     categoryTypeArray: Config.categoryTypeArray,
     bannerImageUrl: Config.bannerImageUrl,
-    categoryBannerUrl: '../../imgs/banner/cateBanner.png',
+    imgUrl: Config.deviceImgUrl,
     statusTable: {},
 
     requestId: 1000000   //请求id100w 递减
@@ -144,6 +144,13 @@ Page({
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
 
+    /**开关变换改变图片 */
+    this.data.statusTable[deviceId] = status;
+    var newStatusTable = this.data.statusTable;
+    this.setData({
+      statusTable: newStatusTable
+    });
+
     var triad = {
       deviceType: deviceInfo.deviceType,
       manufacture: deviceInfo.manufacture,
@@ -160,19 +167,14 @@ Page({
 
     category.turnSwitch(data,(res) =>{
       var statusCode = res.statusCode;
-      if(statusCode === 200){   //状态码为200则应用成功
+      if(statusCode === 200 && res.data.indexOf("device") ===-1){   //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',
           icon: 'success',
           duration: 1000,
           // mask: true
         });
-        /**应用成功后再改变图片 */
-        this.data.statusTable[deviceId] = status;
-        var newStatusTable = this.data.statusTable;
-        this.setData({
-          statusTable: newStatusTable
-        });
+        
       }else{              //状态码不是200  应用失败
         wx.showToast({
           title: '应用失败',

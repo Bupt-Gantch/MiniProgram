@@ -13,6 +13,20 @@
   <!-- 根据设备类型显示面板，用block分隔 -->
   <!-- IASZone -->
   <block wx:if="{{deviceType === 'IASZone'}}">
+  <view class="IASZtable">
+    <view class="tr bg-w">
+      <view class="th">最后更新时间</view>
+      <view class="th">键</view>
+      <view class="th ">值</view>
+    </view>
+    <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+      <view class="tr" >
+        <view class="td">{{item.ts}}</view>
+        <view class="td">{{item.key}}</view>
+        <view class="td">{{item.value}}</view>
+      </view>
+    </block>
+  </view>
   <view class='detail-main'>
     <view class='deviceInfo'>
 
@@ -46,12 +60,20 @@
   <view class='detail-main'>
     <view class='deviceInfo'>
 
-      <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
-        <view class='status'>
-          <view class='title'>{{item.key}}</view>
-          <view class='currentStatus'>{{item.value}}</view>
+      <view class="table">
+        <view class="tr bg-w">
+          <view class="th">最后更新时间</view>
+          <view class="th">键</view>
+          <view class="th ">值</view>
         </view>
-      </block>
+        <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+          <view class="tr">
+            <view class="td">{{item.ts}}</view>
+            <view class="td">{{item.key}}</view>
+            <view class="td">{{item.value}}</view>
+          </view>
+        </block>
+      </view>
       
     </view>
 

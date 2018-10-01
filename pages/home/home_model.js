@@ -4,36 +4,50 @@ class Home extends Base{
   constructor(){
     super();
   }
-  getBannerData(id,callback){
-    var params = {
-      url: 'banner/' + id,
-      sCallback:function(res){
-        callback && callback(res.items);
-      }
-    }
-    this.request(params);
-  }
+  // getBannerData(id,callback){
+  //   var params = {
+  //     url: 'banner/' + id,
+  //     sCallback:function(res){
+  //       callback && callback(res.items);
+  //     }
+  //   }
+  //   this.request(params);
+  // }
 
-  //首页分类，主题
-  getThemeData(callback) {
-    var params = {
-      url: 'theme?ids=1,2,3',
+  /**
+   * mock data
+   */
+
+  loadTestData(callback) {
+    var param = {
+      url: '',
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(params);
+    this.request(param);
   }
 
-  //商品数据
-  getProductsData(callback){
-    var params = {
-      url: 'product/recent',
-      sCallback:function(data){
-        callback && callback(data);
+  /**mock end */
+
+  
+  /**获取设备实时数据 */
+  getRealtimeData(deviceId, sConCb, fConCb, onDataCb) {
+    var param = {
+      url: "",
+      deviceId: deviceId,
+      sConnectCb: function (res) {
+        sConCb && sConCb(res);
+      },
+      fConnectCb: function (err) {
+        fConCb && fConCb(err);
+      },
+      onMsgCb: function (data) {
+        onDataCb: onDataCb(data);
       }
     };
-    this.request(params);
+
+    return this.realTimeDevice(param);
   }
 }
 

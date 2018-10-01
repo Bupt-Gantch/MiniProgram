@@ -1,6 +1,7 @@
 // pages/device/device.js
 import {Device} from 'device_model.js';
 import {Config} from '../../utils/config.js';
+var util = require('../../utils/util.js');
 var device = new Device();
 Page({
 
@@ -14,7 +15,6 @@ Page({
       battery:"70%"
     },
     deviceImgUrl: Config.deviceImgUrl,
-    
   },
 
   /**
@@ -28,7 +28,7 @@ Page({
         deviceId: deviceid
       })
       
-      this._loadData();
+      //this._loadData();
       this._loadRealtimeData(deviceid);
   },
 
@@ -92,6 +92,9 @@ Page({
     var socketTask = device.getRealtimeData(deviceid, sConCb, fConCb,(data)=>{
        //收到服务器端发回数据，更新view层数据
       var sensorData = JSON.parse(data).data;
+      sensorData.forEach(function(e){
+        e.ts = util.formatTime(new Date(e.ts));
+      })
       this.setData({
         lastRtData: sensorData
       });

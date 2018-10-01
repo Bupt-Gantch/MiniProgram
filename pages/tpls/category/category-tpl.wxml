@@ -17,13 +17,13 @@
            
             <view class='image_switch'>
               <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}" >
-                <image wx:if="{{item.deviceType == 'switch'&& statusTable[item.deviceId]}}" src='{{baseImageUrl[0]}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == 'switch'&& !statusTable[item.deviceId]}}" src='{{item.imgUrl}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == 'outlet'&&statusTable[item.deviceId]}}" src='{{baseImageUrl[1]}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == 'outlet'&& !statusTable[item.deviceId]}}" src='{{item.imgUrl}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'switch'&& statusTable[item.id]}}" src='{{switchOnImg[0]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'switch'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'outlet' && statusTable[item.id]}}" src='{{switchOnImg[1]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'outlet'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit"></image>
               </block>
               <block wx:else>
-                <image src='{{item.imgUrl}}' mode="aspectFit"></image>
+                <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit"></image>
               </block>
               <view class='switch'>
                   <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}"/>
