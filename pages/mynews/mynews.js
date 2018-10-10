@@ -1,8 +1,8 @@
-// pages/mypublish/mypublish.js
+// pages/mynews/mynews.js
 var API = require('../../utils/api.js')
 import { Config } from '../../utils/config.js';
-import { myComment } from 'mycomment_model.js';
-var mycomment = new myComment();
+import { myNews } from 'mynews_model.js';
+var mynews = new myNews();
 var app = getApp();
 var oppenid = '';
 Page({
@@ -27,7 +27,7 @@ Page({
    * 获取信息列表/按页显示
    */
   _loadInfoList: function (openid) {
-    mycomment.getMyComment(openid, (res) => {
+    mynews.getMyNews(openid, (res) => {
       this.setData({
         infolist: res.data
       });

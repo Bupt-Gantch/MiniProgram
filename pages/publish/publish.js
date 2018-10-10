@@ -1,6 +1,8 @@
 // pages/publish/publish.js
 import { Config } from '../../utils/config.js';
 import { Publish } from 'publish_model.js';
+var chinese = require("../../utils/Chinese.js")
+var english = require("../../utils/English.js")
 var publish = new Publish();
 var app = getApp();
 var page = 0; 
@@ -36,11 +38,20 @@ Page({
     /**
      * 通过后台服务器获取数据
      */
-    page  = 1;
+    page  = 0;
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
     this._loadInfoList(page);
     info.push(this.data.infoList)
     this.setData({
       infolist:info[0]
+    })
+  },
+
+  onShow: function () {
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
     })
   },
 

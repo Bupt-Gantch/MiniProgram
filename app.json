@@ -9,8 +9,7 @@
     "pages/release/release",
     "pages/publish/publish",
     "pages/mypublish/mypublish",
-    "pages/myup/myup",
-    "pages/mycomment/mycomment"
+    "pages/mynews/mynews"
   ],
   "window": {
     "backgroundTextStyle": "light",

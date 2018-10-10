@@ -19,9 +19,9 @@
 
         <view  class='foods-type-box'>
           <template wx:if="{{index == 0}}" is="categorytop" 
-        data="{{baseImageUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable}}"></template>
+        data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable}}"></template>
           <template wx:if="{{index != 0}}" is="categorytop" 
-          data="{{baseImageUrl,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable}}"></template>
+          data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
 

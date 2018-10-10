@@ -1,12 +1,35 @@
 /* pages/loading/loading.wxss */
-.loading-container{
+swiper {
   width: 100%;
-  height: 402rpx;
+  height: 340rpx;
 }
 
-.loading-container image{
+swiper image {
+  display: block;
   width: 100%;
-  height: 402rpx; 
+  height: 100%;
+}
+
+.search-view {
+  opacity: 0.5;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 500;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-view{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  height: 650rpx;
+  font-size: 30rpx;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: gainsboro
 }
 
 .enter-container{
@@ -14,7 +37,15 @@
 }
 
 .enter-button{
-  width: 50%;
-  margin-top: 60rpx;
+  width: 70%;
   border-radius: 20rpx 20rpx
+}
+
+.language {
+  position: fixed;
+  display: flex;
+  bottom: 10rpx;
+  right: 10rpx;
+  font-size: 35rpx;
+  color: #ab956d;
 }

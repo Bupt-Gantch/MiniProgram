@@ -13,20 +13,20 @@
       <view class='category-main-view'>
         <block wx:for="{{categoryProducts}}" wx:key="{{item.id}}">
           <!-- 下面存放单个设备的div  -->
-          <view class="category-goods-items {{index%3==1?'middle':''}}" data-deviceid="{{item.deviceId}}" data-type="{{item.deviceType}}" bindtap="onDevicesItemTap">
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-deviceid="{{item.id}}" data-type="{{item.deviceType}}" bindtap="onDevicesItemTap">
            
             <view class='image_switch'>
-              <block wx:if="{{item.deviceType=='开关'||item.deviceType=='插座' }}" >
-                <image wx:if="{{item.deviceType == '开关'&& statusTable[item.deviceId]}}" src='{{baseImageUrl[0]}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == '开关'&& !statusTable[item.deviceId]}}" src='{{item.imgUrl}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == '插座'&&statusTable[item.deviceId]}}" src='{{baseImageUrl[1]}}' mode="aspectFit"></image>
-                <image wx:if="{{item.deviceType == '插座'&& !statusTable[item.deviceId]}}" src='{{item.imgUrl}}' mode="aspectFit"></image>
+              <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}" >
+                <image wx:if="{{item.deviceType == 'switch'&& statusTable[item.id]}}" src='{{switchOnImg[0]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'switch'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'outlet' && statusTable[item.id]}}" src='{{switchOnImg[1]}}' mode="aspectFit"></image>
+                <image wx:if="{{item.deviceType == 'outlet'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit"></image>
               </block>
               <block wx:else>
-                <image src='{{item.imgUrl}}' mode="aspectFit"></image>
+                <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit"></image>
               </block>
               <view class='switch'>
-                  <switch checked='{{statusTable[item.deviceId]}}' wx:if="{{item.deviceType=='开关'||item.deviceType=='插座'}}" bindchange="switchChange" id="{{item.id}}" data-deviceid="{{item.deviceId}}"/>
+                  <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}"/>
               </view>
             </view>
             <view wx:if="{{item.online}}" class='online'></view>

@@ -2,6 +2,8 @@
 //获取应用实例
 import { Config } from '../../utils/config.js';
 import { My } from 'my_model.js';
+var chinese = require("../../utils/Chinese.js")
+var english = require("../../utils/English.js")
 var my = new My();
 const app = getApp()
 
@@ -17,7 +19,12 @@ Page({
       url: '../logs/logs'
     })
   },
+  //首次加载
   onLoad: function () {
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -45,8 +52,14 @@ Page({
       })
     }
   },
+
+  onShow:function(){
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
+  },
+  //获取用户信息
   getUserInfo: function (e) {
-    
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -60,15 +73,9 @@ Page({
         })
   },
 
-  myUp:function(e){
+  myNews:function(e){
       wx.navigateTo({
-        url: '/pages/myup/myup',
-      })
-  },
-
-  myComment:function(e){
-      wx.navigateTo({
-        url: '/pages/mycomment/mycomment',
+        url: '/pages/mynews/mynews',
       })
   },
 
@@ -78,4 +85,16 @@ Page({
     });
   },
   
+  changeLanuage: function () {
+    var version = app.globalData.language;
+    if (version == "中文") {
+      app.globalData.language = "English"
+    } else {
+      app.globalData.language = "中文"
+    }
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
+  }
+
 })

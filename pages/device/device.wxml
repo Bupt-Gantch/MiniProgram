@@ -1,38 +1,87 @@
 <!--pages/device/device.wxml-->
-<view class='container detail-container'>
+<view class='detail-container'>
+  <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
-    <view class='icon'>
-      <image src='{{deviceDetail.imgUrl}}' mode="aspectFit"></image>
+    <view class='content'>
+      <image src='{{deviceImgUrl[deviceType]}}' mode="aspectFit"></image>
+      <view class='title'>名称</view>
+      <!-- <view class='name'>{{deviceDetail.name}}</view> -->
+      <view class='name'>{{deviceType}}</view>
     </view>
-    <view class='title'>名称</view>
-    <view class='name'>{{deviceDetail.name}}</view>
   </view>
 
+  <!-- 根据设备类型显示面板，用block分隔 -->
+  <!-- IASZone -->
+  <block wx:if="{{deviceType === 'IASZone'}}">
+  <view class="IASZtable">
+    <view class="tr bg-w">
+      <view class="th">最后更新时间</view>
+      <view class="th">键</view>
+      <view class="th ">值</view>
+    </view>
+    <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+      <view class="tr" >
+        <view class="td">{{item.ts}}</view>
+        <view class="td">{{item.key}}</view>
+        <view class="td">{{item.value}}</view>
+      </view>
+    </block>
+  </view>
   <view class='detail-main'>
     <view class='deviceInfo'>
 
       <view class='status'>
-        <view class='title'>状态</view>
+        <view class='title'>状态：</view>
         <view class='currentStatus'>{{deviceStatus.status}}</view>
       </view>
-      <view class='fangchai'>
-        <view class='title'>防拆</view>
+      <view class='status'>
+        <view class='title'>防拆：</view>
         <view class='currentStatus'>{{deviceStatus.fangchai}}</view>
       </view>
-      <view class='battery'>
-        <view class='title'>电量</view>
+      <view class='status'>
+        <view class='title'>电量：</view>
         <view class='currentStatus'>{{deviceStatus.battery}}</view>
       </view>
     </view>
 
     <view class='bottom'>
-      <button class='warningRecord'></button>
+      <button type="warn" class='warningRecord' 
+            hover-class='button-hover'>报警记录</button>
       <view class='msgPublish'>
         <view class='title'>消息推送</view>
         <switch bindchange="switchChange"></switch>
       </view>
     </view>
   </view>
+  </block>
+
+  <!-- PM2.5 或 temperature -->
+  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5'}}">
+  <view class='detail-main'>
+    <view class='deviceInfo'>
+
+      <view class="table">
+        <view class="tr bg-w">
+          <view class="th">最后更新时间</view>
+          <view class="th">键</view>
+          <view class="th ">值</view>
+        </view>
+        <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+          <view class="tr">
+            <view class="td">{{item.ts}}</view>
+            <view class="td">{{item.key}}</view>
+            <view class="td">{{item.value}}</view>
+          </view>
+        </block>
+      </view>
+      
+    </view>
+
+  </view>
+  </block>
+
+  <!-- <view class='history-data'>
+  </view> -->
 
   
 </view>

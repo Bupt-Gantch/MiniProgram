@@ -1,7 +1,7 @@
 <!--pages/contact/contact.wxml-->
 <view class='container'>
   <view class='contact-title'>
-    <text>如果您有任何建议或想法，请联系我：）</text>
+    <text>{{content.myfeedback}}</text>
   </view>
   <view class='contact-email'>
     <view class='title'></view>

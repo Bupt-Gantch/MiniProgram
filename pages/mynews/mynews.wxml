@@ -1,5 +1,4 @@
-<!--pages/mycomment/mycomment.wxml-->
-<!--pages/mypublish/mypublish.wxml-->
+<!--pages/mynews/mynews.wxml-->
  <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
     <view class='items-list' wx:for="{{infolist}}" wx:for-index="index" data-index="{{index}}">
       <view class='info-user'>
@@ -51,4 +50,5 @@
       </view>
     </view>
   </scroll-view>
+
 

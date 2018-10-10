@@ -3,6 +3,8 @@
 import { Config } from '../../utils/config.js';
 var util = require('../../utils/util.js');
 import { Release } from 'release_model.js';
+var chinese = require("../../utils/Chinese.js")
+var english = require("../../utils/English.js")
 var release = new Release();
 
 var app = getApp();
@@ -14,7 +16,6 @@ Page({
    */
   data: {
     imageList: [],
-    place: '添加地点'
   },
 
   /**
@@ -22,11 +23,25 @@ Page({
    */
   onLoad: function(options) {
     Config.debug = false;
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
+    this.setData({
+      place: this.data.content.place
+    })
     //*addnews.getNewMessage(openid,(res) => {
     // do something
     //})*/
   },
 
+  onShow: function () {
+    // this.setData({
+    //   content: app.getLanuage(app.globalData.language)
+    // })
+    // this.setData({
+    //   place: this.data.content.place
+    // })
+  },
   /**
    * 添加图片
    */
@@ -73,6 +88,7 @@ Page({
         }
         release.addPlace(newplace, (res) => {
           var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
+          console.log(newplace)
           that.setData({
             place:newplace
           })

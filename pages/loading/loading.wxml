@@ -1,9 +1,17 @@
 <!--pages/loading/loading.wxml-->
-<view class='loading-container'>
-   <image class="loading-image" mode="scaleToFill" src="/imgs/swiper/swiper-02.jpg"></image>
-</view>
+<swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+<scroll-view class='scroll-view' scroll-y="true">
+{{content.introduce}}
+</scroll-view>
 
 <view class="enter-container">
-  <button plain="true" class="enter-button" type='primary' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 开启智能家居之旅 
+  <button plain="true" class="enter-button" type='primary' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">{{content.welcome}}
   </button>
+      <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
 </view>

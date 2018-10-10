@@ -1,55 +1,130 @@
 @import "../tpls/base.wxss";
 .detail-container {
-  background-color:#F9F9F9
+  background-color:#F9F9F9;/*#24292e*/
+  color:#F9F9F9;
+  padding: 0rpx 0;
+  box-sizing: border-box;
+  font-family: "Microsoft Yahei";
+  height: 100vh;
 }
-.detail-header-box,.detail-bottom-box{
-  background-color: rgb(97, 23, 23);
-}
-.detail-topic-img{
+
+.detail-header{
+  background-color: #24292e;
+  margin-bottom: 20px;
+  height: 60px;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
-.detail-topic-img image{
+.detail-header view.content{
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.detail-header image{
+  height: 80rpx;
+  width: 80rpx;
+  margin: 0 10rpx;
+}
+.detail-header view view{
+  margin: 0 10rpx;
+}
+
+.detail-main{
+  background-color: #24292e;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  justify-content: flex-start;  /*主轴*/
+  
+}
+.deviceInfo{
+  padding: 10px 10px 30px 10px;
   width: 100%;
 }
-
-
-.fixed-btns-box{
-  position: fixed;
-  top:50rpx;
-  right:12px;
-  width: 80rpx;
-}
-.fiexd-cart image{
-  height: 64rpx;
-  width: 64rpx;
-}
-.fiexd-cart view{
-  font-size: 24rpx;
-  background-color: #AB956D;
-  color: white;
-  position: absolute;
-  right: 64rpx;
-  top: 0rpx;
-  height: 36rpx;
-  width: 36rpx;
-  line-height: 36rpx;
-  border-radius: 36rpx;
-  text-align: center;
-}
-.fiexd-cart.animate{
-  animation: aCartScale 200ms cubic-bezier(.17,.67,.83,.67);
-  animation-fill-mode: backwards;
+.firstLine,.lines{
+  width: 95%;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@-webkit-keyframes aCartScale{
-  0%{
-    -webkit-transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-  }
+/*table */
+.IASZtable{
+  margin-bottom: 20px; 
+  background-color: #24292e;
 }
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.td {
+    width:40%;
+    justify-content: center;
+    text-align: center;
+}
+
+.th {
+  width: 40%;
+  justify-content: center;
+  color: #fff;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+} 
+/* end*/
+.detail-main view.status{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.detail-main view.bottom{
+  margin: 10px; /* 上右下左*/
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+}
+.warningRecord{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.msgPublish{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.msgPublish view{
+  margin: 0px 10px;
+}
+
+.button-hover {
+  background-color: wheat;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*选择数量和添加到购物车*/
 .cart-box{
@@ -84,25 +159,7 @@
   color: #D5D5DB;
 }
 
-/*中间分割线*/
-.middle-border{
-  width: 2rpx;
-  height: 30rpx;
-  border-right: 1rpx #fff dotted;
-}
 
-.small-top-img{
-  height: 160rpx;
-  width: 160rpx;
-  right:6rpx;
-  position: absolute;
-  opacity: 0;
-}
-.small-top-img.animate{
-  opacity: 1;
-  /*-webkit-transition:all 1000ms cubic-bezier(.4,.46,.3,1.31);*/
-  -webkit-transition:all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
 
 
 /*数量选择器*/
@@ -139,42 +196,8 @@
   width: 32rpx;
 }
 
-/*价格和名称*/
-.basic-info-box{
-  padding: 15rpx 0;
-  color: #454552;
-  text-align: center;
-}
-.basic-info-box>view{
-  margin: 20rpx auto;
-}
-.basic-info-box .stock{
-  font-size: 24rpx;
-}
-.basic-info-box .stock.no{
-  color:#B42F2D;
-}
-.basic-info-box .name{
-  font-size: 40rpx;
-}
-.basic-info-box .price{
-  font-size: 38rpx;
-}
 
-/*商品详情*/
-.detail-bottom-box{
-  margin-top: 30rpx;
-  width: 100%;
-  
-  
-}
-.tabs-box{
-  /* width: 100%; */
-  height: 90rpx;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15rpx;
-}
+
 .tabs-item{
   width: 33.3%;
   color: #C7C7CB;
@@ -190,41 +213,6 @@
   /*border-bottom: 2px solid #AB956D;*/
   border-bottom: 2px solid rgba(171,149,109,.8);
 }
-.product-detail-box{
-  padding-bottom: 20rpx;
-}
-.product-detail-imgs image{
-  width: 100%;
-  height:400rpx;
-  float: left;
-}
 
-.product-detail-properties,.product-detail-protect{
-  min-height: 80vh;
-}
-
-.properties-item{
-  display: flex;
-  margin: 25rpx 0;
-  font-size:24rpx;
-}
-.properties-name{
-  width: 160rpx;
-  color:#808080;
-  text-align: center;
-}
-.properties-detail{
-  flex:1;
-  color: #333;
-  padding-right: 40rpx;
-}
-
-
-.product-detail-protect view{
-  font-size: 24rpx;
-  color:808080;
-  text-align: center;
-  margin-top: 30rpx;
-}
 
 

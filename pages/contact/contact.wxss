@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: #EDEDED;
   justify-content:center;
+  text-align: center
 }
 .contact-bottom{
   text-align: center;

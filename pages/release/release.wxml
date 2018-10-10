@@ -2,7 +2,7 @@
 <view>
   <form bindsubmit="formSubmit" bindreset="formReset" name="detail">
     <view class="description">
-      <textarea placeholder='您要发布的内容' name='textarea' maxlength='200'></textarea>
+      <textarea placeholder='{{content.content}}' name='textarea' maxlength='200'></textarea>
     </view>
     <view class='showPic'>
       <block wx:for="{{imageList}}" wx:for-item="image">
@@ -15,7 +15,7 @@
     <view class="line"></view>
     <view bindtap='addPlace'>{{place}}</view>
     <view class="btn-publish">
-      <button form-type='formSubmit' key='value'>发布</button>
+      <button form-type='formSubmit' key='value'>{{content.submit}}</button>
     </view>
   </form>
 </view>

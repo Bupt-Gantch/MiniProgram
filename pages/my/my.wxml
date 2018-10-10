@@ -1,8 +1,7 @@
 <view class="my-container">
   <view class="my-header">
     <view class="userinfo">
-      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <block wx:else>
+      <block>
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </block>
@@ -11,16 +10,14 @@
 
   <view class="my-main">
     <view class="my-item" bindtap='myPublish'>
-      <text>我发布的</text>
+      <text>{{content.mypublish}}</text>
     </view>
-    <view class="my-item" bindtap='myUp'>
-      <text>获得点赞</text>
-    </view>
-    <view class="my-item" bindtap='myComment'>
-      <text>用户评论</text>
+    <view class="my-item" bindtap='myNews'>
+      <text>{{content.mynews}}</text>
     </view>
     <view class="my-item" bindtap='onContactTap'>
-      <text>意见反馈</text>
+      <text>{{content.feedback}}</text>
     </view>
+    <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
   </view>
 </view>

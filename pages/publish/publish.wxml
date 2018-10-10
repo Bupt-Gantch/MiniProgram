@@ -11,7 +11,7 @@
   <view class="search-view">
     <view class="search-content">
       <image src="/imgs/icon/search-pic.png" class="search-icon" />
-      <input placeholder="请输入搜索内容" class="search-input" maxlength="30" bindconfirm="searchNews">
+      <input placeholder="{{content.search}}" class="search-input" maxlength="30" bindconfirm="searchNews">
       </input>
     </view>
   </view>
@@ -55,7 +55,7 @@
       </view> -->
         <view class='uppeople' wx:if="{{item.like_num}}">
           <image src='/imgs/icon/up@success.png'></image>
-          <text>{{item.like_num}}次</text>
+          <text>{{item.like_num}}</text>
         </view>
       </view>
 
@@ -65,7 +65,7 @@
       </view>
 
       <view class='comment-box'>
-        <input wx:if="{{commentTable[item.id]}}" data-userid="{{item.id}}" bindconfirm='add' type="text" placeholder='评论' cursor-spacing='10'></input>
+        <input wx:if="{{commentTable[item.id]}}" data-userid="{{item.id}}" bindconfirm='add' type="text" placeholder='{{content.comment}}' cursor-spacing='10'></input>
       </view>
     </view>
   </scroll-view>

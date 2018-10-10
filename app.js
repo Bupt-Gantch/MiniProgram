@@ -1,4 +1,6 @@
 //app.js
+var chinese = require("/utils/Chinese.js")
+var english = require("/utils/English.js")
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -41,7 +43,17 @@ App({
       }
     })
   },
+  //改变语言
+  getLanuage: function (lastLanuage) {
+    if (lastLanuage == "中文") {
+      return chinese.Content
+    } else {
+      return english.Content
+    }
+  },
+
   globalData: {
+    language:"中文",
     userInfo: null,
     openid:null,
     code:null,
