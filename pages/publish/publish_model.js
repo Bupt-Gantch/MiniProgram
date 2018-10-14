@@ -5,7 +5,7 @@ class Publish extends Base{
   }
   getInfoList(page, callback) {
     var param = {
-      url: 'infolist/by_page?page=' + page,
+      url: 'findAllPosts?page=' + page,
       sCallback: function (data) {
         callback && callback(data);
       }

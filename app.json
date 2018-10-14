@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/home/home",
     "pages/loading/loading",
+    "pages/home/home",
     "pages/device/device",
     "pages/category/category",
     "pages/my/my",
@@ -9,7 +9,8 @@
     "pages/release/release",
     "pages/publish/publish",
     "pages/mypublish/mypublish",
-    "pages/mynews/mynews"
+    "pages/mynews/mynews",
+    "pages/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",

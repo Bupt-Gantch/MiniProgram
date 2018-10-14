@@ -21,14 +21,14 @@
       <view class='info-user'>
         <image src='/imgs/icon/one.png' class='info-pic'></image>
         <view class='info-nati'>
-          <view class='info-name'>{{item.name}}</view>
-          <text class='info-time'>{{item.time}}</text>
+          <view class='info-name'>{{item.nickName}}</view>
+          <text class='info-time'>{{item.timeStamp}}</text>
         </view>
       </view>
 
       <view class='info-content'>
         <view>
-          <text class='info-detail'>{{item.detail}}</text>
+          <text class='info-detail'>{{item.pContent}}</text>
         </view>
         <view class='div'>
           <!-- <view class="info-pictures" wx:for="{{item.pictures}}" wx:for-item="img">
@@ -38,7 +38,7 @@
 
 
         </view>
-        <view class='info-place'>{{item.place}}</view>
+        <view class='info-place'>{{item.location}}</view>
       </view>
       <view class='info-footer'>
         <view class='info-uc'>
@@ -53,9 +53,9 @@
         <!-- <view class='uppeople' wx:for='{{item.up}}'>
         <image src='{{item}}'></image>
       </view> -->
-        <view class='uppeople' wx:if="{{item.like_num}}">
+        <view class='uppeople' wx:if="{{item.favoritenum}}">
           <image src='/imgs/icon/up@success.png'></image>
-          <text>{{item.like_num}}</text>
+          <text>{{item.favoritenum}}</text>
         </view>
       </view>
 

@@ -14,18 +14,19 @@ class Release extends Base {
         callback && callback(res);
       }
     };
-    this.request(param);
+    this.req_location(param);
   }
 
   addContent(data,callback){
     var param = {
-      url:data.url,
-      data:data.data,
-      method:'POST',
+      url: 'addPost',
+      data:data,
+      // method:'POST',
       sCallback:function(res){
         callback && callback(res);
       }
     }
+    this.request(param);
   }
 }
 

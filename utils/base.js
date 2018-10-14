@@ -3,7 +3,6 @@ import {
 } from '../utils/config.js';
 const Mock = require('mock-min.js');
 
-
 class Base {
   constructor() {
     this.baseRequestUrl = Config.restUrl;
@@ -15,23 +14,21 @@ class Base {
     this.debug = Config.debug;
     if (!this.debug) {
       var url = this.baseRequestUrl + params.url;
-
-      if (!params.type) {
-        params.type = 'GET';
+      if (!params.method) {
+        params.method = 'GET';
       }
-
       wx.request({
         // url: url,
-        url: params.url,
-        // url: url,
+        url: url,
         data: params.data,
-        method: params.type,
+        method: params.method,
         header: {
           'content-type': 'application/json',
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
-          params.sCallback && params.sCallback(res.data);
+          // console.log(res.data)
+          params.sCallback && params.sCallback(res);
         },
         fail: function(err) {
           console.log(err);
@@ -93,13 +90,13 @@ class Base {
           'error_code': '',
           'error_msg': '',
           'data|5-10': [{
-            'id|+1': 1,
-            'like_num|1-50': 0,
+            'pId|+1': 1,
+            'favoritenum|1-50': 0,
             'pic': "@image('200x100', '#4A7BF7','#fff','pic')",
-            'name': '@cname()',
-            'time': '@datetime()',
-            'detail': '@cparagraph(2)',
-            'place': '@county(true)',
+            'nickName': '@cname()',
+            'timeStamp': '@datetime()',
+            'pContent': '@cparagraph(2)',
+            'location': '@county(true)',
             'pictures': '',
             'up': '',
             'comments': '',
@@ -213,6 +210,53 @@ class Base {
       params.sCallback && params.sCallback(res);
       //params.fCallback && params.fCallback();
     }
+  }
+
+  req_location(params) {
+      if (!params.method) {
+        params.method = 'GET';
+      }
+      wx.request({
+        url: params.url,
+        data: params.data,
+        method: params.method,
+        header: {
+          'content-type': 'application/json',
+          'token': wx.getStorageSync('token')
+        },
+        success: function (res) {
+          // console.log(res.data)
+          params.sCallback && params.sCallback(res.data);
+        },
+        fail: function (err) {
+          console.log(err);
+          params.fCallback && params.fCallback(err);
+        }
+
+      })
+    }
+
+  req_account(params) {
+    if (!params.method) {
+      params.method = 'GET';
+    }
+    wx.request({
+      url: Config.account+params.url,
+      data: params.data,
+      method: params.method,
+      header: {
+        'content-type': 'application/json',
+        'token': wx.getStorageSync('token')
+      },
+      success: function (res) {
+        // console.log(res.data)
+        params.sCallback && params.sCallback(res.data);
+      },
+      fail: function (err) {
+        console.log(err);
+        params.fCallback && params.fCallback(err);
+      }
+    })
   }
 
 

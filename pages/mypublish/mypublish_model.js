@@ -4,9 +4,10 @@ class myPublish extends Base {
     super()
   }
 
-  getMyPublish(openid, callback) {
+  getMyPublish(data, callback) {
     var param = {
-      url: '?openid=' + openid,
+      url: 'findAllPosts',
+      data:data,
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -14,9 +15,10 @@ class myPublish extends Base {
     this.request(param)
   }
 
-  deleteInformation(id,callback){
+  deleteInformation(params,callback){
     var param = {
-      url: 'infolist/by_page?page='+id,
+      url: 'deletePost',
+      data:params,
       sCallback: function (data) {
         callback && callback(data);
       }

@@ -29,7 +29,7 @@ swiper image {
   height: 650rpx;
   font-size: 30rpx;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: gainsboro
+  background-color: RGB(255,245,225)
 }
 
 .enter-container{
@@ -38,7 +38,7 @@ swiper image {
 
 .enter-button{
   width: 70%;
-  border-radius: 20rpx 20rpx
+  border-radius: 20rpx 20rpx;
 }
 
 .language {
@@ -46,6 +46,15 @@ swiper image {
   display: flex;
   bottom: 10rpx;
   right: 10rpx;
+  font-size: 35rpx;
+  color: #ab956d;
+}
+
+.register{
+  position: fixed;
+  display: flex;
+  bottom: 10rpx;
+  left: 10rpx;
   font-size: 35rpx;
   color: #ab956d;
 }

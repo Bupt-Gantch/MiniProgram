@@ -35,12 +35,9 @@ Page({
   },
 
   onShow: function () {
-    // this.setData({
-    //   content: app.getLanuage(app.globalData.language)
-    // })
-    // this.setData({
-    //   place: this.data.content.place
-    // })
+    this.setData({
+      content: app.getLanuage(app.globalData.language)
+    })
   },
   /**
    * 添加图片
@@ -88,7 +85,6 @@ Page({
         }
         release.addPlace(newplace, (res) => {
           var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
-          console.log(newplace)
           that.setData({
             place:newplace
           })
@@ -102,15 +98,17 @@ Page({
 
   formSubmit: function(e) {
     var formcontent = {
-      url: '',
-      data: {
-        content: e.detail.value,
-        imageList: this.data.imageList,
-        place: this.data.place,
-        time: util.formatTime(new Date())
-      }
+        // openId:app.globalData.openid,
+      openId:'oS-qe4t1XMcdf0xJswIvBfIJUeTw',
+        nickName: app.globalData.userInfo.nickName,
+        pAvator: app.globalData.userInfo.avatarUrl,
+        pContent: e.detail.value.textarea,
+        image: this.data.imageList[0],
+        location: this.data.place,
     }
+    console.log(formcontent)
     release.addContent(formcontent,(res)=>{
+      console.log(res)
         wx.navigateTo({
           url: '/pages/publish/publish',
         })

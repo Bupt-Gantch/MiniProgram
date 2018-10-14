@@ -365,6 +365,7 @@ Page({
   },
 
   onLoad:function(options){
+    Config.debug = true
     var deviceid = "b575d670-be2b-11e8-b40d-db6feb8567aa";
     //this._loadRealtimeData(deviceid);
     //mock test
@@ -387,6 +388,7 @@ Page({
   },
 
   _loadTest : function(){
+    Config.debug = true
     home.loadTestData((res)=>{
       curTemprature = res.data[0].tempra;
       curHumidity = res.data[0].humi;
