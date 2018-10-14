@@ -55,6 +55,11 @@ Page({
         infoList: res.data
       });
       // console.log(this.data.infoList)
+      if (res.data === -1) {
+        this.setData({
+          end: true
+        })
+      }
       for (var i = 0; i < this.data.infoList.length; i++)
         info.push(this.data.infoList[i])
       this.setData({
@@ -99,6 +104,7 @@ Page({
 
   onPullDownRefresh: function() {
     info = [];
+    if (!this.data.end) {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
     var data = {
@@ -114,12 +120,14 @@ Page({
     wx.hideNavigationBarLoading();
     // 停止下拉动作
     wx.stopPullDownRefresh();
+    }
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    if (!this.data.end) {
     var data = {
       page: page + 1,
       openId: app.globalData.openId,
@@ -136,6 +144,7 @@ Page({
     // })
     // 隐藏加载框
     wx.hideLoading();
+    }
   },
 
 })

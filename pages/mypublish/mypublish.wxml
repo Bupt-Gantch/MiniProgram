@@ -23,3 +23,7 @@
     </view>
   </view>
 </scroll-view>
+  <view class="endbox" wx:if="{{end}}">
+    <text>end</text>
+    <view class='line'></view>
+  </view>

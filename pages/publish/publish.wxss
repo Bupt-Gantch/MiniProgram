@@ -62,10 +62,23 @@ swiper image {
   height: 800rpx;
 } */
 
+.endbox{
+  align-content: center;
+  text-align: center;
+  color: gray
+}
+.line{
+  height: 3rpx;
+  background-color:gray;
+  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
+
 .circle-float {
   position: fixed;
   display: flex;
-  bottom: 10rpx;
+  bottom: 90rpx;
   right: 10rpx;
   width: 89rpx;
   height: 89rpx;

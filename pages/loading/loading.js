@@ -16,7 +16,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // openid:'oS-qe4t1XMcdf0xJswIvBfIJUeTw',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     imgUrls: [
       '/imgs/swiper/swiper-01.jpg',
@@ -26,20 +25,9 @@ Page({
   },
 
   /**
-   * 获取用户信息接口后的处理逻辑
-   */
-  // getUserInfo: function(e) {
-  //   // 将获取的用户信息赋值给全局 userInfo 变量
-  //   console.log(e)
-  //   if (e.detail.userInfo) {
-  //     app.globalData.userInfo = e.detail.userInfo
-  //   }
-  // },
-
-  /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function(options){
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
@@ -53,72 +41,73 @@ Page({
     }
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
   },
 
-  login: function() {
-   if(app.globalData.openid===null){
+  /**
+  * 获取用户信息接口后的处理逻辑
+  */
+  getUserInfo: function (e) {
+    // 将获取的用户信息赋值给全局 userInfo 变量
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
       wx.login({
         success: res => {
           this.setData({
             code: res.code
           })
-          wx.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + app.globalData.appid + '&secret=' + app.globalData.secret + '&js_code=' + res.code + '&grant_type=authorization_code',
-            success: res => {
-              this.setData({
-                openid: res.data.openid
-              })
-              app.globalData.openid = res.data.openid
-              console.log(res.data.openid)
-              this.setData({
-                openid:res.data.openid
-              })
+          var param = {
+            data: {
+              appid: app.globalData.appid,
+              secret: app.globalData.secret,
+              js_code: res.code,
+              grant_type: 'authorization_code'
             }
-          })
-        }
-      })
-    }
-    else{
-      this.setData({
-        openid:app.globalData.openid
-      })
-    }
-    wx.showLoading({
-      title: '登陆中',
-    })
-    setTimeout(function () {
-      wx.hideLoading()
-      loading.findOpenid(app.globalData.openid, (res) => {
-        console.log(app.globalData.openid)
-        if (res.status === "success") {
-          wx.showToast({
-            title: '登陆成功',
-            duration: 3000,
-          })
-          setTimeout(function () {
-            wx.reLaunch({
-              url: '../home/home',
+          }
+          loading.getOpenid(param, (res) => {
+            app.globalData.openid = res.openid
+            this.setData({
+              openid: res.openid,
+              // content: app.getLanuage(app.globalData.language)
             })
-          }, 1000)
-        } else {
-          wx.showModal({
-            title: this.data.content.failed,
-            content: this.data.content.failedmess,
-            success: function (res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../register/register',
-                })
-              }
-            }
           })
         }
       })
-    }, 1000)
+      wx.showLoading({
+        title: '登陆中',
+      })
+      setTimeout(function () {
+        wx.hideLoading()
+        loading.findOpenid(app.globalData.openid, (res) => {
+          if (res.status === "success") {
+            wx.showToast({
+              title: '登陆成功',
+              duration: 3000,
+            })
+            setTimeout(function () {
+              wx.reLaunch({
+                url: '../home/home',
+              })
+            }, 1000)
+          } else {
+            wx.showModal({
+              title: this.data.content.failed,
+              content: this.data.content.failedmess,
+              success: function (res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '../register/register',
+                  })
+                }
+              }
+            })
+          }
+        })
+      }, 1000)
+    }
   },
 
   changeLanuage: function() {

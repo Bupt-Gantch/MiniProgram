@@ -11,7 +11,7 @@
 </scroll-view>
 
 <view class="enter-container">
-  <button plain="true" style="color: #ab956d; border-color: #ab956d" class="enter-button" bindtap='login'>{{content.welcome}}</button>
+ <!-- bindtap='login'  -->
+  <button plain="true" style="color: #ab956d; border-color: #ab956d" class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
 </view>
-<!-- <view class="register" bindtap='register'>{{content.register}}</view> -->
 <view class="language" bindtap='changeLanuage'>{{content.button}}</view>

@@ -69,11 +69,15 @@ Page({
    */
   _loadInfoList: function(page) {
     publish.getInfoList(page, (res) => {
-      console.log(res.data)
       this.setData({
         infoList: res.data
       });
-      // console.log(this.data.infoList)
+      // console.log(res.data)
+      if(res.data===-1){
+        this.setData({
+          end:true
+        })
+      }
       for (var i = 0; i < this.data.infoList.length; i++)
         info.push(this.data.infoList[i])
       this.setData({
@@ -139,7 +143,7 @@ Page({
       var addUp = {
         avatarUrl: app.globalData.userInfo.avatarUrl,
         id: userid,
-        oppenid: '',
+        oppenid: app.globalData.oppenid,
       };
       publish.addUp(addUp, (res) => {
 
@@ -148,7 +152,7 @@ Page({
       this.data.statusTable[userid] = false;
       var deleteUp = {
         id: userid,
-        oppenid: '',
+        oppenid: app.globalData.userid,
       }
       publish.deleteUp(deleteUp, (res) => {
 
@@ -182,6 +186,7 @@ Page({
 
   onPullDownRefresh: function() {
     info = [];
+    if (!this.data.end) {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
 
@@ -195,24 +200,22 @@ Page({
     wx.hideNavigationBarLoading();
     // 停止下拉动作
     wx.stopPullDownRefresh();
+    }
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    page = page + 1;
-    // 显示加载图标
-    wx.showLoading({
-      title: '加载中',
-    })
-    this._loadInfoList(page);
-    // for(var i=0;i<this.data.infoList.length;i++)
-    // info[0].push(this.data.infoList[i])
-    // this.setData({
-    //   infolist: info[0]
-    // })
-    // 隐藏加载框
-    wx.hideLoading();
+    if(!this.data.end){
+      page = page + 1;
+      // 显示加载图标
+      wx.showLoading({
+        title: '加载中',
+      })
+      this._loadInfoList(page);
+      // 隐藏加载框
+      wx.hideLoading();
+    }
   },
 })

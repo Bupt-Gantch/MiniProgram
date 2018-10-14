@@ -13,7 +13,7 @@ class Loading extends Base {
         callback && callback(data);
       }
     };
-    this.request(param)
+    this.req_openid(param)
   }
 
   findOpenid(openid, callback) {

@@ -92,7 +92,7 @@ class Base {
           'data|5-10': [{
             'pId|+1': 1,
             'favoritenum|1-50': 0,
-            'pic': "@image('200x100', '#4A7BF7','#fff','pic')",
+            'pAvatar': "@image('200x100', '#4A7BF7','#fff','pic')",
             'nickName': '@cname()',
             'timeStamp': '@datetime()',
             'pContent': '@cparagraph(2)',
@@ -235,6 +235,29 @@ class Base {
 
       })
     }
+
+  req_openid(params) {
+    if (!params.method) {
+      params.method = 'GET';
+    }
+    wx.request({
+      url: Config.openid,
+      data: params.data,
+      method: params.method,
+      header: {
+        'content-type': 'application/json',
+        'token': wx.getStorageSync('token')
+      },
+      success: function (res) {
+        params.sCallback && params.sCallback(res.data);
+      },
+      fail: function (err) {
+        console.log(err);
+        params.fCallback && params.fCallback(err);
+      }
+
+    })
+  }
 
   req_account(params) {
     if (!params.method) {
