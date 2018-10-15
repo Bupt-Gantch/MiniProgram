@@ -10,8 +10,9 @@ class Config{
 
 // Config.restUrl = 'http://x.cn/api/v1/';
 // Config.imagesUrl = 'http://x.cn/images';
-Config.restUrl = 'http://10.108.217.108:8080/api/v1/wechatPost/';
-// Config.restUrl = 'http://de7d4dc8.ngrok.io/api/v1/wechatPost/'
+// Config.restUrl = 'http://10.108.217.108:8080/api/v1/wechatPost/';
+Config.restUrl = 'http://47.104.8.164:80/api/v1/wechatPost/'
+// Config.restUrl = 'http://6b7ddeb2.ngrok.io/api/v1/wechatPost/'
 Config.account = 'http://47.105.120.203:30080/api/v1/account/';
 Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
 Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';

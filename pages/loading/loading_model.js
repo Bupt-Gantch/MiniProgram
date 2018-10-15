@@ -1,24 +1,28 @@
 import {
   Base
 } from '../../utils/base.js'
+import {
+  Config
+} from '../../utils/config.js';
 class Loading extends Base {
   constructor() {
     super()
   }
 //获取用户的openid
-  getOpenid(data, callback) {
-    var param = {
-      data: data.data,
+  getOpenid(param, callback) {
+    var params = {
+      url: Config.openid,
+      data: param.data,
       sCallback: function(data) {
         callback && callback(data);
       }
     };
-    this.req_openid(param)
+    this.request_test(params)
   }
 //查询用户表，是否存在openid
   findOpenid(openid, callback) {
     var param = {
-      url: 'userLogin',
+      url: Config.account+'userLogin',
       data:{
         openid:openid
       },
@@ -27,7 +31,7 @@ class Loading extends Base {
         callback && callback(data);
       }
     };
-    this.req_account(param);
+    this.request_test(param);
   }
 }
 

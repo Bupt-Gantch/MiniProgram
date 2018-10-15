@@ -8,11 +8,14 @@ page {
 }
 
 .description {
-  height: 300rpx;
+  height: 400rpx;
   width: 100%;
   background-color: #fff;
-  margin-top: 60rpx;
+  margin-top: 100rpx;
   margin-bottom: 10rpx;
+}
+.description textarea{
+  width: 100%
 }
 
 .picture image {
@@ -39,10 +42,9 @@ page {
 .btn-publish{
   position: fixed;
   display: flex;
-  top: 1rpx;
-  right: 1rpx;
-  width: 130rpx;
-  height:60rpx;
+  top: 20rpx;
+  right: 10rpx;
+  width: 150rpx;
 }
 
 .btn-publish button{

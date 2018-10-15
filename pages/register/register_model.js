@@ -6,16 +6,16 @@ class Register extends Base {
     super();
   }
 
-  register(data, callback) {
-    var param = {
-      url:'createUser',
-      data: data.data,
+  register(param, callback) {
+    var params = {
+      url: Config.account+'createUser',
+      data: param.data,
       method: 'POST',
       sCallback: function (res) {
         callback && callback(res);
       }
     };
-    this.req_account(param);
+    this.request_test(params);
   }
 }
 

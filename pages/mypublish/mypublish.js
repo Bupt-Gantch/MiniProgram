@@ -25,13 +25,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // Config.test = '1';
-    Config.debug = false;
-    // Config.debug = false;
-    // oppenid = app.globalData.oppenid;
-    // this._loadInfoList(oppenid);
     var data = {
-      openId: 'test1',
+      openId: app.globalData.oppenid,
       page: 0,
     }
     this._loadInfoList(data)
@@ -53,9 +48,8 @@ Page({
   _loadInfoList: function(data) {
     mypublish.getMyPublish(data, (res) => {
       this.setData({
-        infoList: res.data.data
+        infoList: res.data
       });
-      // console.log(this.data.infoList)
       if (this.data.infoList === 0) {
         page = page - 1
         this.setData({
@@ -72,7 +66,6 @@ Page({
   },
   //删除信息
   delete: function(e) {
-    // var id = e.currentTarget.dataset.userid;
     var that = this
     var params = {
       pId: e.currentTarget.dataset.infoid,
@@ -145,11 +138,6 @@ Page({
       title: '加载中',
     })
     this._loadInfoList(page);
-    // for(var i=0;i<this.data.infoList.length;i++)
-    // info[0].push(this.data.infoList[i])
-    // this.setData({
-    //   infolist: info[0]
-    // })
     // 隐藏加载框
     wx.hideLoading();
     }

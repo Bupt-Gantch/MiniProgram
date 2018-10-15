@@ -1,31 +1,32 @@
 import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js'
 class myPublish extends Base {
   constructor() {
     super()
   }
 
-  getMyPublish(data, callback) {
-    var param = {
-      url: 'findAllPosts',
+  getMyPublish(param, callback) {
+    var params = {
+      url: Config.restUrl+'findAllPosts',
       method:'POST',
-      data:data,
+      data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param)
+    this.request_test(params)
   }
 
-  deleteInformation(params,callback){
-    var param = {
-      url: 'deletePost',
+  deleteInformation(param,callback){
+    var params = {
+      url: Config.restUrl+'deletePost',
       method:'POST',
-      data:params,
+      data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request_test(params);
   }
 }
 

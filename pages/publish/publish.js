@@ -25,30 +25,21 @@ Page({
     ],
     statusTable: {},
     commentTable: {},
-    // infolist:[{
-    //   pictures:[
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png'
-    //   ]
-    // }]
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(option) {
-    // Config.test = '1';
-    Config.debug = false;
     info = [];
     /**
      * 通过后台服务器获取数据
      */
     page = 0;
-    this._loadInfoList(page)
     this.setData({
       content: app.getLanuage(app.globalData.language),
-      end:false
+      end: false
     })
+    this._loadInfoList(page)
   },
 
   onShow: function() {
@@ -63,10 +54,10 @@ Page({
   _loadInfoList: function(page) {
     publish.getInfoList(page, (res) => {
       this.setData({
-        infoList: res.data.data
+        infoList: res.data
       });
       if (this.data.infoList===0){
-        page = page-1
+        page-=1
         this.setData({
           end:true
         })
@@ -98,20 +89,21 @@ Page({
    */
   imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
-    var pictures = e.currentTarget.dataset.pictures.pictures;
-    console.log(pictures)
-    wx.previewImage({
-      current: src,
-      urls: pictures,
-    })
+    // var pictures = e.currentTarget.dataset.pictures.pictures;
+    // wx.previewImage({
+    //   current: src,
+    //   urls: src,
+    // })
   },
   /**
    * 评论
    */
   clickComment: function(e) {
     var infoid = e.currentTarget.dataset.infoid;
+    var index = e.currentTarget.dataset.index;
     this.setData({
-      infoid:infoid
+      infoid:infoid,
+      index:index
     })
     if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
       this.data.commentTable[infoid] = true;
@@ -134,14 +126,14 @@ Page({
         pId: infoid,
         num:1
       };
-      console.log(addUp)
       publish.addUp(addUp, (res) => {
-        console.log(res)
-        if(res.data==1){
+        if(res===1){
         var index = e.currentTarget.dataset.index;
         this.data.infolist[index].favoritenum++;
-        this.onShow;
-          console.log(this.data.infolist[index])
+        var newinfolist = this.data.infolist
+        this.setData({
+          infolist: newinfolist
+        })
         }else{
           wx.showToast({
             title: '操作失败',
@@ -156,14 +148,14 @@ Page({
         pId: infoid,
         num:-1,
       }
-      console.log(deleteUp)
       publish.addUp(deleteUp, (res) => {
-        console.log(res)
-        if (res.data == 1) {
+        if (res===1) {
           var index = e.currentTarget.dataset.index;
           this.data.infolist[index].favoritenum--;
-          this.onShow;
-          console.log(this.data.infolist[index])
+          var newinfolist = this.data.infolist
+          this.setData({
+            infolist: newinfolist
+          })
         } else {
           wx.showToast({
             title: '操作失败',
@@ -183,22 +175,28 @@ Page({
    */
   add: function(e) {
     var infoid = this.data.infoid;
-    console.log(infoid)
     this.data.commentTable[infoid] = false;
     var newcommentTable = this.data.commentTable;
     this.setData({
       commentTable: newcommentTable
     })
     var comment = {
-      // nickName: app.globalData.userInfo.nickName,
-      nickName:'123',
+      nickName: app.globalData.userInfo.nickName,
       cContent: e.detail.value,
       pId: infoid,
     }
-    console.log(comment)
     publish.addComment(comment, (res) => {
-      if(res.data===1){
-
+      var index = this.data.index
+      var ans = {
+        nickName: comment.nickName,
+        cContent:comment.cContent,
+      }
+      if(res===1){
+        this.data.infolist[index].comments.push(ans)
+        var newinfolist = this.data.infolist
+        this.setData({
+          infolist: newinfolist
+        })
       }else{
         wx.showToast({
           title: '操作失败',
@@ -217,9 +215,6 @@ Page({
 
     page = 0;
     this._loadInfoList(page);
-    // this.setData({
-    //   infolist: this.data.infoList
-    // })
 
     // 隐藏导航栏加载框
     wx.hideNavigationBarLoading();

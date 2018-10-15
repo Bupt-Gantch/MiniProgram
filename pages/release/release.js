@@ -1,12 +1,15 @@
 // pages/release/release.js
 
-import { Config } from '../../utils/config.js';
+import {
+  Config
+} from '../../utils/config.js';
 var util = require('../../utils/util.js');
-import { Release } from 'release_model.js';
+import {
+  Release
+} from 'release_model.js';
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var release = new Release();
-
 var app = getApp();
 
 Page({
@@ -22,19 +25,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    Config.debug = false;
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
     this.setData({
       place: this.data.content.place
     })
-    //*addnews.getNewMessage(openid,(res) => {
-    // do something
-    //})*/
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
@@ -52,6 +51,16 @@ Page({
         that.setData({
           imageList: res.tempFilePaths
         })
+        console.log(that.data.imageList)
+        // var imagelist;
+        // for (var i = 0; that.data.imageList.length;i++){
+        //   imagelist+=that.data.imageList[i]
+        //   imagelist+=','
+        // }
+        // console.log(imagelist)
+        // that.setData({
+        //   imageString:imagelist
+        // })
       }
     })
   },
@@ -83,16 +92,18 @@ Page({
           }
         }
         release.addPlace(newplace, (res) => {
-        if(res.status==1){
-          var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
-          that.setData({
-            place: newplace
-          })
-        }else{
-          that.setData({
-            place: that.data.wrong
-          })
-        }
+          if (res.status == 1) {
+            var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
+            that.setData({
+              place: newplace,
+              lastplace: newplace
+            })
+          } else {
+            that.setData({
+              place: that.data.wrong,
+              lastplace:null
+            })
+          }
         })
       },
     })
@@ -102,21 +113,32 @@ Page({
    */
 
   formSubmit: function(e) {
+    console.log(app.globalData.userInfo)
     var formcontent = {
-        // openId:app.globalData.openid,
-      openId:'oS-qe4t1XMcdf0xJswIvBfIJUeTw',
-        nickName: app.globalData.userInfo.nickName,
-        pAvator: app.globalData.userInfo.avatarUrl,
-        pContent: e.detail.value.textarea,
-        image: this.data.imageList[0],
-        location: this.data.place,
+      openId: app.globalData.openid,
+      nickName: app.globalData.userInfo.nickName,
+      avatar: app.globalData.userInfo.avatarUrl,
+      content: e.detail.value.textarea,
+      image: this.data.imageList[0],
+      location: this.data.lastplace,
     }
-    console.log(formcontent)
-    release.addContent(formcontent,(res)=>{
-      console.log(res)
-        wx.navigateTo({
-          url: '/pages/publish/publish',
+    release.addContent(formcontent, (res) => {
+      if (res===1){
+        wx.showToast({
+          title: '发布成功',
+          duration: 3000,
         })
+        setTimeout(function () {
+          wx.reLaunch({
+            url: '../publish/publish',
+          })
+        }, 1000)
+      } else {
+        wx.showToast({
+          title: '发布失败',
+          icon:'none'
+        })
+      }
     })
   }
 })

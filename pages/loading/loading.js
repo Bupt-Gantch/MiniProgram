@@ -28,6 +28,33 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options){
+    if(!app.globalData.openid){
+    wx.login({
+      success: res => {
+        this.setData({
+          code: res.code
+        })
+        var param = {
+          data: {
+            appid: app.globalData.appid,
+            secret: app.globalData.secret,
+            js_code: res.code,
+            grant_type: 'authorization_code'
+          }
+        }
+        loading.getOpenid(param, (res) => {
+          app.globalData.openid = res.openid
+          this.setData({
+            openid: res.openid,
+          })
+        })
+      }
+    })
+    }else{
+      this.setData({
+        openid:app.globalData.openid
+      })
+    }
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
@@ -54,27 +81,6 @@ Page({
     // 将获取的用户信息赋值给全局 userInfo 变量
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo;
-      wx.login({
-        success: res => {
-          this.setData({
-            code: res.code
-          })
-          var param = {
-            data: {
-              appid: app.globalData.appid,
-              secret: app.globalData.secret,
-              js_code: res.code,
-              grant_type: 'authorization_code'
-            }
-          }
-          loading.getOpenid(param, (res) => {
-            app.globalData.openid = res.openid
-            this.setData({
-              openid: res.openid,
-            })
-          })
-        }
-      })
       wx.showLoading({
         title: this.data.content.loading,
       })
@@ -83,6 +89,7 @@ Page({
         loading.findOpenid(app.globalData.openid, (res) => {
           if (res.status === "success") {
             wx.showToast({
+              title:'登录成功',
               duration: 3000,
             })
             setTimeout(function () {

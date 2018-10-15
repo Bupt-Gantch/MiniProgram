@@ -1,31 +1,33 @@
 import { Base } from '../../utils/base.js';
+import { Config } from '../../utils/config.js'
 
 class Release extends Base {
   constructor() {
     super();
   }
 
-  addPlace(data, callback) {
-    var param = {
-      data: data.data,
+  addPlace(param, callback) {
+    var params = {
+      url: 'https://restapi.amap.com/v3/geocode/regeo?key=' + param.data.key + '&location=' + param.data.location + '&extensions=' + param.data.extensions + '&radius=' + param.data.radius,
+      data: param.data,
       method: 'POST',
       sCallback: function (res) {
         callback && callback(res);
       }
     };
-    this.req_location(param);
+    this.request_test(params);
   }
 
-  addContent(data,callback){
-    var param = {
-      url: 'addPost',
-      data:data,
-      // method:'POST',
+  addContent(param,callback){
+    var params = {
+      url: Config.restUrl+'addPost',
+      data:param,
+      method:'POST',
       sCallback:function(res){
         callback && callback(res);
       }
     }
-    this.request(param);
+    this.request_test(params);
   }
 }
 

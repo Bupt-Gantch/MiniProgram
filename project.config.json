@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 14,
 			"list": [
 				{
 					"id": -1,
@@ -113,7 +113,13 @@
 				{
 					"id": -1,
 					"name": "mypublish",
-					"pathName": "pages/mypublish/mypublish"
+					"pathName": "pages/mypublish/mypublish",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mynews",
+					"pathName": "pages/mynews/mynews"
 				}
 			]
 		}

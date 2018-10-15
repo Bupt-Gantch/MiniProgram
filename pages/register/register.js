@@ -72,13 +72,13 @@ Page({
             wx.showModal({
               title: '注册失败',
               content: '请重新注册',
-              success: function (res) {
-                if (res.confirm) {
-                  wx.navigateTo({
-                    url: '../register/register',
-                  })
-                }
-              }
+              // success: function (res) {
+              //   if (res.confirm) {
+              //     wx.navigateTo({
+              //       url: '../register/register',
+              //     })  
+              //   }
+              // }
             })
           }
       }, 1000)
