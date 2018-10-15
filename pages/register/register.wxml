@@ -1,7 +1,7 @@
 <!--pages/register/register.wxml-->
 <view class="register">
   <image class="logo" src="/imgs/icon/logo.jpg"></image>
-  <text>{{content.userreg}}</text>
+  <!-- <text>{{content.userreg}}</text> -->
   <form bindsubmit="register">
   <view class="usercontainer">
     <image src="/imgs/icon/email.png"></image>

@@ -43,18 +43,11 @@ Page({
     /**
      * 通过后台服务器获取数据
      */
-
-    // if (this.userInfoReadyCallback) {
-    //   this.userInfoReadyCallback(res)
-    // }
     page = 0;
     this._loadInfoList(page)
-    // info.push(this.data.infoList)
-    // this.setData({
-    //   infolist: info[0]
-    // })
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      content: app.getLanuage(app.globalData.language),
+      end:false
     })
   },
 
@@ -70,26 +63,21 @@ Page({
   _loadInfoList: function(page) {
     publish.getInfoList(page, (res) => {
       this.setData({
-        infoList: res.data
+        infoList: res.data.data
       });
-      // console.log(res.data)
-      if(res.data===-1){
+      if (this.data.infoList===0){
+        page = page-1
         this.setData({
           end:true
         })
+      }else{
+        for (var i = 0; i < this.data.infoList.length; i++)
+          info.push(this.data.infoList[i])
+        this.setData({
+          infolist: info
+        })
       }
-      for (var i = 0; i < this.data.infoList.length; i++)
-        info.push(this.data.infoList[i])
-      this.setData({
-        infolist: info
-      })
-      // console.log(this.data.infolist)
     })
-    // for (var i = 0; i < this.data.infoList.length; i++)
-    //   info.push(this.data.infoList[i])
-    // this.setData({
-    //   infolist: info
-    // })
   },
 
   /**
@@ -111,7 +99,6 @@ Page({
   imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
     var pictures = e.currentTarget.dataset.pictures.pictures;
-    var that = this
     console.log(pictures)
     wx.previewImage({
       current: src,
@@ -122,11 +109,14 @@ Page({
    * 评论
    */
   clickComment: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    if (this.data.commentTable[userid] === undefined || this.data.commentTable[userid] === false) {
-      this.data.commentTable[userid] = true;
+    var infoid = e.currentTarget.dataset.infoid;
+    this.setData({
+      infoid:infoid
+    })
+    if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
+      this.data.commentTable[infoid] = true;
     } else {
-      this.data.commentTable[userid] = false;
+      this.data.commentTable[infoid] = false;
     }
     var newcommentTable = this.data.commentTable;
     this.setData({
@@ -136,26 +126,51 @@ Page({
   /**
    * 点赞
    */
-  clickUp: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    if (this.data.statusTable[userid] === undefined || this.data.statusTable[userid] === false) {
-      this.data.statusTable[userid] = true;
+  clickUp: function(e){
+    var infoid = e.currentTarget.dataset.infoid;
+    if (this.data.statusTable[infoid] === undefined || this.data.statusTable[infoid] === false) {
+      this.data.statusTable[infoid] = true;
       var addUp = {
-        avatarUrl: app.globalData.userInfo.avatarUrl,
-        id: userid,
-        oppenid: app.globalData.oppenid,
+        pId: infoid,
+        num:1
       };
+      console.log(addUp)
       publish.addUp(addUp, (res) => {
-
+        console.log(res)
+        if(res.data==1){
+        var index = e.currentTarget.dataset.index;
+        this.data.infolist[index].favoritenum++;
+        this.onShow;
+          console.log(this.data.infolist[index])
+        }else{
+          wx.showToast({
+            title: '操作失败',
+            icon:'none',
+            duration: 1500,
+          })
+        }
       })
     } else {
-      this.data.statusTable[userid] = false;
+      this.data.statusTable[infoid] = false;
       var deleteUp = {
-        id: userid,
-        oppenid: app.globalData.userid,
+        pId: infoid,
+        num:-1,
       }
-      publish.deleteUp(deleteUp, (res) => {
-
+      console.log(deleteUp)
+      publish.addUp(deleteUp, (res) => {
+        console.log(res)
+        if (res.data == 1) {
+          var index = e.currentTarget.dataset.index;
+          this.data.infolist[index].favoritenum--;
+          this.onShow;
+          console.log(this.data.infolist[index])
+        } else {
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 1500,
+          })
+        }
       })
     }
     var newStatusTable = this.data.statusTable;
@@ -167,20 +182,30 @@ Page({
    * 发表评论
    */
   add: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    this.data.commentTable[userid] = false;
+    var infoid = this.data.infoid;
+    console.log(infoid)
+    this.data.commentTable[infoid] = false;
     var newcommentTable = this.data.commentTable;
     this.setData({
       commentTable: newcommentTable
     })
     var comment = {
-      nickname: app.globalData.userInfo.nickName,
-      detail: e.detail.value,
-      id: userid,
-      oppenid: '',
+      // nickName: app.globalData.userInfo.nickName,
+      nickName:'123',
+      cContent: e.detail.value,
+      pId: infoid,
     }
+    console.log(comment)
     publish.addComment(comment, (res) => {
+      if(res.data===1){
 
+      }else{
+        wx.showToast({
+          title: '操作失败',
+          icon: 'none',
+          duration: 1500,
+        })
+      }
     })
   },
 

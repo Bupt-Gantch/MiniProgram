@@ -18,7 +18,6 @@ class Base {
         params.method = 'GET';
       }
       wx.request({
-        // url: url,
         url: url,
         data: params.data,
         method: params.method,
@@ -27,14 +26,13 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
-          // console.log(res.data)
+          console.log(res.data)
           params.sCallback && params.sCallback(res);
         },
         fail: function(err) {
           console.log(err);
           params.fCallback && params.fCallback(err);
         }
-
       })
     } else {
       //后面是模拟数据
@@ -217,8 +215,8 @@ class Base {
         params.method = 'GET';
       }
       wx.request({
-        url: params.url,
-        data: params.data,
+        url: 'https://restapi.amap.com/v3/geocode/regeo?key=' + params.data.key + '&location=' + params.data.location + '&extensions=' + params.data.extensions + '&radius=' + params.data.radius,
+        // data: params.data,
         method: params.method,
         header: {
           'content-type': 'application/json',
@@ -229,10 +227,9 @@ class Base {
           params.sCallback && params.sCallback(res.data);
         },
         fail: function (err) {
-          console.log(err);
+          // console.log(err);
           params.fCallback && params.fCallback(err);
         }
-
       })
     }
 
@@ -249,6 +246,7 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success: function (res) {
+        // console.log(res)
         params.sCallback && params.sCallback(res.data);
       },
       fail: function (err) {
@@ -272,7 +270,7 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success: function (res) {
-        // console.log(res.data)
+        console.log(res.data)
         params.sCallback && params.sCallback(res.data);
       },
       fail: function (err) {

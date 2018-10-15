@@ -27,9 +27,6 @@ Page({
   onLoad: function(options) {
     // Config.test = '1';
     Config.debug = false;
-    this.setData({
-      content: app.getLanuage(app.globalData.language)
-    })
     // Config.debug = false;
     // oppenid = app.globalData.oppenid;
     // this._loadInfoList(oppenid);
@@ -38,6 +35,10 @@ Page({
       page: 0,
     }
     this._loadInfoList(data)
+    this.setData({
+      content: app.getLanuage(app.globalData.language),
+      end: false
+    })
   },
 
   onShow: function () {
@@ -52,19 +53,21 @@ Page({
   _loadInfoList: function(data) {
     mypublish.getMyPublish(data, (res) => {
       this.setData({
-        infoList: res.data
+        infoList: res.data.data
       });
       // console.log(this.data.infoList)
-      if (res.data === -1) {
+      if (this.data.infoList === 0) {
+        page = page - 1
         this.setData({
           end: true
         })
+      } else {
+        for (var i = 0; i < this.data.infoList.length; i++)
+          info.push(this.data.infoList[i])
+        this.setData({
+          infolist: info
+        })
       }
-      for (var i = 0; i < this.data.infoList.length; i++)
-        info.push(this.data.infoList[i])
-      this.setData({
-        infolist: info
-      })
     })
   },
   //删除信息
@@ -72,29 +75,34 @@ Page({
     // var id = e.currentTarget.dataset.userid;
     var that = this
     var params = {
-      pId: e.currentTarget.dataset.userid,
-      openId: 'test1',
+      pId: e.currentTarget.dataset.infoid,
     }
+    console.log(params)
     wx.showModal({
       title: this.data.content.del,
       content:this.data.content.delmes,
       success: function(res) {
         if (res.confirm) {
-          var index = e.currentTarget.dataset.index;
-          var infolist = that.data.infolist;
-          //移除列表中下标为index的项
-          infolist.splice(index, 1);
-          //更新列表的状态
-          that.setData({
-            infolist: infolist
-          });
           mypublish.deleteInformation(params, (res) => {
             if (res.data === 1) {
+              var index = e.currentTarget.dataset.index;
+              var infolist = that.data.infolist;
+              //移除列表中下标为index的项
+              infolist.splice(index, 1);
+              //更新列表的状态
+              that.setData({
+                infolist: infolist
+              });
               wx.showToast({
                 title: '成功',
                 icon: 'success',
                 duration: 2000
               })
+              if(infolist==null){
+                wx.reLaunch({
+                  url: '../my/my',
+                })
+              }
             }
           })
         }

@@ -6,6 +6,7 @@ class Publish extends Base{
   getInfoList(page, callback) {
     var param = {
       url: 'findAllPosts?page=' + page,
+      method:'POST',
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -15,8 +16,8 @@ class Publish extends Base{
 
   addComment(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url: 'addComment',
+      data:data,
       method:'POST',
       sCallback:function(data){
         callback&&callback(data);
@@ -27,23 +28,15 @@ class Publish extends Base{
 
   addUp(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url:'favorite',
+      data:data,
+      method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
+    console.log(param)
     this.request(param)
-  }
-
-  deleteUp(data, callback) {
-    var param = {
-      url: '',
-      data: data.data,
-      sCallback: function (data) {
-        callback && callback(data);
-      }
-    }
   }
 }
 

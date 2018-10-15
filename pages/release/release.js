@@ -75,19 +75,24 @@ Page({
       success: function(res) {
         var locationString = res.longitude + "," + res.latitude;
         var newplace = {
-          url: 'https://restapi.amap.com/v3/geocode/regeo',
           data: {
-            key: 'b2e307a6b1ddd403ff2da28dbde3578d',
+            key: 'e4cce9c2f43a3988c945a6f0a948a2f7',
             location: locationString,
             extensions: 'base',
             radius: '200',
           }
         }
         release.addPlace(newplace, (res) => {
+        if(res.status==1){
           var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
           that.setData({
-            place:newplace
+            place: newplace
           })
+        }else{
+          that.setData({
+            place: that.data.wrong
+          })
+        }
         })
       },
     })

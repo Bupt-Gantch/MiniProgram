@@ -7,7 +7,6 @@ class Release extends Base {
 
   addPlace(data, callback) {
     var param = {
-      url: data.url,
       data: data.data,
       method: 'POST',
       sCallback: function (res) {

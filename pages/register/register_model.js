@@ -8,14 +8,13 @@ class Register extends Base {
 
   register(data, callback) {
     var param = {
-      url:Config.account+data.url,
+      url:'createUser',
       data: data.data,
       method: 'POST',
       sCallback: function (res) {
         callback && callback(res);
       }
     };
-    console.log(param)
     this.req_account(param);
   }
 }

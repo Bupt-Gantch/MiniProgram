@@ -18,7 +18,7 @@
     </view>
     <view class='info-footer'>
       <view class='info-uc'>
-        <image class='info-delete' data-userid="{{item.pId}}" data-index="{{index}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
+        <image class='info-delete' data-infoid="{{item.pId}}" data-index="{{index}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
       </view>
     </view>
   </view>

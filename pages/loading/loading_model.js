@@ -15,7 +15,7 @@ class Loading extends Base {
     };
     this.req_openid(param)
   }
-
+//查询用户表，是否存在openid
   findOpenid(openid, callback) {
     var param = {
       url: 'userLogin',

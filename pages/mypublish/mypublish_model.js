@@ -7,6 +7,7 @@ class myPublish extends Base {
   getMyPublish(data, callback) {
     var param = {
       url: 'findAllPosts',
+      method:'POST',
       data:data,
       sCallback: function (data) {
         callback && callback(data);
@@ -18,6 +19,7 @@ class myPublish extends Base {
   deleteInformation(params,callback){
     var param = {
       url: 'deletePost',
+      method:'POST',
       data:params,
       sCallback: function (data) {
         callback && callback(data);

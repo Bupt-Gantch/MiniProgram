@@ -71,20 +71,18 @@ Page({
             app.globalData.openid = res.openid
             this.setData({
               openid: res.openid,
-              // content: app.getLanuage(app.globalData.language)
             })
           })
         }
       })
       wx.showLoading({
-        title: '登陆中',
+        title: this.data.content.loading,
       })
-      setTimeout(function () {
+      setTimeout(function (){
         wx.hideLoading()
         loading.findOpenid(app.globalData.openid, (res) => {
           if (res.status === "success") {
             wx.showToast({
-              title: '登陆成功',
               duration: 3000,
             })
             setTimeout(function () {
@@ -94,8 +92,8 @@ Page({
             }, 1000)
           } else {
             wx.showModal({
-              title: this.data.content.failed,
-              content: this.data.content.failedmess,
+              title: '登陆失败',
+              content: '未查询到相关用户信息,请先注册',
               success: function (res) {
                 if (res.confirm) {
                   wx.navigateTo({
