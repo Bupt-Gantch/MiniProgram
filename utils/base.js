@@ -204,6 +204,7 @@ class Base {
   }
 
   request_test(params) {
+    console.log(params.url)
       if (!params.method) {
         params.method = 'GET';
       }

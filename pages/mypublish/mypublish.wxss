@@ -107,11 +107,11 @@ page {
 .endbox{
   align-content: center;
   text-align: center;
-  color: gray
+  color: #ab956d
 }
 .line{
   height: 3rpx;
-  background-color:gray;
+  background-color:#ab956d;
   margin-bottom: 20rpx;
   margin-right: 10rpx;
   margin-left: 10rpx;

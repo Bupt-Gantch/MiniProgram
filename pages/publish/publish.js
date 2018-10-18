@@ -10,7 +10,7 @@ var english = require("../../utils/English.js")
 var publish = new Publish();
 var app = getApp();
 var page = 0;
-var info = []
+var info = [];
 
 Page({
 
@@ -43,9 +43,9 @@ Page({
   },
 
   onShow: function() {
-    this.setData({
-      content: app.getLanuage(app.globalData.language)
-    })
+      this.setData({
+        content: app.getLanuage(app.globalData.language),
+      })
   },
 
   /**
@@ -56,16 +56,13 @@ Page({
       this.setData({
         infoList: res.data
       });
-      if (this.data.infoList===0){
-        page-=1
-        this.setData({
-          end:true
-        })
-      }else{
-        for (var i = 0; i < this.data.infoList.length; i++)
+      if (this.data.infoList.length%9!=0||this.data.infoList===0){
+        page=page-1
+        for (var i = 0; i < this.data.infoList.length;i++)
           info.push(this.data.infoList[i])
         this.setData({
-          infolist: info
+          infolist: info,
+          end:true
         })
       }
     })
@@ -81,7 +78,10 @@ Page({
   },
   //搜索获取数据
   searchNews: function(e) {
-    this._loadInfoList(e.detail.value)
+    app.search = e.detail.value
+    wx.navigateTo({
+      url: '../search/search',
+    })
   },
 
   /**
@@ -209,7 +209,6 @@ Page({
 
   onPullDownRefresh: function() {
     info = [];
-    if (!this.data.end) {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
 
@@ -220,7 +219,6 @@ Page({
     wx.hideNavigationBarLoading();
     // 停止下拉动作
     wx.stopPullDownRefresh();
-    }
   },
 
   /**

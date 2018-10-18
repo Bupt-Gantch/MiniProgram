@@ -1,7 +1,7 @@
 // pages/register/register.js
 import { Config } from '../../utils/config.js';
-var chinese = require("../../utils/Chinese.js")
-var english = require("../../utils/English.js")
+var chinese = require("../../utils/Chinese.js");
+var english = require("../../utils/English.js");
 import { Register } from 'register_model.js';
 var register = new Register();
 const app = getApp()
@@ -30,6 +30,22 @@ Page({
   onShow: function () {
     this.setData({
       content: app.getLanuage(app.globalData.language)
+    })
+  },
+
+  getEmail:function(e){
+    let that = this
+    let email = e.detail.value // 获取输入框的数据
+    that.setData({
+      email
+    })
+  },
+
+  getPhone:function(e){
+    let that = this
+    let phone = e.detail.value // 获取输入框的数据
+    that.setData({
+      phone
     })
   },
 

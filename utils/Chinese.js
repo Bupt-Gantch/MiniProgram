@@ -3,6 +3,7 @@ var Chinese = {
   mypublish:"我发布的",
   mynews:"消息列表",
   feedback:"意见反馈",
+  scan:"添加设备",
   myfeedback:"如果您有任何建议或想法，请联系我：）",
   search:"请输入搜索内容",
   content:"您要发布的内容...",

@@ -84,6 +84,39 @@ Page({
       url: '../contact/contact',
     });
   },
+
+  scan:function(){
+    wx.scanCode({
+      success:function(res){
+        console.log(res)
+        if(res.result!=null){
+          param:{
+            customerid:''
+          }
+          // my.addDevice(param,(res)=>{
+            // if (res.data === 1) {
+            if (1) {
+              wx.showToast({
+                title: '添加成功',
+                duration: 3000,
+              })
+            } else {
+              wx.showModal({
+                title: '添加失败',
+                content: '该设备已被其他用户添加，请联系管理员。Phone:138XXXXXXX',
+              })
+            }
+          // })
+        }else{
+          wx.showToast({
+            title: '无效的二维码',
+            icon:'none',
+            duration: 2000,
+          })
+        }
+      }
+    })
+  },
   
   changeLanuage: function () {
     var version = app.globalData.language;
@@ -96,5 +129,4 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
   }
-
 })

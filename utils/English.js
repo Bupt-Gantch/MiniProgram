@@ -3,6 +3,7 @@ var English = {
   mypublish: "Album",
   mynews: "Friends' Comments",
   feedback: "Feedback",
+  scan:"scan",
   myfeedback: "If you have any suggessions,please contact me",
   search: "Search...",
   content: "What do you want to say...",

@@ -11,7 +11,6 @@ var english = require("../../utils/English.js")
 const app = getApp()
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -23,7 +22,6 @@ Page({
       '/imgs/swiper/swiper-03.jpg'
     ],
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -44,9 +42,21 @@ Page({
         }
         loading.getOpenid(param, (res) => {
           app.globalData.openid = res.openid
-          this.setData({
-            openid: res.openid,
-          })
+            this.setData({
+              openid: res.openid,
+            })
+          if (res.errcode!=40029){
+            app.globalData.openid = res.openid
+            this.setData({
+              openid: res.openid,
+            })
+          }else{
+            wx.showToast({
+              title: '请检查网络设置',
+              ico:'none',
+              duration: 2000,
+            })
+          }
         })
       }
     })
@@ -73,7 +83,6 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
   },
-
   /**
   * 获取用户信息接口后的处理逻辑
   */
@@ -84,13 +93,20 @@ Page({
       wx.showLoading({
         title: this.data.content.loading,
       })
-      setTimeout(function (){
+      setTimeout(function(){
         wx.hideLoading()
+        if (app.globalData.openid == null) {
+          wx.showToast({
+            title: '请检查网络设置',
+            icon: 'none',
+            duration: 2000,
+          })
+        }else{
         loading.findOpenid(app.globalData.openid, (res) => {
           if (res.status === "success") {
             wx.showToast({
               title:'登录成功',
-              duration: 3000,
+              duration: 2000,
             })
             setTimeout(function () {
               wx.reLaunch({
@@ -111,6 +127,7 @@ Page({
             })
           }
         })
+        }
       }, 1000)
     }
   },

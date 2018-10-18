@@ -51,16 +51,6 @@ Page({
         that.setData({
           imageList: res.tempFilePaths
         })
-        console.log(that.data.imageList)
-        // var imagelist;
-        // for (var i = 0; that.data.imageList.length;i++){
-        //   imagelist+=that.data.imageList[i]
-        //   imagelist+=','
-        // }
-        // console.log(imagelist)
-        // that.setData({
-        //   imageString:imagelist
-        // })
       }
     })
   },
@@ -101,7 +91,7 @@ Page({
           } else {
             that.setData({
               place: that.data.wrong,
-              lastplace:null
+              lastplace: null
             })
           }
         })
@@ -113,31 +103,36 @@ Page({
    */
 
   formSubmit: function(e) {
-    console.log(app.globalData.userInfo)
-    var formcontent = {
-      openId: app.globalData.openid,
-      nickName: app.globalData.userInfo.nickName,
-      avatar: app.globalData.userInfo.avatarUrl,
-      content: e.detail.value.textarea,
-      image: this.data.imageList[0],
-      location: this.data.lastplace,
-    }
-    release.addContent(formcontent, (res) => {
-      if (res===1){
-        wx.showToast({
-          title: '发布成功',
-          duration: 3000,
-        })
-        setTimeout(function () {
-          wx.reLaunch({
-            url: '../publish/publish',
-          })
-        }, 1000)
-      } else {
-        wx.showToast({
-          title: '发布失败',
-          icon:'none'
-        })
+    wx.uploadFile({
+      url: Config.restUrl + 'addPost',
+      filePath: this.data.imageList[0],
+      name: 'image',
+      formData: {
+        openId: app.globalData.openid,
+        nickName: app.globalData.userInfo.nickName,
+        avatar: app.globalData.userInfo.avatarUrl,
+        content: e.detail.value.textarea,
+        location: this.data.lastplace,
+      },
+      success(res) {
+        console.log(res.data)
+          if (res.data == 1) {
+            console.log(123)
+            wx.showToast({
+              title: '发布成功',
+              duration: 3000,
+            })
+            setTimeout(function () {
+              wx.reLaunch({
+                url: '../publish/publish',
+              })
+            }, 1000)
+          } else {
+            wx.showToast({
+              title: '发布失败',
+              icon: 'none'
+            })
+          }
       }
     })
   }

@@ -25,6 +25,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    info = []
     var data = {
       openId: app.globalData.oppenid,
       page: 0,
@@ -50,16 +51,13 @@ Page({
       this.setData({
         infoList: res.data
       });
-      if (this.data.infoList === 0) {
+      if (this.data.infoList.length % 9 != 0 || this.data.infoList === 0) {
         page = page - 1
-        this.setData({
-          end: true
-        })
-      } else {
         for (var i = 0; i < this.data.infoList.length; i++)
           info.push(this.data.infoList[i])
         this.setData({
-          infolist: info
+          infolist: info,
+          end: true
         })
       }
     })
