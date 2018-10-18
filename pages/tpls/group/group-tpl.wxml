@@ -1,0 +1,33 @@
+<!-- group模板和category复用一套样式 -->
+
+<template name="group">
+  <view class="category-detail-box">   
+
+    <view class="category-title">
+      <text>全部{{bannerTitle}}</text>
+    </view>
+
+    <view>
+      <image class="circle-float" src='/imgs/icon/insert.png' bindtap='onAddGroupTap'></image>
+    </view>
+
+
+    <scroll-view class="category-main" scroll-y>
+      <view class='category-main-view'>
+        <block wx:for="{{allGroupArr}}" wx:key="{{item.id}}">
+          <!-- 下面存放单个设备的div  -->
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-groupid="{{item.id}}" data-groupname="{{item.groupName}}" bindtap="onGroupsItemTap" bindlongpress="onGroupsLongPress">
+           
+            <view class='group-image'>
+              <image src='{{imgUrl["group"]}}' mode="aspectFit"></image>
+            </view>
+            
+            <view>{{item.groupName}}</view>
+            
+          </view>
+          <!-- end -->
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</template>

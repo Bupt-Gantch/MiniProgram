@@ -10,7 +10,9 @@
     "pages/publish/publish",
     "pages/mypublish/mypublish",
     "pages/mynews/mynews",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/scene/scene",
+    "pages/group/group"
   ],
   "window": {
     "backgroundTextStyle": "light",

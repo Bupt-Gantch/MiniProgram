@@ -13,7 +13,7 @@
       <view class='category-main-view'>
         <block wx:for="{{categoryProducts}}" wx:key="{{item.id}}">
           <!-- 下面存放单个设备的div  -->
-          <view class="category-goods-items {{index%3==1?'middle':''}}" data-deviceid="{{item.id}}" data-type="{{item.deviceType}}" bindtap="onDevicesItemTap">
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-deviceid="{{item.id}}" data-type="{{item.deviceType}}" bindtap="onDevicesItemTap" bindlongpress="onDeviceLongPress">
            
             <view class='image_switch'>
               <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}" >

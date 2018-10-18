@@ -1,4 +1,5 @@
 @import "../tpls/category/category-tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
 
 
 
@@ -15,6 +16,9 @@
     flex: 0 1 150rpx;
     border-right:1rpx solid #D8D8D8;
 }
+.group-btn{
+  margin-top: 20px;
+}
 .menu-item{
     left: 0;
     height: 50rpx;
@@ -29,6 +33,21 @@
     color: #AB956D;
     border-left-color:#AB956D;
 }
+
+.separate{
+  left: 0;
+  height: 20rpx;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  font-size:28rpx;
+  border-bottom: 6rpx solid #AB956D;
+  color: #AB956D;
+}
+
+/*
+ *left above
+ */
 
 .right-box{
     width: 80%;
@@ -55,7 +74,33 @@
 .tanslate6{
     transform:translate(0,-600vh);
 }
+
 .foods-type-box{
     width: 100%;
     height: 100vh;
+}
+.group-picker {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.picker-header .btn{
+  display: flex;
+}
+.group-picker picker-view{
+  width: 100%;
+  height: 80%;
+  text-align: center;
+}
+.picker-indicator{
+  height: 50px;
+}
+.picker-mask{
+  width: 100%;
+  height: 100%;
+  
 }

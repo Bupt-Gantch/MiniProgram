@@ -51,6 +51,10 @@ Config.deviceImgUrl = {
   //...以此类推
 };
 
+Config.otherImg = {
+  'group': '../../imgs/test/group.png'
+};
+
 
 //debug
 Config.debug = true;

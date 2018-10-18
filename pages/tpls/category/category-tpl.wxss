@@ -1,3 +1,4 @@
+
 .category-detail-box{
     overflow: hidden;
     padding: 30rpx 20rpx 0rpx;
@@ -103,4 +104,22 @@
   border-radius:50%; 
   background-color: gray;
   margin: 5rpx;
+}
+
+
+/*
+ * 针对group的样式
+ */
+.category-goods-items .group-image image{
+    height: 150rpx;
+    width: 150rpx;
+    border-radius: 0;
+}
+.circle-float {
+  position: fixed;
+  display: flex;
+  top: 40rpx;
+  right: 15rpx;
+  width: 89rpx;
+  height: 89rpx;
 }

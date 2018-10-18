@@ -28,7 +28,14 @@ class Base {
         },
         success: function(res) {
           // console.log(res.data)
-          params.sCallback && params.sCallback(res);
+          var code = res.statusCode.toString();
+          var startChar = code.charAt(0);
+          
+          if( startChar == '2'){
+            params.sCallback && params.sCallback(res);
+          }else{
+            params.fCallback && params.fCallback(res);
+          }
         },
         fail: function(err) {
           console.log(err);
@@ -48,6 +55,7 @@ class Base {
       var res = Mock.mock({
         'error_code': '',
         'error_msg': '',
+        'statusCode':200,
         'data|30': [{
           'id|+1': 1,
           'title': '@ctitle(3,8)',
@@ -107,13 +115,16 @@ class Base {
         var res = Mock.mock({
           'error_code': '',
           'error_msg': '',
-          'data': [{
+          'statusCode': 200,
+          'data|25': [{
             'id|+1': 1,
             'title': '@ctitle(3,8)',
             'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'], //test
             'marketing_start': '@datetime()',
             'marketing_stop': '@now()',
-            // 'status':true,
+            'groupName': function () {
+              return Random.string(6)
+            },
             'online|1': true,
             'deviceId': function() {
               return Random.string(6)
@@ -176,10 +187,6 @@ class Base {
           params.sCallback && params.sCallback(res.data);
         },
         fail: function(err) {
-          params.fCallback && params.fCallback();
-          params.sCallback && params.sCallback(res);
-        },
-        fail: function(err) {
           params.fCallback && params.fCallback(err);
           console.log(err);
         }
@@ -198,6 +205,7 @@ class Base {
       var res = Mock.mock({
         'error_code': '',
         'error_msg': '',
+        'statusCode': 200,
         'data|1': [{
           'id|+1': 1,
           'title': '@ctitle(3,8)',
@@ -292,7 +300,8 @@ class Base {
     var socketTask = wx.connectSocket({
       url: url,
       success:function(res){
-        params.sConnectCb && params.sConnectCb(res);
+        //params.sConnectCb && params.sConnectCb(res);
+        console.log('connect success?');
       },
       fail:function(err){
         params.fConnectCb && params.fConnectCb(err);
@@ -301,6 +310,7 @@ class Base {
 
     wx.onSocketOpen(function(res){
       console.log('Connected！');
+      params.sConnectCb && params.sConnectCb(res);
       sendSocketMessage('{"deviceId":"' + deviceId + '"}');
     });
 
@@ -310,6 +320,7 @@ class Base {
 
     wx.onSocketError(function(err){
       console.log("WebSocket连接打开失败，请检查！"+err.message);
+      params.fConnectCb && params.fConnectCb(err);
     });
 
     wx.onSocketMessage(function(data){

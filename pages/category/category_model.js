@@ -162,7 +162,47 @@ class Category extends Base{
 
   /**=================END======================= */
 
-  
+  /**
+   * =================group=====================
+   */
+
+  loadAllGroup(customerId,callback){
+    var param = {
+      url: 'deviceaccess/group/customer/'+customerId,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  createGroup(groupName,callback) {
+    var param = {
+      url : 'deviceaccess/group',
+      type:'POST',
+      data:{
+        name: groupName,
+        tenantId: 2
+      },
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+
+    this.request_post(param);
+  }
+
+  deleteGroup(groupId,callback) {
+    var param = {
+      url: 'deviceaccess/group',
+      type: 'DELETE',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+
+    this.request(param);
+  }
 
 }
 

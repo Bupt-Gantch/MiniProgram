@@ -5,6 +5,7 @@ import {Category} from 'category_model.js';
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var category = new Category();
+const app = getApp();
 
 Page({
 
@@ -12,14 +13,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-    transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5','tanslate6'],
+    transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5', 'tanslate6'],
     switchOnImg: Config.switchOnUrl,
     categoryName: Config.categoryName,
     categoryType: Config.categoryType,
     categoryTypeArray: Config.categoryTypeArray,
     bannerImageUrl: Config.bannerImageUrl,
     imgUrl: Config.deviceImgUrl,
+    groupSceneImg: Config.otherImg,
     statusTable: {},
+
+    sceneGroup: ['分组','场景'],
+    showModal: false,
+    content: {
+      title: "创建设备组",
+      placeholder: "请输入设备组名"
+    },
+    groupName: '',
+    hiddenPicker: true,
+    pickerValueArr:[0],
+    pickeredGroup: {},
 
     requestId: 1000000   //请求id100w 递减
     
@@ -30,16 +43,17 @@ Page({
    */
   onLoad: function (options) {
     Config.test = '2';
-    var index = -1;   //从tab栏跳转过来
-    var id = Number(options.index)+Number(2);    
+    var index = 0;   //从tab栏跳转过来 
     var name = this.data.categoryName[0]; //从tab栏跳转过来
     
     this.setData({
       currentTabsIndex:index,
+      currentBottomIndex: -1
 
     });
     this._loadBaannerTitle(name);
-    this._loadCateDevices(id,index);
+    this._loadCateDevices(index);
+    this._loadAllGroup();
   },
 
   /**
@@ -59,24 +73,20 @@ Page({
 
   onTabCategory: function(event){
     var index = Number(category.getDataSet(event,'index'));  //number化
-    var id = Number(index);    //此ID为临时ID，要根据真实DB改
     var name = category.getDataSet(event, 'name');
-    var url = this.data.categoryBannerUrl;
     this.setData({
-      currentTabsIndex: index 
+      currentTabsIndex: index,
+      currentBottomIndex: -1 
     });
     this._loadBaannerTitle(name);   //加载本地banner和标题
-    this._loadCateDevices(id,index);  //点击时获取数据
-
-
+    this._loadCateDevices(index);  //点击时获取数据
 
   },
 
-
   //load所有设备并分类
-  _loadCateDevices: function(id,index){
+  _loadCateDevices: function(index){
     index = Number(index);
-    if(index === -1){   //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
+    if(index === 0){   //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
       category.getAllDevices((data) => {
         
         this.setData({
@@ -132,9 +142,51 @@ Page({
       });
     }
   },
+  /**
+   * 长按设备item
+   * 添加设备到分组
+   */
+  onDeviceLongPress: function() {
+    if (this.data.allGroupArr.length === 0){
+      wx.showToast({
+        title: '您还没有任何设备分组',
+        icon:'none'
+      });
+    }else{
+      this.setData({
+        hiddenPicker: false,
+        pickeredGroup: this.data.allGroupArr[0]
+      })
+    }
+  },
+
+  onPickerChange: function(event) {
+    var index = event.detail.value[0];
+    console.log(this.data.allGroupArr[index]);
+    this.setData({
+      pickeredGroup: this.data.allGroupArr[index]
+    });
+  },
+
+  onPickerConfirm: function() {
+    console.log(this.data.pickeredGroup);
+    this.data.pickeredGroup = {};
+    this._hideGroupPicker();
+  },
+
+  onPickerCancel: function() {
+    this.data.pickeredGroup = {};
+    this._hideGroupPicker();
+  },
+
+  _hideGroupPicker: function(){
+    this.setData({
+      hiddenPicker: true
+    });
+  },
 
   onPullDownRefresh: function () {
-    wx.stopPullDownRefresh()();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -168,8 +220,8 @@ Page({
     };
 
     category.turnSwitch(data,(res) =>{
-      var statusCode = res.statusCode;
-      if(statusCode === 200 && res.data.indexOf("device") ===-1){   //状态码为200则应用成功
+      var statusCode = res.statusCode.toString();
+      if(statusCode.charAt(0) == '2' && res.data.indexOf("device") ===-1){   //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',
           icon: 'success',
@@ -198,6 +250,123 @@ Page({
 
     this.data.requestId--;
 
+  },
+  /**
+   * scene & group
+   */
+
+  onBottomTab: function (event) {
+    var index = Number(category.getDataSet(event, 'index'));
+    var name = category.getDataSet(event, 'name');
+    this.setData({
+      currentBottomIndex: index,
+      currentTabsIndex: -2 // 保留字-2
+    });
+    this._loadBaannerTitle(name);   //加载本地banner和标题
+    // if(index === 0){
+    //   this._loadAllGroup();  //点击时获取数据
+    // }
+  },
+
+  _loadAllGroup: function(){
+    var customerId = app.globalData.customerId;
+    category.loadAllGroup(customerId,(data)=>{
+      this.setData({
+        allGroupArr:data.data
+      })
+    })
+  },
+
+  _createGroup: function(groupName){
+    category.createGroup(groupName,(res) => {
+        wx.showToast({
+          title: '设备组创建成功',
+        });
+        this._loadAllGroup();
+      
+    })
+  },
+
+  _deleteGroup: function(groupId) {
+    category.deleteGroup(groupId,(res) => {
+        wx.showToast({
+          title: '设备组删除成功',
+        });
+        this._loadAllGroup();
+      
+    })
+  },
+
+  onGroupsItemTap: function(event) {
+    var groupid = category.getDataSet(event, 'groupid');
+    var groupName = category.getDataSet(event, 'groupname');
+    wx.navigateTo({
+      url: '../group/group?groupid='+groupid+'&groupName='+groupName 
+    });
+  },
+
+  onGroupsLongPress: function(event) {
+    var _this = this;
+    var groupid = category.getDataSet(event, 'groupid');
+    wx.showModal({
+      title: '删除设备分组',
+      content: '您确定要删除该设备分组吗？',
+      success: function(res){
+        if(res.confirm){
+          _this._deleteGroup(groupid);
+        }
+      }
+    });
+  },
+
+  /**
+   * 弹窗添加分组方法
+   */
+  onAddGroupTap: function(event){
+    this.setData({
+      showModal: true,
+      groupName: ''
+    })
+  },
+  /**
+   * 弹出框蒙层截断touchmove事件
+   */
+  preventTouchMove: function () {
+  },
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function () {
+    this.hideModal();
+  },
+  /**
+   * 对话框确认按钮点击事件
+   */
+  onConfirm: function () {
+    var submitGroupName = this.data.groupName.trim();
+    if (submitGroupName === ""){
+      wx.showToast({
+        title: '设备组名不能为空',
+        icon: 'none'
+      })
+    }else{
+      this.hideModal();
+      this._createGroup(submitGroupName);
+    }
+    
+  },
+  inputChange: function(event){
+    var inputValue = event.detail.value;
+    this.data.groupName = inputValue;
   }
+  
 
 })
