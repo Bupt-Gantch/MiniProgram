@@ -14,13 +14,22 @@
   position:relative;
   margin-top:80rpx;
 }
-.usercontainer image{
+.icon{
   position:absolute;
   width:40rpx;
   height:40rpx;
   left:10rpx;
   top:50%;
   margin-top:-20rpx;
+}
+.emailinfo{
+  position:absolute;
+  top:50%;
+  margin-top:-20rpx;
+  /* margin-top:-35rpx; */
+  right:0rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 .logo{
   width:200rpx;

@@ -3,6 +3,7 @@ var English = {
   mypublish: "Album",
   mynews: "Friends' Comments",
   feedback: "Feedback",
+  scan:"scan",
   myfeedback: "If you have any suggessions,please contact me",
   search: "Search...",
   content: "What do you want to say...",
@@ -30,7 +31,9 @@ var English = {
   failed: 'Login failure',
   failedmess: "We did't find your informaton,please sign up firstly.",
   del: 'Delete',
-  delmes: 'Are you sure you want to do this?'
+  delmes: 'Are you sure you want to do this?',
+  loading: 'Loading',
+  wrong: "Can't get your location"
 }
 
 module.exports = {

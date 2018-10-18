@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 14,
 			"list": [
 				{
 					"id": -1,
@@ -115,6 +115,11 @@
 					"name": "分组&场景",
 					"pathName": "pages/scene/scene",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mynews",
+					"pathName": "pages/mynews/mynews"
 				}
 			]
 		}

@@ -18,7 +18,6 @@ class Base {
         params.method = 'GET';
       }
       wx.request({
-        // url: url,
         url: url,
         data: params.data,
         method: params.method,
@@ -41,7 +40,6 @@ class Base {
           console.log(err);
           params.fCallback && params.fCallback(err);
         }
-
       })
     } else {
       //后面是模拟数据
@@ -158,13 +156,6 @@ class Base {
           }]
         })
       }
-      // 输出结果
-      // console.log(res);
-
-
-
-      // 输出结果
-      //console.log(res);
       params.sCallback && params.sCallback(res);
     }
   }
@@ -220,12 +211,13 @@ class Base {
     }
   }
 
-  req_location(params) {
+  request_test(params) {
+    console.log(params.url)
       if (!params.method) {
         params.method = 'GET';
       }
       wx.request({
-        url: params.url,
+        url:params.url,
         data: params.data,
         method: params.method,
         header: {
@@ -233,63 +225,15 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function (res) {
-          // console.log(res.data)
+          console.log(res.data)
           params.sCallback && params.sCallback(res.data);
         },
         fail: function (err) {
           console.log(err);
           params.fCallback && params.fCallback(err);
         }
-
       })
     }
-
-  req_openid(params) {
-    if (!params.method) {
-      params.method = 'GET';
-    }
-    wx.request({
-      url: Config.openid,
-      data: params.data,
-      method: params.method,
-      header: {
-        'content-type': 'application/json',
-        'token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        params.sCallback && params.sCallback(res.data);
-      },
-      fail: function (err) {
-        console.log(err);
-        params.fCallback && params.fCallback(err);
-      }
-
-    })
-  }
-
-  req_account(params) {
-    if (!params.method) {
-      params.method = 'GET';
-    }
-    wx.request({
-      url: Config.account+params.url,
-      data: params.data,
-      method: params.method,
-      header: {
-        'content-type': 'application/json',
-        'token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        // console.log(res.data)
-        params.sCallback && params.sCallback(res.data);
-      },
-      fail: function (err) {
-        console.log(err);
-        params.fCallback && params.fCallback(err);
-      }
-    })
-  }
-
 
   /** =========== websocket========= */
 

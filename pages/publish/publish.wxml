@@ -1,4 +1,5 @@
 <!--pages/publish/publish.wxml-->
+<wxs src="../../utils/common.wxs" module="util"/>
 <view>
   <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
     <block wx:for="{{imgUrls}}">
@@ -19,7 +20,6 @@
   <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
     <view class='items-list' wx:for="{{infolist}}" wx:for-index="index" data-index="{{index}}">
       <view class='info-user'>
-        <!-- <image src='/imgs/icon/one.png' class='info-pic'></image> -->
         <image src='{{item.pAvatar}}' class='info-pic'></image>
         <view class='info-nati'>
           <view class='info-name'>{{item.nickName}}</view>
@@ -31,22 +31,20 @@
         <view>
           <text class='info-detail'>{{item.pContent}}</text>
         </view>
-        <view>1231231231</view>
         <view class='div'>
           <!-- <view class="info-pictures" wx:for="{{item.pictures}}" wx:for-item="img">
           <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode='widthFix'></image> -->
-          <image src='/imgs/icon/1.png' style='width:32%' mode='widthFix'></image>
+<image wx:if='{{item.image}}' src="{{item.image}}" style='width:32%' mode='widthFix' data-src='{{item.image}}' bindtap='imageClick'></image>
+<!-- <image src='/imgs/icon/bg.png' style='width:32%' mode='widthFix' bindtap='imageClick'></image> -->
           <!-- </view> -->
-
-
         </view>
-        <view class='info-place'>{{item.location}}</view>
+        <view wx:if='{{item.location}}' class='info-place'>{{item.location}}</view>
       </view>
       <view class='info-footer'>
         <view class='info-uc'>
-          <image wx:if="{{statusTable[item.pId]}}" src="/imgs/icon/up@success.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-userid="{{item.pId}}"></image>
-          <image wx:else src="/imgs/icon/up.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-userid="{{item.pId}}"></image>
-          <image src='/imgs/icon/comment.png' class='info-comment' bindtap='clickComment' data-userid="{{item.pId}}"></image>
+          <image wx:if="{{statusTable[item.pId]}}" src="/imgs/icon/up@success.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-infoid="{{item.pId}}"></image>
+          <image wx:else src="/imgs/icon/up.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-infoid="{{item.pId}}"></image>
+          <image src='/imgs/icon/comment.png' class='info-comment' bindtap='clickComment' data-infoid="{{item.pId}}" data-index="{{index}}"></image>
         </view>
       </view>
 
@@ -62,8 +60,8 @@
       </view>
 
       <view class='comments' wx:for='{{item.comments}}'>
-        <text class='comment-name'>{{item.name}}</text>
-        <text class='comment-content'>:{{item.comments}}</text>
+        <text class='comment-name'>{{item.nickName}}</text>
+        <text class='comment-content'>: {{item.cContent}}</text>
       </view>
 
       <view class='comment-box'>
@@ -72,7 +70,7 @@
     </view>
   </scroll-view>
   <view class="endbox" wx:if="{{end}}">
-    <text>end</text>
+    <text>End</text>
     <view class='line'></view>
   </view>
   <view>

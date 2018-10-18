@@ -3,6 +3,7 @@ var Chinese = {
   mypublish:"我发布的",
   mynews:"消息列表",
   feedback:"意见反馈",
+  scan:"添加设备",
   myfeedback:"如果您有任何建议或想法，请联系我：）",
   search:"请输入搜索内容",
   content:"您要发布的内容...",
@@ -27,10 +28,13 @@ var Chinese = {
   email:'请输入邮箱',
   phone:'请输入电话',
   userreg:'用户注册',
-  failed:'登陆失败',
-  failedmess:"未找到相关信息，请您先注册",
+  failed:'登录失败',
+  failedmess:"未查询到相关信息，请您先注册",
   del:'删除',
-  delmes: '确定要删除该条信息吗？'
+  delmes: '确定要删除该条信息吗？',
+  loading:'登录中',
+  wrong:'获取失败'
+
 }
 
 module.exports = {

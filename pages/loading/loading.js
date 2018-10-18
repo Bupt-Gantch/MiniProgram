@@ -11,7 +11,6 @@ var english = require("../../utils/English.js")
 const app = getApp()
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -23,11 +22,49 @@ Page({
       '/imgs/swiper/swiper-03.jpg'
     ],
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options){
+    if(!app.globalData.openid){
+    wx.login({
+      success: res => {
+        this.setData({
+          code: res.code
+        })
+        var param = {
+          data: {
+            appid: app.globalData.appid,
+            secret: app.globalData.secret,
+            js_code: res.code,
+            grant_type: 'authorization_code'
+          }
+        }
+        loading.getOpenid(param, (res) => {
+          app.globalData.openid = res.openid
+            this.setData({
+              openid: res.openid,
+            })
+          if (res.errcode!=40029){
+            app.globalData.openid = res.openid
+            this.setData({
+              openid: res.openid,
+            })
+          }else{
+            wx.showToast({
+              title: '请检查网络设置',
+              ico:'none',
+              duration: 2000,
+            })
+          }
+        })
+      }
+    })
+    }else{
+      this.setData({
+        openid:app.globalData.openid
+      })
+    }
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
@@ -46,7 +83,6 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
   },
-
   /**
   * 获取用户信息接口后的处理逻辑
   */
@@ -54,38 +90,23 @@ Page({
     // 将获取的用户信息赋值给全局 userInfo 变量
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo;
-      wx.login({
-        success: res => {
-          this.setData({
-            code: res.code
-          })
-          var param = {
-            data: {
-              appid: app.globalData.appid,
-              secret: app.globalData.secret,
-              js_code: res.code,
-              grant_type: 'authorization_code'
-            }
-          }
-          loading.getOpenid(param, (res) => {
-            app.globalData.openid = res.openid
-            this.setData({
-              openid: res.openid,
-              // content: app.getLanuage(app.globalData.language)
-            })
-          })
-        }
-      })
       wx.showLoading({
-        title: '登陆中',
+        title: this.data.content.loading,
       })
-      setTimeout(function () {
+      setTimeout(function(){
         wx.hideLoading()
+        if (app.globalData.openid == null) {
+          wx.showToast({
+            title: '请检查网络设置',
+            icon: 'none',
+            duration: 2000,
+          })
+        }else{
         loading.findOpenid(app.globalData.openid, (res) => {
           if (res.status === "success") {
             wx.showToast({
-              title: '登陆成功',
-              duration: 3000,
+              title:'登录成功',
+              duration: 2000,
             })
             setTimeout(function () {
               wx.reLaunch({
@@ -94,8 +115,8 @@ Page({
             }, 1000)
           } else {
             wx.showModal({
-              title: this.data.content.failed,
-              content: this.data.content.failedmess,
+              title: '登陆失败',
+              content: '未查询到相关用户信息,请先注册',
               success: function (res) {
                 if (res.confirm) {
                   wx.navigateTo({
@@ -106,6 +127,7 @@ Page({
             })
           }
         })
+        }
       }, 1000)
     }
   },

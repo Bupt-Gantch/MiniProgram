@@ -1,17 +1,32 @@
 import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js'
 class myNews extends Base {
   constructor() {
     super()
   }
 
-  getMyNews(openid, callback) {
-    var param = {
-      url: '?openid=' + openid,
+  getNews(param, callback) {
+    var params = {
+      url: Config.restUrl + 'findAllPosts',
+      method: 'POST',
+      data: param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param)
+    this.request_test(params)
+  }
+
+  deleteInformation(param, callback) {
+    var params = {
+      url: Config.restUrl + 'deletePost',
+      method: 'POST',
+      data: param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request_test(params);
   }
 }
 

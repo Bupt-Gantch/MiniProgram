@@ -1,49 +1,45 @@
-import {Base} from '../../utils/base.js'
+import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js'
 class Publish extends Base{
   constructor(){
     super()
   }
   getInfoList(page, callback) {
     var param = {
-      url: 'findAllPosts?page=' + page,
+      url: Config.restUrl+'findAllPosts',
+      data:{
+        page:page,
+      },
+      method:'POST',
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request_test(param);
   }
 
   addComment(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url: Config.restUrl+'addComment',
+      data:data,
       method:'POST',
       sCallback:function(data){
         callback&&callback(data);
       }
     };
-    this.request(param);
+    this.request_test(param);
   }
 
   addUp(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url:Config.restUrl+'favorite',
+      data:data,
+      method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param)
-  }
-
-  deleteUp(data, callback) {
-    var param = {
-      url: '',
-      data: data.data,
-      sCallback: function (data) {
-        callback && callback(data);
-      }
-    }
+    this.request_test(param)
   }
 }
 

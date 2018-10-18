@@ -1,4 +1,4 @@
-/* pages/mynews/mynews.wxss */
+/* pages/mypublish/mypublish.wxss */
 
 page {
   width: 100%;
@@ -102,4 +102,17 @@ page {
   height: 30rpx;
   border: 1rpx solid rgb(174, 200, 247);
   border-radius: 10rpx;
+}
+
+.endbox{
+  align-content: center;
+  text-align: center;
+  color: #ab956d
+}
+.line{
+  height: 3rpx;
+  background-color:#ab956d;
+  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
 }
