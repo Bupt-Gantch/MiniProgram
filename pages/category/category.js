@@ -498,17 +498,6 @@ Page({
   },
   inputSceneChange: function(event){
     var inputValue = event.detail.value;
-<<<<<<< HEAD
     this.data.sceneName = inputValue;
   },
-=======
-    this.data.groupName = inputValue;
-  },
-
-  onPullDownRefresh: function () {
-    wx.stopPullDownRefresh();
-  },
-  
-
->>>>>>> ff3f9dfb7ced034bfbd23ad693b197c52c668a31
 })
