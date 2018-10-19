@@ -1,1 +1,21 @@
 <!--pages/scene/scene.wxml-->
+<import src="../tpls/category/category-tpl.wxml"/>
+<import src="../tpls/modal/modal-tpl.wxml"/>
+  <view>
+    <image class="save-float" src='/imgs/icon/save.png' bindtap='saveScene'></image>
+  </view>
+
+<view class='container group-wrapper'>
+  <template is="categorytop" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices,statusTable}}">
+  </template>
+
+  <!--长按设置设备属性-->
+  <template is="bulb1" data="{{showBulb1}}">
+  </template>
+    <template is="bulb2" data="{{showBulb2}}">
+  </template>
+  <template is="bulb3" data="{{showBulb3}}">
+  </template>
+    <template is="lock" data="{{showLock}}">
+  </template>
+</view>

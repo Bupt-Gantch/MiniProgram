@@ -1,6 +1,7 @@
 <!--pages/category/category.wxml-->
 <import src="../tpls/category/category-tpl.wxml"/>
 <import src="../tpls/group/group-tpl.wxml"/>
+<import src="../tpls/scene/scene-tpl.wxml"/>
 <import src="../tpls/modal/modal-tpl.wxml"/>
 
 <view class='container category-container'> 
@@ -21,7 +22,7 @@
            bindtap='onBottomTab' data-index='{{index}}' 
            data-name='{{sceneGroup[index]}}'> 
           {{sceneGroup[index]}}
-         </view> 
+         </view>
       </block>
       
     </view>
@@ -53,8 +54,8 @@
         data="{{imgUrl:groupSceneImg,bannerTitle,allGroupArr}}"></template>
 
           <!-- 保留模板（scene） -->
-          <!-- <template wx:if="{{index === 1}}" is="group" 
-          data="{{imgUrl,bannerTitle}}"></template> -->
+          <template wx:if="{{index == 1}}" is="scene" 
+          data="{{imgUrl:groupSceneImg,bannerTitle,allSceneArr}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
 
@@ -62,8 +63,9 @@
     </view>
 
   </view>
-
   <template is="modalDialog" data="{{showModal,content}}">
+  </template>
+    <template is="modalScene" data="{{showModalScene,contentScene}}">
   </template>
 
   <view wx:if="{{!hiddenPicker}}" class='group-picker'>
@@ -81,5 +83,22 @@
       </picker-view-column>
     </picker-view>
   </view>
+
+    <view wx:if="{{!hiddenPicker}}" class='group-picker'>
+    <view class='picker-header'>
+      <view class='title'>请选择设备分组</view>
+      <view class='btn'>
+        <button type='primary' bindtap='onPickerConfirm'>确定</button>
+        <button bindtap='onPickerCancel'>取消</button>
+      </view>
+    </view>
+    <picker-view indicator-class='picker-indicator' value="{{pickerValueArr}}" mask-class='picker-mask' bindchange="onPickerChange">
+      <picker-view-column>
+        <view wx:for="{{allGroupArr}}" wx:key="{{item.id}}"
+        style="line-height: 50px">{{item.groupName}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  
 </view>
 

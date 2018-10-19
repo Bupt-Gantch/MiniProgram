@@ -56,7 +56,8 @@ Config.deviceImgUrl = {
 };
 
 Config.otherImg = {
-  'group': '../../imgs/test/group.png'
+  'group': '../../imgs/test/group.png',
+  'scene':'../../imgs/test/scene.png'
 };
 
 

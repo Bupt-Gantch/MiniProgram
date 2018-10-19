@@ -1,6 +1,5 @@
 <!--pages/group/group.wxml-->
 <import src="../tpls/category/category-tpl.wxml"/>
-
 <view class='container group-wrapper'>
   <template is="categorytop" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:groupDevices,statusTable}}">
   </template>

@@ -15,7 +15,7 @@ Page({
     imgUrl: Config.deviceImgUrl,
     statusTable: {},
     switchOnImg: Config.switchOnUrl,
-    
+
 
     requestId: 1000000   //请求id100w 递减
   },
@@ -33,8 +33,8 @@ Page({
     this._loadGroupDevices(groupid);
   },
 
-  _loadGroupDevices: function(groupid) {
-    group.loadGroupDevices(groupid,(data)=>{
+  _loadGroupDevices: function (groupid) {
+    group.loadGroupDevices(groupid, (data) => {
       this.setData({
         groupDevices: data.data
       });
@@ -59,8 +59,8 @@ Page({
     }
   },
 
-  onDeviceLongPress: function(event){
-    var deviceId = group.getDataSet(event,'deviceid');
+  onDeviceLongPress: function (event) {
+    var deviceId = group.getDataSet(event, 'deviceid');
     var _this = this;
     wx.showModal({
       title: '取消分配设备',
@@ -73,21 +73,21 @@ Page({
     });
   },
 
-  _unassignDeviceFromGroup: function(deviceId) {
+  _unassignDeviceFromGroup: function (deviceId) {
     var groupId = this.data.groupid;
-    group.unassignDevice(groupId,deviceId,(res) => {
-        wx.showToast({
-          title: '取消分配成功',
-        });
-        this._loadGroupDevices(groupId);
-    },(err) => {
+    group.unassignDevice(groupId, deviceId, (res) => {
+      wx.showToast({
+        title: '取消分配成功',
+      });
+      this._loadGroupDevices(groupId);
+    }, (err) => {
       wx.showToast({
         title: '应用失败',
         image: '../../imgs/icon/pay@error.png',
         duration: 1000,
         // mask: true
       });
-    } );
+    });
   },
 
   /**
@@ -153,7 +153,7 @@ Page({
 
   },
 
-  
+
 
 
 })

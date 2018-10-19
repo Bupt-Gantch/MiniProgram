@@ -1,4 +1,4 @@
-<!--弹窗-->
+<!--添加分组弹窗-->
 <template name="modalDialog">
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
   <view class="modal-dialog" wx:if="{{showModal}}">
@@ -14,3 +14,151 @@
     </view>
   </view>
 </template>
+
+<!--添加场景弹窗-->
+<template name="modalScene">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModalScene}}"></view>
+  <view class="modal-dialog" wx:if="{{showModalScene}}">
+    <view class="modal-title">{{contentScene.title}}</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <input placeholder-class="input-holder" type="text" maxlength="20" focus="true" bindinput="inputSceneChange" class="input" placeholder="{{contentScene.placeholder}}"></input>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--调色灯模板-->
+<template name="bulb1">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showBulb1}}"></view>
+  <view class="modal-dialog" wx:if="{{showBulb1}}">
+    <view class="modal-title">调色灯参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">亮度</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">色调</view>
+    <radio-group name="radio-group">
+      <label><radio value="radio1"/>黄色</label>
+      <label><radio value="radio2"/>白色</label>
+    </radio-group>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">饱和度</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+  <!-- <view class="btn-area">
+    <button formType="submit">保存</button>
+    <button formType="reset">重置</button>
+  </view> -->
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--色温灯模板-->
+
+<template name="bulb2">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showBulb2}}"></view>
+  <view class="modal-dialog" wx:if="{{showBulb2}}">
+    <view class="modal-title">色温灯参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">亮度</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">色温</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+  <!-- <view class="btn-area">
+    <button formType="submit">保存</button>
+    <button formType="reset">重置</button>
+  </view> -->
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--调光灯模板-->
+
+<template name="bulb3">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showBulb3}}"></view>
+  <view class="modal-dialog" wx:if="{{showBulb3}}">
+    <view class="modal-title">调光灯参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">亮度</view>
+    <slider name="slider" show-value ></slider>
+  </view>
+  <!-- <view class="btn-area">
+    <button formType="submit">保存</button>
+    <button formType="reset">重置</button>
+  </view> -->
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--门锁模板-->
+
+<template name="lock">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showLock}}"></view>
+  <view class="modal-dialog" wx:if="{{showLock}}">
+    <view class="modal-title">门锁参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+  <view class="section">
+    <view class="section__title">密码</view>
+    <input name="input" placeholder="请输入四位密码" />
+  </view>
+  <!-- <view class="btn-area">
+    <button formType="submit">保存</button>
+    <button formType="reset">重置</button>
+  </view> -->
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+

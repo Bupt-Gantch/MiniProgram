@@ -78,7 +78,7 @@ swiper image {
 .circle-float {
   position: fixed;
   display: flex;
-  bottom: 65rpx;
+  bottom: 100rpx;
   right: 10rpx;
   width: 89rpx;
   height: 89rpx;

@@ -15,7 +15,7 @@
   width: 540rpx;
   overflow: hidden;
   position: fixed;
-  top: 50%;
+  top: 20%;
   left: 0;
   z-index: 9999;
   background: #f9f9f9;
