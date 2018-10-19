@@ -15,6 +15,12 @@ Page({
       battery:"70%"
     },
     deviceImgUrl: Config.deviceImgUrl,
+    bulb: {
+      dimmableMinVal:1,
+      dimmableMaxVal:255,
+      dimmableStep: 2
+
+    },
   },
 
   /**
@@ -28,8 +34,11 @@ Page({
         deviceId: deviceid
       })
       
-      //this._loadData();
-      this._loadRealtimeData(deviceid);
+      this._loadData();
+      if (deviceType === 'temperature' || deviceType==='PM2.5' ||
+        deviceType === 'IASZone'){
+        this._loadRealtimeData(deviceid);
+      }
   },
 
   /**
@@ -119,6 +128,21 @@ Page({
   //     currentTabsIndex: index
   //   });
   // }
+
+  /**
+   * =================dimmableLight=======================
+   * =====================================================
+   */
+  onSliderChange: function (event){
+    let value = event.detail.value;
+    console.log(value);
+  },
+  onSwitchChange: function (event){
+    let value = event.detail.value;
+    console.log(value);
+  }
+ 
+  
 
   
 })

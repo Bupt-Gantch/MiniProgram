@@ -33,6 +33,9 @@
 .detail-header view view{
   margin: 0 10rpx;
 }
+.device-image{
+  background-color: wheat;
+}
 
 .detail-main{
   background-color: #24292e;

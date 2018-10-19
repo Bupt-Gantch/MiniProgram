@@ -29,9 +29,9 @@
                   <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}"/>
               </view>
             </view>
-            <view wx:if="{{item.online}}" class='online'></view>
-            <view wx:if="{{!item.online}}" class='offline'></view>
-            <view>{{item.deviceType}}</view>
+            <view wx:if="{{!item.online}}" class='online'></view>
+            <!-- <view wx:if="{{!item.online}}" class='offline'></view> -->
+            <view class='devicename'>{{item.name}}</view>
             
           </view>
           <!-- end -->

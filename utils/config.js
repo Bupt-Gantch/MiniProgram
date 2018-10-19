@@ -8,17 +8,17 @@ class Config{
   }
 }
 
-// Config.restUrl = 'http://x.cn/api/v1/';
-// Config.imagesUrl = 'http://x.cn/images';
+
+
 // Config.restUrl = 'http://10.108.217.108:8080/api/v1/wechatPost/';
-Config.restUrl = 'http://47.104.8.164:80/api/v1/wechatPost/'
+//Config.restUrl = 'http://47.104.8.164:80/api/v1/wechatPost/'
+Config.restUrl = 'http://smart.gantch.cn:30080/api/v1/'
 // Config.restUrl = 'http://adfa6cb3.ngrok.io/api/v1/wechatPost/'
 Config.account = 'http://47.105.120.203:30080/api/v1/account/';
 Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
 Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';
 //Config.wsUrl = 'ws://39.104.189.84:8800/api/warning/webSocket';
 Config.switchOnUrl = ['../../imgs/test/switch@on.png','../../imgs/test/socket@on.png'];  //开关和插座亮时的图片
-Config.bannerImageUrl = '../../imgs/banner/';
 Config.categoryImgUrl = '../../imgs/category/';
 
 Config.findAllPosts = 'findAllPosts',
@@ -61,7 +61,7 @@ Config.otherImg = {
 
 
 //debug
-Config.debug = true;
+Config.debug = false;
 
 Config.test = '2';
 

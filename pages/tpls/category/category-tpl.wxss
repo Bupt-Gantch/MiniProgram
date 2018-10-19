@@ -105,6 +105,10 @@
   background-color: gray;
   margin: 5rpx;
 }
+.devicename{
+  overflow:scroll;
+  width:100%;
+}
 
 
 /*

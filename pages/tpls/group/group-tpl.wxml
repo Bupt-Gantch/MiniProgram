@@ -16,13 +16,13 @@
       <view class='category-main-view'>
         <block wx:for="{{allGroupArr}}" wx:key="{{item.id}}">
           <!-- 下面存放单个设备的div  -->
-          <view class="category-goods-items {{index%3==1?'middle':''}}" data-groupid="{{item.id}}" data-groupname="{{item.groupName}}" bindtap="onGroupsItemTap" bindlongpress="onGroupsLongPress">
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-groupid="{{item.id}}" data-groupname="{{item.name}}" bindtap="onGroupsItemTap" bindlongpress="onGroupsLongPress">
            
             <view class='group-image'>
               <image src='{{imgUrl["group"]}}' mode="aspectFit"></image>
             </view>
             
-            <view>{{item.groupName}}</view>
+            <view>{{item.name}}</view>
             
           </view>
           <!-- end -->
