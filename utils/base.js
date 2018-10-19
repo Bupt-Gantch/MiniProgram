@@ -31,7 +31,7 @@ class Base {
           var startChar = code.charAt(0);
           
           if( startChar == '2'){
-            params.sCallback && params.sCallback(res);
+            params.sCallback && params.sCallback(res.data);
           }else{
             params.fCallback && params.fCallback(res);
           }
@@ -98,7 +98,7 @@ class Base {
           'data|25': [{
             'id|+1': 1,
             'title': '@ctitle(3,8)',
-            'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'], //test
+            'deviceType|1': ['dimmableLight', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头','IASZone'], //test
             'marketing_start': '@datetime()',
             'marketing_stop': '@now()',
             'groupName': function () {
@@ -109,6 +109,7 @@ class Base {
               return Random.string(6)
             },
             'tempra|-20-40': 0,
+            'groups':[],
             'humi|0-100':0,
             'pm2.5|10-200':0,
             'imgUrl': function() {

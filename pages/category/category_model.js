@@ -15,6 +15,20 @@ class Category extends Base{
     this.request(param);
   }
 
+  assignDeviceToGroup(groupId, deviceId, sCallback, fCallback) {
+    var param = {
+      url: `deviceaccess/assign/group/${groupId}/${deviceId}`,
+      sCallback: function (res) {
+        sCallback && sCallback(res);
+      },
+      fCallback: function (err) {
+        fCallback && fCallback(err);
+      }
+    };
+
+    this.request(param);
+  }
+
   /**==================控制分类页的开关设备============= */
   /**
    * 获取设备（开关）服务--获取控制面板
@@ -168,7 +182,7 @@ class Category extends Base{
 
   loadAllGroup(customerId,callback){
     var param = {
-      url: 'deviceaccess/group/customer/'+customerId,
+      url: 'deviceaccess/groups/customer/'+customerId+'?limit=1000',
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -194,7 +208,7 @@ class Category extends Base{
 
   deleteGroup(groupId,callback) {
     var param = {
-      url: 'deviceaccess/group',
+      url: `deviceaccess/group/${groupId}`,
       type: 'DELETE',
       sCallback: function (data) {
         callback && callback(data);

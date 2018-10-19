@@ -95,7 +95,6 @@ Page({
     index = Number(index);
     if(index === 0){   //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
       category.getAllDevices((data) => {
-        
         this.setData({
           categoryAllDevices : data.data
         });
@@ -149,34 +148,39 @@ Page({
       });
     }
   },
+
   /**
    * 长按设备item
    * 添加设备到分组
+   * ==========================================================
    */
-  onDeviceLongPress: function() {
+  onDeviceLongPress: function(event) {
+    var deviceid = category.getDataSet(event, 'deviceid');
     if (this.data.allGroupArr.length === 0){
       wx.showToast({
-        title: '您还没有任何设备分组',
+        title: '您还没有创建任何分组',
         icon:'none'
       });
     }else{
       this.setData({
         hiddenPicker: false,
-        pickeredGroup: this.data.allGroupArr[0]
+        pickeredGroup: this.data.allGroupArr[0],
+        currentDeviceId: deviceid
       })
     }
   },
 
   onPickerChange: function(event) {
     var index = event.detail.value[0];
-    console.log(this.data.allGroupArr[index]);
     this.setData({
       pickeredGroup: this.data.allGroupArr[index]
     });
   },
 
   onPickerConfirm: function() {
-    console.log(this.data.pickeredGroup);
+    var currentDeviceId = this.data.currentDeviceId;
+    this._assignDeviceToGroup(currentDeviceId);
+
     this.data.pickeredGroup = {};
     this._hideGroupPicker();
   },
@@ -192,12 +196,25 @@ Page({
     });
   },
 
-  onPullDownRefresh: function () {
-    wx.stopPullDownRefresh();
+  _assignDeviceToGroup: function (deviceId) {
+    var groupId = this.data.pickeredGroup.id;
+    category.assignDeviceToGroup(groupId, deviceId, (res) => {
+      wx.showToast({
+        title: '应用成功',
+      });
+    }, (err) => {
+      wx.showToast({
+        title: '应用失败',
+        image: '../../imgs/icon/pay@error.png',
+        duration: 1000,
+        // mask: true
+      });
+    });
   },
 
   /**
    * 控制开关类设备
+   * ===========================================================
    */
   switchChange: function(event){
     var status = event.detail.value;
@@ -259,6 +276,7 @@ Page({
   },
   /**
    * scene & group
+   * ======================================================
    */
 
   onBottomTab: function (event) {
@@ -330,6 +348,7 @@ Page({
 
   /**
    * 弹窗添加分组方法
+   * ========================================================
    */
   onAddGroupTap: function (event) {
     this.setData({
@@ -479,6 +498,17 @@ Page({
   },
   inputSceneChange: function(event){
     var inputValue = event.detail.value;
+<<<<<<< HEAD
     this.data.sceneName = inputValue;
   },
+=======
+    this.data.groupName = inputValue;
+  },
+
+  onPullDownRefresh: function () {
+    wx.stopPullDownRefresh();
+  },
+  
+
+>>>>>>> ff3f9dfb7ced034bfbd23ad693b197c52c668a31
 })

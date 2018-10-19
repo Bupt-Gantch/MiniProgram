@@ -3,7 +3,9 @@
   <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
     <view class='content'>
-      <image src='{{deviceImgUrl[deviceType]}}' mode="aspectFit"></image>
+      <view class='device-image'>
+        <image src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
+      </view>
       <view class='title'>名称</view>
       <!-- <view class='name'>{{deviceDetail.name}}</view> -->
       <view class='name'>{{deviceType}}</view>
@@ -75,6 +77,20 @@
         </block>
       </view>
       
+    </view>
+
+  </view>
+  </block>
+
+  <!-- dimmableLight -->
+  <block wx:if="{{deviceType === 'dimmableLight'}}">
+  <view class='detail-main'>
+    <view class='deviceInfo'>
+      <switch bindchange='onSwitchChange'></switch>
+      <slider min='{{bulb.dimmableMinVal}}' max='{{bulb.dimmableMaxVal}}'
+        step='{{bulb.dimmableStep}}' show-value='true'
+        bindchange='onSliderChange'>
+      </slider>
     </view>
 
   </view>

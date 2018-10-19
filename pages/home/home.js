@@ -371,7 +371,7 @@ Page({
     var _this = this;
     setInterval(function(){
       _this._loadTest();
-    },1000);
+    },5000);
     //end//
     
   },
@@ -391,7 +391,6 @@ Page({
       curTemprature = res.data[0].tempra;
       curHumidity = res.data[0].humi;
       curPm25 = res.data[0]['pm2.5'];
-      //console.log(res.data);
       this.tempComponent.init(initChart_temp);
       this.humiComponent.init(initChart_hum);
       this.pm25Component.init(initChart_pm25);

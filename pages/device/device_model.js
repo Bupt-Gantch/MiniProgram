@@ -6,7 +6,7 @@ class Device extends Base{
   }
   getDeviceInfo(id,callback){
     var param = {
-      url : 'product/' + id,
+      url: `deviceaccess/device/${id}`,
       sCallback : function(data){
         callback && callback(data);
       }
