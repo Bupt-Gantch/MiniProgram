@@ -98,6 +98,23 @@
   </view>
   </block>
 
+  <!-- curtain -->
+  <block wx:if="{{deviceType === 'curtain'}}">
+  <view class='detail-main'>
+    <view class='deviceInfo'>
+      <view class='curtain-btn'>
+        <button type='primary' data-value="{{'1'}}"
+         bindtap='onCurtainTap'>开</button>
+        <button type='primary' data-value="{{'2'}}"
+         bindtap='onCurtainTap'>停</button>
+        <button type='primary' data-value="{{'0'}}" 
+        bindtap='onCurtainTap'>关</button>
+      </view>
+    </view>
+
+  </view>
+  </block>
+
   <!-- <view class='history-data'>
   </view> -->
 

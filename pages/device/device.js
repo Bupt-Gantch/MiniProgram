@@ -137,15 +137,31 @@ Page({
    * =====================================================
    */
   onSliderChange: function (event){
-    let value = event.detail.value;
-    console.log(value);
+    let value = event.detail.value.toString();
+    let serviceName = this.data.serviceName.controlDimmableLight;
+    this._sendControl(serviceName, value, this.data.deviceInfo);
   },
   onSwitchChange: function (event){
-    let value = event.detail.value;
+    let value = event.detail.value.toString();
     let serviceName = this.data.serviceName.controlSwitch;
-    this._sendControl(serviceName,value,this.data.deviceInfo)
+    this._sendControl(serviceName,value,this.data.deviceInfo);
   },
-  
+
+  /**
+   * ====================curtain==========================
+   * =====================================================
+   */
+
+  onCurtainTap: function (event){
+    let value = device.getDataSet(event, 'value');
+    let serviceName = this.data.serviceName.controlCurtain;
+    this._sendControl(serviceName, value, this.data.deviceInfo);
+  },
+
+  /**
+   * ====================sendControl==========================
+   * =====================================================
+   */
   _sendControl: function (serviceName,value,deviceInfo) {
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
@@ -162,7 +178,7 @@ Page({
       deviceId: deviceInfo.id,
       requestId: requestId,
       triad: triad,
-      status: value
+      value: value
     };
 
     device.applyControl(data, (res) => {

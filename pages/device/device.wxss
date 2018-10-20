@@ -118,104 +118,25 @@
   background-color: wheat;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/*选择数量和添加到购物车*/
-.cart-box{
-  width: 660rpx;
-  height: 100rpx;
-  margin: 30rpx auto;
-  border-radius: 100rpx;
-  background-color: #AB956D;
-  color: #fff;
-  display: flex;
-  align-items: center;
-}
-
-.product-counts,.add-cart-btn{
-  height: 100%;
-  display: flex;
-  font-size: 24rpx;
-  align-items: center;
-  justify-content: center;
-}
-.product-counts{
-  width: 50%;
-}
-.add-cart-btn{
-  position: relative;
-  flex: 1;
-}
-.add-cart-btn:active{
-  color: #fff;
-}
-.add-cart-btn.disabled{
-  color: #D5D5DB;
+.curtain-btn{
+  width:95%;
+  height:200rpx;
+  display:flex;
+  text-align:center;
+  justify-content:space-around;
+  align-items:center;
+  flex-direction:row;
 }
 
 
 
 
-/*数量选择器*/
-.product-counts picker{
-  margin: 0 auto;
-  height: 100rpx;
-  width: 100%;
-  color: #fff;
-}
-.product-counts picker.disabled{
-  color: #D5D5DB;
-}
-.product-counts picker view{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100rpx;
-}
-.counts-tips,.counts-data,.counts-icon{
-  margin: 0 20rpx;
-}
-.counts-data{
-  font-size: 28rpx;
-}
-.counts-icon{
-  height: 48rpx;
-  width: 48rpx;
-}
-
-.add-cart-btn .cart-icon{
-  margin-left: 40rpx;
-  height: 32rpx;
-  width: 32rpx;
-}
 
 
 
-.tabs-item{
-  width: 33.3%;
-  color: #C7C7CB;
-  font-size: 28rpx;
-  display: flex;  
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1rpx solid #D0D0D7;
-}
-.tabs-item.selected{
-  /*color: #AB956D;*/
-  color: rgba(171,149,109,.8);
-  /*border-bottom: 2px solid #AB956D;*/
-  border-bottom: 2px solid rgba(171,149,109,.8);
-}
+
+
+
 
 
 

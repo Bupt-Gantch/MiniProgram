@@ -63,8 +63,10 @@ Page({
   },
 
   onDevicesItemTap: function (event) {
+    var deviceInfo = scene.getDataSet(event, 'deviceinfo');
     var deviceid = scene.getDataSet(event, 'deviceid');
-    var deviceType = scene.getDataSet(event, 'type');
+    var deviceType = deviceInfo.deviceType;
+    var deviceName = deviceInfo.name;
 
     if (deviceType === "switch" || deviceType === "outlet") {
       //nothing
@@ -75,7 +77,7 @@ Page({
     }
     else {
       wx.navigateTo({
-        url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType
+        url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName
       });
     }
   },
