@@ -6,7 +6,7 @@
       id='content' maxlength='200'></textarea>
     </view>
     <view class='showPic'>
-      <block wx:for="{{imageList}}" wx:for-item="image">
+      <block wx:for="{{imageList}}" wx:for-item="image" wx:key="image">
         <image mode='aspectFill' src="{{image}}" data-src="image" bindtap="previewImage"></image>
       </block>
     </view>

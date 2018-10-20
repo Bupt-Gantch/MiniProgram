@@ -18,4 +18,8 @@
   </template>
     <template is="lock" data="{{showLock}}">
   </template>
+    <template is="curtain" data="{{showCurtain}}">
+  </template>
+    <template is="switch" data="{{showSwitch}}">
+  </template>
 </view>

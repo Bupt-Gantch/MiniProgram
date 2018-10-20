@@ -66,7 +66,7 @@ Page({
       })
     }
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      content: app.getLanuage(app.globalData.language),
     })
     // 在没有 open-type=getUserInfo 版本的兼容处理
     if (!this.data.canIUse) {
@@ -83,6 +83,7 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
   },
+
   /**
   * 获取用户信息接口后的处理逻辑
   */
@@ -104,6 +105,8 @@ Page({
         }else{
         loading.findOpenid(app.globalData.openid, (res) => {
           if (res.status === "success") {
+            app.globalData.customerId = res.data.id
+            console.log(app.globalData.customerId)
             wx.showToast({
               title:'登录成功',
               duration: 2000,
@@ -143,9 +146,4 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
   },
-  // register: function() {
-  //   wx.navigateTo({
-  //     url: '../register/register',
-  //   })
-  // }
 })

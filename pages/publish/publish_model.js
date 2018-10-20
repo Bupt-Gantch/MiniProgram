@@ -6,7 +6,7 @@ class Publish extends Base{
   }
   getInfoList(page, callback) {
     var param = {
-      url: Config.restUrl+'findAllPosts',
+      url: Config.postUrl+'findAllPosts',
       data:{
         page:page,
       },
@@ -20,7 +20,7 @@ class Publish extends Base{
 
   addComment(data,callback){
     var param = {
-      url: Config.restUrl+'addComment',
+      url: Config.postUrl+'addComment',
       data:data,
       method:'POST',
       sCallback:function(data){
@@ -32,7 +32,7 @@ class Publish extends Base{
 
   addUp(data,callback){
     var param = {
-      url:Config.restUrl+'favorite',
+      url: Config.postUrl+'favorite',
       data:data,
       method:"POST",
       sCallback: function (data) {

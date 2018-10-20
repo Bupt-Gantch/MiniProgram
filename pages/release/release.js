@@ -29,7 +29,8 @@ Page({
       content: app.getLanuage(app.globalData.language)
     })
     this.setData({
-      place: this.data.content.place
+      place: this.data.content.place,
+      lastplace:""  
     })
   },
 
@@ -70,7 +71,7 @@ Page({
   addPlace: function() {
     var that = this;
     wx.getLocation({
-      type: 'wgs94',
+      type: 'wgs84',
       success: function(res) {
         var locationString = res.longitude + "," + res.latitude;
         var newplace = {
@@ -90,12 +91,19 @@ Page({
             })
           } else {
             that.setData({
-              place: that.data.wrong,
-              lastplace: null
+              place: that.data.content.wrong,
+              lastplace: ""
             })
           }
         })
       },
+      fail:function(res){
+        console.log(res)
+        that.setData({
+          place: that.data.content.wrong,
+          lastplace:""
+        })
+      }
     })
   },
   /**
@@ -103,9 +111,13 @@ Page({
    */
 
   formSubmit: function(e) {
+    var imagePath = this.data.imageList[0]
+    if (imagePath==undefined){
+      imagePath = ""
+    }
     wx.uploadFile({
-      url: Config.restUrl + 'addPost',
-      filePath: this.data.imageList[0],
+      url: Config.postUrl + 'addPost',
+      filePath: imagePath,
       name: 'image',
       formData: {
         openId: app.globalData.openid,

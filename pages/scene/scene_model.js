@@ -1,13 +1,14 @@
 import { Base } from '../../utils/base.js';
+import { Config } from '../../utils/config.js'
 
 class Scene extends Base {
   constructor() {
     super();
   }
 
-  getAllDevices(customerid, callback) {
+  getAllDevices(callback) {
     var param = {
-      url: 'deviceaccess/alldevices/' + customerid + '?limit=1000',
+      url: 'deviceaccess/tenant/devices/2?limit=1000',
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -17,12 +18,12 @@ class Scene extends Base {
 
   getSceneDevices(sceneid,callback) {
     var param = {
-      url: 'deviceaccess/tenant/devices/2?'+sceneid+'limit=1000',
+      url: Config.sceneUrl+'getScene/'+sceneid,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request_test(param);
   }
 }
 

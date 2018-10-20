@@ -48,7 +48,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    Config.test = '2';
     var index = 0;   //从tab栏跳转过来 
     var name = this.data.categoryName[0]; //从tab栏跳转过来
     
@@ -395,9 +394,11 @@ Page({
   _loadAllScene: function () {
     var customerId = app.globalData.customerId;
     category.loadAllScene(customerId, (data) => {
-      this.setData({
-        allSceneArr: data.data
-      })
+      if(data.length!=0){
+        this.setData({
+          allSceneArr: data
+        })
+      }
     })
   },
 

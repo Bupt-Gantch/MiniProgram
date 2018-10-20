@@ -7,13 +7,13 @@
 
     <scroll-view class="category-main" scroll-y>
       <view class='category-main-view'>
-        <block wx:for="{{allSceneArr}}" wx:key="{{item.id}}">
+        <block wx:for="{{allSceneArr}}" wx:key="{{item.scene_id}}">
           <!-- 下面存放单个设备的div  -->
-          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.id}}" data-scenename="{{item.groupName}}" bindtap="onSceneItemTap" bindlongpress="onSceneLongPress">
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.scene_id}}" data-scenename="{{item.sceneName}}" bindtap="onSceneItemTap" bindlongpress="onSceneLongPress">
             <view class='group-image'>
               <image src='{{imgUrl["scene"]}}' mode="aspectFit"></image>
             </view>
-            <view>{{item.groupName}}</view>
+            <view>{{item.sceneName}}</view>
           </view>
           <!-- end -->
         </block>

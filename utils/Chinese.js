@@ -17,6 +17,7 @@ var Chinese = {
   sensor:"传感器",
   swi:"开关",
   othertypes:"其他类型",
+  scenetypes:"场景开关",
   temperature:"温度",
   humidity:"湿度",
   name:"名称",

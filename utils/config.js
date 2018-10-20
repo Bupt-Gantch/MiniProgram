@@ -11,9 +11,10 @@ class Config{
 
 
 // Config.restUrl = 'http://10.108.217.108:8080/api/v1/wechatPost/';
-//Config.restUrl = 'http://47.104.8.164:80/api/v1/wechatPost/'
-Config.restUrl = 'http://smart.gantch.cn:30080/api/v1/'
-// Config.restUrl = 'http://adfa6cb3.ngrok.io/api/v1/wechatPost/'
+Config.sceneUrl = 'http://47.104.8.164:8800/api/v1/scene/';
+Config.getwayUrl = 'http://47.105.120.203:30080/api/v1/deviceaccess/';
+Config.postUrl = 'http://47.104.8.164:80/api/v1/wechatPost/';
+Config.restUrl = 'http://smart.gantch.cn:30080/api/v1/';
 Config.account = 'http://47.105.120.203:30080/api/v1/account/';
 Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
 Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';
@@ -31,14 +32,16 @@ Config.favorite = 'favorite',
 Config.findComment = 'findComment',
 Config.addComment = 'addComment',
 Config.deleteComment = 'deleteComment',
-Config.categoryName = [content.alldevice, content.bulb, content.socket, content.curtain, content.sensor, content.swi, content.othertypes];
+Config.categoryName = [content.alldevice, content.bulb, content.socket, content.curtain, content.sensor, content.swi,content.othertypes];
 Config.categoryType = {
   '灯泡': ['dimmableLight'],
   '插座': ['outlet'],
   '窗帘': ['curtain'],
   '传感器': ['temperature', 'PM2.5', 'IASZone'],
   '开关': ['switch'],
+  '场景开关':['dimmableLight','curtain','switch'],
 };
+Config.secneType = [content.scenetypes]
 
 Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5','IASZone','switch'];
 
