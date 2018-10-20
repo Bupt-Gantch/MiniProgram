@@ -19,8 +19,9 @@ Page({
       dimmableMinVal:1,
       dimmableMaxVal:255,
       dimmableStep: 2
-
     },
+    serviceName: Config.serviceName,
+    requestId: 1000000   //请求id100w 递减
   },
 
   /**
@@ -29,12 +30,14 @@ Page({
   onLoad: function (options) {
       var deviceid = options.deviceid;
       var deviceType = options.deviceType;
+      var deviceName = options.deviceName;
       this.setData({
         deviceType: deviceType,
-        deviceId: deviceid
+        deviceId: deviceid,
+        deviceName: deviceName
       })
       
-      this._loadData();
+    this._loadData(deviceid);
       if (deviceType === 'temperature' || deviceType==='PM2.5' ||
         deviceType === 'IASZone'){
         this._loadRealtimeData(deviceid);
@@ -45,14 +48,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("de_sensor ready");
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("de_sensor show");
+    
   },
 
   /**
@@ -73,10 +76,10 @@ Page({
     }
   },
 
-  _loadData: function(){
-    device.getDeviceInfo(this.data.deviceid,(data)=>{
+  _loadData: function (deviceid){
+    device.getDeviceInfo(deviceid,(data)=>{
       this.setData({
-        deviceDetail: data
+        deviceInfo: data
       });
     });
   },
@@ -139,8 +142,60 @@ Page({
   },
   onSwitchChange: function (event){
     let value = event.detail.value;
-    console.log(value);
-  }
+    let serviceName = this.data.serviceName.controlSwitch;
+    this._sendControl(serviceName,value,this.data.deviceInfo)
+  },
+  
+  _sendControl: function (serviceName,value,deviceInfo) {
+    var deviceId = deviceInfo.id;
+    var requestId = this.data.requestId;
+
+    var triad = {
+      deviceType: deviceInfo.deviceType,
+      manufacture: deviceInfo.manufacture,
+      model: deviceInfo.model
+    }
+
+    /**控制需要的请求数据 */
+    var data = {
+      serviceName: serviceName,
+      deviceId: deviceInfo.id,
+      requestId: requestId,
+      triad: triad,
+      status: value
+    };
+
+    device.applyControl(data, (res) => {
+      if (res.indexOf("device") === -1) {   //状态码为200则应用成功
+        wx.showToast({
+          title: '应用成功',
+          icon: 'success',
+          duration: 1000,
+          // mask: true
+        });
+
+      } else {              //状态码不是200  应用失败
+        wx.showToast({
+          title: '应用失败',
+          image: '../../imgs/icon/pay@error.png',
+          duration: 1000,
+          // mask: true
+        });
+      }
+
+    }, (err) => {
+      wx.showToast({
+        title: '应用失败',
+        image: '../../imgs/icon/pay@error.png',
+        duration: 1000,
+        // mask: true
+      });
+      console.log(err);
+    });
+
+    this.data.requestId--;
+
+  },
  
   
 

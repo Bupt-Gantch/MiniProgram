@@ -91,7 +91,7 @@ class Category extends Base{
     var p = new Promise(function(resolve,reject){
       var param = {
         url: 'deviceaccess/rpc/' + deviceId + '/' + requestId,
-        type: 'POST',
+        method: 'POST',
         data: body,
         sCallback: function (res) {
           resolve && resolve(res);
@@ -101,7 +101,7 @@ class Category extends Base{
         }
       };
 
-      that.request_post(param);
+      that.request(param);
     })
 
     return p;
@@ -193,7 +193,7 @@ class Category extends Base{
   createGroup(groupName,callback) {
     var param = {
       url : 'deviceaccess/group',
-      type:'POST',
+      method:'POST',
       data:{
         name: groupName,
         tenantId: 2
@@ -203,13 +203,13 @@ class Category extends Base{
       }
     }
 
-    this.request_post(param);
+    this.request(param);
   }
 
   deleteGroup(groupId,callback) {
     var param = {
       url: `deviceaccess/group/${groupId}`,
-      type: 'DELETE',
+      method: 'DELETE',
       sCallback: function (data) {
         callback && callback(data);
       }

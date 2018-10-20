@@ -19,7 +19,7 @@ class Group extends Base {
   unassignDevice(groupId, deviceId,sCallback,fCallback) {
     var param = {
       url: `deviceaccess/unassign/group/${groupId}/${deviceId}`,
-      type: 'DELETE',
+      method: 'DELETE',
       sCallback: function(res) {
         sCallback && sCallback(res);
       },
@@ -93,7 +93,7 @@ class Group extends Base {
     var p = new Promise(function (resolve, reject) {
       var param = {
         url: 'deviceaccess/rpc/' + deviceId + '/' + requestId,
-        type: 'POST',
+        method: 'POST',
         data: body,
         sCallback: function (res) {
           resolve && resolve(res);
@@ -103,7 +103,7 @@ class Group extends Base {
         }
       };
 
-      that.request_post(param);
+      that.request(param);
     })
 
     return p;

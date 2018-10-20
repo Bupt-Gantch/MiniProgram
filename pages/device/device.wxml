@@ -8,7 +8,7 @@
       </view>
       <view class='title'>名称</view>
       <!-- <view class='name'>{{deviceDetail.name}}</view> -->
-      <view class='name'>{{deviceType}}</view>
+      <view class='name'>{{deviceName}}</view>
     </view>
   </view>
 
@@ -86,7 +86,9 @@
   <block wx:if="{{deviceType === 'dimmableLight'}}">
   <view class='detail-main'>
     <view class='deviceInfo'>
-      <switch bindchange='onSwitchChange'></switch>
+      <view style='text-align:center'>
+        <switch style='zoom:1.5' bindchange='onSwitchChange'></switch>
+      </view>
       <slider min='{{bulb.dimmableMinVal}}' max='{{bulb.dimmableMaxVal}}'
         step='{{bulb.dimmableStep}}' show-value='true'
         bindchange='onSliderChange'>

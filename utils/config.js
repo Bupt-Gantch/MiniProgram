@@ -59,6 +59,12 @@ Config.otherImg = {
   'group': '../../imgs/test/group.png'
 };
 
+Config.serviceName = {
+  controlSwitch: 'control switch',
+  controlDimmableLight: 'control dimmableLight',
+  controlCurtain: 'control curtain'
+};
+
 
 //debug
 Config.debug = false;
