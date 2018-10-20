@@ -1,2 +1,29 @@
 /* pages/scene/scene.wxss */
+@import "../tpls/category/category-tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
 
+.group-wrapper{
+    width: 100%;
+    
+}
+.category-goods-items{
+    width: 25%;
+    margin-bottom: 20rpx;
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.category-goods-items.middle{
+    margin:0 0 20rpx 0;
+}
+
+.save-float{
+  position: fixed;
+  display: flex;
+  top: 50rpx;
+  right: 5rpx;
+  width: 100rpx;
+  height: 100rpx;
+}

@@ -35,5 +35,6 @@ App({
     code:null,
     appid:'wx5ef2de2111a9a82a',
     secret:'e3658cc08939eb93cf45238c536ec1e6',
+    customerid:null
   },
 })

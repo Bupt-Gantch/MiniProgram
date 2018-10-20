@@ -3,8 +3,6 @@
     overflow: hidden;
     padding: 30rpx 20rpx 0rpx;
     height: 100%;
-   
-    
 }
 .category-header{
     height: 70%;
@@ -119,6 +117,7 @@
     width: 150rpx;
     border-radius: 0;
 }
+
 .circle-float {
   position: fixed;
   display: flex;

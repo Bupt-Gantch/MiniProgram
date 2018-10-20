@@ -218,6 +218,59 @@ class Category extends Base{
     this.request(param);
   }
 
+  /**=================END======================= */
+
+  /**
+   * =================scene=====================
+   */
+
+  loadAllScene(customerId, callback) {
+    var param = {
+      url: 'deviceaccess/scene/customer/' + customerId,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  createScene(param, callback) {
+    var params = {
+      url: 'deviceaccess/group',
+      type: 'POST',
+      data: param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+    this.request_post(params);
+  }
+
+  deleteScene(sceneId, callback) {
+    var param = {
+      url: 'deviceaccess/group',
+      type: 'DELETE',
+      data:{
+        sceneId:sceneId
+      },
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+    this.request(param);
+  }
+
+  alterScene(param, callback) {
+    var params = {
+      url: 'deviceaccess/group',
+      data: param,
+      type: 'DELETE',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+    this.request(params);
+  }
 }
 
 export {Category};

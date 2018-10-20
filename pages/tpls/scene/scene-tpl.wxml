@@ -1,0 +1,29 @@
+<template name="scene">
+  <view class="category-detail-box">
+
+    <view class="category-title">
+      <text>全部{{bannerTitle}}</text>
+    </view>
+
+    <scroll-view class="category-main" scroll-y>
+      <view class='category-main-view'>
+        <block wx:for="{{allSceneArr}}" wx:key="{{item.id}}">
+          <!-- 下面存放单个设备的div  -->
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.id}}" data-scenename="{{item.groupName}}" bindtap="onSceneItemTap" bindlongpress="onSceneLongPress">
+            <view class='group-image'>
+              <image src='{{imgUrl["scene"]}}' mode="aspectFit"></image>
+            </view>
+            <view>{{item.groupName}}</view>
+          </view>
+          <!-- end -->
+        </block>
+        <view class='category-goods-items'>
+        <view class='group-image'>
+          <image src='/imgs/icon/addScene.png' mode="aspectFit" bindtap='onAddScene'></image>
+        </view>
+        <view>添加场景</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>

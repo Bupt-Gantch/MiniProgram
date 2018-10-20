@@ -89,11 +89,13 @@ Page({
    */
   imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
+    var pictures= [];
+    pictures.push(src)
     // var pictures = e.currentTarget.dataset.pictures.pictures;
-    // wx.previewImage({
-    //   current: src,
-    //   urls: src,
-    // })
+    wx.previewImage({
+      current: src,
+      urls: pictures,
+    })
   },
   /**
    * 评论

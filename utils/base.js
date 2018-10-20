@@ -91,26 +91,7 @@ class Base {
           
         }]
       })
-      if (Config.test === '1') {
-        //消息列表模拟数据
-        var res = Mock.mock({
-          'error_code': '',
-          'error_msg': '',
-          'data|5-10': [{
-            'pId|+1': 1,
-            'favoritenum|1-50': 0,
-            'pAvatar': "@image('200x100', '#4A7BF7','#fff','pic')",
-            'nickName': '@cname()',
-            'timeStamp': '@datetime()',
-            'pContent': '@cparagraph(2)',
-            'location': '@county(true)',
-            'pictures': '',
-            'up': '',
-            'comments': '',
-          }]
-        })
-
-      } else if (Config.test === '2') {
+     if (Config.test === '2') {
         var res = Mock.mock({
           'error_code': '',
           'error_msg': '',

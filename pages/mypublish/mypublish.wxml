@@ -1,6 +1,6 @@
 <!--pages/mypublish/mypublish.wxml-->
 <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
-  <view class='items-list' wx:for="{{infolist}}">
+  <view class='items-list' wx:for="{{infolist}}" wx:key="item">
     <view class='info-content'>
       <view>
         <text class='info-detail'>{{item.pContent}}</text>
@@ -8,7 +8,8 @@
       <view class='div'>
         <!-- <view class="info-pictures" wx:for="{{item.pictures}}" wx:for-item="img">
           <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode='widthFix'></image> -->
-<image src='/imgs/icon/bg.png' style='width:32%' mode='widthFix' bindtap='imageClick'></image>
+          <image wx:if='{{item.image}}' src="{{item.image}}" style='width:32%' mode='widthFix' data-src='{{item.image}}' bindtap='imageClick'></image>
+<!-- <image src='/imgs/icon/bg.png' style='width:32%' mode='widthFix' bindtap='imageClick'></image> -->
         <!-- </view> -->
 
 

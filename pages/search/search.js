@@ -66,6 +66,20 @@ Page({
     })
   },
 
+  /**
+* 点击图片查看
+*/
+  imageClick: function (e) {
+    var src = e.currentTarget.dataset.src;
+    var pictures = [];
+    pictures.push(src)
+    // var pictures = e.currentTarget.dataset.pictures.pictures;
+    wx.previewImage({
+      current: src,
+      urls: pictures,
+    })
+  },
+
   onPullDownRefresh: function () {
     info = [];
     if (!this.data.end) {

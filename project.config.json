@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -58,8 +58,8 @@
 				},
 				{
 					"id": 4,
-					"name": "设备详情",
-					"pathName": "pages/device/device",
+					"name": "scene",
+					"pathName": "pages/scene/scene",
 					"query": ""
 				},
 				{
@@ -119,7 +119,32 @@
 				{
 					"id": -1,
 					"name": "mynews",
-					"pathName": "pages/mynews/mynews"
+					"pathName": "pages/mynews/mynews",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "group",
+					"pathName": "pages/group/group",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "scene",
+					"pathName": "pages/scene/scene",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "group",
+					"pathName": "pages/group/group",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "scene",
+					"pathName": "pages/scene/scene",
+					"query": ""
 				}
 			]
 		}

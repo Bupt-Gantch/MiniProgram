@@ -30,12 +30,18 @@ Page({
       placeholder: "请输入设备组名"
     },
     groupName: '',
+
+    showModalScene: false,
+    contentScene: {
+      title: "创建场景",
+      placeholder: "请输入场景名"
+    },
+    sceneName: '',
+
     hiddenPicker: true,
     pickerValueArr:[0],
     pickeredGroup: {},
-
-    requestId: 1000000   //请求id100w 递减
-    
+    requestId: 1000000,   //请求id100w 递减
   },
 
   /**
@@ -54,6 +60,7 @@ Page({
     this._loadBaannerTitle(name);
     this._loadCateDevices(index);
     this._loadAllGroup();
+    this._loadAllScene();
   },
 
   /**
@@ -245,8 +252,7 @@ Page({
           icon: 'success',
           duration: 1000,
           // mask: true
-        });
-        
+        });    
       }else{              //状态码不是200  应用失败
         wx.showToast({
           title: '应用失败',
@@ -287,6 +293,10 @@ Page({
     // }
   },
 
+  /**
+   * =================group=====================
+   */
+
   _loadAllGroup: function(){
     var customerId = app.globalData.customerId;
     category.loadAllGroup(customerId,(data)=>{
@@ -302,7 +312,6 @@ Page({
           title: '设备组创建成功',
         });
         this._loadAllGroup();
-      
     })
   },
 
@@ -324,14 +333,14 @@ Page({
     });
   },
 
-  onGroupsLongPress: function(event) {
+  onGroupsLongPress: function (event) {
     var _this = this;
     var groupid = category.getDataSet(event, 'groupid');
     wx.showModal({
       title: '删除设备分组',
       content: '您确定要删除该设备分组吗？',
-      success: function(res){
-        if(res.confirm){
+      success: function (res) {
+        if (res.confirm) {
           _this._deleteGroup(groupid);
         }
       }
@@ -342,7 +351,7 @@ Page({
    * 弹窗添加分组方法
    * ========================================================
    */
-  onAddGroupTap: function(event){
+  onAddGroupTap: function (event) {
     this.setData({
       showModal: true,
       groupName: ''
@@ -352,14 +361,6 @@ Page({
    * 弹出框蒙层截断touchmove事件
    */
   preventTouchMove: function () {
-  },
-  /**
-   * 隐藏模态对话框
-   */
-  hideModal: function () {
-    this.setData({
-      showModal: false
-    });
   },
   /**
    * 对话框取消按钮点击事件
@@ -372,25 +373,132 @@ Page({
    */
   onConfirm: function () {
     var submitGroupName = this.data.groupName.trim();
-    if (submitGroupName === ""){
+    if (submitGroupName === "") {
       wx.showToast({
         title: '设备组名不能为空',
         icon: 'none'
       })
-    }else{
+    } else {
       this.hideModal();
       this._createGroup(submitGroupName);
     }
-    
   },
-  inputChange: function(event){
+  inputChange: function (event) {
     var inputValue = event.detail.value;
     this.data.groupName = inputValue;
   },
 
-  onPullDownRefresh: function () {
-    wx.stopPullDownRefresh();
-  },
-  
+   /**
+   * =================scene=====================
+   */
 
+  _loadAllScene: function () {
+    var customerId = app.globalData.customerId;
+    category.loadAllScene(customerId, (data) => {
+      this.setData({
+        allSceneArr: data.data
+      })
+    })
+  },
+
+  _createScene: function (params) {
+    // category.createScene(params, (res) => {
+    //   wx.showToast({
+    //     title: '场景创建成功',
+    //   });
+      // this._loadAllScene();
+      wx.navigateTo({
+        url: '../scene/scene?&sceneName=' + params
+      });
+    // })
+  },
+
+  _alterScene:function(params){
+    category.createScene(params, (res) => {
+      wx.showToast({
+        title: '场景修改成功',
+      });
+      this._loadAllScene();
+    })
+  },
+
+  _deleteScene: function (sceneId) {
+    category.deleteScene(sceneId, (res) => {
+      wx.showToast({
+        title: '场景删除成功',
+      });
+      this._loadAllScene();
+    })
+  },
+
+  onSceneItemTap: function (event) {
+    var sceneid = category.getDataSet(event, 'scene');
+    var sceneName = category.getDataSet(event, 'scenename');
+    wx.navigateTo({
+      url: '../scene/scene?sceneid=' + sceneid + '&sceneName=' + sceneName
+    });
+  },
+
+  onSceneLongPress: function (event) {
+    var _this = this;
+    var sceneid = category.getDataSet(event, 'sceneid');
+    wx.showModal({
+      title: '删除场景',
+      content: '您确定要删除该场景吗？',
+      success: function (res) {
+        if (res.confirm) {
+          _this._deleteScene(sceneid);
+        }
+      }
+    });
+  },
+
+  /**
+   * 弹窗添加场景方法
+   */
+  onAddScene: function(event){
+    this.setData({
+      showModalScene: true,
+      sceneName: ''
+    })
+  },
+  /**
+   * 弹出框蒙层截断touchmove事件
+   */
+  preventTouchMove: function () {
+  },
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false,
+      showModalScene:false
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function () {
+    this.hideModal();
+  },
+  /**
+   * 场景对话框确认按钮点击事件
+   */
+  onSceneConfirm: function () {
+    var submitGroupName = this.data.sceneName.trim();
+    if (submitGroupName === ""){
+      wx.showToast({
+        title: '场景名不能为空',
+        icon: 'none'
+      })
+    }else{
+      this.hideModal();
+      this._createScene(submitGroupName);
+    }
+  },
+  inputSceneChange: function(event){
+    var inputValue = event.detail.value;
+    this.data.sceneName = inputValue;
+  },
 })
