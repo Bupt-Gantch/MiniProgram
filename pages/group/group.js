@@ -121,8 +121,8 @@ Page({
     };
 
     group.turnSwitch(data, (res) => {
-      var statusCode = res.statusCode.toString();
-      if (statusCode.charAt(0) == '2' && res.data.indexOf("device") === -1) {   //状态码为200则应用成功
+      
+      if ( res.indexOf("device") === -1) {   //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',
           icon: 'success',

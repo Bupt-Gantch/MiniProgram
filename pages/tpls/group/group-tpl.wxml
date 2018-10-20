@@ -22,7 +22,7 @@
               <image src='{{imgUrl["group"]}}' mode="aspectFit"></image>
             </view>
             
-            <view>{{item.name}}</view>
+            <view class='devicename'>{{item.name}}</view>
             
           </view>
           <!-- end -->

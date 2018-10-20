@@ -131,8 +131,10 @@ Page({
 
 
   onDevicesItemTap: function (event) {
+    var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceid = category.getDataSet(event, 'deviceid');
-    var deviceType = category.getDataSet(event, 'type');
+    var deviceType = deviceInfo.deviceType;
+    var deviceName = deviceInfo.name;
     
     if(deviceType === "switch" || deviceType === "outlet"){
       //nothing
@@ -143,7 +145,7 @@ Page({
     } 
     else{
       wx.navigateTo({
-        url: '../device/device?deviceid='+deviceid+'&deviceType='+deviceType
+        url: '../device/device?deviceid='+deviceid+'&deviceType='+deviceType+'&deviceName='+deviceName
       });
     }
   },
@@ -243,8 +245,7 @@ Page({
     };
 
     category.turnSwitch(data,(res) =>{
-      var statusCode = res.statusCode.toString();
-      if(statusCode.charAt(0) == '2' && res.data.indexOf("device") ===-1){   //状态码为200则应用成功
+      if( res.indexOf("device") ===-1){   //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',
           icon: 'success',

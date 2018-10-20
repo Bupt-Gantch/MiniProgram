@@ -63,6 +63,12 @@ Config.otherImg = {
   'scene':'../../imgs/test/scene.png'
 };
 
+Config.serviceName = {
+  controlSwitch: 'control switch',
+  controlDimmableLight: 'control dimmableLight',
+  controlCurtain: 'control curtain'
+};
+
 
 //debug
 Config.debug = false;

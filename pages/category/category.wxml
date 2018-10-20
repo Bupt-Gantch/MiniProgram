@@ -68,6 +68,7 @@
     <template is="modalScene" data="{{showModalScene,contentScene}}">
   </template>
 
+  <!-- 分配设备组picker -->
   <view wx:if="{{!hiddenPicker}}" class='group-picker'>
     <view class='picker-header'>
       <view class='title'>请选择设备分组</view>
@@ -79,7 +80,7 @@
     <picker-view indicator-class='picker-indicator' value="{{pickerValueArr}}" mask-class='picker-mask' bindchange="onPickerChange">
       <picker-view-column>
         <view wx:for="{{allGroupArr}}" wx:key="{{item.id}}"
-        style="line-height: 50px">{{item.groupName}}</view>
+        style="line-height: 50px">{{item.name}}</view>
       </picker-view-column>
     </picker-view>
   </view>

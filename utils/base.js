@@ -14,6 +14,7 @@ class Base {
     this.debug = Config.debug;
     if (!this.debug) {
       var url = this.baseRequestUrl + params.url;
+  
       if (!params.method) {
         params.method = 'GET';
       }
@@ -148,7 +149,7 @@ class Base {
       wx.request({
         url: url,
         data: params.data,
-        method: params.type,
+        method: params.method,
         header: {
           'content-type': 'application/json',
           'token': wx.getStorageSync('token')
