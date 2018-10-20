@@ -17,11 +17,6 @@
       <text class='info-time'>{{item.timeStamp}}</text>
       <view class='info-place'>{{item.location}}</view>
     </view>
-    <view class='info-footer'>
-      <view class='info-uc'>
-        <image class='info-delete' data-infoid="{{item.pId}}" data-index="{{index}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
-      </view>
-    </view>
   </view>
 </scroll-view>
   <view class="endbox" wx:if="{{end}}">

@@ -20,10 +20,9 @@
 }
 
 .save-float{
-  position: fixed;
-  display: flex;
-  top: 50rpx;
-  right: 5rpx;
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
   width: 100rpx;
   height: 100rpx;
 }

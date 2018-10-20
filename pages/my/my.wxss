@@ -67,6 +67,10 @@
   position: relative;
 }
 
+.scan{
+  top: 16rpx
+}
+
 .item-title image {
   position: absolute;
   transform: rotate(270deg);

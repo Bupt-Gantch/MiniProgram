@@ -20,7 +20,7 @@ class Release extends Base {
 
   addContent(param,callback){
     var params = {
-      url: Config.restUrl+'addPost',
+      url: Config.postUrl+'addPost',
       data:param,
       method:'POST',
       sCallback:function(res){

@@ -4,35 +4,17 @@ class My extends Base {
   constructor() {
     super()
   }
-  // getMyUp(openid,callback){
-  //   var param = {
-  //     url: Config+'?openid='+openid,
-  //     sCallback: function (data) {
-  //       callback && callback(data);
-  //     }
-  //   };
-  //   this.request_test(param)
-  // }
-
-  // getMyComment(openid, callback) {
-  //   var param = {
-  //     url: '?openid=' + openid,
-  //     sCallback: function (data) {
-  //       callback && callback(data);
-  //     }
-  //   };
-  //   this.request(param)
-  // }
-
+  
   //添加设备
   addDevice(param,callback){
+    console.log(param)
     var params = {
-      url:'',
-      data:param.data,
+      url: Config.getwayUrl + 'assignAll/' + param.customerId+'?gateway_user="'+param.gateway_user+'"',
       sCallback:function(data){
         callback && callback(data);
       }
-    }
+    };
+    this.request_test(params)
   }
 }
 

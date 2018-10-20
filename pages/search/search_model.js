@@ -7,7 +7,7 @@ class Search extends Base {
 
   getSearch(param, callback) {
     var params = {
-      url: Config.restUrl+'search',
+      url: Config.postUrl+'search',
       method: 'POST',
       data: param,
       sCallback: function (data) {

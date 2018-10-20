@@ -1,4 +1,5 @@
 import { Base } from '../../utils/base.js';
+import { Config } from '../../utils/config.js';
 
 class Category extends Base{
   constructor(){
@@ -226,24 +227,12 @@ class Category extends Base{
 
   loadAllScene(customerId, callback) {
     var param = {
-      url: 'deviceaccess/scene/customer/' + customerId,
+      url: Config.sceneUrl + 'getAllScene/'+customerId,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
-  }
-
-  createScene(param, callback) {
-    var params = {
-      url: 'deviceaccess/group',
-      type: 'POST',
-      data: param,
-      sCallback: function (data) {
-        callback && callback(data);
-      }
-    }
-    this.request_post(params);
+    this.request_test(param);
   }
 
   deleteScene(sceneId, callback) {

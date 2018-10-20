@@ -2,11 +2,6 @@
   <view class="my-header">
     <view class="userinfo">
       <block>
-      <!-- <view class="userinfo-avatar">
-      <open-data type="userAvatarUrl" background-size="cover"></open-data>
-      </view>
-      <open-data type="userNickName" class="userinfo-nickname"></open-data> -->
-
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </block>
@@ -20,11 +15,11 @@
     <!-- <view class="my-item" bindtap='myNews'>
       <text>{{content.mynews}}</text>
     </view> -->
-        <view class="my-item" bindtap='scan'>
-      <text>{{content.scan}}</text>
-    </view>
     <view class="my-item" bindtap='onContactTap'>
       <text>{{content.feedback}}</text>
+    </view>
+    <view class="my-item scan" bindtap='scan'>
+      <text>{{content.scan}}</text>
     </view>
     <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
   </view>

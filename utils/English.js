@@ -17,6 +17,7 @@ var English = {
   sensor: "Sensor",
   swi: "Switch",
   othertypes: "Other types",
+  scenetypes: "Scene types",
   temperature: "Temperature",
   humidity: "humidity",
   name: "name",

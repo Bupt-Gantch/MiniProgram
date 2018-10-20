@@ -58,15 +58,11 @@
     <view class="section__title">饱和度</view>
     <slider name="slider" show-value ></slider>
   </view>
-  <!-- <view class="btn-area">
-    <button formType="submit">保存</button>
-    <button formType="reset">重置</button>
-  </view> -->
-</form>
+  <view class="modal-footer">
+      <button class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</button>
+      <button formType="submit" class="btn-confirm">确定</button>
     </view>
-    <view class="modal-footer">
-      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+</form>
     </view>
   </view>
 </template>
@@ -161,4 +157,47 @@
     </view>
   </view>
 </template>
+
+<!--开关模板-->
+
+<template name="switch">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showSwitch}}"></view>
+  <view class="modal-dialog" wx:if="{{showSwitch}}">
+    <view class="modal-title">开关参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--窗帘模板-->
+
+<template name="curtain">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showCurtain}}"></view>
+  <view class="modal-dialog" wx:if="{{showCurtain}}">
+    <view class="modal-title">窗帘参数配置</view>
+    <view class="modal-content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <view class="section__title">开关</view>
+    <switch name="switch"/>
+  </view>
+</form>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
 
