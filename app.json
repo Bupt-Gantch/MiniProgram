@@ -20,13 +20,8 @@
     "navigationBarBackgroundColor": "#7fbcd2",
     "navigationBarTitleText": "冠川智能家居",
     "navigationBarTextStyle": "white",
-<<<<<<< HEAD
-    "enablePullDownRefresh": true,
-    "backgroundColor": "#7fbcd2"
-=======
     "enablePullDownRefresh": false,
-    "backgroundColor": "#eeeeee"
->>>>>>> 5a2950ec73b96f97cdd845d021e9c07c3ddde104
+    "backgroundColor": "#7fbcd2"
   },
   "tabBar": {
     "list": [
