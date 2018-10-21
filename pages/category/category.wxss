@@ -14,7 +14,8 @@
 }
 .left-box{
     flex: 0 1 150rpx;
-    border-right:1rpx solid #D8D8D8;
+    border-right:1rpx solid #a8d3ba;
+    background-color: #e7eae9
 }
 .group-btn{
   margin-top: 20px;
@@ -27,22 +28,24 @@
     align-items: center;
     justify-content: center;
     font-size:28rpx;
-    border-left: 6rpx solid #fff;
+    border-left: 6rpx solid #a8d3ba;
+    color: #a8d3ba
 }
 .menu-item.selected{
-    color: #AB956D;
-    border-left-color:#AB956D;
+    color: #5a9ec8;
+    border-left-color:#5a9ec8;
 }
 
 .separate{
   left: 0;
-  height: 20rpx;
+  height: 6rpx;
   display: flex; 
   align-items: center;
   justify-content: center;
   font-size:28rpx;
-  border-bottom: 6rpx solid #AB956D;
-  color: #AB956D;
+  border-bottom: 3rpx solid #a8d3ba;
+  color: #a8d3ba;
+  background-color: #a8d3ba
 }
 
 /*

@@ -6,40 +6,40 @@ class Publish extends Base{
   }
   getInfoList(page, callback) {
     var param = {
-      url: Config.postUrl+'findAllPosts',
+      url: 'wechatPost/findAllPosts',
       data:{
         page:page,
       },
-      method:'POST',
+      method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(param);
+    this.request(param);
   }
 
   addComment(data,callback){
     var param = {
-      url: Config.postUrl+'addComment',
+      url: 'wechatPost/addComment',
       data:data,
       method:'POST',
       sCallback:function(data){
         callback&&callback(data);
       }
     };
-    this.request_test(param);
+    this.request(param);
   }
 
   addUp(data,callback){
     var param = {
-      url: Config.postUrl+'favorite',
+      url: 'wechatPost/favorite',
       data:data,
       method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(param)
+    this.request(param)
   }
 }
 

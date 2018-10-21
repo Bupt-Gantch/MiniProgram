@@ -423,12 +423,14 @@ Page({
     })
   },
 
-  _deleteScene: function (sceneId) {
-    category.deleteScene(sceneId, (res) => {
-      wx.showToast({
-        title: '场景删除成功',
-      });
-      this._loadAllScene();
+  _deleteScene: function (param) {
+    category.deleteScene(param, (res) => {
+      if(res=="success"){
+        wx.showToast({
+          title: '场景删除成功',
+        });
+        this._loadAllScene();
+      }
     })
   },
 
@@ -443,12 +445,18 @@ Page({
   onSceneLongPress: function (event) {
     var _this = this;
     var sceneid = category.getDataSet(event, 'sceneid');
+    var gatewayid = "Gateway_"
+    gatewayid += category.getDataSet(event, 'parentid');
+    var param = {
+      sceneid: sceneid,
+      gatewayid: gatewayid
+    }
     wx.showModal({
       title: '删除场景',
       content: '您确定要删除该场景吗？',
       success: function (res) {
         if (res.confirm) {
-          _this._deleteScene(sceneid);
+          _this._deleteScene(param);
         }
       }
     });

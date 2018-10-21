@@ -86,9 +86,20 @@ Page({
   },
 
   scan:function(){
+    wx.scanCode({
+      success:function(res){
+        if(res.result!=null){
+          var gateway = res.result;
+          if(gateway.length==26||gateway.length==27){
+            var gateway_user="Gateway_";
+            var i=13;
+            while(gateway[i]!='p'){
+              gateway_user+=gateway[i],
+              i++
+            }
             var param={
               customerId: app.globalData.customerId,
-              gateway_user: "Gateway_30222"
+              gateway_user: gateway_user
             };
             my.addDevice(param,(res)=>{
               console.log(res)
@@ -100,64 +111,27 @@ Page({
             } else {
               wx.showModal({
                 title: '添加失败',
-                content: '该设备已被其他用户添加，请联系管理员。',
-                success: function (res) {
-                  if (res.confirm) {
-                   wx.makePhoneCall({
-                     phoneNumber: '18310020135',
-                   })
-                  }
-                }
+                content: '该设备已被其他用户添加，请联系管理员。Phone:183 1022 0135',
               })
             }
           })
-
-    // wx.scanCode({
-    //   success:function(res){
-    //     if(res.result!=null){
-    //       var gateway = res.result;
-    //       if(gateway.length==26||gateway.length==27){
-    //         var gateway_user="Gateway_";
-    //         var i=13;
-    //         while(gateway[i]!='p'){
-    //           gateway_user+=gateway[i],
-    //           i++
-    //         }
-    //         var param={
-    //           customerId: app.globalData.customerId,
-    //           gateway_user: gateway_user
-    //         };
-    //         my.addDevice(param,(res)=>{
-    //           console.log(res)
-    //         if (res.status!=500) {
-    //           wx.showToast({
-    //             title: '添加成功',
-    //             duration: 3000,
-    //           })
-    //         } else {
-    //           wx.showModal({
-    //             title: '添加失败',
-    //             content: '该设备已被其他用户添加，请联系管理员。Phone:183 1022 0135',
-    //           })
-    //         }
-    //       })
-    //       }
-    //       else{
-    //         wx.showToast({
-    //           title: '无效的二维码',
-    //           icon: 'none',
-    //           duration: 2000,
-    //         })
-    //       }
-    //     }else{
-    //       wx.showToast({
-    //         title: '无效的二维码',
-    //         icon:'none',
-    //         duration: 2000,
-    //       })
-    //     }
-    //   }
-    // })
+          }
+          else{
+            wx.showToast({
+              title: '无效的二维码',
+              icon: 'none',
+              duration: 2000,
+            })
+          }
+        }else{
+          wx.showToast({
+            title: '无效的二维码',
+            icon:'none',
+            duration: 2000,
+          })
+        }
+      }
+    })
   },
   
   changeLanuage: function () {

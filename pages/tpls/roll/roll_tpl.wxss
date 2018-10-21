@@ -1,0 +1,14 @@
+.swiper_view { 
+ width: 100%; 
+ height: 40rpx;
+ margin-top: 10rpx; 
+ color: #a8d3ba
+}
+.reds{ 
+ overflow: hidden; 
+ text-overflow: ellipsis; 
+ white-space:nowrap; 
+ width:100%; 
+ font-size: 30rpx; 
+ height: 40rpx; 
+} 

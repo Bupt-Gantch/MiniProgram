@@ -17,11 +17,11 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#AB956D",
+    "navigationBarBackgroundColor": "#7fbcd2",
     "navigationBarTitleText": "冠川智能家居",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
-    "backgroundColor": "#eeeeee"
+    "backgroundColor": "#7fbcd2"
   },
   "tabBar": {
     "list": [
@@ -34,8 +34,8 @@
       {
         "pagePath": "pages/category/category",
         "text": "设备",
-        "iconPath": "imgs/toolbar/home.png",
-        "selectedIconPath": "imgs/toolbar/home@selected.png"
+        "iconPath": "imgs/toolbar/device.png",
+        "selectedIconPath": "imgs/toolbar/device@selected.png"
       },
       {
         "pagePath": "pages/publish/publish",
@@ -50,9 +50,9 @@
         "selectedIconPath": "imgs/toolbar/my@selected.png"
       }
     ],
-    "borderStyle": "#AB956D",
-    "selectedColor": "#AB956D",
-    "color": "#989898",
-    "backgroundColor": "#F5F5F5"
+    "borderStyle": "#a6a8a8",
+    "selectedColor": "#7fbcd2",
+    "color": "#a8d3ba",
+    "backgroundColor": "#e7eae9"
   }
 }

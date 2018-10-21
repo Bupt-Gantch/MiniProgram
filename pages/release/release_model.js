@@ -8,7 +8,7 @@ class Release extends Base {
 
   addPlace(param, callback) {
     var params = {
-      url: 'https://restapi.amap.com/v3/geocode/regeo?key=' + param.data.key + '&location=' + param.data.location + '&extensions=' + param.data.extensions + '&radius=' + param.data.radius,
+      url: Config.regeoUrl+'?key=' + param.data.key + '&location=' + param.data.location + '&extensions=' + param.data.extensions + '&radius=' + param.data.radius,
       data: param.data,
       method: 'POST',
       sCallback: function (res) {
@@ -20,7 +20,7 @@ class Release extends Base {
 
   addContent(param,callback){
     var params = {
-      url: Config.postUrl+'addPost',
+      url: 'wechatPost/addPost',
       data:param,
       method:'POST',
       sCallback:function(res){

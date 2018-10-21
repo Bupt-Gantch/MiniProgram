@@ -1,10 +1,6 @@
 // pages/loading/loading.js
-import {
-  Config
-} from '../../utils/config.js';
-import {
-  Loading
-} from 'loading_model.js';
+import { Config } from '../../utils/config.js';
+import { Loading } from 'loading_model.js';
 var loading = new Loading();
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
@@ -42,28 +38,12 @@ Page({
         }
         loading.getOpenid(param, (res) => {
           app.globalData.openid = res.openid
-            this.setData({
-              openid: res.openid,
-            })
           if (res.errcode!=40029){
             app.globalData.openid = res.openid
-            this.setData({
-              openid: res.openid,
-            })
-          }else{
-            wx.showToast({
-              title: '请检查网络设置',
-              ico:'none',
-              duration: 2000,
-            })
           }
         })
       }
     })
-    }else{
-      this.setData({
-        openid:app.globalData.openid
-      })
     }
     this.setData({
       content: app.getLanuage(app.globalData.language),

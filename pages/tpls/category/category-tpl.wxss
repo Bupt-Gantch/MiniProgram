@@ -3,6 +3,7 @@
     overflow: hidden;
     padding: 30rpx 20rpx 0rpx;
     height: 100%;
+    background-color: #dbe8f1
 }
 .category-header{
     height: 70%;
@@ -22,7 +23,7 @@
 }
 .category-title text{
     font-size: 30rpx;
-    color:#AB956D;
+    color:#5a9ec8;
 }
 .category-title text::before,.category-title text::after{
     content: '';
@@ -85,7 +86,7 @@
   
 }
 .category-goods-items view {
-    color:#444452;
+    color:#7fbcd2;
     font-size: 24rpx;
     
 }
@@ -100,10 +101,11 @@
   height: 12rpx;
   width: 12rpx;
   border-radius:50%; 
-  background-color: gray;
+  background-color: #a8d3ba;
   margin: 5rpx;
 }
 .devicename{
+  white-space: nowrap;
   overflow:scroll;
   width:100%;
 }

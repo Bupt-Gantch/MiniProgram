@@ -7,14 +7,13 @@ class My extends Base {
   
   //添加设备
   addDevice(param,callback){
-    console.log(param)
     var params = {
-      url: Config.getwayUrl + 'assignAll/' + param.customerId+'?gateway_user="'+param.gateway_user+'"',
+      url: 'deviceaccess/assignAll/' + param.customerId+'?gateway_user="'+param.gateway_user+'"',
       sCallback:function(data){
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
 }
 

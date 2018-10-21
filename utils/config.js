@@ -8,17 +8,11 @@ class Config{
   }
 }
 
-
-
-// Config.restUrl = 'http://10.108.217.108:8080/api/v1/wechatPost/';
-Config.sceneUrl = 'http://47.104.8.164:8800/api/v1/scene/';
-Config.getwayUrl = 'http://47.105.120.203:30080/api/v1/deviceaccess/';
-Config.postUrl = 'http://47.104.8.164:80/api/v1/wechatPost/';
-Config.restUrl = 'http://smart.gantch.cn:30080/api/v1/';
-Config.account = 'http://47.105.120.203:30080/api/v1/account/';
+Config.restUrl = 'https://smart.gantch.cn/api/v1/';
+Config.regeoUrl = 'https://restapi.amap.com/v3/geocode/regeo';
 Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
 Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';
-//Config.wsUrl = 'ws://39.104.189.84:8800/api/warning/webSocket';
+
 Config.switchOnUrl = ['../../imgs/test/switch@on.png','../../imgs/test/socket@on.png'];  //开关和插座亮时的图片
 Config.categoryImgUrl = '../../imgs/category/';
 
@@ -68,11 +62,5 @@ Config.serviceName = {
   controlDimmableLight: 'control dimmableLight',
   controlCurtain: 'control curtain'
 };
-
-
-//debug
-Config.debug = false;
-
-Config.test = '2';
 
 export {Config};

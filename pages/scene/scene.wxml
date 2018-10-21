@@ -1,25 +1,30 @@
 <!--pages/scene/scene.wxml-->
-<import src="../tpls/category/category-tpl.wxml"/>
-<import src="../tpls/modal/modal-tpl.wxml"/>
-  <view>
-    <image class="save-float" src='/imgs/icon/save.png' bindtap='saveScene'></image>
-  </view>
+<import src="../tpls/category/category-tpl.wxml" />
+<import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/scene/scene-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml"/>
+<view>
+    <template is="roll" data="{{news}}"></template>
+</view>
+<view>
+  <image class="save-float" src='/imgs/icon/save.png' bindtap='saveScene'></image>
+</view>
 
 <view class='container group-wrapper'>
-  <template is="categorytop" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices,statusTable}}">
+  <template is="scenecategory" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices}}">
   </template>
 
   <!--长按设置设备属性-->
   <template is="bulb1" data="{{showBulb1}}">
   </template>
-    <template is="bulb2" data="{{showBulb2}}">
+  <template is="bulb2" data="{{showBulb2}}">
   </template>
   <template is="bulb3" data="{{showBulb3}}">
   </template>
-    <template is="lock" data="{{showLock}}">
+  <template is="lock" data="{{showLock}}">
   </template>
-    <template is="curtain" data="{{showCurtain}}">
+  <template is="curtain" data="{{showCurtain}}">
   </template>
-    <template is="switch" data="{{showSwitch}}">
+  <template is="switch" data="{{showSwitch}}">
   </template>
 </view>

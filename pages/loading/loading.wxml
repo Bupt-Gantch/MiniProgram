@@ -1,16 +1,16 @@
 <!--pages/loading/loading.wxml-->
-<swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
+<!-- <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
   <block wx:for="{{imgUrls}}" wx:key="item">
     <swiper-item>
       <image src="{{item}}" class="slide-image" width="355" height="150" />
     </swiper-item>
   </block>
-</swiper>
-<scroll-view class='scroll-view' scroll-y="true">
-  {{content.introduce}}
-</scroll-view>
+</swiper> -->
+<view class='logo-view'>
+<!-- <image src='/imgs/swiper/logo2.png'></image> -->
+</view>
 
 <view class="enter-container">
-  <button plain="true" style="color: #ab956d; border-color: #ab956d" class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
+  <button plain="true" style="color: #a8d3ba; border-color: #a8d3ba" class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
 </view>
 <view class="language" bindtap='changeLanuage'>{{content.button}}</view>

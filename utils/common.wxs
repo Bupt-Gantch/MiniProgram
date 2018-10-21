@@ -9,18 +9,7 @@ var validatePhone = function(phone){
   return re.test(phone)
 };
 
-var dowloadimage = function(url){
-//   wx.downloadFile({
-//     url:url,
-//     success:function(res){
-//       console.log(res.tempFilePath)
-//       return res.tempFilePath
-//     }
-//   })
-};
-
 module.exports = {
   validateEmail: validateEmail,
   validatePhone: validatePhone,
-  dowloadimage:dowloadimage
 }

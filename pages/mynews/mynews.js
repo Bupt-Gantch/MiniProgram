@@ -1,11 +1,7 @@
 // pages/mypublish/mypublish.js
 var API = require('../../utils/api.js')
-import {
-  Config
-} from '../../utils/config.js';
-import {
-  myNews
-} from 'mynews_model.js';
+import { Config } from '../../utils/config.js';
+import { myNews } from 'mynews_model.js';
 var mynews = new myNews();
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")

@@ -18,12 +18,22 @@ class Scene extends Base {
 
   getSceneDevices(sceneid,callback) {
     var param = {
-      url: Config.sceneUrl+'getScene/'+sceneid,
+      url: 'scene/getScene/'+sceneid,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(param);
+    this.request(param);
+  }
+
+  getDeviceById(deviceid, callback) {
+    var param = {
+      url: 'deviceaccess/device/'+deviceid,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
   }
 }
 

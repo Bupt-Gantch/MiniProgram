@@ -1,9 +1,5 @@
-import {
-  Base
-} from '../../utils/base.js'
-import {
-  Config
-} from '../../utils/config.js';
+import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js';
 class Loading extends Base {
   constructor() {
     super()
@@ -22,7 +18,7 @@ class Loading extends Base {
 //查询用户表，是否存在openid
   findOpenid(openid, callback) {
     var param = {
-      url: Config.account+'userLogin',
+      url: 'account/userLogin',
       data:{
         openid:openid
       },
@@ -31,7 +27,7 @@ class Loading extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(param);
+    this.request(param);
   }
 }
 

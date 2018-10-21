@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 13,
 			"list": [
 				{
 					"id": -1,
@@ -94,24 +94,6 @@
 				},
 				{
 					"id": -1,
-					"name": "mypublish",
-					"pathName": "pages/mypublish/mypublish",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "mypublish",
-					"pathName": "pages/mypublish/mypublish",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "mypublish",
-					"pathName": "pages/mypublish/mypublish",
-					"query": ""
-				},
-				{
-					"id": -1,
 					"name": "分组&场景",
 					"pathName": "pages/scene/scene",
 					"query": ""
@@ -130,20 +112,8 @@
 				},
 				{
 					"id": -1,
-					"name": "scene",
-					"pathName": "pages/scene/scene",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "group",
-					"pathName": "pages/group/group",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "scene",
-					"pathName": "pages/scene/scene",
+					"name": "device",
+					"pathName": "pages/device/device",
 					"query": ""
 				}
 			]

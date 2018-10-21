@@ -1,9 +1,10 @@
 /* pages/mypublish/mypublish.wxss */
 
-page {
+page{
   width: 100%;
   height: 100%;
   font-size: 30rpx;
+  background-color: #e7eae9
 }
 
 /* .scroll-view{
@@ -107,11 +108,11 @@ page {
 .endbox{
   align-content: center;
   text-align: center;
-  color: #ab956d
+  color: #a8d3ba
 }
 .line{
   height: 3rpx;
-  background-color:#ab956d;
+  background-color:#a8d3ba;
   margin-bottom: 20rpx;
   margin-right: 10rpx;
   margin-left: 10rpx;

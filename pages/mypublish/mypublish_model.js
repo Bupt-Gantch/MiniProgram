@@ -7,26 +7,26 @@ class myPublish extends Base {
 
   getMyPublish(param, callback) {
     var params = {
-      url: Config.postUrl+'findAllPosts',
+      url: 'wechatPost/findAllPosts',
       method:'POST',
       data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
 
   deleteInformation(param,callback){
     var params = {
-      url: Config.postUrl+'deletePost',
+      url: 'wechatPost/deletePost',
       method:'POST',
       data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(params);
+    this.request(params);
   }
 }
 

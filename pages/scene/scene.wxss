@@ -1,10 +1,13 @@
 /* pages/scene/scene.wxss */
 @import "../tpls/category/category-tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
+@import "../tpls/roll/roll_tpl.wxss";
+page{
+  background-color: #dbe8f1
+}
 
 .group-wrapper{
     width: 100%;
-    
 }
 .category-goods-items{
     width: 25%;
@@ -21,7 +24,7 @@
 
 .save-float{
   position: absolute;
-  top: 30rpx;
+  top: 50rpx;
   right: 30rpx;
   width: 100rpx;
   height: 100rpx;

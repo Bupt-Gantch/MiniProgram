@@ -1,0 +1,10 @@
+<template name="roll"> 
+ <block> 
+   <swiper class='swiper_view' autoplay interval="0" duration="3000" circular="true"> 
+    <swiper-item wx:for="{{news}}" wx:key="item"> 
+     <view class='reds'>{{item.title}} 
+     </view> 
+    </swiper-item> 
+   </swiper> 
+ </block> 
+</template>

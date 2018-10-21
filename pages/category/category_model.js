@@ -227,21 +227,18 @@ class Category extends Base{
 
   loadAllScene(customerId, callback) {
     var param = {
-      url: Config.sceneUrl + 'getAllScene/'+customerId,
+      url: 'scene/getAllScene/'+customerId,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(param);
+    this.request(param);
   }
 
-  deleteScene(sceneId, callback) {
-    var param = {
-      url: 'deviceaccess/group',
+  deleteScene(param, callback) {
+    var params = {
+      url: 'scene/deleteScene/' + param.sceneid + '/' + param.gatewayid,
       type: 'DELETE',
-      data:{
-        sceneId:sceneId
-      },
       sCallback: function (data) {
         callback && callback(data);
       }

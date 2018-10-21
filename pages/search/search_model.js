@@ -7,15 +7,14 @@ class Search extends Base {
 
   getSearch(param, callback) {
     var params = {
-      url: Config.postUrl+'search',
+      url: 'wechatPost/search',
       method: 'POST',
       data: param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    console.log(params)
-    this.request_test(params)
+    this.request(params)
   }
 }
 
