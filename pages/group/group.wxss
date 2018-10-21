@@ -5,6 +5,9 @@
     width: 100%;
     
 }
+.category-detail-box{
+  width: 100%;
+}
 .category-goods-items{
     width: 25%;
     margin-bottom: 20rpx;

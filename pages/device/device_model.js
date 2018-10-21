@@ -164,7 +164,12 @@ class Device extends Base{
           params.forEach(function (e) {
             body[e.key] = getAttrVal(e.key, _data.attr);
           })
-          body.status = data.status;  //注意注意
+          for(let key in body){
+            if(body[key] === undefined){
+              body[key] = data.value;
+              break;
+            }
+          }
 
           return that.sendControl(data.deviceId, data.requestId, body);
         } else {
@@ -178,7 +183,6 @@ class Device extends Base{
 
       })
       .then((res) => {
-        console.log(res);
         sCallback && sCallback(res);
       })
       .catch((err) => {
