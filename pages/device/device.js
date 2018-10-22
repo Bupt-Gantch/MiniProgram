@@ -21,7 +21,13 @@ Page({
       dimmableStep: 2
     },
     serviceName: Config.serviceName,
-    requestId: 1000000   //请求id100w 递减
+    requestId: 1000000,   //请求id100w 递减
+    showEdit:false,
+    content: {
+      title: "修改设备名",
+      placeholder: "请输入设备名"
+    },
+    newName: '',
   },
 
   /**
@@ -212,8 +218,72 @@ Page({
     this.data.requestId--;
 
   },
- 
-  
 
-  
+  /**修改别名*/
+  onChangeName:function(){
+    this.setData({
+      showEdit: true,
+      newName: ''
+    })
+  },
+  /**
+   * 弹出框蒙层截断touchmove事件
+   */
+  preventTouchMove: function () {
+  },
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showEdit: false,
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function () {
+    this.hideModal();
+  },
+  /**
+   * 场景对话框确认按钮点击事件
+   */
+  onEditConfirm: function () {
+    var submitnewName = this.data.newName.trim();
+    if (submitnewName === "") {
+      wx.showToast({
+        title: '设备别名不能为空',
+        icon: 'none'
+      })
+    } else {
+      this.hideModal();
+      this.data.deviceInfo.nickname = submitnewName;
+      var newdeviceInfo = this.data.deviceInfo
+      device.saveDevice(newdeviceInfo,(res)=>{
+        console.log(res)
+        if (res.statusCode==200){
+          wx.showToast({
+            title: '修改成功',
+            duration: 1000,
+          })
+          this.setData({
+            deviceName: submitnewName
+          })
+        }else{
+          wx.showToast({
+            title: '修改失败',
+            icon:'none',
+            duration:1000
+          })
+        }
+      })
+      // this._createScene(submitGroupName);
+
+
+    }
+  },
+  inputChange: function (event) {
+    var inputValue = event.detail.value;
+    this.data.newName = inputValue;
+  },
 })

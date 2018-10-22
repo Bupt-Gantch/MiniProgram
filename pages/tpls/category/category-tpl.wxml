@@ -30,7 +30,8 @@
             </view>
             <view wx:if="{{!item.online}}" class='online'></view>
             <!-- <view wx:if="{{!item.online}}" class='offline'></view> -->
-            <view class='devicename'>{{item.name}}</view>
+            <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
+            <view wx:else class='devicename'>{{item.name}}</view>
             
           </view>
           <!-- end -->

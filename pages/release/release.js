@@ -114,9 +114,36 @@ Page({
     var imagePath = this.data.imageList[0]
     console.log(imagePath)
     if (imagePath==undefined){
-      imagePath = ""
-    }
-    wx.uploadFile({
+      var param = {
+        openId: app.globalData.openid,
+        nickName: app.globalData.userInfo.nickName,
+        avatar: app.globalData.userInfo.avatarUrl,
+        content: e.detail.value.textarea,
+        location: this.data.lastplace,
+        image:"",
+      }
+      release.addContent(param,(res)=>{
+        console.log(res)
+        if (res.data == 1) {
+          wx.showToast({
+            title: '发布成功',
+            duration: 3000,
+          })
+          setTimeout(function () {
+            wx.reLaunch({
+              url: '../publish/publish',
+            })
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: '发布失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    }else{
+      wx.uploadFile({
       url: Config.restUrl+'wechatPost/addPost',
       filePath: imagePath,
       name: 'image',
@@ -147,6 +174,6 @@ Page({
             })
           }
       }
-    })
+    })}
   }
 })

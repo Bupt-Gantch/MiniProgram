@@ -1,4 +1,5 @@
 @import "../tpls/base.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
 .detail-container {
   background-color:#e7eae9;/*#24292e*/
   color:#F9F9F9;

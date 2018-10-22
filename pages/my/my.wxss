@@ -55,7 +55,7 @@ page {
   bottom: 10rpx;
   right: 10rpx;
   font-size: 35rpx;
-  color: #a8d3ba;
+  color: #49cc80;
 }
 
 .my-main {
@@ -66,9 +66,9 @@ page {
 
 .my-item {
   padding: 30rpx 0;
-  color: #a8d3ba;
+  color: #49cc80;
   text-align: center;
-  border-bottom: 5rpx solid #a8d3ba;
+  border-bottom: 5rpx solid #49cc80;
   font-size: 30rpx;
   background-color: #ededed;
   position: relative;

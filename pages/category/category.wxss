@@ -28,8 +28,9 @@
     align-items: center;
     justify-content: center;
     font-size:28rpx;
-    border-left: 6rpx solid #a8d3ba;
-    color: #a8d3ba
+    border-left: 6rpx solid #49cc80;
+    /* color: #a8d3ba */
+    color:#49cc80
 }
 .menu-item.selected{
     color: #5a9ec8;
@@ -43,9 +44,9 @@
   align-items: center;
   justify-content: center;
   font-size:28rpx;
-  border-bottom: 3rpx solid #a8d3ba;
-  color: #a8d3ba;
-  background-color: #a8d3ba
+  border-bottom: 3rpx solid #49cc80;
+  color: #49cc80;
+  background-color: #49cc80
 }
 
 /*

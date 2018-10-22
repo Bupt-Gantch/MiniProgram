@@ -27,7 +27,7 @@ class Release extends Base {
         callback && callback(res);
       }
     }
-    this.request_test(params);
+    this.request(params);
   }
 }
 

@@ -138,18 +138,18 @@ Page({
     var deviceType = deviceInfo.deviceType;
     var deviceName = deviceInfo.name;
     
-    if(deviceType === "switch" || deviceType === "outlet"){
-      //nothing
-    } else if (deviceType === 'sceneSelector'){
-      wx.navigateTo({
-        url: '../sceneSelector/sceneSelector?deviceid=' + deviceid
-      });
-    } 
-    else{
+    // if(deviceType === "switch" || deviceType === "outlet"){
+    //   //nothing
+    // } else if (deviceType === 'sceneSelector'){
+    //   wx.navigateTo({
+    //     url: '../sceneSelector/sceneSelector?deviceid=' + deviceid
+    //   });
+    // } 
+    // else{
       wx.navigateTo({
         url: '../device/device?deviceid='+deviceid+'&deviceType='+deviceType+'&deviceName='+deviceName
       });
-    }
+    // }
   },
 
   /**

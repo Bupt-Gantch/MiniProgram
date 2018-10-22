@@ -1,4 +1,6 @@
 <!--pages/device/device.wxml-->
+<import src="../tpls/modal/modal-tpl.wxml"/>
+
 <view class='detail-container'>
   <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
@@ -8,9 +10,12 @@
       </view>
       <view class='title'>名称</view>
       <!-- <view class='name'>{{deviceDetail.name}}</view> -->
-      <view class='name'>{{deviceName}}</view>
+      <view class='name' bindlongpress="onChangeName">{{deviceName}}</view>
     </view>
   </view>
+
+    <template is="changeName" data="{{showEdit,content}}">
+  </template>
 
   <!-- 根据设备类型显示面板，用block分隔 -->
   <!-- IASZone -->

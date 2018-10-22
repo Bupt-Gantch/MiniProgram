@@ -1,4 +1,5 @@
 import {Base} from '../../utils/base.js';
+import { Config } from '../../utils/config.js';
 
 class Device extends Base{
   constructor(){
@@ -12,6 +13,19 @@ class Device extends Base{
       }
     };
     this.request(param);
+  }
+
+  saveDevice(param,callback){
+    var params = {
+      url: Config.restUrl+'deviceaccess/device',
+      // url:'http://47.105.120.203:30080/api/v1/deviceaccess/device',
+      method:'POST',
+      data:param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request_test(params);
   }
 
   /**获取设备实时数据 */

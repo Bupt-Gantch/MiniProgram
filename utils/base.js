@@ -28,7 +28,6 @@ class Base {
         success: function (res) {
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
-
           if (startChar == '2') {
             params.sCallback && params.sCallback(res.data);
           } else {

@@ -56,7 +56,6 @@ Page({
       this.setData({
         bannerTitle: sceneName
       })
-      // this._loadCateDevices(app.globalData.customerid)
       this._loadCateDevices()
     }
   },

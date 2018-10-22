@@ -104,7 +104,8 @@ Page({
               gateway_user: gateway_user
             };
             my.addDevice(param,(res)=>{
-              if (res.statusCode==200) {
+              console.log(res)
+              if (res.data==1) {
               wx.showToast({
                 title: '添加成功',
                 duration: 3000,
