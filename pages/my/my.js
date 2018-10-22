@@ -88,6 +88,7 @@ Page({
   scan:function(){
     wx.scanCode({
       success:function(res){
+        console.log(res)
         if(res.result!=null){
           var gateway = res.result;
           if(gateway.length==26||gateway.length==27){
@@ -97,12 +98,13 @@ Page({
               gateway_user+=gateway[i],
               i++
             }
+            console.log(gateway_user)
             var param={
               customerId: app.globalData.customerId,
               gateway_user: gateway_user
             };
             my.addDevice(param,(res)=>{
-              console.log(res)
+              console.log(res.data)
             if (res.status!=500) {
               wx.showToast({
                 title: '添加成功',

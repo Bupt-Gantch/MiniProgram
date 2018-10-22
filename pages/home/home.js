@@ -369,9 +369,9 @@ Page({
     //this._loadRealtimeData(deviceid);
     //mock test
     var _this = this;
-    setInterval(function(){
-      _this._loadTest();
-    },5000);
+    // setInterval(function(){
+    //   _this._loadTest();
+    // },5000);
     //end//
     
   },

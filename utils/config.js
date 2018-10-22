@@ -10,7 +10,7 @@ class Config{
 
 Config.restUrl = 'https://smart.gantch.cn/api/v1/';
 Config.regeoUrl = 'https://restapi.amap.com/v3/geocode/regeo';
-Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
+// Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
 Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';
 
 Config.switchOnUrl = ['../../imgs/test/switch@on.png','../../imgs/test/socket@on.png'];  //开关和插座亮时的图片
