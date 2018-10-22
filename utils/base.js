@@ -207,7 +207,7 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success: function (res) {
-         console.log(res.data)
+        console.log(res.data)
         params.sCallback && params.sCallback(res.data);
       },
       fail: function (err) {
