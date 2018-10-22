@@ -231,7 +231,7 @@ function initChart_piecount(canvas, width, height){
         },
         type: 'pie',
         center: ['50%', '50%'],
-        radius: [0, '80%'],
+        radius: [0, '70%'],
         data: [
         {
           value: 38 || globalCateDeviceArr['其他类型'].length,
@@ -383,9 +383,9 @@ Page({
 
   onLoad:function(options){
     var customerId = app.globalData.customerId;
-    // this.setData({
-    //   theCustomerId: customerId
-    // });
+    this.setData({
+      theCustomerId: customerId
+    });
 
     //this._selectComponent();
     //this._loadAllDevices(customerId);
