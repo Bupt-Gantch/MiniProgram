@@ -84,7 +84,7 @@ Page({
         }
         release.addPlace(newplace, (res) => {
           if (res.status == 1) {
-            var newplace = res.regeocode.addressComponent.province + res.regeocode.addressComponent.district
+            var newplace = res.data.regeocode.addressComponent.province + res.data.regeocode.addressComponent.district
             that.setData({
               place: newplace,
               lastplace: newplace
