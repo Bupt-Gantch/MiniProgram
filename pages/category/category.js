@@ -220,7 +220,7 @@ Page({
    * ===========================================================
    */
   switchChange: function(event){
-    var status = event.detail.value;
+    var status = event.detail.value.toString();
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
