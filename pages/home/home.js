@@ -29,7 +29,7 @@ function initChart_temp(canvas, width, height){
       series: [{
         name: '温度',
         type: 'gauge',
-        radius: '100%',
+        radius: '80%',
         detail: {
           formatter: '{value}℃',
           fontSize: 20,
@@ -95,7 +95,7 @@ function initChart_hum(canvas, width, height){
       series: [{
         name: '湿度',
         type: 'gauge',
-        radius:'100%',
+        radius:'80%',
         detail: {
           formatter: '{value}%',
           fontSize:20,
@@ -157,7 +157,7 @@ function initChart_pm25(canvas, width, height){
       series: [{
         name: 'pm2.5',
         type: 'gauge',
-        radius: '100%',
+        radius: '80%',
         detail: {
           formatter: '{value}',
           fontSize: 20,

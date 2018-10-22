@@ -23,10 +23,7 @@ swiper image {
 
 .search-view {
   opacity: 0.5;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
+  position:absolute;
   z-index: 500;
   width: 100%;
   height: 100rpx;
@@ -57,11 +54,14 @@ swiper image {
 .search-input {
   width: 500rpx;
   font-size: 28rpx;
+  border: 1rpx #7fbcd2;
+  /* display:block */
 }
 
-/* .scroll-view{
-  height: 800rpx;
-} */
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
 
 .endbox{
   align-content: center;
@@ -180,7 +180,7 @@ swiper image {
 
 .comments{
   font-size: 25rpx;
-  color: rgb(67, 68, 68);
+  color: #000;
 }
 
 .comment-name{
@@ -191,7 +191,7 @@ swiper image {
 
 .comment-box input{
   width:100%;
-  height: 30rpx;
-  border: 1rpx solid rgb(174, 200, 247);
+  height: 20rpx;
+  border: 1rpx solid gray;
   border-radius: 10rpx;
 }

@@ -27,7 +27,7 @@ Page({
   onLoad: function(options) {
     info = []
     var data = {
-      openId: app.globalData.oppenid,
+      openId: app.globalData.openid,
       page: 0,
     }
     this._loadInfoList(data)
