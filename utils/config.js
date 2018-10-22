@@ -10,8 +10,8 @@ class Config{
 
 Config.restUrl = 'https://smart.gantch.cn/api/v1/';
 Config.regeoUrl = 'https://restapi.amap.com/v3/geocode/regeo';
-// Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
-Config.wsUrl = 'ws://10.108.218.64:30080/api/v1/deviceaccess/websocket';
+//Config.openid = 'https://api.weixin.qq.com/sns/jscode2session';
+Config.wsUrl = 'wss://smart.gantch.cn/api/v1/deviceaccess/websocket';
 
 Config.switchOnUrl = ['../../imgs/test/switch@on.png','../../imgs/test/socket@on.png'];  //开关和插座亮时的图片
 Config.categoryImgUrl = '../../imgs/category/';
@@ -34,6 +34,13 @@ Config.categoryType = {
   '传感器': ['temperature', 'PM2.5', 'IASZone'],
   '开关': ['switch'],
   '场景开关':['dimmableLight','curtain','switch'],
+};
+Config.homeCategoryType = {
+  '灯泡': ['dimmableLight'],
+  '插座': ['outlet'],
+  '窗帘': ['curtain'],
+  '传感器': ['temperature', 'PM2.5', 'IASZone'],
+  '开关': ['switch'],
 };
 Config.secneType = [content.scenetypes]
 

@@ -30,7 +30,7 @@ App({
   globalData: {
     language:"中文",
     userInfo: null,
-    customerId:null,
+    customerId:1,
     openid: null,
     code:null,
     appid:'wx5ef2de2111a9a82a',
