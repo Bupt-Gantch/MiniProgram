@@ -50,14 +50,16 @@ Page({
   onLoad: function (options) {
     var index = 0;   //从tab栏跳转过来 
     var name = this.data.categoryName[0]; //从tab栏跳转过来
+    var customerId = app.globalData.customerId;
     
     this.setData({
       currentTabsIndex:index,
-      currentBottomIndex: -1
+      currentBottomIndex: -1,
+      customerId: customerId
 
     });
     this._loadBaannerTitle(name);
-    this._loadCateDevices(index);
+    this._loadCateDevices(index, customerId);
     this._loadAllGroup();
     this._loadAllScene();
   },
@@ -85,15 +87,15 @@ Page({
       currentBottomIndex: -1 
     });
     this._loadBaannerTitle(name);   //加载本地banner和标题
-    this._loadCateDevices(index);  //点击时获取数据
+    this._loadCateDevices(index, this.data.customerId);  //点击时获取数据
 
   },
 
   //load所有设备并分类
-  _loadCateDevices: function(index){
+  _loadCateDevices: function (index, customerId){
     index = Number(index);
     if(index === 0){   //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
-      category.getAllDevices((data) => {
+      category.getAllDevices(customerId,(data) => {
         this.setData({
           categoryAllDevices : data.data
         });
@@ -245,6 +247,7 @@ Page({
     };
 
     category.turnSwitch(data,(res) =>{
+      
       if( res.indexOf("device") ===-1){   //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',

@@ -10,7 +10,7 @@
 
   <!-- 饼图容器 -->
   <view class='count_container'>
-    <ec-canvas id="pie_count" canvas-id="mychart-pie" ec="{{ ec_piecount }}" bind:init="echartInit"></ec-canvas>
+    <ec-canvas id="pie_count" canvas-id="mychart-pie" ec="{{ ec_piecount }}"></ec-canvas>
   </view>
 
   <!-- 折线图容器 -->

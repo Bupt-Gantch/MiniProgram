@@ -4,31 +4,17 @@ class Home extends Base{
   constructor(){
     super();
   }
-  // getBannerData(id,callback){
-  //   var params = {
-  //     url: 'banner/' + id,
-  //     sCallback:function(res){
-  //       callback && callback(res.items);
-  //     }
-  //   }
-  //   this.request(params);
-  // }
 
-  /**
-   * mock data
-   */
-
-  loadTestData(callback) {
+  getAllDevices(customerId, callback) {
     var param = {
-      url: '',
+      //url: 'deviceaccess/tenant/devices/2?limit=1000',
+      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
     this.request(param);
   }
-
-  /**mock end */
 
   
   /**获取设备实时数据 */

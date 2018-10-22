@@ -6,9 +6,10 @@ class Category extends Base{
     super();
   }
 
-  getAllDevices(callback){
+  getAllDevices(customerId,callback){
     var param = {
-      url: 'deviceaccess/tenant/devices/2?limit=1000',
+      //url: 'deviceaccess/tenant/devices/2?limit=1000',
+      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function(data){
         callback && callback(data);
       }
@@ -87,6 +88,7 @@ class Category extends Base{
    * sendControl
    */
   sendControl(deviceId,requestId,body){
+    
     //body可以是对象
     var that = this;
     var p = new Promise(function(resolve,reject){
