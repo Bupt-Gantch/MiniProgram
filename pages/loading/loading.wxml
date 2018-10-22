@@ -1,16 +1,10 @@
 <!--pages/loading/loading.wxml-->
-<!-- <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
-  <block wx:for="{{imgUrls}}" wx:key="item">
-    <swiper-item>
-      <image src="{{item}}" class="slide-image" width="355" height="150" />
-    </swiper-item>
-  </block>
-</swiper> -->
-<view class='logo-view'>
-<!-- <image src='/imgs/swiper/logo2.png'></image> -->
-</view>
-
+ <view class="poster-view">
+    <image src="/imgs/swiper/poster.jpg" class="poster-image" mode="scaleToFill"></image>
+  </view>
+  <view>{{code}}</view>
+  <view>{{openid}}</view>
 <view class="enter-container">
-  <button plain="true" style="color: #a8d3ba; border-color: #a8d3ba" class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
+  <button class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
+  <!-- <view class="language" bindtap='changeLanuage'>{{content.button}}</view> -->
 </view>
-<view class="language" bindtap='changeLanuage'>{{content.button}}</view>

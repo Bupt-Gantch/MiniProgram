@@ -112,11 +112,12 @@ Page({
 
   formSubmit: function(e) {
     var imagePath = this.data.imageList[0]
+    console.log(imagePath)
     if (imagePath==undefined){
       imagePath = ""
     }
     wx.uploadFile({
-      url: Config.postUrl + 'addPost',
+      url: Config.restUrl+'wechatPost/addPost',
       filePath: imagePath,
       name: 'image',
       formData: {
@@ -127,7 +128,6 @@ Page({
         location: this.data.lastplace,
       },
       success(res) {
-        console.log(res.data)
           if (res.data == 1) {
             console.log(123)
             wx.showToast({
@@ -142,7 +142,8 @@ Page({
           } else {
             wx.showToast({
               title: '发布失败',
-              icon: 'none'
+              icon: 'none',
+              duration:2000
             })
           }
       }

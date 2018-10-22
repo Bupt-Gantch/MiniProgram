@@ -8,12 +8,12 @@ class My extends Base {
   //添加设备
   addDevice(param,callback){
     var params = {
-      url: 'deviceaccess/assignAll/' + param.customerId+'?gateway_user="'+param.gateway_user+'"',
+      url: Config.restUrl + 'deviceaccess/assignAll/' + param.customerId + '?gateway_user=' + param.gateway_user,
       sCallback:function(data){
         callback && callback(data);
       }
     };
-    this.request(params)
+    this.request_test(params)
   }
 }
 

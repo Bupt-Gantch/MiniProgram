@@ -79,8 +79,8 @@ swiper image {
 .circle-float {
   position: fixed;
   display: flex;
-  bottom: 100rpx;
-  right: 10rpx;
+  bottom: 10rpx;
+  left: 10rpx;
   width: 89rpx;
   height: 89rpx;
 }
@@ -92,6 +92,7 @@ swiper image {
 
 .info-user{
   overflow: hidden;
+  margin-bottom: 20rpx
 }
 .info-pic{
   float: left;
@@ -107,23 +108,28 @@ swiper image {
   font-size: 40rpx;
   font-weight: bold;
   font-family: cursive;
-  color: #a8d3ba;
+  color: #7fbcd2;
 }
 
 .info-time{
   font-size: 25rpx;
-  color: #a8d3ba;
+  color: #7fbcd2;
 }
 
 .info-detail{
   word-break:break-all;
   font-size: 28rpx;
+  border-bottom: 10rpx
 }
 
 .div{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.div image{
+  width: 32%
 }
 
 .info-pictures{
@@ -137,7 +143,7 @@ swiper image {
 
 .info-place{
   font-size: 25rpx;
-  color: #a8d3ba;
+  color: #7fbcd2;
 }
 
 .info-up{
@@ -157,7 +163,7 @@ swiper image {
 
 .info-uc{
   float: right;
-    display: flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -180,7 +186,7 @@ swiper image {
 .comment-name{
   font-size: 30rpx;
   font-family: cursive;
-  color: #a8d3ba;
+  color: #7fbcd2;
 }
 
 .comment-box input{
