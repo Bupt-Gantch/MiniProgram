@@ -387,7 +387,7 @@ Page({
       theCustomerId: customerId
     });
 
-    this._selectComponent();
+    //this._selectComponent();
     //this._loadAllDevices(customerId);
     
   },
