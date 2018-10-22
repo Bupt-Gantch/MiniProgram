@@ -8,8 +8,8 @@ class Category extends Base{
 
   getAllDevices(customerId,callback){
     var param = {
-      url: 'deviceaccess/tenant/devices/2?limit=1000',
-      //url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
+      //url: 'deviceaccess/tenant/devices/2?limit=1000',
+      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function(data){
         callback && callback(data);
       }
@@ -193,13 +193,14 @@ class Category extends Base{
     this.request(param);
   }
 
-  createGroup(groupName,callback) {
+  createGroup(customerId,groupName,callback) {
     var param = {
       url : 'deviceaccess/group',
       method:'POST',
       data:{
         name: groupName,
-        tenantId: 2
+        tenantId: 2,
+        customerId: customerId
       },
       sCallback: function (data) {
         callback && callback(data);

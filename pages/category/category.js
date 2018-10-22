@@ -308,8 +308,8 @@ Page({
     })
   },
 
-  _createGroup: function(groupName){
-    category.createGroup(groupName,(res) => {
+  _createGroup: function(customerId,groupName){
+    category.createGroup(customerId,groupName,(res) => {
         wx.showToast({
           title: '设备组创建成功',
         });
@@ -374,6 +374,7 @@ Page({
    * 对话框确认按钮点击事件
    */
   onConfirm: function () {
+    let theCustomerId = this.data.customerId;
     var submitGroupName = this.data.groupName.trim();
     if (submitGroupName === "") {
       wx.showToast({
@@ -382,7 +383,7 @@ Page({
       })
     } else {
       this.hideModal();
-      this._createGroup(submitGroupName);
+      this._createGroup(theCustomerId,submitGroupName);
     }
   },
   inputChange: function (event) {

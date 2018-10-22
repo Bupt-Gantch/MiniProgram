@@ -5,7 +5,7 @@
   <view class='gauge_container'>
       <ec-canvas id="temperature" canvas-id="mychart-gauge" ec="{{ ec_temp }}"></ec-canvas>
       <ec-canvas id="humidity" canvas-id="mychart-gauge" ec="{{ ec_hum }}"></ec-canvas>
-      <ec-canvas id="pm25" canvas-id="mychart-gauge" ec="{{ ec_pm25 }}"></ec-canvas>
+      <!-- <ec-canvas id="pm25" canvas-id="mychart-gauge" ec="{{ ec_pm25 }}"></ec-canvas> -->
   </view>
 
   <!-- 饼图容器 -->

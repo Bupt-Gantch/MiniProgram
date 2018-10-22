@@ -30,17 +30,17 @@
   
 } 
 #temperature{
-  width: 33%;
+  width: 50%;
   height: 100%;
 }
 #humidity{
-  width: 33%;
+  width: 50%;
   height: 100%;
 }
-#pm25{
+/* #pm25{
   width: 33%;
   height: 100%;
-}
+} */
 
 /* 饼图容器从25%高度开始，占35*/
 .count_container{

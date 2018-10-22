@@ -29,7 +29,7 @@ function initChart_temp(canvas, width, height){
       series: [{
         name: '温度',
         type: 'gauge',
-        radius: '80%',
+        radius: '100%',
         detail: {
           formatter: '{value}℃',
           fontSize: 20,
@@ -95,7 +95,7 @@ function initChart_hum(canvas, width, height){
       series: [{
         name: '湿度',
         type: 'gauge',
-        radius:'80%',
+        radius:'100%',
         detail: {
           formatter: '{value}%',
           fontSize:20,
@@ -144,6 +144,7 @@ function initChart_hum(canvas, width, height){
 }
 
 /**初始化pm2.5 */
+
 function initChart_pm25(canvas, width, height){
     const chart = echarts.init(canvas, null, {
       width: width,
@@ -157,7 +158,7 @@ function initChart_pm25(canvas, width, height){
       series: [{
         name: 'pm2.5',
         type: 'gauge',
-        radius: '80%',
+        radius: '100%',
         detail: {
           formatter: '{value}',
           fontSize: 20,
@@ -211,6 +212,7 @@ function initChart_pm25(canvas, width, height){
 
     return chart;
 }
+
 
 /**初始化饼状图 */
 function initChart_piecount(canvas, width, height){
@@ -358,9 +360,9 @@ Page({
     ec_hum:{
       onInit: initChart_hum
     },
-    ec_pm25: {
-      onInit: initChart_pm25
-    },
+    // ec_pm25: {
+    //   onInit: initChart_pm25
+    // },
     ec_piecount: {
       // onInit: initChart_piecount
     },
@@ -406,7 +408,7 @@ Page({
   _selectComponent: function(){
     gaugeComponent.tempComponent = this.selectComponent('#temperature');
     gaugeComponent.humiComponent = this.selectComponent('#humidity');
-    gaugeComponent.pm25Component = this.selectComponent('#pm25');
+    // gaugeComponent.pm25Component = this.selectComponent('#pm25');
     gaugeComponent.pieComponent = this.selectComponent('#pie_count');
   },
 
@@ -465,19 +467,18 @@ Page({
       })
     }else{
       let firstTempDeviceId = categoryDeviceArr.temp_humi[0].id;
-      console.log(firstTempDeviceId)
       this._loadRealtimeData(firstTempDeviceId);
     }
-    if (categoryDeviceArr.pm.length === 0){
-      wx.showToast({
-        title: '您还没有任何pm2.5度传感器',
-        icon: 'none'
-      })
-    }
-    else{
-      let firstPmDeviceId = categoryDeviceArr.pm[0].id;
-      //this._loadRealtimeData_pm(firstPmDeviceId);
-    }
+    // if (categoryDeviceArr.pm.length === 0){
+    //   wx.showToast({
+    //     title: '您还没有任何pm2.5度传感器',
+    //     icon: 'none'
+    //   })
+    // }
+    // else{
+    //   let firstPmDeviceId = categoryDeviceArr.pm[0].id;
+    //   this._loadRealtimeData_pm(firstPmDeviceId);
+    // }
   },
 
   _loadRealtimeData: function (deviceid) {
@@ -505,54 +506,15 @@ Page({
           curHumidity = Number(e.value);
           gaugeComponent.humiComponent.init(initChart_hum);
         }
-        if (e.key === 'PM2.5') {
-          curPm25 = Number(e.value);
-          gaugeComponent.pm25Component.init(initChart_pm25);
-        }
+        // if (e.key === 'PM2.5') {
+        //   curPm25 = Number(e.value);
+        //   gaugeComponent.pm25Component.init(initChart_pm25);
+        // }
       })
       
     });
     this.data.socketTasks.push(socketTask);
 
   },
-
-  _loadRealtimeData_pm: function (deviceid) {
-    var _this = this;
-    var sConCb = function (res) {
-      wx.showToast({
-        title: '连接成功！',
-        duration: 1000,
-        icon: 'success'
-      })
-    };
-    var fConCb = function () {
-    };
-    //以上为callback
-    let socketTask = home.getRealtimeData(deviceid, sConCb, fConCb, (data) => {
-      //收到服务器端发回数据，更新view层数据
-      var sensorData = JSON.parse(data).data;
-      sensorData.forEach(function (e) {
-
-        if (e.key === 'temperature') {
-          curTemprature = Number(e.value);
-          gaugeComponent.tempComponent.init(initChart_temp);
-        }
-        if (e.key === 'humidity') {
-          curHumidity = Number(e.value);
-          gaugeComponent.humiComponent.init(initChart_hum);
-        }
-        if (e.key === 'PM2.5') {
-          curPm25 = Number(e.value);
-          gaugeComponent.pm25Component.init(initChart_pm25);
-        }
-      })
-
-    });
-    this.data.socketTasks.push(socketTask);
-
-  },
-
-
-
   
 });
