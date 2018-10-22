@@ -8,8 +8,8 @@ class Category extends Base{
 
   getAllDevices(customerId,callback){
     var param = {
-      //url: 'deviceaccess/tenant/devices/2?limit=1000',
-      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
+      url: 'deviceaccess/tenant/devices/2?limit=1000',
+      //url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function(data){
         callback && callback(data);
       }

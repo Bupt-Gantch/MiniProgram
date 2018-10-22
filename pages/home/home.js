@@ -12,6 +12,8 @@ var curPm25 = undefined;
 
 var globalCateDeviceArr = null;
 
+var gaugeComponent = {}; //存放所有图表组件
+
 /** 初始化温度计 */
 function initChart_temp(canvas, width, height){
   
@@ -66,7 +68,7 @@ function initChart_temp(canvas, width, height){
           width: 3
         },
         data: [{
-          value: 26||curTemprature,
+          value: curTemprature,
           name: '温度'
         }]
 
@@ -234,23 +236,23 @@ function initChart_piecount(canvas, width, height){
         radius: [0, '70%'],
         data: [
         {
-          value: 38 || globalCateDeviceArr['其他类型'].length,
+          value: globalCateDeviceArr['其他类型'].length,
           name: '其他类型'
         },
         {
-          value: 55 || globalCateDeviceArr['灯泡'].length,
+          value: globalCateDeviceArr['灯泡'].length,
           name: '灯泡'
         }, {
-          value: 10|| globalCateDeviceArr['插座'].length,
+          value: globalCateDeviceArr['插座'].length,
           name: '插座'
         }, {
-          value: 20||globalCateDeviceArr['窗帘'].length,
+          value: globalCateDeviceArr['窗帘'].length,
           name: '窗帘'
         }, {
-          value: 38||globalCateDeviceArr['传感器'].length,
+          value: globalCateDeviceArr['传感器'].length,
           name: '传感器'
         }, {
-          value: 10 ||globalCateDeviceArr['开关'].length,
+          value: globalCateDeviceArr['开关'].length,
           name: '开关'
         },
         ],
@@ -360,7 +362,7 @@ Page({
       onInit: initChart_pm25
     },
     ec_piecount: {
-      onInit: initChart_piecount
+      // onInit: initChart_piecount
     },
     ec_history: {
       onInit: initChart_line
@@ -387,9 +389,8 @@ Page({
       theCustomerId: customerId
     });
 
-    //this._selectComponent();
-    //this._loadAllDevices(customerId);
-    
+    this._selectComponent();
+    this._loadAllDevices(customerId);
   },
 
   onUnload: function(){
@@ -403,23 +404,22 @@ Page({
   },
 
   _selectComponent: function(){
-    this.data.tempComponent = this.selectComponent('#temperature');
-    this.data.humiComponent = this.selectComponent('#humidity');
-    this.data.pm25Component = this.selectComponent('#pm25'); 
-    this.data.pieComponent = this.selectComponent('#pie_count');
+    gaugeComponent.tempComponent = this.selectComponent('#temperature');
+    gaugeComponent.humiComponent = this.selectComponent('#humidity');
+    gaugeComponent.pm25Component = this.selectComponent('#pm25');
+    gaugeComponent.pieComponent = this.selectComponent('#pie_count');
   },
 
 
   //load所有设备并分类
   _loadAllDevices: function (customerId) {
     home.getAllDevices(customerId, (res) => {
-      let allDevices = res.data
-      let customerAllDevices = allDevices;
-      
+      let allDevices = res.data;
       this._categoryForDevices(allDevices);
-      this.data.pieComponent.init(initChart_piecount);
 
-      //this._getTempPmDevice(this.data.categoryDeviceArr);
+      gaugeComponent.pieComponent.init(initChart_piecount);
+
+      this._getTempPmDevice(this.data.categoryDeviceArr);
     });
   },
 
@@ -476,7 +476,7 @@ Page({
     }
     else{
       let firstPmDeviceId = categoryDeviceArr.pm[0].id;
-      //this._loadRealtimeData(firstPmDeviceId);
+      //this._loadRealtimeData_pm(firstPmDeviceId);
     }
   },
 
@@ -499,16 +499,15 @@ Page({
         
         if (e.key === 'temperature'){
           curTemprature = Number(e.value);
-          // initChart_temp();//再次初始化
-          _this.data.tempComponent.init(initChart_temp);
+          gaugeComponent.tempComponent.init(initChart_temp);
         }
         if (e.key === 'humidity'){
           curHumidity = Number(e.value);
-          _this.data.humiComponent.init(initChart_hum);
+          gaugeComponent.humiComponent.init(initChart_hum);
         }
         if (e.key === 'PM2.5') {
           curPm25 = Number(e.value);
-          _this.data.pm25Component.init(initChart_pm25);
+          gaugeComponent.pm25Component.init(initChart_pm25);
         }
       })
       
@@ -516,6 +515,43 @@ Page({
     this.data.socketTasks.push(socketTask);
 
   },
+
+  _loadRealtimeData_pm: function (deviceid) {
+    var _this = this;
+    var sConCb = function (res) {
+      wx.showToast({
+        title: '连接成功！',
+        duration: 1000,
+        icon: 'success'
+      })
+    };
+    var fConCb = function () {
+    };
+    //以上为callback
+    let socketTask = home.getRealtimeData(deviceid, sConCb, fConCb, (data) => {
+      //收到服务器端发回数据，更新view层数据
+      var sensorData = JSON.parse(data).data;
+      sensorData.forEach(function (e) {
+
+        if (e.key === 'temperature') {
+          curTemprature = Number(e.value);
+          gaugeComponent.tempComponent.init(initChart_temp);
+        }
+        if (e.key === 'humidity') {
+          curHumidity = Number(e.value);
+          gaugeComponent.humiComponent.init(initChart_hum);
+        }
+        if (e.key === 'PM2.5') {
+          curPm25 = Number(e.value);
+          gaugeComponent.pm25Component.init(initChart_pm25);
+        }
+      })
+
+    });
+    this.data.socketTasks.push(socketTask);
+
+  },
+
 
 
   
