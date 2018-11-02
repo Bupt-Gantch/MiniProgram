@@ -10,18 +10,17 @@
     "pages/release/release",
     "pages/publish/publish",
     "pages/mypublish/mypublish",
-    "pages/mynews/mynews",
     "pages/register/register",
     "pages/scene/scene",
     "pages/group/group"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#7fbcd2",
+    "navigationBarBackgroundColor": "#002366",
     "navigationBarTitleText": "冠川智能家居",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false,
-    "backgroundColor": "#7fbcd2"
+    "backgroundColor": "#002366"
   },
   "tabBar": {
     "list": [
@@ -50,9 +49,9 @@
         "selectedIconPath": "imgs/toolbar/my@selected.png"
       }
     ],
-    "borderStyle": "#a6a8a8",
-    "selectedColor": "#7fbcd2",
-    "color": "#49cc80",
+    "borderStyle": "#5a9ec8",
+    "selectedColor": "#002366",
+    "color": "#5a9ec8",
     "backgroundColor": "#e7eae9"
   }
 }

@@ -9,8 +9,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.4",
-	"appid": "wx5ef2de2111a9a82a",
-	"projectname": "gantch",
+	"appid": "wx9e12afc5dec75b6f",
+	"projectname": "postgantch",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

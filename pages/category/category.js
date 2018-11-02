@@ -1,7 +1,11 @@
 // pages/category/category.js
 
-import { Config } from '../../utils/config.js';
-import {Category} from 'category_model.js';
+import {
+  Config
+} from '../../utils/config.js';
+import {
+  Category
+} from 'category_model.js';
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var category = new Category();
@@ -23,7 +27,7 @@ Page({
     groupSceneImg: Config.otherImg,
     statusTable: {},
 
-    sceneGroup: ['分组','场景'],
+    sceneGroup: ['分组', '场景'],
     showModal: false,
     content: {
       title: "创建设备组",
@@ -34,29 +38,30 @@ Page({
     showModalScene: false,
     contentScene: {
       title: "创建场景",
-      placeholder: "请输入场景名"
+      placeholder: "只能输入数字和字母"
     },
     sceneName: '',
 
+    showDetail: false,
+
     hiddenPicker: true,
-    pickerValueArr:[0],
+    pickerValueArr: [0],
     pickeredGroup: {},
-    requestId: 1000000,   //请求id100w 递减
+    requestId: 1000000, //请求id100w 递减
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    var index = 0;   //从tab栏跳转过来 
+  onLoad: function(options) {
+    var index = 0; //从tab栏跳转过来 
     var name = this.data.categoryName[0]; //从tab栏跳转过来
     var customerId = app.globalData.customerId;
-    
+
     this.setData({
-      currentTabsIndex:index,
+      currentTabsIndex: index,
       currentBottomIndex: -1,
       customerId: customerId
-
     });
     this._loadBaannerTitle(name);
     this._loadCateDevices(index, customerId);
@@ -67,77 +72,85 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  
+  onReady: function() {
+
   },
 
-/*加载本地banner和title */
-  _loadBaannerTitle:function(name){
-    
-      this.setData({
-          bannerTitle:name
-      });
+  // onShow:function(){
+  //   this._loadAllScene();
+  // },
+
+  /*加载本地banner和title */
+  _loadBaannerTitle: function(name) {
+
+    this.setData({
+      bannerTitle: name
+    });
   },
 
-  onTabCategory: function(event){
-    var index = Number(category.getDataSet(event,'index'));  //number化
+  onTabCategory: function(event) {
+    var index = Number(category.getDataSet(event, 'index')); //number化
     var name = category.getDataSet(event, 'name');
     this.setData({
       currentTabsIndex: index,
-      currentBottomIndex: -1 
+      currentBottomIndex: -1
     });
-    this._loadBaannerTitle(name);   //加载本地banner和标题
-    this._loadCateDevices(index, this.data.customerId);  //点击时获取数据
+    this._loadBaannerTitle(name); //加载本地banner和标题
+    this._loadCateDevices(index, this.data.customerId); //点击时获取数据
 
   },
 
   //load所有设备并分类
-  _loadCateDevices: function (index, customerId){
+  _loadCateDevices: function(index, customerId) {
     index = Number(index);
-    if(index === 0){   //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
-      category.getAllDevices(customerId,(data) => {
+    if (index === 0) { //刚进入tab栏刷新设备，在分类页点击所有设备不刷新
+      category.getAllDevices(customerId, (data) => {
         this.setData({
-          categoryAllDevices : data.data
+          categoryAllDevices: data.data
         });
       });
-    }else if(index === this.data.categoryName.length - 1){
+    } else if (index === this.data.categoryName.length - 1) {
       /* 对未知设备类型进行归类  */
       var _array = this.data.categoryTypeArray;
       var otherDevices = new Array();
-      this.data.categoryAllDevices.forEach(function (element){
+      this.data.categoryAllDevices.forEach(function(element) {
         if (!category.inArray(element.deviceType, _array)) {
           otherDevices.push(element);
         }
       });
       this.setData({
-        categoryDevices: otherDevices
+        categoryDevices: otherDevices,
       });
-    }else if(index !== 0){
+    } else if (index !== 0) {
       /*========对所有设备按类型分类=============*/
       var currentType = this.data.categoryName[index];
       var _arrayType = this.data.categoryType[currentType];
       var typeDevices = new Array();
-      this.data.categoryAllDevices.forEach(function(element){
-        if (category.inArray(element.deviceType, _arrayType)){
+      this.data.categoryAllDevices.forEach(function(element) {
+        if (category.inArray(element.deviceType, _arrayType)) {
           typeDevices.push(element);
         }
       });
-            
+
       this.setData({
         categoryDevices: typeDevices
       });
-      
+
       /* ===========end================= */
     }
-   },
+  },
 
 
-  onDevicesItemTap: function (event) {
+  onDevicesItemTap: function(event) {
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceid = category.getDataSet(event, 'deviceid');
     var deviceType = deviceInfo.deviceType;
-    var deviceName = deviceInfo.name;
-    
+    if (deviceInfo.nickname != null) {
+      var deviceName = deviceInfo.nickname;
+    } else {
+      var deviceName = deviceInfo.name;
+    }
+
     // if(deviceType === "switch" || deviceType === "outlet"){
     //   //nothing
     // } else if (deviceType === 'sceneSelector'){
@@ -146,9 +159,9 @@ Page({
     //   });
     // } 
     // else{
-      wx.navigateTo({
-        url: '../device/device?deviceid='+deviceid+'&deviceType='+deviceType+'&deviceName='+deviceName
-      });
+    wx.navigateTo({
+      url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName
+    });
     // }
   },
 
@@ -159,12 +172,12 @@ Page({
    */
   onDeviceLongPress: function(event) {
     var deviceid = category.getDataSet(event, 'deviceid');
-    if (this.data.allGroupArr.length === 0){
+    if (this.data.allGroupArr.length === 0) {
       wx.showToast({
         title: '您还没有创建任何分组',
-        icon:'none'
+        icon: 'none'
       });
-    }else{
+    } else {
       this.setData({
         hiddenPicker: false,
         pickeredGroup: this.data.allGroupArr[0],
@@ -193,13 +206,13 @@ Page({
     this._hideGroupPicker();
   },
 
-  _hideGroupPicker: function(){
+  _hideGroupPicker: function() {
     this.setData({
       hiddenPicker: true
     });
   },
 
-  _assignDeviceToGroup: function (deviceId) {
+  _assignDeviceToGroup: function(deviceId) {
     var groupId = this.data.pickeredGroup.id;
     category.assignDeviceToGroup(groupId, deviceId, (res) => {
       wx.showToast({
@@ -219,7 +232,7 @@ Page({
    * 控制开关类设备
    * ===========================================================
    */
-  switchChange: function(event){
+  switchChange: function(event) {
     var status = event.detail.value;
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceId = deviceInfo.id;
@@ -240,22 +253,22 @@ Page({
 
     /**控制需要的请求数据 */
     var data = {
-      deviceId:deviceInfo.id,
+      deviceId: deviceInfo.id,
       requestId: requestId,
       triad: triad,
       status: status
     };
 
-    category.turnSwitch(data,(res) =>{
-      
-      if( res.indexOf("device") ===-1){   //状态码为200则应用成功
+    category.turnSwitch(data, (res) => {
+
+      if (res.indexOf("device") === -1) { //状态码为200则应用成功
         wx.showToast({
           title: '应用成功',
           icon: 'success',
           duration: 1000,
           // mask: true
-        });    
-      }else{              //状态码不是200  应用失败
+        });
+      } else { //状态码不是200  应用失败
         wx.showToast({
           title: '应用失败',
           image: '../../imgs/icon/pay@error.png',
@@ -263,8 +276,8 @@ Page({
           // mask: true
         });
       }
-      
-    },(err) => {
+
+    }, (err) => {
       wx.showToast({
         title: '应用失败',
         image: '../../imgs/icon/pay@error.png',
@@ -282,14 +295,14 @@ Page({
    * ======================================================
    */
 
-  onBottomTab: function (event) {
+  onBottomTab: function(event) {
     var index = Number(category.getDataSet(event, 'index'));
     var name = category.getDataSet(event, 'name');
     this.setData({
       currentBottomIndex: index,
       currentTabsIndex: -2 // 保留字-2
     });
-    this._loadBaannerTitle(name);   //加载本地banner和标题
+    this._loadBaannerTitle(name); //加载本地banner和标题
     // if(index === 0){
     //   this._loadAllGroup();  //点击时获取数据
     // }
@@ -299,31 +312,31 @@ Page({
    * =================group=====================
    */
 
-  _loadAllGroup: function(){
+  _loadAllGroup: function() {
     var customerId = app.globalData.customerId;
-    category.loadAllGroup(customerId,(data)=>{
+    category.loadAllGroup(customerId, (data) => {
       this.setData({
-        allGroupArr:data.data
+        allGroupArr: data.data
       })
     })
   },
 
-  _createGroup: function(customerId,groupName){
-    category.createGroup(customerId,groupName,(res) => {
-        wx.showToast({
-          title: '设备组创建成功',
-        });
-        this._loadAllGroup();
+  _createGroup: function(customerId, groupName) {
+    category.createGroup(customerId, groupName, (res) => {
+      wx.showToast({
+        title: '设备组创建成功',
+      });
+      this._loadAllGroup();
     })
   },
 
   _deleteGroup: function(groupId) {
-    category.deleteGroup(groupId,(res) => {
-        wx.showToast({
-          title: '设备组删除成功',
-        });
-        this._loadAllGroup();
-      
+    category.deleteGroup(groupId, (res) => {
+      wx.showToast({
+        title: '设备组删除成功',
+      });
+      this._loadAllGroup();
+
     })
   },
 
@@ -331,17 +344,17 @@ Page({
     var groupid = category.getDataSet(event, 'groupid');
     var groupName = category.getDataSet(event, 'groupname');
     wx.navigateTo({
-      url: '../group/group?groupid='+groupid+'&groupName='+groupName 
+      url: '../group/group?groupid=' + groupid + '&groupName=' + groupName
     });
   },
 
-  onGroupsLongPress: function (event) {
+  onGroupsLongPress: function(event) {
     var _this = this;
     var groupid = category.getDataSet(event, 'groupid');
     wx.showModal({
       title: '删除设备分组',
       content: '您确定要删除该设备分组吗？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           _this._deleteGroup(groupid);
         }
@@ -353,7 +366,7 @@ Page({
    * 弹窗添加分组方法
    * ========================================================
    */
-  onAddGroupTap: function (event) {
+  onAddGroupTap: function(event) {
     this.setData({
       showModal: true,
       groupName: ''
@@ -362,18 +375,17 @@ Page({
   /**
    * 弹出框蒙层截断touchmove事件
    */
-  preventTouchMove: function () {
-  },
+  preventTouchMove: function() {},
   /**
    * 对话框取消按钮点击事件
    */
-  onCancel: function () {
+  onCancel: function() {
     this.hideModal();
   },
   /**
    * 对话框确认按钮点击事件
    */
-  onConfirm: function () {
+  onConfirm: function() {
     let theCustomerId = this.data.customerId;
     var submitGroupName = this.data.groupName.trim();
     if (submitGroupName === "") {
@@ -383,42 +395,37 @@ Page({
       })
     } else {
       this.hideModal();
-      this._createGroup(theCustomerId,submitGroupName);
+      this._createGroup(theCustomerId, submitGroupName);
     }
   },
-  inputChange: function (event) {
+  inputChange: function(event) {
     var inputValue = event.detail.value;
     this.data.groupName = inputValue;
   },
 
-   /**
+  /**
    * =================scene=====================
    */
 
-  _loadAllScene: function () {
+/**
+ * 加载所有场景
+ */
+  _loadAllScene: function() {
     var customerId = app.globalData.customerId;
     category.loadAllScene(customerId, (data) => {
-      if(data.length!=0){
-        this.setData({
-          allSceneArr: data
-        })
-      }
+      this.setData({
+        allSceneArr: data
+      })
     })
   },
 
-  _createScene: function (params) {
-    // category.createScene(params, (res) => {
-    //   wx.showToast({
-    //     title: '场景创建成功',
-    //   });
-      // this._loadAllScene();
-      wx.navigateTo({
-        url: '../scene/scene?&sceneName=' + params
-      });
-    // })
+  _createScene: function(params) {
+    wx.navigateTo({
+      url: '../scene/scene?&sceneName=' + params
+    });
   },
 
-  _alterScene:function(params){
+  _alterScene: function(params) {
     category.createScene(params, (res) => {
       wx.showToast({
         title: '场景修改成功',
@@ -427,90 +434,220 @@ Page({
     })
   },
 
-  _deleteScene: function (param) {
-    category.deleteScene(param, (res) => {
-      if(res=="success"){
+/**
+ * 删除场景
+ */
+  _deleteScene: function(sceneid) {
+    category.deleteScene(sceneid, (res) => {
+      console.log(res)
+      if (res == "success") {
         wx.showToast({
           title: '场景删除成功',
+          duration: 2000
         });
         this._loadAllScene();
+      } else {
+        wx.showToast({
+          title: '场景删除失败',
+          icon: 'none',
+          duration: 2000
+        })
       }
     })
   },
 
-  onSceneItemTap: function (event) {
-    var sceneid = category.getDataSet(event, 'scene');
+/**
+ * 点击场景
+ */
+  onSceneItemTap: function(event) {
+    var sceneid = category.getDataSet(event, 'sceneid');
     var sceneName = category.getDataSet(event, 'scenename');
-    wx.navigateTo({
-      url: '../scene/scene?sceneid=' + sceneid + '&sceneName=' + sceneName
+    this.setData({
+      sceneid:sceneid,
+      newSceneName: sceneName
+    });
+    this._loadSceneDevices(sceneid);
+    // wx.showToast({
+    //   title: '功能完善中，敬请期待',
+    //   icon:'none',
+    //   duration:2000
+    // })
+  },
+
+/***
+ * 显示场景详情
+ */
+  _loadSceneDevices: function(sceneid) {
+    var _this = this
+    var newSceneList = []
+    category.getSceneDevices(sceneid, (data) => {
+      console.log(data)
+      _this.setData({
+        sceneLists: data,
+      });
+      _this.data.sceneLists.forEach(function(element) {
+        category.getDeviceById(element.deviceId, (data) => {
+          element.deviceType = data.deviceType,
+          element.name = data.name,
+          element.nickname = data.nickname,
+          newSceneList.push(element);
+          _this.setData({
+            sceneList: newSceneList
+          });
+        })
+      });
+      this.setData({
+        showDetail: true
+      })
     });
   },
 
-  onSceneLongPress: function (event) {
+/**
+ * 长按删除场景
+ */
+  onSceneLongPress: function(event) {
     var _this = this;
     var sceneid = category.getDataSet(event, 'sceneid');
-    var gatewayid = "Gateway_"
-    gatewayid += category.getDataSet(event, 'parentid');
-    var param = {
-      sceneid: sceneid,
-      gatewayid: gatewayid
-    }
     wx.showModal({
       title: '删除场景',
       content: '您确定要删除该场景吗？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
-          _this._deleteScene(param);
+          _this._deleteScene(sceneid);
         }
       }
     });
   },
 
   /**
+   * 绑定场景开关
+   */
+  onBindConfirm:function(event){
+    var sceneid = this.data.sceneid;
+    var _this = this;
+    var nameList = [];
+    var idList = [];
+    var sceneSelector = new Array();
+    this.data.categoryAllDevices.forEach(function (element) {
+      if (element.deviceType === "sceneSelector"){
+        sceneSelector.push(element)
+      }
+    });
+    this.setData({
+      sceneSelectorList: sceneSelector
+    })
+    this.data.sceneSelectorList.forEach(function (element) {
+      if (element.nickname != null && element.nickname != undefined){
+        nameList.push(element.nickname)
+        idList.push(element.id)
+      }else{
+        nameList.push(element.name)
+        idList.push(element.id)
+      }
+    });
+    wx.showActionSheet({
+      itemList: nameList,
+      success(res) {
+        var param = {
+          scene_id: sceneid,
+          sceneSelectorId: idList[res.tapIndex]
+        }
+        category.bindSceneSelector(param,(res)=>{
+          if(res=="success"){
+            wx.showToast({
+              title: '操作成功',
+              duration:2000
+            })
+          }else{
+            wx.showToast({
+              title: '操作失败',
+              icon:'none',
+              duration:2000
+            })
+          }
+        })
+      },
+    })
+  },
+
+  /***
+   * 应用场景
+   */
+  onUseScene:function(){
+    var sceneid = this.data.sceneid;
+    category.useScene(sceneid,(res)=>{
+      if(res=="success"){
+        wx.showToast({
+          title: '应用成功',
+          duration:2000
+        })
+      }else{
+        wx.showToast({
+          title: '应用失败',
+          inco:'none',
+          duration:2000
+        })
+      }
+    })
+  },
+
+  /**
    * 弹窗添加场景方法
    */
-  onAddScene: function(event){
+  onAddScene: function(event) {
     this.setData({
       showModalScene: true,
       sceneName: ''
     })
+    // wx.showToast({
+    //   title: '功能完善中，敬请期待',
+    //   icon:'none',
+    //   duration:2000
+    // })
   },
   /**
    * 弹出框蒙层截断touchmove事件
    */
-  preventTouchMove: function () {
-  },
+  preventTouchMove: function() {},
   /**
    * 隐藏模态对话框
    */
-  hideModal: function () {
+  hideModal: function() {
     this.setData({
       showModal: false,
-      showModalScene:false
+      showModalScene: false,
+      showDetail: false,
     });
   },
   /**
    * 对话框取消按钮点击事件
    */
-  onCancel: function () {
+  onCancel: function() {
     this.hideModal();
   },
   /**
    * 场景对话框确认按钮点击事件
    */
-  onSceneConfirm: function () {
+  onSceneConfirm: function() {
     var submitGroupName = this.data.sceneName.trim();
-    if (submitGroupName === ""){
+    if (submitGroupName === "") {
       wx.showToast({
         title: '场景名不能为空',
-        icon: 'none'
+        icon: 'none',
+        duration: 2000
       })
-    }else{
+    } else if (!category.validateName(submitGroupName)) {
+      wx.showToast({
+        title: '场景名只能为字母和数字',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
       this.hideModal();
       this._createScene(submitGroupName);
     }
   },
-  inputSceneChange: function(event){
+  inputSceneChange: function(event) {
     var inputValue = event.detail.value;
     this.data.sceneName = inputValue;
   },

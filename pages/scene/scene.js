@@ -8,18 +8,20 @@ import {
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var scene = new Scene();
-var app = getApp()
-
-var scenlist = {}
+var app = getApp();
+var sceneDevicesArray = []
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    news:[
-      {title:"请选择网关相同的设备创建场景，否则将创建失败！"},
-      {title:"请选择网关相同的设备创建场景，否则将创建失败！"},
+    news: [{
+        title: "请选择网关相同的设备创建场景，否则将创建失败！"
+      },
+      {
+        title: "请选择网关相同的设备创建场景，否则将创建失败！"
+      },
     ],
     imgUrl: Config.deviceImgUrl,
     statusTable: {},
@@ -37,7 +39,7 @@ Page({
     showCurtain: false,
     showSwitch: false,
 
-    newTypeDevices : []
+    newTypeDevices: [],
   },
 
   /**
@@ -63,46 +65,37 @@ Page({
   //load所有场景设备
   _loadCateDevices: function() {
     var _this = this
-    scene.getAllDevices((data) => {
+    var customerId = app.globalData.customerId
+    scene.getAllDevices(customerId, (data) => {
       this.setData({
         categoryAllDevices: data.data
       });
-      /*========对所有设备按类型分类=============*/
+      /*========获取场景开关设备=============*/
       var currentType = this.data.sceneType[0];
       var _arrayType = this.data.categoryType[currentType];
       var typeDevices = new Array();
-      
+
       this.data.categoryAllDevices.forEach(function(element) {
         if (scene.inArray(element.deviceType, _arrayType)) {
           typeDevices.push(element);
         }
       });
-      typeDevices.forEach(function (element) {
-        _this._getDeviceById(element,element.parentDeviceId);
-      });
-      
-    });
-  },
-
-  _loadSceneDevices: function(sceneid) {
-    scene.getSceneDevices(sceneid, (data) => {
-      this.setData({
-        sceneDevices: data.data
+      typeDevices.forEach(function(element) {
+        _this._getDeviceById(element, element.parentDeviceId);
       });
     });
   },
 
-  _getDeviceById:function(element,deviceId){
+  _getDeviceById: function(element, deviceId) {
     scene.getDeviceById(deviceId, (data) => {
       var newname = data.name
-      console.log(newname.length)
       var length = newname.length
       var name = "";
-      for(let i=8;i<length;i++){
-          name+=newname[i]
+      for (let i = 8; i < length; i++) {
+        name += newname[i]
       }
-       element.parentName = name;
-       this.data.newTypeDevices.push(element);
+      element.parentName = name;
+      this.data.newTypeDevices.push(element);
       this.setData({
         sceneDevices: this.data.newTypeDevices
       });
@@ -115,7 +108,6 @@ Page({
     this.setData({
       deviceId: deviceId
     })
-    // if(deviceType=='调色灯'){
     if (deviceType == 'dimmableLight') {
       this.setData({
         showBulb1: true
@@ -141,7 +133,6 @@ Page({
         showCurtain: true
       })
     }
-    // var _this = this;
   },
 
   /**
@@ -171,14 +162,12 @@ Page({
    * 场景对话框确认按钮点击事件
    */
   onSceneConfirm: function() {},
-
   inputSceneChange: function(event) {
     var inputValue = event.detail.value;
     this.data.sceneName = inputValue;
   },
 
   formSubmit: function(event) {
-    console.log(event)
     var data1 = scene.getDataSet1(event, 'data1');
     var data2 = scene.getDataSet1(event, 'data2');
     var data3 = scene.getDataSet1(event, 'data3');
@@ -199,9 +188,58 @@ Page({
     if (data4 == "" || data4 == undefined) {
       data4 = 0;
     }
+    var sceneDevice = {
+      "deviceId": this.data.deviceId,
+      "data1": data1,
+      "data2": data2,
+      "data3": data3,
+      "data4": data4,
+    }
+    sceneDevicesArray.push(sceneDevice)
+    console.log(sceneDevicesArray)
+    this.hideModal()
   },
   //保存场景
   saveScene: function() {
-
+    var _this = this
+    if (sceneDevicesArray.length == 0) {
+      wx.showToast({
+        title: '请添加设备来创建场景',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      var sceneType = {
+        "sceneName": this.data.bannerTitle,
+        "customerId": app.globalData.customerId,
+        "sceneInfo": sceneDevicesArray,
+      }
+      sceneDevicesArray = [];
+      wx.showLoading({
+        title: "创建中...",
+      })
+      setTimeout(function() {
+        wx.hideLoading()
+        scene.addscene(sceneType, (res) => {
+          if (res === "success") {
+            wx.showToast({
+              title: '创建成功',
+              duration: 2000,
+            })
+            setTimeout(function() {
+              wx.reLaunch({
+                url: '../category/category',
+              })
+            }, 1000)
+          } else {
+            wx.showToast({
+              title: '创建失败',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+      }, 1000)
+    }
   }
 })

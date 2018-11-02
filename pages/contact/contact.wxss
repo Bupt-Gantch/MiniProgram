@@ -5,13 +5,13 @@
   background-color: #e7eae9;
   justify-content:center;
   text-align: center;
-  color: #7fbcd2
+  color: #002366
 }
 .contact-bottom{
   text-align: center;
   width:100%;
   padding: 50rpx;
-  color: #7fbcd2;
+  color: #002366;
 }
 .contact-need{
   width:98%;

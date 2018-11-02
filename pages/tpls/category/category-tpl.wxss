@@ -3,7 +3,7 @@
     overflow: hidden;
     padding: 30rpx 20rpx 0rpx;
     height: 100%;
-    background-color: #dbe8f1
+    background-color: rgb(217, 220, 223)
 }
 .category-header{
     height: 70%;
@@ -23,7 +23,7 @@
 }
 .category-title text{
     font-size: 30rpx;
-    color:#5a9ec8;
+    color:#002366;
 }
 .category-title text::before,.category-title text::after{
     content: '';
@@ -86,7 +86,7 @@
   
 }
 .category-goods-items view {
-    color:#7fbcd2;
+    color:#002366;
     font-size: 24rpx;
     
 }

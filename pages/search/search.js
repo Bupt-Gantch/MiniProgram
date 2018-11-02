@@ -1,5 +1,4 @@
 // pages/search/search.js
-var API = require('../../utils/api.js')
 import {
   Config
 } from '../../utils/config.js';

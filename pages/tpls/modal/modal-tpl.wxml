@@ -26,8 +26,8 @@
       </view>
     </view>
     <view class="modal-footer">
-      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-      <view class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</view>
+      <button class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</button>
+      <button class="btn-confirm" bindtap="onSceneConfirm" data-status="confirm">确定</button>
     </view>
   </view>
 </template>
@@ -185,7 +185,7 @@
   </view>
 </template>
 
-<!--修改设别名弹窗-->
+<!--修改设备名弹窗-->
 <template name="changeName">
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showEdit}}"></view>
   <view class="modal-dialog" wx:if="{{showEdit}}">
@@ -198,6 +198,67 @@
     <view class="modal-footer">
       <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
       <view class="btn-confirm" bindtap="onEditConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template> 
+
+<!--场景详情-->
+<template name="sceneDetail">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showDetail}}"></view>
+  <view class="modal-dialog" wx:if="{{showDetail}}">
+    <view class="modal-title">{{newSceneName}}</view>
+    <view class="modal-content">
+      <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+        <block wx:for="{{sceneArray}}" wx:key="item">
+          <view wx:if="{{item.nickname}}" class='sceneDeviceName'>{{item.nickname}}</view>
+          <view wx:else class='sceneDeviceName'>{{item.name}}</view>
+          <view wx:if="{{item.deviceType=='dimmableLight'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+            <view class="section section_gap">
+              <view class="section__title">亮度</view>
+              <slider disabled="true" min="1" max="255" value='{{item.data2}}' show-value></slider>
+            </view>
+            <view class="section section_gap">
+              <view class="section__title">色温</view>
+              <slider disabled="true" min="1" max="255" value='{{item.data3}}' show-value></slider>
+            </view>
+          </view>
+          <view wx:if="{{item.deviceType=='switch'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+          </view>
+          <view wx:if="{{item.deviceType=='curtain'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onBindConfirm" data-status="confirm">绑定场景开关</view>
+      <view class="btn-confirm" bindtap="onUseScene" data-status="cancel">应用场景</view>
     </view>
   </view>
 </template>

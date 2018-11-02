@@ -468,6 +468,7 @@ Page({
     }else{
       let firstTempDeviceId = categoryDeviceArr.temp_humi[0].id;
       this._loadRealtimeData(firstTempDeviceId);
+      this._loadHistoryData(firstTempDeviceId);
     }
     // if (categoryDeviceArr.pm.length === 0){
     //   wx.showToast({
@@ -479,6 +480,24 @@ Page({
     //   let firstPmDeviceId = categoryDeviceArr.pm[0].id;
     //   this._loadRealtimeData_pm(firstPmDeviceId);
     // }
+  },
+
+  _loadHistoryData:function(deviceId){
+    var _this = this;
+    var timestamp = Date.parse(new Date());
+    // timestamp = timestamp / 1000;
+    var param = {
+      deviceId: deviceId,
+      key:"temperature",
+      startTs: (timestamp/1000-24*60*60*7)*1000,
+      endTs: timestamp,
+      limit:14,
+      interval:86400000,
+      aggregation:"AVG"
+    }
+    home.getHistoryData(param,(res)=>{
+      console.log(res)
+    })
   },
 
   _loadRealtimeData: function (deviceid) {
@@ -511,10 +530,8 @@ Page({
         //   gaugeComponent.pm25Component.init(initChart_pm25);
         // }
       })
-      
     });
     this.data.socketTasks.push(socketTask);
-
   },
   
 });

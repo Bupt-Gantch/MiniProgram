@@ -238,10 +238,10 @@ class Category extends Base{
     this.request(param);
   }
 
-  deleteScene(param, callback) {
-    var params = {
-      url: 'scene/deleteScene/' + param.sceneid + '/' + param.gatewayid,
-      type: 'DELETE',
+  deleteScene(sceneid, callback) {
+    var param = {
+      url: 'scene/deleteScene/' + sceneid,
+      method: 'DELETE',
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -259,6 +259,57 @@ class Category extends Base{
       }
     }
     this.request(params);
+  }
+
+  getSceneDevices(sceneid, callback) {
+    var param = {
+      url: 'scene/getScene/' + sceneid,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  getDeviceById(deviceid, callback) {
+    var param = {
+      url: 'deviceaccess/device/' + deviceid,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  /**
+   * 场景绑定场景开关
+   */
+  bindSceneSelector(param,callback){
+    console.log(param)
+    var params = {
+      url:'scene/bindSelector',
+      data:param,
+      method:'POST',
+      sCallback:function(data){
+        callback&&callback(data);
+      }
+    };
+    this.request(params);
+  }
+
+  /**
+   * 应用场景
+   */
+  useScene(scene_id,callback){
+    var param = {
+      url:`scene/useScene/${scene_id}`,
+      data:scene_id,
+      method:'POST',
+      sCallback:function(data){
+        callback&&callback(data);
+      }
+    };
+    this.request(param);
   }
 }
 

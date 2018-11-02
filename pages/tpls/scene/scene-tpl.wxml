@@ -15,7 +15,6 @@
               <image src='{{imgUrl["scene"]}}' mode="aspectFit"></image>
             </view>
             <view>{{item.sceneName}}</view>
-            <view>{{item.sceneName}}</view>
           </view>
           <!-- end -->
         </block>
@@ -55,4 +54,7 @@
       </view>
     </scroll-view>
   </view>
+</template>
+
+<template name="scenedetail">
 </template>

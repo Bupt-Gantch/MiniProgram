@@ -32,8 +32,20 @@ class Home extends Base{
         onDataCb: onDataCb(data);
       }
     };
-
     return this.realTimeDevice(param);
+  }
+
+  //获取设备历史数据
+  getHistoryData(param, callback){
+    console.log(param)
+    var params = {
+      url: `deviceaccess/data/alldata/${param.deviceId}`,
+      data:param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params)
   }
 }
 

@@ -3,7 +3,7 @@
 @import "../tpls/modal/modal-tpl.wxss";
 @import "../tpls/roll/roll_tpl.wxss";
 page{
-  background-color: #dbe8f1
+  background-color: rgb(217, 220, 223)
 }
 
 .group-wrapper{

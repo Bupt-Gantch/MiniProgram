@@ -1,5 +1,4 @@
 // pages/release/release.js
-
 import {
   Config
 } from '../../utils/config.js';
@@ -19,6 +18,8 @@ Page({
    */
   data: {
     imageList: [],
+    newimageList: [],
+    imageArray: []
   },
 
   /**
@@ -30,7 +31,7 @@ Page({
     })
     this.setData({
       place: this.data.content.place,
-      lastplace:""  
+      lastplace: ""
     })
   },
 
@@ -43,13 +44,13 @@ Page({
    * 添加图片
    */
   chooseImg: function() {
-    var that = this;
+    var _this = this;
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function(res) {
-        that.setData({
+        _this.setData({
           imageList: res.tempFilePaths
         })
       }
@@ -83,7 +84,7 @@ Page({
           }
         }
         release.addPlace(newplace, (res) => {
-          if (res.status == 1) {
+          if (res.data.status == 1) {
             var newplace = res.data.regeocode.addressComponent.province + res.data.regeocode.addressComponent.district
             that.setData({
               place: newplace,
@@ -97,11 +98,10 @@ Page({
           }
         })
       },
-      fail:function(res){
-        console.log(res)
+      fail: function(res) {
         that.setData({
           place: that.data.content.wrong,
-          lastplace:""
+          lastplace: ""
         })
       }
     })
@@ -109,27 +109,33 @@ Page({
   /**
    * 发布内容
    */
-
   formSubmit: function(e) {
-    var imagePath = this.data.imageList[0]
-    console.log(imagePath)
-    if (imagePath==undefined){
+    var _this = this
+    var imageArray = []
+    var newimagePath = this.data.imageList
+    this.setData({
+      content: e.detail.value.textarea
+    })
+    wx.showLoading({
+      title: '发布中',
+    })
+    if (newimagePath == undefined || newimagePath == "") {
       var param = {
         openId: app.globalData.openid,
         nickName: app.globalData.userInfo.nickName,
         avatar: app.globalData.userInfo.avatarUrl,
         content: e.detail.value.textarea,
         location: this.data.lastplace,
-        image:"",
       }
-      release.addContent(param,(res)=>{
+      release.addContent(param, (res) => {
+        wx.hideLoading()
         console.log(res)
-        if (res.data == 1) {
+        if (res == 1) {
           wx.showToast({
             title: '发布成功',
             duration: 3000,
           })
-          setTimeout(function () {
+          setTimeout(function() {
             wx.reLaunch({
               url: '../publish/publish',
             })
@@ -142,38 +148,56 @@ Page({
           })
         }
       })
-    }else{
-      wx.uploadFile({
-      url: Config.restUrl+'wechatPost/addPost',
-      filePath: imagePath,
+    } else {
+      this.request(newimagePath, 0, this)
+    }
+  },
+
+  request(request_data, i, _this) {
+    wx.uploadFile({
+      url: Config.restUrl+'wechatPost/uploadImage',
+      filePath: request_data[i],
       name: 'image',
-      formData: {
-        openId: app.globalData.openid,
-        nickName: app.globalData.userInfo.nickName,
-        avatar: app.globalData.userInfo.avatarUrl,
-        content: e.detail.value.textarea,
-        location: this.data.lastplace,
-      },
       success(res) {
-          if (res.data == 1) {
-            console.log(123)
-            wx.showToast({
-              title: '发布成功',
-              duration: 3000,
-            })
-            setTimeout(function () {
-              wx.reLaunch({
-                url: '../publish/publish',
-              })
-            }, 1000)
-          } else {
-            wx.showToast({
-              title: '发布失败',
-              icon: 'none',
-              duration:2000
-            })
+        _this.data.newimageList.push(res.data);
+        _this.setData({
+          imageArray: _this.data.newimageList
+        });
+        i++;
+        if (i < request_data.length) {
+          _this.request(request_data, i, _this);
+        } else {
+          var param = {
+            openId: app.globalData.openid,
+            nickName: app.globalData.userInfo.nickName,
+            avatar: app.globalData.userInfo.avatarUrl,
+            content: _this.data.content, 
+            location: _this.data.lastplace,
+            images: _this.data.imageArray
           }
+          release.addContent(param, (res) => {
+            wx.hideLoading()
+            if (res == 1) {
+              wx.showToast({
+                title: '发布成功',
+                duration: 3000,
+              })
+              setTimeout(function() {
+                wx.reLaunch({
+                  url: '../publish/publish',
+                })
+              }, 1000)
+            } else {
+              wx.showToast({
+                title: '发布失败',
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          })
+        }
       }
-    })}
+    })
   }
+
 })

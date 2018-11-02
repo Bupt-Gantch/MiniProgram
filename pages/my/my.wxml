@@ -7,19 +7,19 @@
       </block>
     </view>
   </view>
+    <view class="my-item scan" bindtap='scan'>
+      <text>{{content.scan}}</text>
+    </view>
 
+    <view class="my-item scan" bindtap='deleteGateway'>
+      <text>{{content.deleteGateway}}</text>
+    </view>
   <view class="my-main">
     <view class="my-item" bindtap='myPublish'>
       <text>{{content.mypublish}}</text>
     </view>
-    <!-- <view class="my-item" bindtap='myNews'>
-      <text>{{content.mynews}}</text>
-    </view> -->
     <view class="my-item" bindtap='onContactTap'>
       <text>{{content.feedback}}</text>
-    </view>
-    <view class="my-item scan" bindtap='scan'>
-      <text>{{content.scan}}</text>
     </view>
     <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
   </view>

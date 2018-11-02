@@ -47,19 +47,16 @@ page{
   font-size: 28rpx;
 }
 
-.div {
+.showPic{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.info-pictures {
+.showPic image{
   width: 32%;
-}
-
-.info-pictures image {
-  width: 100%;
-  padding: 5rpx;
+  height: 200rpx;
+  padding-right: 8rpx 
 }
 
 .info-place {
@@ -108,11 +105,11 @@ page{
 .endbox{
   align-content: center;
   text-align: center;
-  color: #a8d3ba
+  color: #001f56
 }
 .line{
   height: 3rpx;
-  background-color:#a8d3ba;
+  background-color:#001f56;
   margin-bottom: 20rpx;
   margin-right: 10rpx;
   margin-left: 10rpx;

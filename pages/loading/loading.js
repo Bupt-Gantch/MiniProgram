@@ -51,17 +51,18 @@ Page({
       app.globalData.userInfo = e.detail.userInfo;
       wx.login({
         success: function (res) {
-          console.log(res.code)
-          //发送请求
+          //发送请求获取openid
           wx.request({
             url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId', //接口地址
-            data: { JSCODE: res.code },
+            data: { 
+              JSCODE: res.code,
+              },
             method:'POST',
             header: {
               'content-type': 'application/json' //默认值
             },
             success: function (res) {
-                     if (res.data == undefined || res.data == "" || res.data == null) {
+          if (res.data == undefined || res.data == "" || res.data == null) {
           wx.showToast({
             title: '请求错误',
             icon: 'none',
@@ -102,7 +103,7 @@ Page({
             })
           }, 1000)
         }
-            },
+      },
             fail:function(err){
               wx.showToast({
                 title: '请求错误',
@@ -113,52 +114,6 @@ Page({
           })
         }
       })
-
-
-      // loading.getOpenid((res) => {
-      //   console.log(res.openid)
-      //   if (res.openid == undefined || res.openid == "" || res.openid == null) {
-      //     wx.showToast({
-      //       title: '请求错误',
-      //       icon: 'none',
-      //       duration: 2000,
-      //     })
-      //   } else {
-      //     app.globalData.openid = res.openid,
-      //       wx.showLoading({
-      //         title: _this.data.content.loading,
-      //       })
-      //     setTimeout(function () {
-      //       wx.hideLoading()
-      //       loading.findOpenid(res.openid, (res) => {
-      //         if (res.status === "success") {
-      //           app.globalData.customerId = res.data.id
-      //           wx.showToast({
-      //             title: '登录成功',
-      //             duration: 2000,
-      //           })
-      //           setTimeout(function () {
-      //             wx.reLaunch({
-      //               url: '../home/home',
-      //             })
-      //           }, 1000)
-      //         } else {
-      //           wx.showModal({
-      //             title: '登陆失败',
-      //             content: '未查询到相关用户信息,请先注册',
-      //             success: function (res) {
-      //               if (res.confirm) {
-      //                 wx.navigateTo({
-      //                   url: '../register/register',
-      //                 })
-      //               }
-      //             }
-      //           })
-      //         }
-      //       })
-      //     }, 1000)
-      //   }
-      // })
     }
   },
 

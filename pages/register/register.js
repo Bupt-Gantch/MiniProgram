@@ -69,15 +69,13 @@ Page({
         }
     }
     register.register(params, (res) => {
-      console.log(res)
       wx.showLoading({
         title:'请稍后',
       })
       setTimeout(function () {
         wx.hideLoading()
           if (res.status === "success") {
-            app.globalData.customerId = res.data.customerId
-            console.log(app.globalData.customerId)
+            app.globalData.customerId = res.data.id
             wx.showToast({
               title:'注册成功',
               duration: 3000,

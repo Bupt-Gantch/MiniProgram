@@ -32,6 +32,7 @@ page {
 .showPic image{
   width: 33%;
   height: 150rpx;
+  padding-right: 8rpx 
 }
 
 .line{

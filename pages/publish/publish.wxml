@@ -28,14 +28,20 @@
 
       <view class='info-content'>
         <view>
-          <text class='info-detail'>{{item.pContent}}</text>
+         <text class='info-detail'>{{item.pContent}}</text>
         </view>
-        <view class='div'>
-          <!-- <view class="info-pictures" wx:for="{{item.pictures}}" wx:for-item="img">
-          <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode='widthFix'></image> -->
-<image wx:if='{{item.image}}' src="{{item.image}}" mode='widthFix' data-src='{{item.image}}' bindtap='imageClick'></image>
-          <!-- </view> -->
-        </view>
+        <!-- <view class='div'>
+        <view class="info-pictures" wx:for="{{item.image}}" wx:for-item="img" wx:key="img">
+        <view class='picture-view'>       
+          <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
+          </view>
+          </view>
+        </view> -->
+      <view class='showPic'>
+      <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img" class='picture-view'>
+        <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
+      </block>
+    </view>
         <view wx:if='{{item.location}}' class='info-place'>{{item.location}}</view>
       </view>
       <view class='info-footer'>

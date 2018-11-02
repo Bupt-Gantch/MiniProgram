@@ -1,7 +1,6 @@
 import {
   Config
 } from '../utils/config.js';
-const Mock = require('mock-min.js');
 
 class Base {
   constructor() {
@@ -26,6 +25,7 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function (res) {
+          // console.log(res.data)
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
           if (startChar == '2') {
@@ -39,160 +39,10 @@ class Base {
           params.fCallback && params.fCallback(err);
         }
       })
-    } else {
-      //后面是模拟数据
-      var Random = Mock.Random;
-      Random.extend({
-        deviceTypes: Config.categoryName,
-        deviceType: function (date) {
-          return this.pick(this.deviceTypes)
-        }
-      })
-      var res = Mock.mock({
-        'error_code': '',
-        'error_msg': '',
-        'statusCode': 200,
-        'data|30': [{
-          'id|+1': 1,
-          'title': '@ctitle(3,8)',
-          'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'],   //test
-          'marketing_start': '@datetime()',
-          'marketing_stop': '@now()',
-          // 'status':true,
-          'online|1': true,
-          'deviceId': function () {
-            return Random.string(6)
-          },
-          'imgUrl': function () {
-            let type = this.deviceType;
-            switch (type) {
-              case "灯泡":
-                return '../../imgs/test/bump2.png'
-                break;
-              case "插座":
-                return '../../imgs/test/socket@off.png'
-                break;
-              case "窗帘":
-                return '../../imgs/test/curtain.png'
-                break;
-              case "传感器":
-                return '../../imgs/test/sensor.png'
-                break;
-              case "开关":
-                return '../../imgs/test/switch@off.png'
-                break;
-              default:
-                return '../../imgs/test/default.png'
-            }
-          },
-
-        }]
-      })
-      if (Config.test === '2') {
-        var res = Mock.mock({
-          'error_code': '',
-          'error_msg': '',
-          'statusCode': 200,
-          'data|25': [{
-            'id|+1': 1,
-            'title': '@ctitle(3,8)',
-            'deviceType|1': ['dimmableLight', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头', 'IASZone'], //test
-            'marketing_start': '@datetime()',
-            'marketing_stop': '@now()',
-            'groupName': function () {
-              return Random.string(6)
-            },
-            'online|1': true,
-            'deviceId': function () {
-              return Random.string(6)
-            },
-            'tempra|-20-40': 0,
-            'groups': [],
-            'humi|0-100': 0,
-            'pm2.5|10-200': 0,
-            'imgUrl': function () {
-              let type = this.deviceType;
-              switch (type) {
-                case "灯泡":
-                  return '../../imgs/test/bump2.png'
-                  break;
-                case "插座":
-                  return '../../imgs/test/socket@off.png'
-                  break;
-                case "窗帘":
-                  return '../../imgs/test/curtain.png'
-                  break;
-                case "传感器":
-                  return '../../imgs/test/sensor.png'
-                  break;
-                case "开关":
-                  return '../../imgs/test/switch@off.png'
-                  break;
-                default:
-                  return '../../imgs/test/default.png'
-              }
-            },
-
-          }]
-        })
-      }
-      params.sCallback && params.sCallback(res);
-    }
-  }
-
-  request_post(params) {
-    var url = this.baseRequestUrl + params.url;
-    if (!this.debug) {
-      wx.request({
-        url: url,
-        data: params.data,
-        method: params.method,
-        header: {
-          'content-type': 'application/json',
-          'token': wx.getStorageSync('token')
-        },
-        success: function (res) {
-          // if(params.sCallBack){
-          //   params.sCallBack(res);
-          // }
-          params.sCallback && params.sCallback(res.data);
-        },
-        fail: function (err) {
-          params.fCallback && params.fCallback(err);
-          console.log(err);
-        }
-
-      })
-    } else {
-      //后面是模拟数据
-      var Random = Mock.Random;
-      Random.extend({
-        deviceTypes: Config.categoryName,
-        deviceType: function (date) {
-          return this.pick(this.deviceTypes)
-        }
-      })
-
-      var res = Mock.mock({
-        'error_code': '',
-        'error_msg': '',
-        'statusCode': 200,
-        'data|1': [{
-          'id|+1': 1,
-          'title': '@ctitle(3,8)',
-          'deviceType|1': ['灯泡', '插座', '窗帘', '传感器', '开关', 'x', '红外宝', '摄像头'], //test
-          'online|1': true,
-        }]
-      })
-
-      // 成功调用成功回调，失败调用失败回调
-      params.sCallback && params.sCallback(res);
-      //params.fCallback && params.fCallback();
     }
   }
 
   request_test(params) {
-    console.log(params.url)
     if (!params.method) {
       params.method = 'GET';
     }
@@ -205,7 +55,6 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success: function (res) {
-        console.log(res)
         params.sCallback && params.sCallback(res);
       },
       fail: function (err) {
@@ -214,6 +63,29 @@ class Base {
       }
     })
   }
+
+  // request_te(params) {
+  //   console.log(params.url)
+  //   if (!params.method) {
+  //     params.method = 'GET';
+  //   }
+  //   wx.request({
+  //     url: params.url,
+  //     data: params.data,
+  //     method: params.method,
+  //     header: {
+  //       'Content-Type': 'multipart/form-data',
+  //       'token': wx.getStorageSync('token')
+  //     },
+  //     success: function (res) {
+  //       params.sCallback && params.sCallback(res);
+  //     },
+  //     fail: function (err) {
+  //       console.log(err);
+  //       params.fCallback && params.fCallback(err);
+  //     }
+  //   })
+  // }
 
   /** =========== websocket========= */
 
@@ -316,6 +188,10 @@ class Base {
     return false;
 
   }
+
+  validateName(name) {
+    return /^[\da-z]+$/i.test(name)
+}
 
 
 }

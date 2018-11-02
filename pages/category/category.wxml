@@ -55,16 +55,17 @@
 
           <!-- 保留模板（scene） -->
           <template wx:if="{{index == 1}}" is="scene" 
-          data="{{imgUrl:groupSceneImg,bannerTitle,allSceneArr}}"></template>
+          data="{{imgUrl:groupSceneImg,bannerTitle,allSceneArr,sceneName}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
-
       </block>
     </view>
   </view>
   <template is="modalDialog" data="{{showModal,content}}">
   </template>
     <template is="modalScene" data="{{showModalScene,contentScene}}">
+  </template>
+  <template is="sceneDetail" data="{{showDetail,sceneArray:sceneList,newSceneName}}">
   </template>
 
   <!-- 分配设备组picker -->

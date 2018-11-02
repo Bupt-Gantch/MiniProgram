@@ -4,13 +4,13 @@
 <view class='detail-container'>
   <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
-    <view class='content'>
+    <view class='content' bindlongpress="onChangeName">
       <view class='device-image'>
         <image src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
       </view>
       <view class='title'>名称</view>
       <!-- <view class='name'>{{deviceDetail.name}}</view> -->
-      <view class='name' bindlongpress="onChangeName">{{deviceName}}</view>
+      <view class='name'>{{deviceName}}</view>
     </view>
   </view>
 

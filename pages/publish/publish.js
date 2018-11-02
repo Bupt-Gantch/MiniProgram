@@ -52,19 +52,42 @@ Page({
    * 获取信息列表/按页显示
    */
   _loadInfoList: function(page) {
+    var _this = this
+    var newinfoList = new Array();
     publish.getInfoList(page, (res) => {
-      this.setData({
+      _this.setData({
         infoList: res.data
       });
-      if (this.data.infoList.length%9!=0||this.data.infoList===0){
+      if (_this.data.infoList.length!=undefined){
+        _this.data.infoList.forEach(function (element) {
+          if (element.image != null) {
+            if (element.image[0] == "[") {
+              var newimage = element.image.substr(1, element.image.length - 2);
+            } else {
+              var newimage = element.image;
+            }
+            var arr = newimage.split(",");
+            element.image = arr;
+            newinfoList.push(element)
+          } else {
+            newinfoList.push(element)
+          }
+        });
+      }
+      _this.setData({
+        infoList:newinfoList
+      })
+      if (_this.data.infoList.length%9!=0||_this.data.infoList.length===0){
         page=page-1
-        for (var i = 0; i < this.data.infoList.length;i++)
-          info.push(this.data.infoList[i])
         this.setData({
-          infolist: info,
-          end:true
+          end: true
         })
       }
+      for (var i = 0; i < _this.data.infoList.length; i++)
+        info.push(_this.data.infoList[i])
+      this.setData({
+        infolist: info,
+      })
     })
   },
 
@@ -89,9 +112,7 @@ Page({
    */
   imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
-    var pictures= [];
-    pictures.push(src)
-    // var pictures = e.currentTarget.dataset.pictures.pictures;
+    var pictures = e.currentTarget.dataset.pictures.image;
     wx.previewImage({
       current: src,
       urls: pictures,

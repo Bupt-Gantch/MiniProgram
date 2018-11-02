@@ -14,7 +14,7 @@
 }
 .left-box{
     flex: 0 1 150rpx;
-    border-right:1rpx solid #a8d3ba;
+    border-right:1rpx solid #5a9ec8;
     background-color: #e7eae9
 }
 .group-btn{
@@ -28,13 +28,13 @@
     align-items: center;
     justify-content: center;
     font-size:28rpx;
-    border-left: 6rpx solid #49cc80;
+    border-left: 6rpx solid #5a9ec8;
     /* color: #a8d3ba */
-    color:#49cc80
+    color:#5a9ec8
 }
 .menu-item.selected{
-    color: #5a9ec8;
-    border-left-color:#5a9ec8;
+    color: #002366;
+    border-left-color:#002366;
 }
 
 .separate{
@@ -44,9 +44,9 @@
   align-items: center;
   justify-content: center;
   font-size:28rpx;
-  border-bottom: 3rpx solid #49cc80;
-  color: #49cc80;
-  background-color: #49cc80
+  border-bottom: 3rpx solid #5a9ec8;
+  color: #5a9ec8;
+  background-color: #5a9ec8
 }
 
 /*

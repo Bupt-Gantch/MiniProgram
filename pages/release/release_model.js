@@ -18,10 +18,12 @@ class Release extends Base {
     this.request_test(params);
   }
 
+  
+
   addContent(param,callback){
     var params = {
-      url: 'wechatPost/addPost',
-      data:param,
+      url: 'wechatPost/addPostJson',
+      data:param, 
       method:'POST',
       sCallback:function(res){
         callback && callback(res);

@@ -79,3 +79,12 @@ input-holder {
   color: #ec5300;
   text-align: center;
 }
+
+.scroll-view{
+  height: 500rpx;
+}
+
+.sceneDeviceName{
+  font-size: 45rpx;
+  color: #ec5300
+}
