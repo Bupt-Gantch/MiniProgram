@@ -651,4 +651,27 @@ Page({
     var inputValue = event.detail.value;
     this.data.sceneName = inputValue;
   },
+
+  onPullDownRefresh() {
+    wx.showLoading({
+      title: '正在刷新设备...',
+    })
+    var customerId = app.globalData.customerId;
+    var currentTabIndex = this.data.currentTabsIndex;
+    category.getAllDevices(customerId, (data) => {
+      this.setData({
+        categoryAllDevices: data.data
+      });
+      if (currentTabIndex > 0 && currentTabIndex !== 0){
+        this._loadCateDevices(currentTabIndex, customerId);
+      }
+      setTimeout(function(){
+        wx.hideLoading({
+          success: function () {
+            wx.stopPullDownRefresh()
+          }
+        });
+      },500)
+    });
+  },
 })
