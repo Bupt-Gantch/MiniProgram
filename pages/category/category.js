@@ -730,6 +730,7 @@ Page({
     this.data.sceneName = inputValue;
   },
 
+<<<<<<< HEAD
   onDeleteDevice:function(){
     if (this.data.categoryAllDevices.length==0){
       wx.showToast({
@@ -775,4 +776,28 @@ Page({
       }
     })
   }
+=======
+  onPullDownRefresh() {
+    wx.showLoading({
+      title: '正在刷新设备...',
+    })
+    var customerId = app.globalData.customerId;
+    var currentTabIndex = this.data.currentTabsIndex;
+    category.getAllDevices(customerId, (data) => {
+      this.setData({
+        categoryAllDevices: data.data
+      });
+      if (currentTabIndex > 0 && currentTabIndex !== 0){
+        this._loadCateDevices(currentTabIndex, customerId);
+      }
+      setTimeout(function(){
+        wx.hideLoading({
+          success: function () {
+            wx.stopPullDownRefresh()
+          }
+        });
+      },500)
+    });
+  },
+>>>>>>> 4b010aa03f04108d2d9674ec117e78b84ff013b8
 })
