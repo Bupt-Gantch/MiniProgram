@@ -12,7 +12,8 @@
     "pages/mypublish/mypublish",
     "pages/register/register",
     "pages/scene/scene",
-    "pages/group/group"
+    "pages/group/group",
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -25,7 +26,7 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/index/index",
         "text": "首页",
         "iconPath": "imgs/toolbar/home.png",
         "selectedIconPath": "imgs/toolbar/home@selected.png"

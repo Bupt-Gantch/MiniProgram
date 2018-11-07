@@ -49,22 +49,6 @@ Page({
         }
       })
     }
-    this._getGateway();
-  },
-
-  _getGateway: function() {
-    var gatewayList = new Array();
-    var customerId = app.globalData.customerId
-    my.getAllDevices(customerId, (res) => {
-      res.data.forEach(function(element) {
-        if (element.deviceType === "Gateway") {
-          gatewayList.push(element.name)
-        }
-      });
-      this.setData({
-        gateway: gatewayList
-      })
-    })
   },
 
   onShow: function() {
@@ -111,7 +95,6 @@ Page({
               gateway_user += gateway[i],
                 i++
             }
-            console.log(gateway_user)
             var param = {
               customerId: app.globalData.customerId,
               gateway_user: gateway_user
@@ -156,38 +139,46 @@ Page({
 
   deleteGateway: function() {
     var _this = this
-    var nameList = _this.data.gateway
-    if (nameList.length==0) {
-      wx.showToast({
-        title: '您还没有绑定任何网关',
-        icon: 'none',
-        duration: 2000
-      })
-    } else {
-      wx.showActionSheet({
-        itemList: nameList,
-        success(res) {
-          var param = {
-            customerId: app.globalData.customerId,
-            gatewayName: nameList[res.tapIndex]
-          }
-          my.deleteGateway(param, (res) => {
-            if (res == 1) {
-              wx.showToast({
-                title: '操作成功',
-                duration: 2000
-              })
-            } else {
-              wx.showToast({
-                title: '操作失败',
-                icon: 'none',
-                duration: 2000
-              })
+    var gatewayList = new Array();
+    var customerId = app.globalData.customerId
+    my.getAllDevices(customerId, (res) => {
+      res.data.forEach(function (element) {
+        if (element.deviceType === "Gateway") {
+          gatewayList.push(element.name)
+        }
+      });
+      if (gatewayList.length == 0) {
+        wx.showToast({
+          title: '您还没有绑定任何网关',
+          icon: 'none',
+          duration: 2000
+        })
+      } else {
+        wx.showActionSheet({
+          itemList: gatewayList,
+          success(res) {
+            var param = {
+              customerId: app.globalData.customerId,
+              gatewayName: gatewayList[res.tapIndex]
             }
-          })
-        },
-      })
-    }
+            my.deleteGateway(param, (res) => {
+              if (res == 1) {
+                wx.showToast({
+                  title: '操作成功',
+                  duration: 2000
+                })
+              } else {
+                wx.showToast({
+                  title: '操作失败',
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            })
+          },
+        })
+      }
+    })
   },
 
   changeLanuage: function() {

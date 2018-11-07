@@ -35,6 +35,16 @@ Page({
     }
   },
 
+  onShareAppMessage:function(options){
+    var shar = {
+      success: function (res) {
+        if (res.errMsg == 'shareAppMessage:ok') {
+        }
+      },
+    }
+    return shar;
+  },
+
   onShow: function() {
     this.setData({
       content: app.getLanuage(app.globalData.language)
@@ -84,7 +94,7 @@ Page({
                 })
                 setTimeout(function () {
                   wx.reLaunch({
-                    url: '../home/home',
+                    url: '../index/index',
                   })
                 }, 1000)
               } else {

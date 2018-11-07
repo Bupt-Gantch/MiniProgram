@@ -17,6 +17,18 @@ class Category extends Base{
     this.request(param);
   }
 
+//获取所有子设备
+  getAllSonDevices(parentdeviceId,callback){
+    var param = {
+      // url: `http://47.105.120.203:30080/api/v1/deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
+      url: `deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
   assignDeviceToGroup(groupId, deviceId, sCallback, fCallback) {
     var param = {
       url: `deviceaccess/assign/group/${groupId}/${deviceId}`,
@@ -182,17 +194,21 @@ class Category extends Base{
   /**
    * =================group=====================
    */
-
-  loadAllGroup(customerId,callback){
-    var param = {
-      url: 'deviceaccess/groups/customer/'+customerId+'?limit=1000',
+/**
+ * 加载所有的场景
+ */
+  loadAllGroup(param,callback){
+    var params = {
+      url: 'deviceaccess/groups/customer/' + param.customerId + '?limit=1000',
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request(params);
   }
-
+/**
+ * 创建分组
+ */
   createGroup(customerId,groupName,callback) {
     var param = {
       url : 'deviceaccess/group',
@@ -209,7 +225,9 @@ class Category extends Base{
 
     this.request(param);
   }
-
+/**
+ * 删除分组
+ */
   deleteGroup(groupId,callback) {
     var param = {
       url: `deviceaccess/group/${groupId}`,
@@ -228,16 +246,30 @@ class Category extends Base{
    * =================scene=====================
    */
 
-  loadAllScene(customerId, callback) {
+  // loadAllScene(customerId, callback) {
+  //   var param = {
+  //     url: 'scene/getAllScene/'+customerId,
+  //     sCallback: function (data) {
+  //       callback && callback(data);
+  //     }
+  //   };
+  //   this.request(param);
+  // }
+/**
+ * 加载所有场景
+ */
+  loadAllScene(gatewayName, callback) {
     var param = {
-      url: 'scene/getAllScene/'+customerId,
+      url: 'scene/getSceneByGateway/' + gatewayName,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
     this.request(param);
   }
-
+/**
+ * 删除场景
+ */
   deleteScene(sceneid, callback) {
     var param = {
       url: 'scene/deleteScene/' + sceneid,
@@ -248,7 +280,9 @@ class Category extends Base{
     }
     this.request(param);
   }
-
+/**
+ * 修改场景
+ */
   alterScene(param, callback) {
     var params = {
       url: 'deviceaccess/group',
@@ -260,7 +294,9 @@ class Category extends Base{
     }
     this.request(params);
   }
-
+/**
+ * 获取场景详情
+ */
   getSceneDevices(sceneid, callback) {
     var param = {
       url: 'scene/getScene/' + sceneid,
@@ -270,7 +306,9 @@ class Category extends Base{
     };
     this.request(param);
   }
-
+/**
+ * 根据设备id获取设备详情信息
+ */
   getDeviceById(deviceid, callback) {
     var param = {
       url: 'deviceaccess/device/' + deviceid,
@@ -305,6 +343,19 @@ class Category extends Base{
       url:`scene/useScene/${scene_id}`,
       data:scene_id,
       method:'POST',
+      sCallback:function(data){
+        callback&&callback(data);
+      }
+    };
+    this.request(param);
+  }
+/**
+ * 删除设备
+ */
+  deleteDevice(deviceid,callback){
+    var param = {
+      url: `device/deleteDevice/${deviceid}`,
+      method:'DELETE',
       sCallback:function(data){
         callback&&callback(data);
       }

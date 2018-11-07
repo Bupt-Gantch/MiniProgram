@@ -257,7 +257,7 @@
       </scroll-view>
     </view>
     <view class="modal-footer">
-      <view class="btn-cancel" bindtap="onBindConfirm" data-status="confirm">绑定场景开关</view>
+      <!-- <view class="btn-cancel" bindtap="onBindConfirm" data-status="confirm">绑定场景开关</view> -->
       <view class="btn-confirm" bindtap="onUseScene" data-status="cancel">应用场景</view>
     </view>
   </view>

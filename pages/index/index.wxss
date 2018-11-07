@@ -1,0 +1,160 @@
+/* pages/index/index.wxss */
+
+page {
+  width: 100%;
+  height: 100%;
+  font-size: 30rpx;
+  background-color: #e7eae9;
+}
+
+.container {
+  min-height: 100%;
+  padding-bottom: 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: bottom center;
+}
+
+swiper {
+  width: 100%;
+  height: 340rpx;
+  border-bottom: 3rpx solid #e5e5e5 !important;
+}
+
+swiper image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.main-core {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  background: #fff;
+  padding: 10rpx 10rpx 10rpx;
+  border-bottom: 5rpx solid #e5e5e5;
+  /* min-height: 350rpx; */
+  height: auto !important;
+  overflow: hidden;
+  top: 350rpx;
+}
+
+.main-core-item {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 20%;
+  height: 170rpx;
+}
+
+.main-core-item.disabled {
+  color: #9c9c9c;
+}
+
+.core-item-icon {
+  display: block;
+  width: 85rpx;
+  height: 85rpx;
+  margin: 15rpx auto;
+}
+
+.core-item-name {
+  display: block;
+  margin: 5rpx;
+}
+
+.home-main {
+  width: 100%;
+  margin: 10rpx 10rpx 10rpx;
+  position: absolute;
+  top: 680rpx;
+}
+
+.home-main-header {
+  margin: 20rpx 10rpx 15rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  font-family: cursive;
+  color: #002366;
+}
+
+.home-main-header text::before, .home-main-header text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #002366;
+}
+
+.theme-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.theme-item {
+  display: flex;
+  height: 375rpx;
+  width: 50%;
+  border-bottom: 4rpx solid #fff;
+  position: relative;
+  box-sizing: border-box;
+  background-color: white;
+  color: #1296db;
+  font-size: 32rpx;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  /* opacity: 0.5 */
+}
+
+.theme-item:first-child {
+  border-right: 4rpx solid #fff;
+}
+
+.theme-item.big {
+  width: 100%;
+}
+
+.theme-item.big .theme-icon view {
+  margin: 0 auto;
+  width: 150rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  line-height: 60rpx;
+  border: 1rpx solid #fff;
+  text-align: center;
+  font-size: 24rpx;
+  background-color: gray;
+  color: white;
+  font-size: 30rpx;
+}
+
+.theme-item image {
+  height: 100%;
+  width: 100%;
+}
+
+.theme-icon {
+  margin-top: 10rpx;
+  height: 48rpx;
+}
+
+.theme-icon image {
+  height: 48rpx;
+  width: 48rpx;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}

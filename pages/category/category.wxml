@@ -7,6 +7,16 @@
 <view class='container category-container'> 
   <view class='category-box'>
     <view class='left-box'>
+      <!-- 网关 -->
+      <block wx:for="{{gatewayGroup}}" wx:key="*this">
+         <view class="menu-item {{currentBottomIndex===-2?'selected':''}}"
+           bindtap='onGatewayTab' data-index='-2' 
+           data-name='{{gatewayGroup[index]}}'> 
+          {{gatewayGroup[index]}}
+         </view>
+      </block>
+<view class='separate'></view>
+
       <block wx:for="{{categoryName}}" wx:key="*this">
          <view class="menu-item {{currentTabsIndex==index?'selected':''}}"
            bindtap='onTabCategory' data-index='{{index}}' 
@@ -28,18 +38,29 @@
     </view>
 
     <!-- 设备分类right-box -->
-    <view wx:if="{{currentBottomIndex===-1}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
+
+    <view wx:if="{{currentBottomIndex===-2}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
+    <!--显示所有网关-->
+      <block wx:for="{{categoryName}}" wx:key="*this">
+        <view  class='foods-type-box'>
+          <template is="gateway" 
+        data="{{switchOnImg,imgUrl,bannerTitle,gatewayDevice,currentId,statusTable}}"></template>
+          <!-- <status表示开关或插座的状态> -->
+        </view>
+      </block>
+    </view>
+
+
+    <view wx:elif="{{currentBottomIndex===-1}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
     <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{categoryName}}" wx:key="*this">
-
         <view  class='foods-type-box'>
           <template wx:if="{{index == 0}}" is="categorytop" 
-        data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable}}"></template>
+        data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,showDelete}}"></template>
           <template wx:if="{{index != 0}}" is="categorytop" 
           data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
-
       </block>
     </view>
 
@@ -51,7 +72,7 @@
 
         <view  class='foods-type-box'>
           <template wx:if="{{index == 0}}" is="group" 
-        data="{{imgUrl:groupSceneImg,bannerTitle,allGroupArr}}"></template>
+        data="{{imgUrl:groupSceneImg,bannerTitle,allGroupArr,statusTable}}"></template>
 
           <!-- 保留模板（scene） -->
           <template wx:if="{{index == 1}}" is="scene" 

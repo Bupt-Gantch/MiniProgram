@@ -1,6 +1,6 @@
 <template name="categorytop">
-  <view class="category-detail-box">   
-    <!--加载categorybanner和标题 --> 
+  <view class="category-detail-box">
+    <!--加载categorybanner和标题 -->
     <!-- <view class="category-header">
       <image src='{{topInfo.url}}' mode="aspectFill"></image>
     </view> -->
@@ -8,14 +8,22 @@
       <text>{{bannerTitle}}</text>
     </view>
 
+    <view>
+      <image wx:if="{{showDelete}}" class="circle-float" src='/imgs/icon/delete.png' bindtap='onDeleteDevice'></image>
+      <image wx:if="{{showDelete==false}}" class="circle-float" src='/imgs/icon/cancel.png' bindtap='onCancelDelete'></image>
+    </view>
+
     <scroll-view class="category-main" scroll-y>
       <view class='category-main-view'>
         <block wx:for="{{categoryProducts}}" wx:key="{{item.id}}">
           <!-- 下面存放单个设备的div  -->
           <view class="category-goods-items {{index%3==1?'middle':''}}" bindlongpress="onDeviceLongPress">
-           
+
             <view class='image_switch'>
-              <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}" >
+            <view class='delete-view'>
+            <image wx:if="{{showDelete==false}}" class="deleteCertain" src='/imgs/icon/deleteCertain.png' data-deviceid="{{item.id}}" data-index="{{index}}" bindtap="deleteCertain"></image>
+            </view>
+              <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}">
                 <image wx:if="{{item.deviceType == 'switch'&& statusTable[item.id]}}" src='{{switchOnImg[0]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:if="{{item.deviceType == 'switch'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:if="{{item.deviceType == 'outlet' && statusTable[item.id]}}" src='{{switchOnImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
@@ -25,7 +33,40 @@
                 <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
               <view class='switch'>
-                  <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}"/>
+                <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
+              </view>
+            </view>
+            <view wx:if="{{!item.online}}" class='online'></view>
+            <!-- <view wx:if="{{!item.online}}" class='offline'></view> -->
+            <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
+            <view wx:else class='devicename'>{{item.name}}</view>
+          </view>
+          <!-- end -->
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+
+
+<!--网关模板-->
+<template name="gateway">
+  <view class="category-detail-box">
+    <view class="category-title">
+      <text>{{bannerTitle}}</text>
+    </view>
+    <scroll-view class="category-main" scroll-y>
+      <view class='category-main-view'>
+        <block wx:for="{{gatewayDevice}}" wx:key="{{item.id}}">
+          <!-- 下面存放单个设备的div  -->
+          <view class="category-goods-items {{index%3==1?'middle':''}}" bindlongpress="onGatewayLongPress">
+            <view class='image_switch'>
+              <block>
+                <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+              </block>
+              <view class='switch'>
+                <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
               </view>
             </view>
             <view wx:if="{{!item.online}}" class='online'></view>

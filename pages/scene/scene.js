@@ -46,27 +46,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var sceneid = options.sceneid;
     var sceneName = options.sceneName;
-    if (sceneid != undefined) {
+    var gatewayName = options.gatewayName;
       this.setData({
-        sceneid: sceneid,
-        bannerTitle: sceneName
+        bannerTitle: sceneName,
+        gatewayName: gatewayName
       })
-      this._loadSceneDevices(sceneid);
-    } else {
-      this.setData({
-        bannerTitle: sceneName
-      })
-      this._loadCateDevices()
-    }
+    this._loadCateDevices(gatewayName)
   },
 
   //load所有场景设备
-  _loadCateDevices: function() {
+  _loadCateDevices: function (gatewayName) {
     var _this = this
-    var customerId = app.globalData.customerId
-    scene.getAllDevices(customerId, (data) => {
+    var param = {
+      customerId: app.globalData.customerId,
+      gatewayName: gatewayName,
+    }
+    scene.getAllDevices(param, (data) => {
       this.setData({
         categoryAllDevices: data.data
       });
@@ -80,27 +76,30 @@ Page({
           typeDevices.push(element);
         }
       });
-      typeDevices.forEach(function(element) {
-        _this._getDeviceById(element, element.parentDeviceId);
-      });
+      this.setData({
+        sceneDevices:typeDevices
+      })
+      // typeDevices.forEach(function(element) {
+      //   _this._getDeviceById(element, element.parentDeviceId);
+      // });
     });
   },
 
-  _getDeviceById: function(element, deviceId) {
-    scene.getDeviceById(deviceId, (data) => {
-      var newname = data.name
-      var length = newname.length
-      var name = "";
-      for (let i = 8; i < length; i++) {
-        name += newname[i]
-      }
-      element.parentName = name;
-      this.data.newTypeDevices.push(element);
-      this.setData({
-        sceneDevices: this.data.newTypeDevices
-      });
-    });
-  },
+  // _getDeviceById: function(element, deviceId) {
+  //   scene.getDeviceById(deviceId, (data) => {
+  //     var newname = data.name
+  //     var length = newname.length
+  //     var name = "";
+  //     for (let i = 8; i < length; i++) {
+  //       name += newname[i]
+  //     }
+  //     element.parentName = name;
+  //     this.data.newTypeDevices.push(element);
+  //     this.setData({
+  //       sceneDevices: this.data.newTypeDevices
+  //     });
+  //   });
+  // },
 
   onDeviceLongPress: function(event) {
     var deviceId = scene.getDataSet(event, 'deviceid');

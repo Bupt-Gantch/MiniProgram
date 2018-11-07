@@ -2,10 +2,6 @@
 <import src="../tpls/category/category-tpl.wxml" />
 <import src="../tpls/modal/modal-tpl.wxml" />
 <import src="../tpls/scene/scene-tpl.wxml" />
-<import src="../tpls/roll/roll_tpl.wxml"/>
-<view>
-    <template is="roll" data="{{news}}"></template>
-</view>
 <view>
   <image class="save-float" src='/imgs/icon/save.png' bindtap='saveScene'></image>
 </view>

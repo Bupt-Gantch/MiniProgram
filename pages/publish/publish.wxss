@@ -107,7 +107,7 @@ swiper image {
 .info-name{
   font-size: 40rpx;
   font-weight: bold;
-  font-family: cursive;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: #7fbcd2;
 }
 
@@ -121,26 +121,6 @@ swiper image {
   font-size: 28rpx;
   border-bottom: 10rpx
 }
-
-/* .div{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-top: 10rpx
-}
-
-.info-pictures{
-  width: 33%;
-  height: auto
-}
-
-.picture-view{
-  padding-right: 13rpx 
-}
-
-.info-pictures image{
-  width: 100%;
-} */
 
 .showPic{
   display: flex;

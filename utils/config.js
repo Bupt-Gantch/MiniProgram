@@ -25,7 +25,7 @@ Config.favorite = 'favorite',
 Config.findComment = 'findComment',
 Config.addComment = 'addComment',
 Config.deleteComment = 'deleteComment',
-Config.categoryName = [content.alldevice, content.bulb, content.socket, content.curtain, content.sensor, content.swi,content.othertypes];
+Config.categoryName = [content.alldevice, content.bulb, content.socket, content.curtain, content.sensor, content.swi, content.monitor, content.gatelock,content.othertypes];
 Config.categoryType = {
   '灯泡': ['dimmableLight'],
   '插座': ['outlet'],
@@ -33,6 +33,8 @@ Config.categoryType = {
   '传感器': ['temperature', 'PM2.5', 'IASZone'],
   '开关': ['switch'],
   '场景开关':['dimmableLight','curtain','switch'],
+  '监控': ['monitor'],
+  '门锁': ['gatelock']
 };
 Config.homeCategoryType = {
   '灯泡': ['dimmableLight'],
@@ -43,7 +45,7 @@ Config.homeCategoryType = {
 };
 Config.secneType = [content.scenetypes]
 
-Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5','IASZone','switch'];
+Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5','IASZone','switch','monitor','gatelock'];
 
 Config.deviceImgUrl = {
   'dimmableLight': '../../imgs/test/bump2.png',
@@ -54,7 +56,9 @@ Config.deviceImgUrl = {
   'IASZone': '../../imgs/test/IASZone.png',
   'switch': '../../imgs/test/switch@off.png',
   'sceneSelector': '../../imgs/test/sceneSelector.png',
-  'default': '../../imgs/test/default.png'
+  'default': '../../imgs/test/default.png',
+  'monitor':'../../imgs/test/monitor.png',
+  'gatelock':'../../imgs/test/lock.png'
   //...以此类推
 };
 

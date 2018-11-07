@@ -6,15 +6,15 @@ class Scene extends Base {
     super();
   }
 
-  getAllDevices(customerId, callback) {
-    var param = {
+  getAllDevices(param, callback) {
+    var params = {
       //url: 'deviceaccess/tenant/devices/2?limit=1000',
-      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
+      url: `deviceaccess/customerdevices/2/${param.customerId}?limit=1000&searchText=${param.gatewayName}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request(params);
   }
 
   getDeviceById(deviceid, callback) {

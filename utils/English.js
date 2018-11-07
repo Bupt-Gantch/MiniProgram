@@ -17,6 +17,8 @@ var English = {
   curtain: "Curtain",
   sensor: "Sensor",
   swi: "Switch",
+  monitor: "Monitor",
+  gatelock: "Gate lock",
   othertypes: "Other types",
   scenetypes: "Scene types",
   temperature: "Temperature",

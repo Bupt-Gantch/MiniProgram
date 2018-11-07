@@ -24,7 +24,7 @@ page{
 
 .save-float{
   position: absolute;
-  top: 50rpx;
+  top: 40rpx;
   right: 30rpx;
   width: 100rpx;
   height: 100rpx;

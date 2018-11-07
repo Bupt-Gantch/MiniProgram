@@ -17,6 +17,8 @@ var Chinese = {
   curtain:"窗帘",
   sensor:"传感器",
   swi:"开关",
+  monitor:"监控",
+  gatelock:"门锁",
   othertypes:"其他类型",
   scenetypes:"场景开关",
   temperature:"温度",

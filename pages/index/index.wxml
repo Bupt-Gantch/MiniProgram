@@ -1,0 +1,56 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
+    <block wx:for="{{imgUrls}}" wx:key="item">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <swiper-item class="main-core" wx:for="{{cores}}" wx:for-item="core" wx:key="id">
+    <block wx:for="{{core}}" wx:key="id">
+      <navigator wx:if="{{item.disabled}}" class="main-core-item" url="{{item.url}}">
+        <image class="core-item-icon" src="{{item.image}}"></image>
+        <text class="core-item-name">{{item.name}}</text>
+      </navigator>
+      <view wx:else class="main-core-item disabled" bindtap="disabled_item">
+        <image class="core-item-icon" src="{{item.image}}"></image>
+        <text class="core-item-name">{{item.name}}</text>
+      </view>
+    </block>
+  </swiper-item>
+
+  <view class='home-main'>
+    <view class='home-main-theme'>
+      <view class='home-main-header'>
+        <text>冠川的核心价值观</text>
+      </view>
+      <view class='theme-box'>
+        <block wx:for="{{themeArr}}" wx:key="item">
+          <view wx:if="{{index==2}}" class="theme-item big {{index2}}" bindtouchmove="show" data-index='{{index}}'>
+            <image src="{{item.url}}"></image>
+            <view></view>
+          </view>
+          <view wx:elif="{{index==1}}" class="theme-item {{index1}}" bindtouchmove="show" data-index='{{index}}'>
+            <image src="{{item.url}}"></image>
+          </view>
+            <view wx:elif="{{index==0}}" class="theme-item {{index0}}" bindtouchmove="show" data-index='{{index}}'>
+            <image src="{{item.url}}"></image>
+          </view>
+
+          <view wx:if="{{index==2}}" class="theme-item big {{index02}}" bindtouchmove="hide" data-index='{{index}}'>
+            {{item.content}}
+            <view></view>
+          </view>
+          <view wx:elif="{{index==1}}" class="theme-item {{index01}}" bindtouchmove="hide" data-index='{{index}}'>
+            {{item.content}}
+          </view>
+            <view wx:elif="{{index==0}}" class="theme-item {{index00}}" bindtouchmove="hide" data-index='{{index}}'>
+            {{item.content}}
+          </view>
+
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

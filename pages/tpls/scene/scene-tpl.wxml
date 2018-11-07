@@ -47,7 +47,6 @@
             </view>
               <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
             <view wx:else class='devicename'>{{item.name}}</view>
-            <view class='devicename'>网关:{{item.parentName}}</view>
           </view>
           <!-- end -->
         </block>
