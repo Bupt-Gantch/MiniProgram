@@ -134,7 +134,7 @@
   right: 15rpx;
   width: 89rpx;
   height: 89rpx;
-}
+} 
 
 .delete-view{
   position:relative;

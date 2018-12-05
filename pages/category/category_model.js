@@ -20,7 +20,6 @@ class Category extends Base{
 //获取所有子设备
   getAllSonDevices(parentdeviceId,callback){
     var param = {
-      // url: `http://47.105.120.203:30080/api/v1/deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
       url: `deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
       sCallback: function (data) {
         callback && callback(data);
@@ -141,7 +140,6 @@ class Category extends Base{
           // mask: true
         });
       }
-
     })
     //获取设备服务
     .then(function(res){
@@ -294,6 +292,21 @@ class Category extends Base{
     }
     this.request(params);
   }
+
+/**
+ * 获取分享网关
+ */
+  getShareGateway(param,callback){
+    var params = {
+      url: `account/getBinderGates`,
+      data: param,
+      method: 'POST',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    }
+    this.request(params);
+  }
 /**
  * 获取场景详情
  */
@@ -361,6 +374,35 @@ class Category extends Base{
       }
     };
     this.request(param);
+  }
+  /**获取设备实时数据 */
+  getRealtimeData(gatewayId, sConCb, fConCb, onDataCb) {
+    var param = {
+      url: "/device",
+      flag:1,
+      gatewayId: gatewayId,
+      sConnectCb: function (res) {
+        sConCb && sConCb(res);
+      },
+      fConnectCb: function (err) {
+        fConCb && fConCb(err);
+      },
+      onMsgCb: function (data) {
+        onDataCb: onDataCb(data);
+      }
+    };
+    return this.realTimeDeviceTest(param);
+  }
+
+  //添加设备
+  addDevice(param, callback) {
+    var params = {
+      url: Config.restUrl + 'deviceaccess/assignAll/' + param.customerId + '?gateway_user=' + param.gateway_user,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request_test(params)
   }
 }
 

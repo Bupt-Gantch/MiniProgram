@@ -144,7 +144,6 @@
 </template>
 
 <!--开关模板-->
-
 <template name="switch">
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showSwitch}}"></view>
   <view class="modal-dialog" wx:if="{{showSwitch}}">
@@ -200,7 +199,24 @@
       <view class="btn-confirm" bindtap="onEditConfirm" data-status="confirm">确定</view>
     </view>
   </view>
-</template> 
+</template>
+
+<!--修改设备名弹窗-->
+<template name="changePassword">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showPassword}}"></view>
+  <view class="modal-dialog" wx:if="{{showPassword}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <input placeholder-class="input-holder" type="text" maxlength="6" focus="true" bindinput="inputPasswordChange" class="input" placeholder="{{content.placeholder}}"></input>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onPasswordConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
 
 <!--场景详情-->
 <template name="sceneDetail">
@@ -257,8 +273,242 @@
       </scroll-view>
     </view>
     <view class="modal-footer">
-      <!-- <view class="btn-cancel" bindtap="onBindConfirm" data-status="confirm">绑定场景开关</view> -->
+      <!-- <view class="btn-cancel" bindtap="onBindConfirm" data-status="confirm"></view> -->
+      <view class="btn-cancel" bindtap="onLeave" data-status="confirm">取消</view>
       <view class="btn-confirm" bindtap="onUseScene" data-status="cancel">应用场景</view>
+    </view>
+  </view>
+</template>
+
+
+
+<template name="devices">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showDevice}}"></view>
+  <view class="modal-dialog" wx:if="{{showDevice}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <form bindsubmit="{{content.name}}" report-submit='true' bindreset="formReset">
+        <view wx:if="{{content.value=='share'}}" class="section_gap">
+          <radio-group name="gateway">
+            <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+              <view wx:for="{{devices}}" wx:key="item" class="sectiongap">
+                <view wx:if="{{item.customerId==customerId}}">
+                  <view wx:if="{{item.deviceType=='Gateway'&&content.value=='share'}}">
+                    <label wx:if="{{item.nickname!=null}}">
+                      <radio value="{{item.id}},{{item.customerId}},{{item.name}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <radio value="{{item.id}},{{item.customerId}},{{item.name}}" />{{item.name}}</label>
+                  </view>
+                  <view wx:else>
+                    <label wx:if="{{item.nickname!=null}}">
+                      <radio value="{{item.id}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <radio value="{{item.id}}" />{{item.name}}</label>
+                  </view>
+                </view>
+                <view wx:else>
+                  <view wx:if="{{item.deviceType=='Gateway'}}">
+                    <label wx:if="{{item.nickname!=null}}">
+                      <radio value="{{item.id}},{{item.customerId}}" />{{item.nickname}}*他人*</label>
+                    <label wx:else>
+                      <radio value="{{item.id}},{{item.customerId}}" />{{item.name}}*他人*</label>
+                  </view>
+                  <view wx:else>
+                    <label wx:if="{{item.nickname!=null}}">
+                      <radio value="{{item.id}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <radio value="{{item.id}}" />{{item.name}}</label>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </radio-group>
+        </view>
+        <view wx:else class="section_gap">
+          <checkbox-group name="gateway">
+            <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+              <view wx:for="{{devices}}" wx:key="item" class="sectiongap">
+                <view wx:if="{{item.customerId==customerId}}">
+                  <view wx:if="{{item.deviceType=='Gateway'&&content.value=='share'}}">
+                    <label wx:if="{{item.nickname!=null}}">
+                      <checkbox value="{{item.name}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <checkbox value="{{item.name}}" />{{item.name}}</label>
+                  </view>
+                  <view wx:else>
+                    <label wx:if="{{item.nickname!=null}}">
+                      <checkbox value="{{item.id}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <checkbox value="{{item.id}}" />{{item.name}}</label>
+                  </view>
+                </view>
+                <view wx:else>
+                  <view wx:if="{{item.deviceType=='Gateway'}}">
+                    <label wx:if="{{item.nickname!=null}}">
+                      <checkbox value="{{item.id}}" />{{item.nickname}}*他人*</label>
+                    <label wx:else>
+                      <checkbox value="{{item.id}}" />{{item.name}}*他人*</label>
+                  </view>
+                  <view wx:else>
+                    <label wx:if="{{item.nickname!=null}}">
+                      <checkbox value="{{item.id}}" />{{item.nickname}}</label>
+                    <label wx:else>
+                      <checkbox value="{{item.id}}" />{{item.name}}</label>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </checkbox-group>
+        </view>
+        <view class="modal-footer ">
+          <button class="btn-cancel" bindtap="cancel" data-status="cancel ">取消</button>
+          <button formType="submit" class="btn-confirm">确定</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</template>
+
+
+<template name="sceneTemplate">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showScene}}"></view>
+  <view class="modal-dialog" wx:if="{{showScene}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <form bindsubmit="onBindConfirm" bindreset="formReset">
+        <view class="section section_gap">
+          <radio-group name="sceneid">
+            <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+              <view wx:for="{{allScene}}" wx:key="item">
+                <label>
+                  <radio value="{{item.scene_id}}" />{{item.sceneNickName}}</label>
+              </view>
+            </scroll-view>
+          </radio-group>
+        </view>
+        <view class="modal-footer ">
+          <button class="btn-cancel" bindtap="cancel" data-status="cancel ">取消</button>
+          <button formType="submit" class="btn-confirm">确定</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</template>
+
+
+<template name="sharedDetail">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showSharedDetail}}"></view>
+  <view class="modaldialog" wx:if="{{showSharedDetail}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <form bindsubmit="{{content.name}}" report-submit='true' bindreset="formReset">
+        <view class="section_gap">
+          <radio-group name="gateway">
+            <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+              <view wx:for="{{sharedDetail}}" wx:key="item" class="sectiongap">
+                <label wx:if="{{item.nickname!=null}}">
+                  <radio value="{{item.id}},{{item.phone}}" />网关名:{{item.nickname}}/手机号:{{item.phone}}</label>
+                <label wx:else>
+                  <radio value="{{item.id}},{{item.phone}}" />网关名:{{item.name}}/手机号:{{item.phone}}</label>
+              </view>
+            </scroll-view>
+          </radio-group>
+        </view>
+        <view class="modal-footer ">
+          <button class="btn-cancel" bindtap="cancel" data-status="cancel ">取消</button>
+          <button formType="submit" class="btn-confirm">确定</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</template>
+
+<!-- 添加联动-->
+<template name="onAddLinkage">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showDevice}}"></view>
+  <view class="modal-dialog" wx:if="{{showDevice}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <form bindsubmit="onAddLinkage" report-submit='true' bindreset="formReset">
+        <view class="section_gap">
+          <view class="section__title sceneDeviceName">联动名</view>
+          <input placeholder-class="input-holder" type="text" maxlength="20" focus="true" bindinput="inputNameChange" class="scene-input" placeholder="请输入联动名" />
+        </view>
+        <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+          <view class="section_gap">
+            <view class="section__title sceneDeviceName">联动条件</view>
+            <view wx:if="{{deviceType=='temperature'}}">
+              <view>温度</view>
+              <radio-group name="condition1">
+                <label>
+                  <radio value="大于" />大于</label>
+                <label>
+                  <radio value="等于" />等于</label>
+                <label>
+                  <radio value="小于" />小于</label>
+              </radio-group>
+              <slider min="-30" max="40" name="threshold1" value='0' show-value></slider>
+              <view>湿度</view>
+              <radio-group name="condition2">
+                <label>
+                  <radio value="大于" />大于</label>
+                <label>
+                  <radio value="等于" />等于</label>
+                <label>
+                  <radio value="小于" />小于</label>
+              </radio-group>
+              <slider min="0" max="100" name="threshold2" value='0' show-value></slider>
+            </view>
+            <view wx:else>
+              <view wx:if="{{deviceType=='lightSensor'}}">光照度</view>
+              <view wx:elif="{{deviceType=='PM2.5'}}">PM2.5</view>
+              <view wx:elif="{{deviceType=='IASZone'}}">
+              <view wx:if="{{model == 'BOT'}}">红外</view>
+                <view wx:elif="{{model == 'SMF'}}">烟雾</view>
+                <view wx:elif="{{model == 'WTS'}}">水浸</view>
+              </view>
+              <!-- <view class="section__title">普通选择器</view> -->
+              <view wx:if="{{deviceType=='IASZone'}}">
+              </view>
+              <view wx:else>
+              <radio-group name="condition3">
+                <label>
+                  <radio value="大于" />大于</label>
+                <label>
+                  <radio value="等于" />等于</label>
+                <label>
+                  <radio value="小于" />小于</label>
+              </radio-group>
+              </view>
+              <slider wx:if="{{deviceType=='lightSensor'}}" min="1" max="500" name="threshold3" value='1' show-value></slider>
+              <slider wx:elif="{{deviceType=='PM2.5'}}" min="0" max="250" name="threshold3" value='0' show-value></slider>
+            </view>
+          </view>
+          <view class="section section_gap">
+            <view class="section__title sceneDeviceName">报警</view>
+            <switch name="alarm" />
+            <input placeholder-class="input-holder" type="text" maxlength="30" bindinput="inputAlarmChange" class="scene-input" placeholder="请输入报警信息" />
+          </view>
+          <view class='section_gap'>
+            <view class='section__title sceneDeviceName'>联动操作</view>
+            <checkbox-group name="linkage">
+              <view wx:for="{{devices}}" wx:key="item" class="sectiongap">
+                <label wx:if="{{item.nickname!=null}}">
+                  <checkbox value="{{item.id}},{{index}}"/>{{item.nickname}}</label>
+                <label wx:else>
+                  <checkbox value="{{item.id}},{{index}}"/>{{item.name}}</label>
+                <label>
+                  <switch name="*witch{{index}}" />
+                </label>
+              </view>
+            </checkbox-group>
+          </view>
+        </scroll-view>
+        <view class="modal-footer ">
+          <button class="btn-cancel" bindtap="onCancel" data-status="cancel ">取消</button>
+          <button formType="submit" class="btn-confirm">确定</button>
+        </view>
+      </form>
     </view>
   </view>
 </template>

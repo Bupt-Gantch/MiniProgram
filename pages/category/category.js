@@ -1,5 +1,4 @@
 // pages/category/category.js
-
 import {
   Config
 } from '../../utils/config.js';
@@ -17,8 +16,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5', 'tanslate6', 'tanslate7', 'tanslate8'],
+    transClassArr: ['tanslate0', 'tanslate1', 'tanslate2', 'tanslate3', 'tanslate4', 'tanslate5', 'tanslate6', 'tanslate7', 'tanslate8','tanslate9'],
     switchOnImg: Config.switchOnUrl,
+    curtainOnImg: Config.curtainOnUrl,
+    dimmableLightOneImg: Config.dimmableLightOnUrl,
+    gatewayImg: Config.gatewayUrl,
+    iASZoneImg:Config.iASZoneUrl,
     categoryName: Config.categoryName,
     categoryType: Config.categoryType,
     categoryTypeArray: Config.categoryTypeArray,
@@ -26,7 +29,7 @@ Page({
     imgUrl: Config.deviceImgUrl,
     groupSceneImg: Config.otherImg,
     statusTable: {},
-
+    statusTableOne: {},
     sceneGroup: ['分组', '场景'],
     gatewayGroup: ['所有网关'],
     showModal: false,
@@ -39,15 +42,15 @@ Page({
     showModalScene: false,
     contentScene: {
       title: "创建场景",
-      placeholder: "只能输入数字和字母"
+      placeholder: "请输入场景名"
     },
     sceneName: '',
-
-    showDelete:true,
+    showDelete: true,
     showDetail: false,
     hiddenPicker: true,
     pickerValueArr: [0],
     pickeredGroup: {},
+    socketTasks: [],
     requestId: 1000000, //请求id100w 递减
   },
 
@@ -58,7 +61,6 @@ Page({
     var index = 0; //从tab栏跳转过来 
     var name = this.data.gatewayGroup[0]; //从tab栏跳转过来
     var customerId = app.globalData.customerId;
-
     this.setData({
       currentTabsIndex: -2,
       currentBottomIndex: -2,
@@ -66,6 +68,22 @@ Page({
     });
     this._loadBaannerTitle(name);
     this._loadGateway();
+  },
+  onHide: function() {
+    if (this.data.socketTasks.length > 0) {
+      this.data.socketTasks.forEach(function(e) {
+        e.close();
+      })
+    }
+  },
+  onShow: function() {
+    var _this = this;
+    var gatewayId = app.globalData.gatewayId;
+    if (gatewayId != null) {
+      setTimeout(function() {
+        _this._loadRealtimeData(gatewayId);
+      }, 1000);
+    }
   },
 
   /**
@@ -80,37 +98,186 @@ Page({
     var _this = this;
     var gatewayList = new Array();
     var customerId = app.globalData.customerId;
-    category.getAllDevices(customerId, (res) => {
-      res.data.forEach(function(element) {
-        if (element.deviceType === "Gateway") {
-          gatewayList.push(element)
-        }
-      });
-      this.setData({
-        gatewayDevice: gatewayList
-      })
-      if (gatewayList.length == 1) {
-        this._loadCateDevices(0, customerId);
-        this._loadAllGroup();
-        this._loadAllScene(gatewayList[0].name);
-        this.setData({
-          gatewayName:gatewayList[0].name
+    this.setData({
+      customerId: customerId
+    });
+    var param = {
+      customerid: customerId
+    };
+    category.getShareGateway(param, (res) => {
+      if (res.status === "success") {
+        console.log(res.data);
+        var gatewayFirst = res.data;
+        gatewayFirst.forEach(function(e, index) {
+          var gatewayData = e.split(",")
+          if (gatewayData.length != 0) {
+            gatewayData.forEach(function(element) {
+              if (element != "") {
+                category.getDeviceById(element, (res) => {
+                  if (res.id != undefined) {
+                    gatewayList.push(res);
+                  }; 
+                  _this.setData({
+                    gatewayDevice: gatewayList
+                  })
+                })
+              }
+            })
+          };
+          if (gatewayFirst.length - 1 == index) {
+            category.getAllDevices(customerId, (res) => {
+              console.log(res.data);
+              res.data.forEach(function (element) {
+                if (element.deviceType === "Gateway") {
+                  gatewayList.push(element)
+                }
+              });
+              _this.setData({
+                gatewayDevice: gatewayList
+              })
+              if (gatewayList.length >= 1) {
+                if (app.globalData.gatewayName != null) {
+                  _this._loadAllGroup();
+                  _this._loadAllScene(app.globalData.gatewayName);
+                  _this._loadCateDevices(0);
+                  _this._loadRealtimeData(app.globalData.gatewayId);
+                } else {
+                  app.globalData.gatewayName = gatewayList[0].name;
+                  app.globalData.gatewayId = gatewayList[0].id;
+                  app.globalData.gatewayCustomerId = gatewayList[0].customerId;
+                  _this.setData({
+                    gatewayName: gatewayList[0].name,
+                    parentdeviceId: gatewayList[0].id
+                  });
+                  _this._loadAllGroup();
+                  _this._loadAllScene(gatewayList[0].name);
+                  _this._loadCateDevices(0);
+                  _this._loadRealtimeData(_this.data.parentdeviceId);
+                }
+              } else if (gatewayList.length == 0) {
+                wx.showToast({
+                  title: '您还没有绑定任何网关',
+                  icon: 'none',
+                  duration: 2000
+                });
+                _this.setData({
+                  categoryAllDevices: null,
+                  gatewayName: null,
+                  parentdeviceId: null,
+                })
+                app.globalData.gatewayName = null;
+                app.globalData.gatewayId = null;
+                app.globalData.gatewayCustomerId = null;
+                _this._loadCateDevices(0);
+                if (_this.data.socketTasks.length > 0) {
+                  _this.data.socketTasks.forEach(function (e) {
+                    e.close();
+                  })
+                }
+              }
+            });
+          }
         })
-      }else if(gatewayList.length == 0){
-        this.setData({
-          categoryAllDevices:null
-        })
+      }else{
+        category.getAllDevices(customerId, (res) => {
+          console.log(res.data);
+          res.data.forEach(function (element) {
+            if (element.deviceType === "Gateway") {
+              gatewayList.push(element)
+            }
+          });
+          _this.setData({
+            gatewayDevice: gatewayList
+          })
+          if (gatewayList.length >= 1) {
+            if (app.globalData.gatewayName != null) {
+              _this._loadAllGroup();
+              _this._loadAllScene(app.globalData.gatewayName);
+              _this._loadCateDevices(0);
+              _this._loadRealtimeData(app.globalData.gatewayId);
+            } else {
+              app.globalData.gatewayName = gatewayList[0].name;
+              app.globalData.gatewayId = gatewayList[0].id;
+              app.globalData.gatewayCustomerId = gatewayList[0].customerId;
+              _this.setData({
+                gatewayName: gatewayList[0].name,
+                parentdeviceId: gatewayList[0].id
+              });
+              _this._loadAllGroup();
+              _this._loadAllScene(gatewayList[0].name);
+              _this._loadCateDevices(0);
+              _this._loadRealtimeData(_this.data.parentdeviceId);
+            }
+          } else if (gatewayList.length == 0) {
+            wx.showToast({
+              title: '您还没有绑定任何网关',
+              icon: 'none',
+              duration: 2000
+            });
+            _this.setData({
+              categoryAllDevices: null,
+              gatewayName: null,
+              parentdeviceId: null,
+            })
+            app.globalData.gatewayName = null;
+            app.globalData.gatewayId = null;
+            app.globalData.gatewayCustomerId = null;
+            _this._loadCateDevices(0);
+            if (_this.data.socketTasks.length > 0) {
+              _this.data.socketTasks.forEach(function (e) {
+                e.close();
+              })
+            }
+          }
+        });
       }
     });
+  },
+
+  _loadRealtimeData: function(gatewayId) {
+    var _this = this;
+    var sConCb = function(res) {};
+    var fConCb = function() {};
+    //以上为callback
+    let socketTask = category.getRealtimeData(gatewayId, sConCb, fConCb, (data) => {
+      var id = JSON.parse(data).deviceId;
+      //收到服务器端发回数据，更新view层数据
+      var sensorData = JSON.parse(data).data;
+      // console.log(sensorData);
+      var newStatusTableOne = _this.data.statusTableOne;
+      var newStatusTable = _this.data.statusTable;
+      sensorData.forEach(function(e) {
+        if (e.key === 'online') {
+          if (e.value == '1.0') {
+            newStatusTableOne[id] = true;
+          } else {
+            newStatusTableOne[id] = false;
+          }
+        } else if (e.key === 'status') {
+          if (e.value == true || e.value == 'true') {
+            newStatusTable[id] = true;
+          } else {
+            newStatusTable[id] = false;
+          }
+        };
+        // console.log(newStatusTable);
+        _this.setData({
+          statusTableOne: newStatusTableOne,
+          statusTable: newStatusTable
+        });
+      })
+    });
+    this.data.socketTasks.push(socketTask);
   },
 
   //长按网关选定该网关
   onGatewayLongPress: function(event) {
     var _this = this;
-    var parentdeviceId = event.target.dataset.deviceid
-    var gatewayName = event.target.dataset.deviceinfo.name
+    var parentdeviceId = event.target.dataset.deviceid;
+    var gatewayName = event.target.dataset.deviceinfo.name;
+    var gatewayCustomerId = event.target.dataset.deviceinfo.customerId;
     var param = {
-      customerId:app.globalData.customerId,
+      customerId: app.globalData.customerId,
       gatewayName: gatewayName
     }
     this.setData({
@@ -118,20 +285,43 @@ Page({
       gatewayName: gatewayName
     })
     category.getAllSonDevices(parentdeviceId, (res) => {
+      app.globalData.gatewayName = gatewayName;
+      app.globalData.gatewayId = parentdeviceId;
+      app.globalData.gatewayCustomerId = gatewayCustomerId;
       var allDevices = new Array();
-      res.forEach(function (element) {
-        if (element.deviceType !="Gateway") {
-          allDevices.push(element);
-        }
+      res.forEach(function(element) {
+        if (element.deviceType != "Gateway") {
+          if (element.deviceType == "IASZone") {
+            var model = element.model;
+            element.model = model.substr(5, 3);
+            allDevices.push(element);
+          } else {
+            allDevices.push(element);
+          }
+        };
+        _this.data.statusTableOne[element.id] = true;
+        var newStatusTableOne = _this.data.statusTableOne;
+        _this.setData({
+          statusTableOne: newStatusTableOne
+        });
       });
       _this.setData({
         categoryAllDevices: allDevices
       });
       _this._loadAllGroup();
       _this._loadAllScene(gatewayName);
+      if (_this.data.socketTasks.length > 0) {
+        _this.data.socketTasks.forEach(function(e) {
+          e.close();
+        });
+      };
+      setTimeout(function() {
+        _this._loadRealtimeData(parentdeviceId);
+      }, 1000);
+
       wx.showToast({
         title: '为您展现该网关下设备',
-        icon:'none',
+        icon: 'none',
         duration: 3000
       })
     })
@@ -152,63 +342,78 @@ Page({
       currentBottomIndex: -1
     });
     this._loadBaannerTitle(name); //加载本地banner和标题
-    this._loadCateDevices(index, this.data.customerId); //点击时获取数据
+    this._loadCateDevices(index); //点击时获取数据
   },
 
   //load所有设备并分类
-  _loadCateDevices: function(index, customerId) {
+  _loadCateDevices: function(index) {
     var _this = this;
     index = Number(index);
     var gatewayList = _this.data.gatewayDevice;
-    if (index == 0 && gatewayList.length == 1){
-      category.getAllDevices(customerId,(res)=>{
+    var parentdeviceId = app.globalData.gatewayId;
+    if (index == 0) {
+      category.getAllSonDevices(parentdeviceId, (res) => {
+        // console.log(res);
         var allDevices = new Array();
-        res.data.forEach(function (element) {
+        res.forEach(function(element) {
           if (element.deviceType != "Gateway") {
-            allDevices.push(element);
-          }
+            if (element.deviceType == "IASZone") {
+              var model = element.model;
+              element.model = model.substr(5, 3);
+              allDevices.push(element);
+            } else {
+              allDevices.push(element);
+            }
+          };
+          _this.data.statusTableOne[element.id] = true;
+          var newStatusTableOne = _this.data.statusTableOne;
+          _this.setData({
+            statusTableOne: newStatusTableOne
+          });
         });
         _this.setData({
-          categoryAllDevices:allDevices
+          categoryAllDevices: allDevices
         })
       })
     }
-      if (index === _this.data.categoryName.length - 1) {
-        /* 对未知设备类型进行归类  */
-        var _array = _this.data.categoryTypeArray;
-        var otherDevices = new Array();
-        this.data.categoryAllDevices.forEach(function(element) {
-          if (!category.inArray(element.deviceType, _array)) {
-            otherDevices.push(element);
-          }
-        });
-        _this.setData({
-          categoryDevices: otherDevices,
-        });
-      } else if (index !== 0) {
-        /*========对所有设备按类型分类=============*/
-        var currentType = _this.data.categoryName[index];
-        var _arrayType = _this.data.categoryType[currentType];
-        var typeDevices = new Array();
-        this.data.categoryAllDevices.forEach(function(element) {
-          if (category.inArray(element.deviceType, _arrayType)) {
-            typeDevices.push(element);
-          }
-        });
+    else if (index == _this.data.categoryName.length - 1) {
+      /* 对未知设备类型进行归类  */
+      var _array = _this.data.categoryTypeArray;
+      var otherDevices = new Array();
+      _this.data.categoryAllDevices.forEach(function(element) {
+        if (!category.inArray(element.deviceType, _array)) {
+          otherDevices.push(element);
+        }
+      });
+      _this.setData({
+        categoryDevices: otherDevices,
+      });
+    } else{
+      /*========对所有设备按类型分类=============*/
+      var currentType = _this.data.categoryName[index];
+      var _arrayType = _this.data.categoryType[currentType];
+      var typeDevices = new Array();
+      this.data.categoryAllDevices.forEach(function(element) {
+        if (category.inArray(element.deviceType, _arrayType)) {
+          typeDevices.push(element);
+        }
+      });
+      _this.setData({
+        categoryDevices: typeDevices
+      });
 
-        _this.setData({
-          categoryDevices: typeDevices
-        });
-
-        /* ===========end================= */
-      }
+      /* ===========end================= */
+    }
   },
 
 
   onDevicesItemTap: function(event) {
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceid = category.getDataSet(event, 'deviceid');
+    var customerId = deviceInfo.customerId;
     var deviceType = deviceInfo.deviceType;
+    var model = deviceInfo.model;
+    var gatewayname = this.data.gatewayname;
     if (deviceInfo.nickname != null) {
       var deviceName = deviceInfo.nickname;
     } else {
@@ -223,9 +428,15 @@ Page({
     //   });
     // } 
     // else{
-    wx.navigateTo({
-      url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName
-    });
+    if (deviceType === 'sceneSelector') {
+      wx.navigateTo({
+        url: '../sceneselector/sceneselector?deviceid=' + deviceid + '&deviceName=' + deviceName
+      });
+    } else {
+      wx.navigateTo({
+        url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName + '&customerId=' + customerId + '&model=' + model
+      });
+    }
     // }
   },
 
@@ -297,17 +508,13 @@ Page({
    * ===========================================================
    */
   switchChange: function(event) {
+    console.log(event);
+    var _this = this;
     var status = event.detail.value;
+    console.log(status);
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
-
-    /**开关变换改变图片 */
-    this.data.statusTable[deviceId] = status;
-    var newStatusTable = this.data.statusTable;
-    this.setData({
-      statusTable: newStatusTable
-    });
 
     var triad = {
       deviceType: deviceInfo.deviceType,
@@ -324,8 +531,13 @@ Page({
     };
 
     category.turnSwitch(data, (res) => {
-
+    /**开关变换改变图片 */
       if (res.indexOf("device") === -1) { //状态码为200则应用成功
+        _this.data.statusTable[deviceId] = status;
+        var newStatusTable = this.data.statusTable;
+        this.setData({
+          statusTable: newStatusTable
+        });
         wx.showToast({
           title: '应用成功',
           icon: 'success',
@@ -333,6 +545,11 @@ Page({
           // mask: true
         });
       } else { //状态码不是200  应用失败
+        _this.data.statusTable[deviceId] = !status;
+        var newStatusTable = this.data.statusTable;
+        this.setData({
+          statusTable: newStatusTable
+        });
         wx.showToast({
           title: '应用失败',
           image: '../../imgs/icon/pay@error.png',
@@ -340,8 +557,12 @@ Page({
           // mask: true
         });
       }
-
     }, (err) => {
+      _this.data.statusTable[deviceId] = !status;
+      var newStatusTable = this.data.statusTable;
+      this.setData({
+        statusTable: newStatusTable
+      });
       wx.showToast({
         title: '应用失败',
         image: '../../imgs/icon/pay@error.png',
@@ -367,18 +588,25 @@ Page({
       currentTabsIndex: -2
     });
     this._loadBaannerTitle(name); //加载本地banner和标题
-    // if(index === 0){
-    //   this._loadAllGroup();  //点击时获取数据
-    // }
   },
 
   onGatewayTab: function(event) {
+    console.log(event.detail);
     var index = Number(category.getDataSet(event, 'index'));
-    var name = category.getDataSet(event, 'name');
+    // var name = category.getDataSet(event, 'name');
+    var formId = event.formId;
+    var index = Number(event.target.dataset.index);
+    var name = event.target.dataset.name;
+    console.log(formId);
     this.setData({
       currentBottomIndex: -2,
       currentTabsIndex: index
     });
+    if (this.data.socketTasks.length > 0) {
+      this.data.socketTasks.forEach(function(e) {
+        e.close();
+      })
+    };
     this._loadBaannerTitle(name);
     this._loadGateway();
   },
@@ -387,9 +615,9 @@ Page({
    * =================group=====================
    */
 
-  _loadAllGroup: function (parentdeviceId) {
+  _loadAllGroup: function(parentdeviceId) {
     var param = {
-      customerId:app.globalData.customerId,
+      customerId: app.globalData.customerId,
       parentdeviceId: parentdeviceId
     }
     category.loadAllGroup(param, (data) => {
@@ -488,7 +716,7 @@ Page({
   /**
    * 加载所有场景
    */
-  _loadAllScene: function (gatewayName) {
+  _loadAllScene: function(gatewayName) {
     category.loadAllScene(gatewayName, (data) => {
       this.setData({
         allSceneArr: data
@@ -546,11 +774,6 @@ Page({
       newSceneName: sceneName
     });
     this._loadSceneDevices(sceneid);
-    // wx.showToast({
-    //   title: '功能完善中，敬请期待',
-    //   icon:'none',
-    //   duration:2000
-    // })
   },
 
   /***
@@ -658,7 +881,8 @@ Page({
         wx.showToast({
           title: '应用成功',
           duration: 2000
-        })
+        });
+        this.onCancel();
       } else {
         wx.showToast({
           title: '应用失败',
@@ -669,6 +893,10 @@ Page({
     })
   },
 
+  onLeave: function() {
+    this.hideModal();
+  },
+
   /**
    * 弹窗添加场景方法
    */
@@ -677,11 +905,6 @@ Page({
       showModalScene: true,
       sceneName: ''
     })
-    // wx.showToast({
-    //   title: '功能完善中，敬请期待',
-    //   icon:'none',
-    //   duration:2000
-    // })
   },
   /**
    * 弹出框蒙层截断touchmove事件
@@ -714,12 +937,6 @@ Page({
         icon: 'none',
         duration: 2000
       })
-    } else if (!category.validateName(submitGroupName)) {
-      wx.showToast({
-        title: '场景名只能为字母和数字',
-        icon: 'none',
-        duration: 2000
-      })
     } else {
       this.hideModal();
       this._createScene(submitGroupName);
@@ -730,38 +947,56 @@ Page({
     this.data.sceneName = inputValue;
   },
 
-  onDeleteDevice:function(){
-    if (this.data.categoryAllDevices.length==0){
+  onDeleteDevice: function() {
+    var categoryAllDevices = this.data.categoryAllDevices
+    if (categoryAllDevices === null || categoryAllDevices.length === 0) {
       wx.showToast({
         title: '您还没有设备',
-        icon:'none',
-        duration:2000
+        icon: 'none',
+        duration: 2000
       })
-    }else{
+    } else {
       this.setData({
         showDelete: false,
       })
     }
   },
-  onCancelDelete:function(){
+  onCancelDelete: function() {
     this.setData({
-      showDelete:true,
+      showDelete: true,
     })
   },
-  deleteCertain:function(event){
+
+  deleteCertain: function(event) {
+    var _this = this;
     var deviceid = category.getDataSet(event, 'deviceid');
     var index = category.getDataSet(event, 'index');
     var newAllDevices = this.data.categoryAllDevices;
+    var parentdeviceId = this.data.parentdeviceId;
+    var gatewayName = this.data.gatewayName;
     wx.showModal({
       title: '注意',
       content: '删除设备后网关将与设备断开连接，请您慎重选择！',
-      success(res){
-        if(res.confirm){
+      success(res) {
+        if (res.confirm) {
           category.deleteDevice(deviceid, (res) => {
             if (res == "success") {
-              newAllDevices.splice(index, 1);
-              this.setData({
-                categoryAllDevices: newAllDevices
+              category.getAllSonDevices(parentdeviceId, (res) => {
+                var allDevices = new Array();
+                res.forEach(function(element) {
+                  if (element.deviceType != "Gateway") {
+                    if(element.deviceType == "IASZone"){
+                      var model = element.model;
+                      element.model = model.substr(5, 3);
+                      allDevices.push(element);
+                    }else{
+                      allDevices.push(element);
+                    }
+                  }
+                });
+                _this.setData({
+                  categoryAllDevices: allDevices
+                });
               })
             } else {
               wx.showToast({
@@ -775,26 +1010,55 @@ Page({
       }
     })
   },
+
+  /**下拉刷新设备 */
   onPullDownRefresh() {
+    var _this = this;
     wx.showLoading({
       title: '正在刷新设备...',
     })
     var customerId = app.globalData.customerId;
+    var parentdeviceId = this.data.parentdeviceId;
+    var gatewayName = this.data.gatewayName;
     var currentTabIndex = this.data.currentTabsIndex;
-    category.getAllDevices(customerId, (data) => {
-      this.setData({
-        categoryAllDevices: data.data
+    var param = {
+      customerId: app.globalData.gatewayCustomerId,
+      gateway_user: gatewayName
+    };
+    category.addDevice(param, (res) => {
+
+    });
+    category.getAllSonDevices(parentdeviceId, (res) => {
+      var allDevices = new Array();
+      res.forEach(function(element) {
+        if (element.deviceType != "Gateway") {
+          if (element.deviceType == "IASZone") {
+            var model = element.model;
+            element.model = model.substr(5, 3);
+            allDevices.push(element);
+          } else {
+            allDevices.push(element);
+          }
+        };
+        _this.data.statusTableOne[element.id] = true;
+        var newStatusTableOne = _this.data.statusTableOne;
+        _this.setData({
+          statusTableOne: newStatusTableOne
+        });
       });
-      if (currentTabIndex > 0 && currentTabIndex !== 0){
-        this._loadCateDevices(currentTabIndex, customerId);
+      _this.setData({
+        categoryAllDevices: allDevices
+      });
+      if (currentTabIndex > 0 && currentTabIndex !== 0) {
+        this._loadCateDevices(currentTabIndex);
       }
-      setTimeout(function(){
+      setTimeout(function() {
         wx.hideLoading({
-          success: function () {
+          success: function() {
             wx.stopPullDownRefresh()
           }
         });
-      },500)
-    });
+      }, 500)
+    })
   },
 })

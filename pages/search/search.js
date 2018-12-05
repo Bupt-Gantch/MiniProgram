@@ -31,7 +31,9 @@ Page({
       searchText: searchText,
       page: 0
     }
-    console.log(data)
+    this.setData({
+      searchText: searchText
+    })
     this._loadInfoList(data)
     this.setData({
       content: app.getLanuage(app.globalData.language),
@@ -48,20 +50,49 @@ Page({
   /**
    * 获取信息列表/按页显示
    */
+
+  /**
+   * 获取信息列表/按页显示
+   */
   _loadInfoList: function (data) {
+    var _this = this
+    var newinfoList = new Array();
     search.getSearch(data, (res) => {
-      this.setData({
+      _this.setData({
         infoList: res.data
       });
-      if (this.data.infoList.length % 9 != 0 || this.data.infoList === 0) {
+      if (_this.data.infoList.length != undefined) {
+        _this.data.infoList.forEach(function (element) {
+          if (element.image != null) {
+            if (element.image[0] == "[") {
+              var newimage = element.image.substr(1, element.image.length - 2);
+            } else {
+              var newimage = element.image;
+            }
+            var arr = newimage.split(",");
+            element.image = arr;
+            element.nickName = search.matchPhoneNum(element.nickName);
+            newinfoList.push(element)
+          } else {
+            element.nickName = search.matchPhoneNum(element.nickName);
+            newinfoList.push(element)
+          }
+        });
+      }
+      _this.setData({
+        infoList: newinfoList
+      })
+      if (_this.data.infoList.length % 9 != 0 || _this.data.infoList.length === 0) {
         page = page - 1
-        for (var i = 0; i < this.data.infoList.length; i++)
-          info.push(this.data.infoList[i])
         this.setData({
-          infolist: info,
           end: true
         })
       }
+      for (var i = 0; i < _this.data.infoList.length; i++)
+        info.push(_this.data.infoList[i])
+      this.setData({
+        infolist: info,
+      })
     })
   },
 
@@ -79,23 +110,6 @@ Page({
     })
   },
 
-  onPullDownRefresh: function () {
-    info = [];
-    if (!this.data.end) {
-      // 显示顶部刷新图标
-      wx.showNavigationBarLoading();
-      var data = {
-        page: 0,
-        openId: app.globalData.openId,
-      }
-      this._loadInfoList(data);
-      // 隐藏导航栏加载框
-      wx.hideNavigationBarLoading();
-      // 停止下拉动作
-      wx.stopPullDownRefresh();
-    }
-  },
-
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -103,7 +117,7 @@ Page({
     if (!this.data.end) {
       var param = {
         page: page + 1,
-        openId: app.globalData.openId,
+        searchText: this.data.searchText,
       }
       // 显示加载图标
       wx.showLoading({

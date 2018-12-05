@@ -6,7 +6,7 @@ import {
   Config
 } from '../../utils/config.js';
 var util = require('../../utils/util.js');
-
+ 
 var home = new Home();
 
 const app = getApp();
@@ -363,14 +363,6 @@ function initChart_line(canvas, width, height) {
 
 
 Page({
-  // onShareAppMessage: function (res) {
-  //   return {
-  //     title: 'ECharts 可以在微信小程序中使用啦！',
-  //     path: '/pages/index/index',
-  //     success: function () { },
-  //     fail: function () { }
-  //   }
-  // },
   data: {
     ec_temp: {
       onInit: initChart_temp,
@@ -485,6 +477,8 @@ Page({
         title: '您还没有任何温湿度传感器',
         icon: 'none'
       })
+      globalLineDeviceArr = this.data.lineDeviceArr;
+      gaugeComponent.lineComponent.init(initChart_line)
     } else {
       let firstTempDeviceId = categoryDeviceArr.temp_humi[0].id;
       this._loadRealtimeData(firstTempDeviceId);
@@ -509,6 +503,9 @@ Page({
   },
 
   _loadHistoryData: function(deviceId, keyType) {
+    var history1 = [];
+    var history2 = [];
+    var history3 = [];
     var _this = this;
     var timestamp = Date.parse(new Date());
     var param = {
@@ -522,21 +519,36 @@ Page({
       aggregation: "AVG"
     }
     home.getHistoryData(param, (res) => {
+      _this.data.lineDeviceArr['historyTime'] = [];
       var arrayValue = res;
       if (keyType == 'temperature') {
         arrayValue.forEach(function (element) {
-          _this.data.lineDeviceArr['historyTime'].push(util.formatData(new Date(element.ts)))
-        });
-        arrayValue.forEach(function(element) {
+          history1.push(util.formatData(new Date(element.ts)))
+          // _this.data.lineDeviceArr['historyTime'].push(util.formatData(new Date(element.ts)))
           _this.data.lineDeviceArr['temperature'].push(Number(element.value.toFixed(2)))
         });
       } else if (keyType == 'humidity') {
         arrayValue.forEach(function(element) {
+          history2.push(util.formatData(new Date(element.ts)))
           _this.data.lineDeviceArr['humidity'].push(Number(element.value.toFixed(2)))
         });
       } else if (keyType == 'PM2.5') {
         arrayValue.forEach(function(element) {
+          history3.push(util.formatData(new Date(element.ts)))
           _this.data.lineDeviceArr['pm25'].push(Number(element.value.toFixed(2)))
+        });
+      }
+      if(history1.length>=history2.length&&history1.length>=history3.length){
+        history1.forEach(function (element) {
+          _this.data.lineDeviceArr['historyTime'].push(element)
+        });
+      } else if (history2.length >= history1.length && history2.length >= history3.length){
+        history2.forEach(function (element) {
+          _this.data.lineDeviceArr['historyTime'].push(element)
+        });
+      } else if (history3.length >= history1.length && history3.length >= history2.length) {
+        history3.forEach(function (element) {
+          _this.data.lineDeviceArr['historyTime'].push(element)
         });
       }
       globalLineDeviceArr = this.data.lineDeviceArr;
@@ -558,8 +570,8 @@ Page({
     let socketTask = home.getRealtimeData(deviceid, sConCb, fConCb, (data) => {
       //收到服务器端发回数据，更新view层数据
       var sensorData = JSON.parse(data).data;
+      console.log(sensorData);
       sensorData.forEach(function(e) {
-
         if (e.key === 'temperature') {
           curTemprature = Number(e.value);
           gaugeComponent.tempComponent.init(initChart_temp);
@@ -576,5 +588,4 @@ Page({
     });
     this.data.socketTasks.push(socketTask);
   },
-
 });

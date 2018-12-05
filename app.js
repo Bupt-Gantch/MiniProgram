@@ -27,12 +27,25 @@ App({
       })
   },
 
+  onShareAppMessage: function (res) {
+    return {
+      title: '冠川智能',
+      path: '/pages/loading/loading',
+      success: function () { },
+      fail: function () { }
+    }
+  },
+
   globalData: {
     language:"中文",
     userInfo: null,
     customerId:null,
+    gatewayCustomerId:null,
     openid: null,
+    unionid:null,
     code:null,
-    getwayId:null
+    getwayId:null,
+    gatewayName:null,
+    gatewayId:null,
   },
 })

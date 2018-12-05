@@ -78,6 +78,7 @@ Page({
         address:this.data.address
         }
     }
+    console.log(params);
     register.register(params, (res) => {
       wx.showLoading({
         title:'请稍后',

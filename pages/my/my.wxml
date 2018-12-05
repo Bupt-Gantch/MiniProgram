@@ -1,3 +1,4 @@
+<import src="../tpls/modal/modal-tpl.wxml" />
 <view class="my-container">
   <view class="my-header">
     <view class="userinfo">
@@ -7,13 +8,22 @@
       </block>
     </view>
   </view>
-    <view class="my-item scan" bindtap='scan'>
-      <text>{{content.scan}}</text>
-    </view>
+  <view class="my-item scan" bindtap='onScan'>
+    <text>{{content.scan}}</text>
+  </view>
 
-    <view class="my-item scan" bindtap='deleteGateway'>
-      <text>{{content.deleteGateway}}</text>
-    </view>
+  <view class="my-item scan" bindtap='deleteGateway'>
+    <text>{{content.deleteGateway}}</text>
+  </view>
+  <view class="my-item scan" bindtap='onShare'>
+    <text>{{content.share}}</text>
+  </view>
+  <view class="my-item scan" bindtap='onUnShare'>
+    <text>{{content.unshare}}</text>
+  </view>
+  <view wx:if="{{gatewayName!=null}}" class="my-item scan" bindtap='refreshGateway'>
+    <text>{{content.refreshGateway}}</text>
+  </view>
   <view class="my-main">
     <view class="my-item" bindtap='myPublish'>
       <text>{{content.mypublish}}</text>
@@ -23,4 +33,13 @@
     </view>
     <!-- <view class="language" bindtap='changeLanuage'>{{content.button}}</view> -->
   </view>
+  <template is="changeName" data="{{showEdit,content:content2}}">
+  </template>
+  <template is="devices" data="{{showDevice,content:content1,devices:gatewayList,customerId}}">
+  </template>
+  <template is="devices" data="{{showDevice:showGateway,content:content3,devices:gatewayArray,customerId}}">
+  </template>
+
+  <template is="sharedDetail" data="{{showSharedDetail,sharedDetail,content:content4}}">
+  </template>
 </view>

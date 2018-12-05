@@ -1,7 +1,14 @@
 @import "../tpls/base.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
+
+page{
+  width: 100%;
+  height: 100%;
+  background-color:#E3E3E3;
+}
+
 .detail-container {
-  background-color:#e7eae9;/*#24292e*/
+  background-color:#E3E3E3;/*#24292e*/
   color:#F9F9F9;
   padding: 0rpx 0;
   box-sizing: border-box;
@@ -63,7 +70,7 @@
 /*table */
 .IASZtable{
   margin-bottom: 20px; 
-  background-color: #e7eae9;
+  background-color: #a8d3ba;
 }
 .tr {
   display: flex;
@@ -129,15 +136,76 @@
   flex-direction:row;
 }
 
+.view_footer button {
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  padding: 0rpx 0;
+  font-family: "Microsoft Yahei";
+  margin: 30rpx;
+}
 
+.detailview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Microsoft Yahei";
+  margin-top: 30rpx;
+}
 
+.deviceDetail {
+  align-items: center;
+  margin-right: 10rpx;
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
 
+.deviceDetail text{
+  font-size: 40rpx
+}
 
+.btn-confirm {
+  width: 200rpx;
+}
 
+.deviceDetailView {
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
 
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
 
+.linkage-view{
+  display: block;
+  margin-top: 20rpx;
+  height: 500rpx;
+}
 
+.linkageDetail{
+  width: 100%;
+  height: 60rpx;
+  border-bottom: 5rpx solid #E3E3E3;
+  font-size: 40rpx;
+  color: #f9f9f9;
+  margin: 10rpx;
+}
 
+.linkageDetail image{
+  position: absolute;
+  right: 0rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
 
-
-
+.name image{
+  position: relative;
+  top:0rpx;
+  right: 0rpx;
+  width: 30rpx;
+  height: 30rpx;
+}

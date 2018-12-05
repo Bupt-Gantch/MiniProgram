@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 17,
 			"list": [
 				{
 					"id": -1,
@@ -119,7 +119,26 @@
 				{
 					"id": -1,
 					"name": "index",
-					"pathName": "pages/index/index"
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "weather",
+					"pathName": "pages/weather/weather",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "contact",
+					"pathName": "pages/contact/contact",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "sceneselector",
+					"pathName": "pages/sceneselector/sceneselector",
+					"query": ""
 				}
 			]
 		}

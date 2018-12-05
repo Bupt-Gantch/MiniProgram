@@ -1,6 +1,10 @@
 // pages/loading/loading.js
-import { Config } from '../../utils/config.js';
-import { Loading } from 'loading_model.js';
+import {
+  Config
+} from '../../utils/config.js';
+import {
+  Loading
+} from 'loading_model.js';
 var loading = new Loading();
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
@@ -21,7 +25,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options){
+  onLoad: function(options) {
     this.setData({
       content: app.getLanuage(app.globalData.language),
     })
@@ -35,14 +39,14 @@ Page({
     }
   },
 
-  onShareAppMessage:function(options){
-    var shar = {
-      success: function (res) {
-        if (res.errMsg == 'shareAppMessage:ok') {
-        }
-      },
+
+  onShareAppMessage: function(res) {
+    return {
+      title: '冠川智能',
+      path: '/pages/loading/loading',
+      success: function() {},
+      fail: function() {}
     }
-    return shar;
   },
 
   onShow: function() {
@@ -52,69 +56,74 @@ Page({
   },
 
   /**
-  * 获取用户信息接口后的处理逻辑
-  */
-  getUserInfo: function (e) {
+   * 获取用户信息接口后的处理逻辑
+   */
+  getUserInfo: function(e) {
     var _this = this
     // 将获取的用户信息赋值给全局 userInfo 变量
-    if (e.detail.userInfo){
+    if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo;
       wx.login({
-        success: function (res) {
+        success: function(res) {
           //发送请求获取openid
+          // console.log(res.code);
           wx.request({
             url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId', //接口地址
-            data: { 
+            data: {
               JSCODE: res.code,
-              },
-            method:'POST',
+            },
+            method: 'POST',
             header: {
               'content-type': 'application/json' //默认值
             },
-            success: function (res) {
-          if (res.data == undefined || res.data == "" || res.data == null) {
-          wx.showToast({
-            title: '请求错误',
-            icon: 'none',
-            duration: 2000,
-          })
-        } else {
-          app.globalData.openid = res.data,
-            wx.showLoading({
-              title: _this.data.content.loading,
-            })
-          setTimeout(function () {
-            wx.hideLoading()
-            loading.findOpenid(res.data, (res) => {
-              if (res.status === "success") {
-                app.globalData.customerId = res.data.id
+            success: function(res) {
+              var answer = res.data;
+              console.log(answer);
+              if (answer == undefined || answer == "" || answer == null) {
                 wx.showToast({
-                  title: '登录成功',
+                  title: '请求错误',
+                  icon: 'none',
                   duration: 2000,
                 })
-                setTimeout(function () {
-                  wx.reLaunch({
-                    url: '../index/index',
-                  })
-                }, 1000)
               } else {
-                wx.showModal({
-                  title: '登陆失败',
-                  content: '未查询到相关用户信息,请先注册',
-                  success: function (res) {
-                    if (res.confirm) {
-                      wx.navigateTo({
-                        url: '../register/register',
+                app.globalData.openid = answer.openid,
+                  app.globalData.unionid = answer.unionid,
+                  wx.showLoading({
+                    title: _this.data.content.loading,
+                  })
+                setTimeout(function() {
+                  wx.hideLoading()
+                  loading.findOpenid(answer.openid, (res) => {
+                    if (res.status === "success") {
+                      console.log(res);
+                      app.globalData.customerId = res.data.id
+                      wx.showToast({
+                        title: '登录成功',
+                        duration: 2000,
+                      })
+                      setTimeout(function() {
+                        wx.reLaunch({
+                          url: '../index/index',
+                        })
+                      }, 1000)
+                    } else {
+                      wx.showModal({
+                        title: '登陆失败',
+                        content: '未查询到相关用户信息,请先注册',
+                        success: function(res) {
+                          if (res.confirm) {
+                            wx.navigateTo({
+                              url: '../register/register',
+                            })
+                          }
+                        }
                       })
                     }
-                  }
-                })
+                  })
+                }, 1000)
               }
-            })
-          }, 1000)
-        }
-      },
-            fail:function(err){
+            },
+            fail: function(err) {
               wx.showToast({
                 title: '请求错误',
                 icon: 'none',

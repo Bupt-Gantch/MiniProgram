@@ -13,15 +13,31 @@
     "pages/register/register",
     "pages/scene/scene",
     "pages/group/group",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/ruleDetail/ruleDetail",
+    "pages/sceneselector/sceneselector",
+    "pages/second/smarthome/smarthome",
+    "pages/second/alert/alert",
+    "pages/second/firecontrol/firecontrol",
+    "pages/second/farm/farm",
+    "pages/second/hotel/hotel",
+    "pages/second/city/city",
+    "pages/second/community/community",
+    "pages/second/school/school",
+    "pages/second/old/old",
+    "pages/second/office/office",
+    "pages/second/s-city/s-city",
+    "pages/second/company/company",
+    "pages/second/ai/ai",
+    "pages/second/support/support"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#002366",
-    "navigationBarTitleText": "冠川智能家居",
+    "navigationBarBackgroundColor": "#9ABAF5",
+    "navigationBarTitleText": "冠川智能",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
-    "backgroundColor": "#002366"
+    "backgroundColor": "#E3E3E3"
   },
   "tabBar": {
     "list": [

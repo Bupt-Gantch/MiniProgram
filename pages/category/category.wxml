@@ -1,50 +1,44 @@
 <!--pages/category/category.wxml-->
-<import src="../tpls/category/category-tpl.wxml"/>
-<import src="../tpls/group/group-tpl.wxml"/>
-<import src="../tpls/scene/scene-tpl.wxml"/>
-<import src="../tpls/modal/modal-tpl.wxml"/>
+<import src="../tpls/category/category-tpl.wxml" />
+<import src="../tpls/group/group-tpl.wxml" />
+<import src="../tpls/scene/scene-tpl.wxml" />
+<import src="../tpls/modal/modal-tpl.wxml" />
 
-<view class='container category-container'> 
+<view class='container category-container'>
   <view class='category-box'>
-    <view class='left-box'>
+    <scroll-view scroll-y="true" class='left-box'>
       <!-- 网关 -->
       <block wx:for="{{gatewayGroup}}" wx:key="*this">
-         <view class="menu-item {{currentBottomIndex===-2?'selected':''}}"
-           bindtap='onGatewayTab' data-index='-2' 
+        <view class="menu-item {{currentBottomIndex===-2?'selected':''}}"
+          bindtap='onGatewayTab' data-index='-2' 
            data-name='{{gatewayGroup[index]}}'> 
           {{gatewayGroup[index]}}
          </view>
       </block>
-<view class='separate'></view>
+      <view class='separate'></view>
 
       <block wx:for="{{categoryName}}" wx:key="*this">
-         <view class="menu-item {{currentTabsIndex==index?'selected':''}}"
-           bindtap='onTabCategory' data-index='{{index}}' 
-           data-name='{{categoryName[index]}}'> 
+        <view class="menu-item {{currentTabsIndex==index?'selected':''}}" bindtap='onTabCategory' data-index='{{index}}' data-name='{{categoryName[index]}}'>
           {{categoryName[index]}}
-         </view> 
+        </view>
       </block>
 
       <view class='separate'></view>
       <!-- 场景和分组 -->
       <block wx:for="{{sceneGroup}}" wx:key="*this">
-         <view class="menu-item {{currentBottomIndex==index?'selected':''}}"
-           bindtap='onBottomTab' data-index='{{index}}' 
-           data-name='{{sceneGroup[index]}}'> 
+        <view class="menu-item {{currentBottomIndex==index?'selected':''}}" bindtap='onBottomTab' data-index='{{index}}' data-name='{{sceneGroup[index]}}'>
           {{sceneGroup[index]}}
-         </view>
+        </view>
       </block>
-      
-    </view>
+    </scroll-view>
 
     <!-- 设备分类right-box -->
 
     <view wx:if="{{currentBottomIndex===-2}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
-    <!--显示所有网关-->
+      <!--显示所有网关-->
       <block wx:for="{{categoryName}}" wx:key="*this">
-        <view  class='foods-type-box'>
-          <template is="gateway" 
-        data="{{switchOnImg,imgUrl,bannerTitle,gatewayDevice,currentId,statusTable}}"></template>
+        <view class='foods-type-box'>
+          <template is="gateway" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,gatewayImg,imgUrl,iASZoneImg,bannerTitle,gatewayDevice,currentId,statusTable,customerId,statusTableOne}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>
@@ -52,31 +46,25 @@
 
 
     <view wx:elif="{{currentBottomIndex===-1}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
-    <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
+      <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{categoryName}}" wx:key="*this">
-        <view  class='foods-type-box'>
-          <template wx:if="{{index == 0}}" is="categorytop" 
-        data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,showDelete}}"></template>
-          <template wx:if="{{index != 0}}" is="categorytop" 
-          data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable}}"></template>
+        <view class='foods-type-box'>
+          <template wx:if="{{index == 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,statusTableOne,showDelete}}"></template>
+          <template wx:if="{{index != 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable,statusTableOne}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>
     </view>
-
     <!-- 分组right-box -->
-    <view wx:else 
-          class='right-box {{transClassArr[currentBottomIndex]}}'>
-    <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
+    <view wx:else class='right-box {{transClassArr[currentBottomIndex]}}'>
+      <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{sceneGroup}}" wx:key="*this">
 
-        <view  class='foods-type-box'>
-          <template wx:if="{{index == 0}}" is="group" 
-        data="{{imgUrl:groupSceneImg,bannerTitle,allGroupArr,statusTable}}"></template>
+        <view class='foods-type-box'>
+          <template wx:if="{{index == 0}}" is="group" data="{{imgUrl:groupSceneImg,bannerTitle,allGroupArr,statusTable,statusTableOne}}"></template>
 
           <!-- 保留模板（scene） -->
-          <template wx:if="{{index == 1}}" is="scene" 
-          data="{{imgUrl:groupSceneImg,bannerTitle,allSceneArr,sceneName}}"></template>
+          <template wx:if="{{index == 1}}" is="scene" data="{{imgUrl:groupSceneImg,bannerTitle,allSceneArr,sceneName}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>
@@ -84,7 +72,7 @@
   </view>
   <template is="modalDialog" data="{{showModal,content}}">
   </template>
-    <template is="modalScene" data="{{showModalScene,contentScene}}">
+  <template is="modalScene" data="{{showModalScene,contentScene}}">
   </template>
   <template is="sceneDetail" data="{{showDetail,sceneArray:sceneList,newSceneName}}">
   </template>
@@ -100,11 +88,8 @@
     </view>
     <picker-view indicator-class='picker-indicator' value="{{pickerValueArr}}" mask-class='picker-mask' bindchange="onPickerChange">
       <picker-view-column>
-        <view wx:for="{{allGroupArr}}" wx:key="{{item.id}}"
-        style="line-height: 50px">{{item.name}}</view>
+        <view wx:for="{{allGroupArr}}" wx:key="{{item.id}}" style="line-height: 50px">{{item.name}}</view>
       </picker-view-column>
     </picker-view>
   </view>
-  
 </view>
-

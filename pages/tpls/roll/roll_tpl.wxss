@@ -1,14 +1,10 @@
-.swiper_view { 
- width: 100%; 
+/* .swiper_view { 
+ width: 550rpx; 
  height: 40rpx;
  margin-top: 10rpx; 
- color: #002366
-}
-.reds{ 
- overflow: hidden; 
+}  */
+/* .reds{ 
+ overflow: scroll; 
  text-overflow: ellipsis; 
  white-space:nowrap; 
- width:100%; 
- font-size: 30rpx; 
- height: 40rpx; 
-} 
+}  */

@@ -23,6 +23,18 @@
   border-radius: 36rpx;
 }
 
+.modaldialog{
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 15%;
+  left: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  /* margin: -180rpx 105rpx; */
+  border-radius: 36rpx;
+}
+
 .modal-title {
   padding-top: 50rpx;
   font-size: 36rpx;
@@ -40,6 +52,13 @@
   border: 2rpx solid #ddd;
   border-radius: 4rpx;
   font-size: 28rpx;
+}
+
+.scene-input{
+  display: flex;
+  background: #fff;
+  border: 2rpx solid #ddd;
+  border-radius: 4rpx;
 }
 
 
@@ -81,10 +100,15 @@ input-holder {
 }
 
 .scroll-view{
-  height: 500rpx;
+  height: 600rpx;
 }
 
 .sceneDeviceName{
   font-size: 45rpx;
   color: #ec5300
+}
+
+.sectiongap{
+  margin-top:10rpx!important;
+  margin-bottom: 10rpx; 
 }

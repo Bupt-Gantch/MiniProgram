@@ -9,12 +9,12 @@
       <view class='category-main-view'>
         <block wx:for="{{allSceneArr}}" wx:key="{{item.scene_id}}">
           <!-- 下面存放单个设备的div  -->
-          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.scene_id}}" data-scenename="{{item.sceneName}}"
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.scene_id}}" data-scenename="{{item.sceneNickName}}"
           data-parentid="{{item.parentName}}" bindtap="onSceneItemTap" bindlongpress="onSceneLongPress">
             <view class='group-image'>
               <image src='{{imgUrl["scene"]}}' mode="aspectFit"></image>
             </view>
-            <view>{{item.sceneName}}</view>
+            <view>{{item.sceneNickName}}</view>
           </view>
           <!-- end -->
         </block>

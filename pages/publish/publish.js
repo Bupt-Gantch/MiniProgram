@@ -68,8 +68,10 @@ Page({
             }
             var arr = newimage.split(",");
             element.image = arr;
+            element.nickName = publish.matchPhoneNum(element.nickName);
             newinfoList.push(element)
           } else {
+            element.nickName = publish.matchPhoneNum(element.nickName);
             newinfoList.push(element)
           }
         });
@@ -113,6 +115,7 @@ Page({
   imageClick: function(e) {
     var src = e.currentTarget.dataset.src;
     var pictures = e.currentTarget.dataset.pictures.image;
+    console.log(pictures)
     wx.previewImage({
       current: src,
       urls: pictures,

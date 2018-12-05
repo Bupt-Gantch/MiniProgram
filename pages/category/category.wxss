@@ -1,8 +1,6 @@
 @import "../tpls/category/category-tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
 
-
-
 .category-container{
     /*min-height: 100vh;*/
 }
@@ -15,7 +13,8 @@
 .left-box{
     flex: 0 1 150rpx;
     border-right:1rpx solid #5a9ec8;
-    background-color: #e7eae9
+    background-color: #E3E3E3;
+    height: 100%;
 }
 .group-btn{
   margin-top: 20px;
@@ -23,6 +22,7 @@
 .menu-item{
     left: 0;
     height: 50rpx;
+    /* height: 100rpx; */
     padding: 20rpx 0;
     display: flex; 
     align-items: center;
@@ -95,6 +95,9 @@
 }
 .tanslate8{
     transform:translate(0,-800vh);
+}
+.tanslate9{
+    transform:translate(0,-900vh);
 }
 
 .foods-type-box{

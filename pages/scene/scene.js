@@ -16,13 +16,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    news: [{
-        title: "请选择网关相同的设备创建场景，否则将创建失败！"
-      },
-      {
-        title: "请选择网关相同的设备创建场景，否则将创建失败！"
-      },
-    ],
     imgUrl: Config.deviceImgUrl,
     statusTable: {},
     switchOnImg: Config.switchOnUrl,
@@ -79,27 +72,8 @@ Page({
       this.setData({
         sceneDevices:typeDevices
       })
-      // typeDevices.forEach(function(element) {
-      //   _this._getDeviceById(element, element.parentDeviceId);
-      // });
     });
   },
-
-  // _getDeviceById: function(element, deviceId) {
-  //   scene.getDeviceById(deviceId, (data) => {
-  //     var newname = data.name
-  //     var length = newname.length
-  //     var name = "";
-  //     for (let i = 8; i < length; i++) {
-  //       name += newname[i]
-  //     }
-  //     element.parentName = name;
-  //     this.data.newTypeDevices.push(element);
-  //     this.setData({
-  //       sceneDevices: this.data.newTypeDevices
-  //     });
-  //   });
-  // },
 
   onDeviceLongPress: function(event) {
     var deviceId = scene.getDataSet(event, 'deviceid');
@@ -195,7 +169,6 @@ Page({
       "data4": data4,
     }
     sceneDevicesArray.push(sceneDevice)
-    console.log(sceneDevicesArray)
     this.hideModal()
   },
   //保存场景

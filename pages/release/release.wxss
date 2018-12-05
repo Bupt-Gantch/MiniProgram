@@ -5,7 +5,7 @@ page {
   height: 100%;
   font-size: 30rpx;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #e7eae9
+  background-color: #E3E3E3
 }
 
 .description {

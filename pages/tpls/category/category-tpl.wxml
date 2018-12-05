@@ -20,24 +20,36 @@
           <view class="category-goods-items {{index%3==1?'middle':''}}" bindlongpress="onDeviceLongPress">
 
             <view class='image_switch'>
-            <view class='delete-view'>
-            <image wx:if="{{showDelete==false}}" class="deleteCertain" src='/imgs/icon/deleteCertain.png' data-deviceid="{{item.id}}" data-index="{{index}}" bindtap="deleteCertain"></image>
-            </view>
-              <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet' }}">
+              <view class='delete-view'>
+                <image wx:if="{{showDelete==false}}" class="deleteCertain" src='/imgs/icon/deleteCertain.png' data-deviceid="{{item.id}}" data-index="{{index}}" bindtap="deleteCertain"></image>
+              </view>
+              <block wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'||item.deviceType=='dimmableLight'}}">
                 <image wx:if="{{item.deviceType == 'switch'&& statusTable[item.id]}}" src='{{switchOnImg[0]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:if="{{item.deviceType == 'switch'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:if="{{item.deviceType == 'outlet' && statusTable[item.id]}}" src='{{switchOnImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:if="{{item.deviceType == 'outlet'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:if="{{item.deviceType == 'dimmableLight' && statusTable[item.id]}}" src='{{dimmableLightOneImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:if="{{item.deviceType == 'dimmableLight'&& !statusTable[item.id]}}" src='{{imgUrl[item.deviceType]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
+              <block wx:elif="{{item.deviceType=='curtain'}}">
+                <image wx:if="{{item.deviceType == 'curtain'&& statusTable[item.id]}}" src='{{curtainOnImg[0]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:if="{{item.deviceType == 'curtain'&& !statusTable[item.id]}}" src='{{curtainOnImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+              </block>
+              <block wx:elif="{{item.deviceType=='IASZone'}}">
+                <image wx:if="{{item.model == 'BOT'}}" src='{{iASZoneImg[0]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:elif="{{item.model == 'SMF'}}" src='{{iASZoneImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:elif="{{item.model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+              </block>
+
               <block wx:else>
                 <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
               <view class='switch'>
-                <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
+                <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'||item.deviceType=='dimmableLight'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
               </view>
             </view>
-            <view wx:if="{{!item.online}}" class='online'></view>
-            <!-- <view wx:if="{{!item.online}}" class='offline'></view> -->
+            <view wx:if="{{statusTableOne[item.id]}}" class='online'></view>
+            <view wx:else class='offline'></view>
             <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
             <view wx:else class='devicename'>{{item.name}}</view>
           </view>
@@ -63,14 +75,17 @@
           <view class="category-goods-items {{index%3==1?'middle':''}}" bindlongpress="onGatewayLongPress">
             <view class='image_switch'>
               <block>
-                <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:if="{{item.customerId===customerId}}" src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:else src='{{gatewayImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
               <view class='switch'>
                 <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
               </view>
             </view>
-            <view wx:if="{{!item.online}}" class='online'></view>
-            <!-- <view wx:if="{{!item.online}}" class='offline'></view> -->
+
+            <view class='online'></view>
+            <!-- <view wx:else class='offline'></view> -->
+
             <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
             <view wx:else class='devicename'>{{item.name}}</view>
           </view>

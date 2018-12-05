@@ -14,16 +14,17 @@ page{
   }
 
 .enter-button{
-  width: 70%;
+  width: 260rpx;
   border-radius: 20rpx;
-  color:#6A6F8F;
-  background-color: #E4E9ED;
+  color:#46C1D1;
+  font-weight: bold;
+  background-color: #DBD9D9;
   font-size: 40rpx
 }
 
 .enter-container{
   position:fixed;
-  bottom: 30rpx;
+  bottom: 20rpx;
   width: 100%
 }
 

@@ -1,0 +1,4 @@
+<!--pages/second/alert/alert.wxml-->
+ <view class="poster-view">
+    <image src="/imgs/swiper/bg.jpg" class="poster-image" mode="scaleToFill"></image>
+  </view>

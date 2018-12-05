@@ -1,0 +1,100 @@
+<!--pages/sceneselector/sceneselector.wxml-->
+<import src="../tpls/modal/modal-tpl.wxml" />
+<view class='detail-container'>
+  <!-- header复用一个，保持不变 -->
+  <view class='detail-header'>
+    <view class='content' bindlongpress="onChangeName">
+      <view class='device-image'>
+        <image src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
+      </view>
+      <view class='title'>名称</view>
+      <view class='name'>{{deviceName}}<image src='/imgs/icon/alert.png' 
+     bindtouchstart='showAlert'></image></view>
+    </view>
+  </view>
+
+  <view class='view_footer'>
+  <button wx:if="{{showDetailviewOne}}" bindtap='bindDevice'>绑定设备</button>
+  <button disabled='true' wx:if="{{showSceneDetailOne}}" bindtap='bindScene'>绑定场景</button>
+  </view>
+
+  <view class='detailview'>
+  <view class='deviceDetail' wx:if="{{showDetailviewTwo}}">
+  <text>所绑定设备信息</text>
+  <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+  <view class="deviceDetailView" wx:for="{{deviceDetail}}" wx:key="item">
+   <form bindsubmit="onBindDelete">
+       <radio-group name="radiogroup">
+   <label wx:if="{{item.nickname!=null}}">
+   <radio value="{{item.id}}" checked='true' disabled='true'/>{{item.nickname}}</label>
+   <label wx:else>
+    <radio value="{{item.id}}"  checked='true' disabled='true'/>{{item.name}}</label>
+    </radio-group>
+
+  <!-- <view wx:if="{{item.nickname!=null}}">{{item.nickname}}</view>
+  <view wx:else>{{item.name}}</view> -->
+   <button formType="submit" class="btn-confirm">解绑</button>
+    </form>
+  </view>
+  </scroll-view>
+  </view>
+  <view class='sceneDetail'  wx:if="{{showSceneDetailTwo}}">
+  <text>所绑定场景信息</text>
+     <scroll-view scroll-y="true" scroll-with-animation="true">
+        <block wx:for="{{sceneDetail}}" wx:key="item">
+          <view wx:if="{{item.nickname}}" class='sceneDeviceName'>{{item.nickname}}</view>
+          <view wx:else class='sceneDeviceName'>{{item.name}}</view>
+          <view wx:if="{{item.deviceType=='dimmableLight'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+            <view class="section section_gap">
+              <view class="section__title">亮度</view>
+              <slider disabled="true" min="1" max="255" value='{{item.data2}}' show-value></slider>
+            </view>
+            <view class="section section_gap">
+              <view class="section__title">色温</view>
+              <slider disabled="true" min="1" max="255" value='{{item.data3}}' show-value></slider>
+            </view>
+          </view>
+          <view wx:if="{{item.deviceType=='switch'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+          </view>
+          <view wx:if="{{item.deviceType=='curtain'}}">
+            <view class="section section_gap">
+              <view class="section__title">开关</view>
+              <block wx:if="{{item.data1 == 1}}">
+                <switch disabled="true" checked='true' />
+              </block>
+              <block wx:else>
+                <switch disabled="true" />
+              </block>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+      <!-- <button class='unBind' bindtap='unBindScene'>解除该场景</button> -->
+  </view>
+  </view>
+</view>
+
+<template is="changeName" data="{{showEdit,content:content1}}">
+  </template>
+    <template is="devices" data="{{showDevice,devices,content:content2,customerId}}">
+  </template>
+    <template is="sceneTemplate" data="{{showScene,allScene,content:content3}}">
+  </template>

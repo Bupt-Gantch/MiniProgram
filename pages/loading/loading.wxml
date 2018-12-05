@@ -1,6 +1,6 @@
 <!--pages/loading/loading.wxml-->
  <view class="poster-view">
-    <image src="/imgs/swiper/poster.jpg" class="poster-image" mode="scaleToFill"></image>
+    <image src="/imgs/swiper/logo.jpg" class="poster-image" mode="scaleToFill"></image>
   </view>
   <view>{{code}}</view>
   <view>{{openid}}</view>

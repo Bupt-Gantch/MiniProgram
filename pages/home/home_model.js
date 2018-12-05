@@ -4,7 +4,7 @@ class Home extends Base{
   constructor(){
     super();
   }
-
+ 
   getAllDevices(customerId, callback) {
     var param = {
       //url: 'deviceaccess/tenant/devices/2?limit=1000',
@@ -37,7 +37,6 @@ class Home extends Base{
 
   //获取设备历史数据
   getHistoryData(param, callback){
-    console.log(param)
     var params = {
       url: `deviceaccess/data/alldata/${param.deviceId}`,
       data:param,

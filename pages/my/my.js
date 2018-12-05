@@ -15,12 +15,36 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    showEdit: false,
+    showDevice: false,
+    showGateway: false,
+    showSharedDetail: false,
+    content1: {
+      title: "绑定设备",
+      name: 'shareGateway'
+    },
+    content2: {
+      title: '用户信息',
+      placeholder: '被分享者手机号'
+    },
+    phoneNumber: '',
+    content3: {
+      title: "解绑网关",
+      name: 'unBindGateway',
+      value: 'share'
+    },
+    content4: {
+      title: "取消分享",
+      name: 'unGatewaySelector',
+    },
   },
   //首次加载
   onLoad: function() {
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      content: app.getLanuage(app.globalData.language),
+      gatewayName: app.globalData.gatewayName,
+      customerId: app.globalData.customerId
     })
 
     if (app.globalData.userInfo) {
@@ -53,7 +77,8 @@ Page({
 
   onShow: function() {
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      content: app.getLanuage(app.globalData.language),
+      gatewayName: app.globalData.gatewayName
     })
   },
   //获取用户信息
@@ -83,7 +108,8 @@ Page({
     });
   },
 
-  scan: function() {
+  //扫码添加网关
+  onScan: function() {
     wx.scanCode({
       success: function(res) {
         if (res.result != null) {
@@ -136,15 +162,212 @@ Page({
       }
     })
   },
+  /**
+   * 设备入网
+   */
+  refreshGateway: function() {
+    var gatewayName = app.globalData.gatewayName;
+    var param = {
+      customerId: app.globalData.customerId,
+      gateway_user: gatewayName
+    };
+    my.refresh(gatewayName, (res) => {
+      if (res == 'success') {
+        wx.showLoading({
+          title: '请您耐心等待',
+          mask: true
+        })
+        setTimeout(function() {
+          my.addDevice(param, (res) => {
+            wx.hideLoading();
+            if (res.data == 1) {
+              wx.showToast({
+                title: '设备入网成功',
+                duration: 2000,
+              })
+            } else {
+              wx.showToast({
+                title: '设备入网失败，请稍后重试',
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          })
+        }, 60000)
+      } else if (res == 'fail') {
+        wx.showToast({
+          title: '设备入网失败，请稍后重试',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
 
+  /**
+   * 删除网关
+   *  */
   deleteGateway: function() {
+    var _this = this
+    var gatewayList = new Array();
+    var customerId = app.globalData.customerId;
+    var param = {
+      customerid: customerId
+    };
+    my.getSharedGateway(param, (res) => {
+      if (res.status === "success") {
+        var gatewayFirst = res.data;
+        gatewayFirst.forEach(function(e, index) {
+          var gatewayData = e.split(",")
+          if (gatewayData.length != 0) {
+            gatewayData.forEach(function(element) {
+              if (element != "") {
+                my.getDeviceById(element, (res) => {
+                  if (res.id != undefined) {
+                    gatewayList.push(res);
+                  };
+                  _this.setData({
+                    gatewayArray: gatewayList
+                  });
+                })
+              }
+            })
+          };
+          if (gatewayFirst.length - 1 == index) {
+            my.getAllDevices(customerId, (res) => {
+              res.data.forEach(function (element) {
+                if (element.deviceType === "Gateway") {
+                  gatewayList.push(element)
+                }
+              });
+              _this.setData({
+                gatewayArray: gatewayList
+              });
+              if (gatewayList.length == 0) {
+                _this.setData({
+                  showGateway: false,
+                });
+                wx.showToast({
+                  title: '您还没有绑定任何网关',
+                  icon: 'none',
+                  duration: 2000
+                })
+              } else {
+                _this.setData({
+                  showGateway: true,
+                });
+              }
+            })
+          }
+        })
+      }else{
+        my.getAllDevices(customerId, (res) => {
+          res.data.forEach(function (element) {
+            if (element.deviceType === "Gateway") {
+              gatewayList.push(element)
+            }
+          });
+          _this.setData({
+            gatewayArray: gatewayList
+          });
+          if (gatewayList.length == 0) {
+            _this.setData({
+              showGateway: false,
+            });
+            wx.showToast({
+              title: '您还没有绑定任何网关',
+              icon: 'none',
+              duration: 2000
+            })
+          } else {
+            _this.setData({
+              showGateway: true,
+            });
+          }
+        })
+      }
+    })
+  },
+
+  /**
+   * 主动解绑网关
+   */
+  unBindGateway: function(e) {
+    var _this = this;
+    var unbindGateway = e.detail.value.gateway;
+    if (unbindGateway.length == 0) {
+      wx.showToast({
+        title: '您还没有选择网关',
+        icon: 'none'
+      })
+    } else {
+      var gatewayArr = unbindGateway.split(",");
+      var gatewayid = gatewayArr[0];
+      var customerId = Number(gatewayArr[1]);
+      var gatewayname = gatewayArr[2];
+      if (customerId === app.globalData.customerId) {
+        var param = {
+          customerId: app.globalData.customerId,
+          gatewayName: gatewayname
+        }
+        my.deleteGateway(param, (res) => {
+          console.log(res);
+          if (res == 1) {
+            var params = {
+              customerid: app.globalData.customerId,
+              gateid: gatewayid,
+            };
+            my.onUnShareAll(params, (res) => {
+              console.log(res);
+              if (res.status == "success") {
+                wx.showToast({
+                  title: '解绑成功',
+                });
+                var customerId = app.globalData.customerId;
+                _this.deleteGateway(customerId);
+              }
+            });
+          } else {
+            wx.showToast({
+              title: '解绑失败',
+              icon: 'none',
+              duration: 1000
+            });
+          }
+        })
+      } else {
+        var param = {
+          customerid: app.globalData.customerId,
+          gateids: gatewayid
+        };
+        console.log(param);
+        my.onGuestUnShare(param, (res) => {
+          if (res.status == "success") {
+            var customerId = app.globalData.customerId;
+            _this.deleteGateway(customerId);
+          } else {
+            wx.showToast({
+              title: '解绑失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        })
+      }
+    }
+  },
+
+  /**
+   * 分享网关
+   */
+  onShare: function() {
     var _this = this
     var gatewayList = new Array();
     var customerId = app.globalData.customerId
     my.getAllDevices(customerId, (res) => {
-      res.data.forEach(function (element) {
+      res.data.forEach(function(element) {
         if (element.deviceType === "Gateway") {
-          gatewayList.push(element.name)
+          gatewayList.push(element);
         }
       });
       if (gatewayList.length == 0) {
@@ -154,31 +377,166 @@ Page({
           duration: 2000
         })
       } else {
-        wx.showActionSheet({
-          itemList: gatewayList,
-          success(res) {
-            var param = {
-              customerId: app.globalData.customerId,
-              gatewayName: gatewayList[res.tapIndex]
-            }
-            my.deleteGateway(param, (res) => {
-              if (res == 1) {
-                wx.showToast({
-                  title: '操作成功',
-                  duration: 2000
-                })
-              } else {
-                wx.showToast({
-                  title: '操作失败',
-                  icon: 'none',
-                  duration: 2000
-                })
-              }
-            })
-          },
+        this.setData({
+          gatewayList: gatewayList,
+          showEdit: true
         })
       }
     })
+  },
+
+  /**
+   * 分享网关
+   */
+  shareGateway: function(e) {
+    this.hideModal();
+    var gatewayArrs = e.detail.value.gateway;
+    console.log(e.detail);
+    console.log(gatewayArrs);
+    if (gatewayArrs.length == 0) {
+      wx.showToast({
+        title: '请选择网关',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      var gatewayArr = gatewayArrs.join(",");
+      var param = {
+        phone: this.data.phoneNumber,
+        customerid: app.globalData.customerId,
+        gateids: gatewayArr
+      }
+      console.log(param);
+      my.shareGateway(param, (res) => {
+        if (res.status == 'success') {
+          wx.showToast({
+            title: '分享成功',
+          })
+        } else {
+          wx.showToast({
+            title: '分享失败',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      });
+    }
+  },
+
+  onUnShare: function() {
+    var _this = this;
+    var param = {
+      customerid: app.globalData.customerId
+    };
+    var gates = Array();
+    my.getShareGateway(param, (res) => {
+      var shareList = res.data;
+      if (shareList.length == 0) {
+        this.hideModal();
+        wx.showToast({
+          title: '您还没有分享过网关',
+          icon: 'none'
+        })
+      } else {
+        shareList.forEach(function(element) {
+          var gatewayFirst = element.gates;
+          var gatewayData = gatewayFirst.split(",")
+          if (gatewayData.length != 0) {
+            gatewayData.forEach(function(e) {
+              if (e != "") {
+                my.getDeviceById(e, (res) => {
+                  if (res.id != undefined) {
+                    res.phone = element.phone;
+                    gates.push(res);
+                    _this.setData({
+                      sharedDetail: gates
+                    });
+                  }
+                })
+              }
+            })
+          };
+        });
+        console.log(gates);
+        this.setData({
+          showSharedDetail: true,
+        });
+      }
+    })
+  },
+
+  unGatewaySelector: function(event) {
+    var deleteGateway = event.detail.value.gateway;
+    var gatewayDetail = deleteGateway.split(",");
+    var param = {
+      customerid: app.globalData.customerId,
+      gateids: gatewayDetail[0],
+      phone: gatewayDetail[1],
+    };
+    console.log(param);
+    my.onOwnerUnShare(param, (res) => {
+      console.log(res);
+      if (res.status == "success") {
+        this.onUnShare();
+      } else {
+        wx.showToast({
+          title: '解绑失败',
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+  /**
+   * 弹出框蒙层截断touchmove事件
+   */
+  preventTouchMove: function() {},
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function() {
+    this.setData({
+      showEdit: false,
+      showDevice: false,
+      showGateway: false,
+      showSharedDetail: false
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function() {
+    this.hideModal();
+  },
+  /**
+   *输入手机号对话框确认按钮点击事件
+   */
+  onEditConfirm: function() {
+    var phoneNumber = this.data.phoneNumber.trim();
+    if (phoneNumber === "") {
+      wx.showToast({
+        title: '电话号码不能为空',
+        icon: 'none'
+      })
+    } else if (!my.validatePhone(phoneNumber)) {
+      wx.showToast({
+        title: '请输入正确的电话号码',
+        icon: 'none'
+      })
+    } else {
+      this.hideModal();
+      this.setData({
+        showDevice: true
+      })
+    }
+  },
+  cancel: function() {
+    this.hideModal();
+  },
+
+  inputChange: function(event) {
+    var inputValue = event.detail.value;
+    this.data.phoneNumber = inputValue;
   },
 
   changeLanuage: function() {
