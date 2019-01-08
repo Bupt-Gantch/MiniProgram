@@ -1,5 +1,9 @@
 <!--pages/device/device.wxml-->
 <import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 
 <view class='detail-container'>
   <!-- header复用一个，保持不变 -->
@@ -8,14 +12,17 @@
       <view wx:if="{{deviceType == 'IASZone'}}" class='device-image'>
         <image wx:if="{{model == 'BOT'}}" src='{{iASZoneImg[0]}}' mode="aspectFit"></image>
         <image wx:elif="{{model == 'SMF'}}" src='{{iASZoneImg[1]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'DOS'}}" src='{{iASZoneImg[3]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'SOS'}}" src='{{iASZoneImg[4]}}' mode="aspectFit"></image>
         <image wx:else="{{model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit"></image>
       </view>
       <view wx:else class='device-image'>
-        <image  src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
+        <image src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
       </view>
       <view class='title'>名称</view>
-      <view class='name'>{{deviceName}}<image src='/imgs/icon/alert.png' 
-     bindtouchstart='showAlert'></image></view>
+      <view class='name'>{{deviceName}}
+        <image src='/imgs/icon/alert.png' bindtouchstart='showAlert'></image>
+      </view>
     </view>
   </view>
 
@@ -46,9 +53,9 @@
     </view>
     <view wx:if="{{deviceType == 'lock'}}" class='view_footer'>
       <button bindtap='remoteUnlock'>远程开锁</button>
-      <!-- <button bindtap='remoteLock'>远程关锁</button> -->
+      <button bindtap='addLinkage'>添加联动</button>
     </view>
-        <view wx:else class='view_footer'>
+    <view wx:else class='view_footer'>
       <button bindtap='addLinkage'>添加联动</button>
     </view>
   </block>
@@ -86,14 +93,16 @@
       <button wx:if="{{deployment}}" bindtap='deployment'>布防</button>
       <button wx:else bindtap='disarming'>撤防</button>
     </view>
-    
+
     <view class='detailview'>
       <view class='deviceDetail' wx:if="{{showLinkage}}">
         <text>联动信息</text>
         <scroll-view scroll-y="true" class='linkage-view'>
           <block class="deviceDetailView" wx:for="{{linkageDetail}}" wx:key="item">
-            <view class='linkageDetail' bindtap='gotoLinkageDetail' data-id="{{item.rule.ruleId}}">{{item.rule.name}}<image src='/imgs/icon/arrow@grey.png'></image></view>
-            </block>
+            <view class='linkageDetail' bindtap='gotoLinkageDetail' data-id="{{item.rule.ruleId}}">{{item.rule.name}}
+              <image src='/imgs/icon/arrow@grey.png'></image>
+            </view>
+          </block>
         </scroll-view>
       </view>
     </view>
@@ -106,7 +115,10 @@
 </view>
 
 <template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
-  <template is="changePassword" data="{{showPassword,content:content2}}">
-  </template>
-  <template is="changePassword" data="{{showPassword,content:content3}}">
-  </template>
+<template is="changePassword" data="{{showPassword,content:content2}}">
+</template>
+<template is="changePassword" data="{{showPassword,content:content3}}">
+</template>
+
+
+<!-- <button bindtap='getRealData'>查看实时数据</button> -->

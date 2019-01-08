@@ -2,7 +2,7 @@
   overflow: hidden;
   padding: 30rpx 20rpx 0rpx;
   height: 100%;
-  background-color: rgb(217, 220, 223);
+  background-color: #fffef9;
 }
 
 .category-header {
@@ -26,6 +26,15 @@
 
 .category-title text {
   font-size: 30rpx;
+  color: #002366;
+}
+
+.title-alarm{
+  margin: 30rpx 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25rpx;
   color: #002366;
 }
 

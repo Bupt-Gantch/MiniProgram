@@ -9,7 +9,6 @@ var loading = new Loading();
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 const app = getApp()
-
 Page({
   /**
    * 页面的初始数据
@@ -27,6 +26,7 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
+      netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
     })
     // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -51,7 +51,8 @@ Page({
 
   onShow: function() {
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      content: app.getLanuage(app.globalData.language),
+      netStatus: app.globalData.netStatus
     })
   },
 
@@ -59,16 +60,22 @@ Page({
    * 获取用户信息接口后的处理逻辑
    */
   getUserInfo: function(e) {
-    var _this = this
+    var _this = this;
+    _this.setData({
+      netStatus: app.globalData.netStatus
+    });
     // 将获取的用户信息赋值给全局 userInfo 变量
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo;
       wx.login({
         success: function(res) {
+          wx.showLoading({
+            title: '登录中',
+          }),
           //发送请求获取openid
           // console.log(res.code);
           wx.request({
-            url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId', //接口地址
+              url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
             data: {
               JSCODE: res.code,
             },
@@ -77,6 +84,7 @@ Page({
               'content-type': 'application/json' //默认值
             },
             success: function(res) {
+              wx.hideLoading();
               var answer = res.data;
               console.log(answer);
               if (answer == undefined || answer == "" || answer == null) {
@@ -85,30 +93,24 @@ Page({
                   icon: 'none',
                   duration: 2000,
                 })
-              } else {
+              } else { 
                 app.globalData.openid = answer.openid,
                   app.globalData.unionid = answer.unionid,
-                  wx.showLoading({
-                    title: _this.data.content.loading,
-                  })
-                setTimeout(function() {
-                  wx.hideLoading()
                   loading.findOpenid(answer.openid, (res) => {
                     if (res.status === "success") {
                       console.log(res);
-                      app.globalData.customerId = res.data.id
-                      wx.showToast({
-                        title: '登录成功',
-                        duration: 2000,
-                      })
-                      setTimeout(function() {
+                      app.globalData.customerId = res.data.id;
+                      app.globalData.phoneNumber = res.data.phone;
+                      // wx.showToast({
+                      //   title: '登录成功',
+                      //   duration: 2000,
+                      // })
                         wx.reLaunch({
                           url: '../index/index',
                         })
-                      }, 1000)
                     } else {
                       wx.showModal({
-                        title: '登陆失败',
+                        title: '登录失败',
                         content: '未查询到相关用户信息,请先注册',
                         success: function(res) {
                           if (res.confirm) {
@@ -120,10 +122,10 @@ Page({
                       })
                     }
                   })
-                }, 1000)
               }
             },
             fail: function(err) {
+              wx.hideLoading();
               wx.showToast({
                 title: '请求错误',
                 icon: 'none',

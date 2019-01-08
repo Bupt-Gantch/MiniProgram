@@ -51,6 +51,17 @@ Page({
         var key = jsCode.substring(first, second);
         var value = jsCode.substring(second + 9, third);
         var alarmId = jsCode.substring(fourth + 11, fifth);
+        if(key=='operate'){
+          if(value == '===1'){
+            value = '关门';
+          }else if(value == '===2'){
+            value = '开门';
+          }else if(value == '===3'){
+            value = '非法操作';
+          }else if(value == '===5'){
+            value = '非法卡';
+          }
+        };
         rule.getDeviceById(alarmId, (res) => {
           if (res.deviceType == "IASZone") {
             var model = res.model;
@@ -65,6 +76,11 @@ Page({
         condition.value = value;
         conditions.push(condition);
         console.log(conditions);
+        _this.setData({
+          conditions: conditions,
+          name: rulename,
+          rule_type: rule_type
+        });
       });
       transforms.forEach(function(e, index) {
         var operation = {};
@@ -91,10 +107,7 @@ Page({
             });
             if (index == transforms.length - 1) {
               _this.setData({
-                conditions: conditions,
                 operations: operations,
-                name: rulename,
-                rule_type: rule_type
               });
             }
           })

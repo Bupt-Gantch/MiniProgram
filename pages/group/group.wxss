@@ -1,5 +1,6 @@
 /* pages/group/group.wxss */
 @import "../tpls/category/category-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
 
 .group-wrapper{
     width: 100%;

@@ -57,12 +57,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var _this = this;
     var deviceid = options.deviceid;
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
     var customerId = options.customerId;
     var model = options.model;
-    console.log(model);
+    this._loadData(deviceid);
+    if (deviceType === 'Gateway') {
+      this._loadLinkage(deviceid);
+      this._loadAlarmStatus(deviceid);
+    }
     this.setData({
       deviceType: deviceType,
       deviceId: deviceid,
@@ -70,64 +78,43 @@ Page({
       bindedId: customerId,
       model: model
     });
-    this._loadData(deviceid);
-    if (deviceType === 'temperature' || deviceType === 'PM2.5' ||
-      deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
-      this._loadRealtimeData(deviceid, deviceType);
-    }
+  },
+
+  onShow: function() {
+    var _this = this;
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var deviceid = this.data.deviceId;
+    var deviceType = this.data.deviceType;
     if (deviceType === 'Gateway') {
       this._loadLinkage(deviceid);
       this._loadAlarmStatus(deviceid);
-    }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    var _this = this;
-    var deviceType = this.data.deviceType;
-    var deviceId = this.data.deviceId;
-    if (this.data.socketTask) {
-      this.data.socketTask.close();
-    };
-    this._loadData(deviceId);
-    this._loadLinkage(deviceId);
-    if (deviceType === 'temperature' || deviceType === 'PM2.5' ||
+    } else if (deviceType === 'temperature' || deviceType === 'PM2.5' ||
       deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
-      setTimeout(function() {
-        _this._loadRealtimeData(deviceId, deviceType);
-      }, 1000);
+      _this._loadLatestData(deviceid);
+      var cleanId = setInterval(
+        function () {
+          _this._loadLatestData(deviceid);
+        }, 5000)
+      _this.setData({
+        cleanId: cleanId
+      })
     }
-  },
-
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-    console.log("de_sensor hide");
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    console.log("de_sensor unload");
-    /**卸载页面时断开socket连接 */
-    if (this.data.socketTask) {
-      this.data.socketTask.close();
-    }
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
   },
 
   _loadData: function(deviceid) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     device.getDeviceInfo(deviceid, (data) => {
       this.setData({
         deviceInfo: data
@@ -135,30 +122,15 @@ Page({
     });
   },
 
-  _loadRealtimeData: function(deviceid, deviceType) {
+
+  _loadLatestData: function (deviceId){
     var _this = this;
-    var sConCb = function(res) {
-      wx.showToast({
-        title: '连接成功！',
-        duration: 1000,
-        icon: 'success'
-      })
-    };
-    var fConCb = function(err) {
-      wx.showToast({
-        title: '连接失败！',
-        image: '../../imgs/icon/pay@error.png',
-        duration: 1000,
-      })
-      console.log(err);
-    };
-    //以上为callback
-    var socketTask = device.getRealtimeData(deviceid, sConCb, fConCb, (data) => {
-      //收到服务器端发回数据，更新view层数据
-      var sensorData = JSON.parse(data).data;
+    device.getlatestData(deviceId,(res)=>{
+      console.log(res);
+      var sensorData = res;
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
-      sensorData.forEach(function(e) {
+      sensorData.forEach(function (e) {
         if (e.key === 'status') {
           if (e.value === 'true' || e.value === true) {
             _this.setData({
@@ -174,15 +146,17 @@ Page({
           e.ts = util.formatTime(new Date(e.ts));
           e.key = keyName[e.key];
           var test = ''
-          if(_this.data.deviceType == 'IASZone'){
-            test = e.value+'*';
+          if (_this.data.deviceType == 'IASZone') {
+            test = e.value + '*';
+          } else if (_this.data.deviceType == 'lock'&&e.key=='操作'){
+            test = e.value+'**';
           }else{
             test = e.value;
           }
           var question = test.toString();
           var value = question.split("|");
           var answer = '';
-          value.forEach(function(element, index) {
+          value.forEach(function (element, index) {
             if (valueName[element] != undefined) {
               if (index != 1 && index != 0) {
                 answer += ',';
@@ -196,28 +170,31 @@ Page({
         } else {
           e.ts = '';
           e.key = '',
-          e.value = ''
+            e.value = ''
         }
       })
       _this.setData({
         lastRtData: sensorData,
       });
-    });
-    this.setData({
-      socketTask: socketTask
-    });
+    })
+    // lastRtData
   },
-
   /**
    * =================dimmableLight=======================
    * =====================================================
    */
   onSliderChange: function(event) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     let value = event.detail.value.toString();
     let serviceName = this.data.serviceName.controlDimmableLight;
     this._sendControl(serviceName, value, this.data.deviceInfo);
   },
   onSwitchChange: function(event) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     this.setData({
       dimmableLight: !this.data.dimmableLight
     })
@@ -232,6 +209,9 @@ Page({
    */
 
   onCurtainTap: function(event) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     let value = device.getDataSet(event, 'value');
     let serviceName = this.data.serviceName.controlCurtain;
     this._sendControl(serviceName, value, this.data.deviceInfo);
@@ -244,7 +224,6 @@ Page({
   _sendControl: function(serviceName, value, deviceInfo) {
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
-    console.log(value);
     var triad = {
       deviceType: deviceInfo.deviceType,
       manufacture: deviceInfo.manufacture,
@@ -271,7 +250,6 @@ Page({
         value: value
       };
     }
-    console.log(data);
     device.applyControl(data, (res) => {
       if (res.indexOf("device") === -1) { //状态码为200则应用成功
         wx.showToast({
@@ -335,6 +313,9 @@ Page({
    * 场景对话框确认按钮点击事件
    */
   onEditConfirm: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var submitnewName = this.data.newName.trim();
     if (submitnewName === "") {
       wx.showToast({
@@ -397,6 +378,9 @@ Page({
 
   // 添加联动
   addLinkage: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var newAllDevices = Array();
     var parentdeviceId = app.globalData.gatewayId;
@@ -426,6 +410,9 @@ Page({
   },
 
   onAddLinkage: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var controlDevices = [];
     var param = {};
@@ -452,10 +439,13 @@ Page({
       rule_type = 'alarm'
     } else {
       rule_type = 'common'
-    };
+    }; 
     var condition1 = device.changeOperator(answer.condition1);
     var condition2 = device.changeOperator(answer.condition2);
-    var condition3 = device.changeOperator(answer.condition3);
+    var condition3 = answer.condition3;
+    if(deviceType!='lock'){
+      condition3 = device.changeOperator(answer.condition3);
+    }
     var threshold1 = answer.threshold1;
     var threshold2 = answer.threshold2;
     var threshold3 = answer.threshold3;
@@ -505,9 +495,10 @@ Page({
         }
       }
     } else {
-      if (deviceType == 'IASZone'){
+      if (deviceType == 'IASZone') {
         condition3 = '===';
       }
+      console.log(condition3)
       if (name == null || (devices.length == 0 && rule_type == 'common') || condition3 == "") {
         wx.showToast({
           title: '请完善规则内容',
@@ -520,11 +511,15 @@ Page({
           key = "illumination";
         } else if (deviceType == 'PM2.5') {
           key = 'PM2.5';
-        } else if (deviceType == 'IASZone'){
+        } else if (deviceType == 'IASZone') {
           key = 'alarm';
           condition3 = '===';
           threshold3 = '1';
-          }else {
+        } else if (deviceType == 'lock') {
+          key = 'operate';
+          threshold3 = condition3;
+          condition3 = '===';
+        } else {
           key = '';
         }
         var filter = {
@@ -553,22 +548,24 @@ Page({
     }
     param.filters = filters;
     console.log(param);
-    controlDevices.forEach(function(element, index) {
-      device.getDeviceInfo(element.id, (res) => {
-        element.manufacture = res.manufacture;
-        element.model = res.model;
-        element.deviceType = res.deviceType;
-        controlDeviceArr.push(element);
-        wx.showLoading({
-          title: '创建中',
-        })
-        setTimeout(function() {
-          if (index == controlDevices.length - 1) {
-            param.deviceArr = controlDeviceArr;
-            device.addRule(param, (res) => {
-              wx.hideLoading();
-              console.log(res);
-              // if (res == 'OK') {
+    console.log(controlDevices.length);
+    if(controlDevices.length!=0){
+      controlDevices.forEach(function (element, index) {
+        device.getDeviceInfo(element.id, (res) => {
+          element.manufacture = res.manufacture;
+          element.model = res.model;
+          element.deviceType = res.deviceType;
+          controlDeviceArr.push(element);
+          wx.showLoading({
+            title: '创建中',
+          })
+          setTimeout(function () {
+            if (index == controlDevices.length - 1) {
+              param.deviceArr = controlDeviceArr;
+              device.addRule(param, (res) => {
+                wx.hideLoading();
+                console.log(res);
+                // if (res == 'OK') {
                 wx.showToast({
                   title: '添加成功',
                   duration: 1000,
@@ -577,16 +574,40 @@ Page({
                 _this.setData({
                   showDevice: false
                 })
-              // }
-            });
-          }
-        }, 1000);
+                // }
+              });
+            }
+          }, 1000);
+        })
       })
-    })
+    }else{
+      wx.showLoading({
+        title: '创建中',
+      })
+      transforms.push(transform);
+      param.transforms = transforms;
+      device.createRule1(param, (res) => {
+        wx.hideLoading();
+        console.log(res);
+        // if (res == 'OK') {
+        wx.showToast({
+          title: '添加成功',
+          duration: 1000,
+          // mask: true
+        });
+        _this.setData({
+          showDevice: false
+        })
+        // }
+      });
+    }
   },
 
   //查看联动详情
   gotoLinkageDetail: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var ruleId = Number(device.getDataSet(e, 'id'));
     wx.navigateTo({
       url: '../ruleDetail/ruleDetail?ruleId=' + ruleId
@@ -595,18 +616,21 @@ Page({
 
   // 根据gatewayId获取所有用户规则
   _loadLinkage: function(gatewayId) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     device.getRulesByGatewayId(gatewayId, (res) => {
       if (res.length == 0) {
         this.setData({
           showLinkage: false,
-          showButton:false
+          showButton: false
         })
       }
       if (res.length != 0) {
         this.setData({
           linkageDetail: res,
           showLinkage: true,
-          showButton:true
+          showButton: true
         })
       }
     })
@@ -615,6 +639,9 @@ Page({
 
   //查询网关下的规则是否处于报警状态
   _loadAlarmStatus: function(gatewayId) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     device.getAlarmActiveRule(gatewayId, (res) => {
       console.log(res);
       if (!res) {
@@ -630,6 +657,9 @@ Page({
   },
   //布防
   deployment: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var gatewayId = this.data.deviceId;
     console.log(gatewayId);
@@ -641,7 +671,7 @@ Page({
       if (res == '1') {
         device.activateAlarmRule(gatewayId, (res) => {
           console.log(res);
-          if (res == 'ActivateAllRule'){
+          if (res == 'ActivateAllRule') {
             wx.showToast({
               title: '布防成功',
               duration: 2000
@@ -654,7 +684,7 @@ Page({
       } else {
         wx.showToast({
           title: '布防失败，请您先关注"冠川智能"微信公众号来接收报警信息',
-          icon:'none',
+          icon: 'none',
           duration: 2000
         })
       }
@@ -663,9 +693,12 @@ Page({
 
   //撤防
   disarming: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var gatewayId = this.data.deviceId;
     device.suspendAlarmRule(gatewayId, (res) => {
-      if(res == 'SuspendAllRule'){
+      if (res == 'SuspendAllRule') {
         this.setData({
           deployment: true
         })
@@ -674,6 +707,9 @@ Page({
   },
 
   remoteUnlock: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     wx.showModal({
       title: '提醒',
@@ -691,6 +727,9 @@ Page({
   },
 
   remoteLock: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     wx.showModal({
       title: '提醒',
@@ -708,6 +747,9 @@ Page({
   },
 
   onPasswordConfirm: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var password = this.data.password.toString();
     var statusValue = this.data.statusValue;
     var key = [0x46, 0x45, 0x49, 0x42, 0x49, 0x47];
@@ -722,5 +764,5 @@ Page({
     }
     var serviceName = this.data.serviceName.controlLock;
     this._sendControl(serviceName, value, this.data.deviceInfo);
-  }
+  },
 })

@@ -2,16 +2,60 @@
 <import src="../tpls/category/category-tpl.wxml" />
 <import src="../tpls/modal/modal-tpl.wxml" />
 <import src="../tpls/scene/scene-tpl.wxml" />
+
 <view>
-  <image class="save-float" src='/imgs/icon/save.png' bindtap='saveScene'></image>
+  <!-- <image class="save-float" src='/imgs/icon/cancel.png' bindtap='saveScene'></image> -->
 </view>
 
-<view class='container group-wrapper'>
-  <template is="scenecategory" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices}}">
-  </template>
+<view class="category-detail-box">
+  <view class="category-title">
+    <text>{{bannerTitle}}</text>
+  </view>
 
-  <template is="scenedetail" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices}}">
-  </template>
+<form bindsubmit="saveScene" report-submit='true' bindreset="formReset">
+  <scroll-view class="category-main" scroll-y>
+    <view class='category-main-view'>
+      <block wx:for="{{sceneDevices}}" wx:key="{{item.id}}">
+        <view class="tr">
+          <view class='td'>
+            <view wx:if="{{item.nickname!=null}}">
+              {{item.nickname}}
+            </view>
+            <view wx:else>
+              {{item.name}}
+            </view>
+          </view>
+          <view class='td'>
+            <view class="section section_gap">
+              <switch name="switch{{index}}" />
+            </view>
+          </view>
+            <!-- <view wx:if="{{item.deviceType == 'dimmableLight'}}" class='td'>
+            <view class="section section_gap">
+               <slider min="1" max="255" name="light{{index}}" value='1' show-value></slider>
+            </view>
+          </view> -->
+          <view class='td'>
+            <checkbox-group name="deviceId{{index}}">
+              <label>
+                <checkbox value="{{item.id}}" />
+              </label>
+            </checkbox-group>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+   <button formType="submit" class="btn-confirm"> 
+   确定
+    <!-- <image class="save-float" src='/imgs/icon/cancel.png'></image> -->
+    </button>
+  </form>
+  <!-- <template is="scenecategory" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices}}">
+  </template> -->
+
+  <!-- <template is="scenedetail" data="{{switchOnImg,imgUrl,bannerTitle,categoryProducts:sceneDevices}}">
+  </template> -->
 
   <!--长按设置设备属性-->
   <template is="bulb1" data="{{showBulb1}}">

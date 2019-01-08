@@ -27,6 +27,7 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
+        netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language)
     })
     this.setData({
@@ -37,6 +38,7 @@ Page({
 
   onShow: function() {
     this.setData({
+        netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language)
     })
   },
@@ -60,6 +62,9 @@ Page({
    * 预览图片
    */
   previewImage: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var current = e.target.dataset.src;
     wx.previewImage({
       current: current,
@@ -70,6 +75,9 @@ Page({
    * 添加地理位置信息
    */
   addPlace: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var that = this;
     wx.getLocation({
       type: 'wgs84',
@@ -110,6 +118,9 @@ Page({
    * 发布内容
    */
   formSubmit: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this
     var imageArray = []
     var newimagePath = this.data.imageList

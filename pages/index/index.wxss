@@ -10,31 +10,40 @@ page {
 
 .title_view {
   height: 70rpx;
-  display : flex; 
-  flex-flow : row;
+  display: flex;
+  flex-flow: row;
   text-align: center;
   line-height: 40px;
-  color: #356F57;
-  background-color: #A5C0ED;
+  color: #356f57;
+  background-color: #fffef9;
   font-weight: 60rpx;
   position: fixed;
   top: 0;
   z-index: 1;
 }
 
+.otherCity {
+  width: 120rpx;
+}
+
+.otherCity image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
 .city_view {
   width: 200rpx;
   height: 70rpx;
-  color: #356F57;
-  background-color: #A5C0ED;
-  white-space: nowrap
+  color: #356f57;
+  background-color: #f6f5ec;
+  white-space: nowrap;
 }
 
 .weather_view {
   width: 900rpx;
   height: 70rpx;
   white-space: nowrap;
-  overflow: visible; 
+  overflow: visible;
   text-overflow: ellipsis;
 }
 
@@ -162,10 +171,15 @@ swiper image {
   width: 48rpx;
 }
 
-.show {
-  display: block;
-}
-
-.hide {
-  display: none;
+.goods_view {
+  width: 100%;
+  position: absolute;
+  top: 1100rpx;
+  height: 70rpx;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: ellipsis;
+  font-size: 35rpx;
+  color: #ef4136;
+  background-color: #f6f5ec;
 }

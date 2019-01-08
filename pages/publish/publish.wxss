@@ -1,9 +1,11 @@
 /* pages/publish/publish.wxss */
+ @import "../tpls/roll/roll_tpl.wxss";
+ 
 page{
   width: 100%;
   height: 100%;
   font-size: 30rpx;
-  background-color: #E3E3E3
+  background-color: #fffef9
 }
 .container {
   background-color: #a8d3ba;
@@ -32,7 +34,7 @@ swiper image {
 }
 
 .search-content {
-  background: #fff;
+  background: #E3E3E3;
   width: 650rpx;
   display: flex;
   flex-direction: row;
@@ -67,6 +69,18 @@ swiper image {
   text-align: center;
   color:#001f56
 }
+
+.endbox text::before, .endbox text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}
+
 .line{
   height: 3rpx;
   background-color:#001f56;

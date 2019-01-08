@@ -20,6 +20,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language)
     })
   },
@@ -29,6 +30,7 @@ Page({
    */
   onShow: function () {
     this.setData({
+        netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language)
     })
   },
@@ -66,6 +68,7 @@ Page({
 
   register:function(e){
     this.setData({
+      netStatus: app.globalData.netStatus,
       email:e.detail.value.email,
       phone:e.detail.value.phone,
       address: this.data.region[0] + this.data.region[1] + this.data.region[2]
@@ -80,6 +83,7 @@ Page({
     }
     console.log(params);
     register.register(params, (res) => {
+      console.log(res.data);
       wx.showLoading({
         title:'请稍后',
       })
@@ -87,6 +91,7 @@ Page({
         wx.hideLoading()
           if (res.status === "success") {
             app.globalData.customerId = res.data.id
+            app.globalData.phoneNumber = res.data.phone,
             wx.showToast({
               title:'注册成功',
               duration: 3000,

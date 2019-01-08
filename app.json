@@ -4,6 +4,7 @@
     "pages/home/home",
     "pages/search/search",
     "pages/device/device",
+    "pages/messagelist/messagelist",
     "pages/category/category",
     "pages/my/my",
     "pages/contact/contact",
@@ -15,6 +16,7 @@
     "pages/group/group",
     "pages/index/index",
     "pages/ruleDetail/ruleDetail",
+    "pages/weather/weather",
     "pages/sceneselector/sceneselector",
     "pages/second/smarthome/smarthome",
     "pages/second/alert/alert",
@@ -48,16 +50,16 @@
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
       {
-        "pagePath": "pages/category/category",
-        "text": "设备",
-        "iconPath": "imgs/toolbar/device.png",
-        "selectedIconPath": "imgs/toolbar/device@selected.png"
-      },
-      {
         "pagePath": "pages/publish/publish",
         "text": "发布",
         "iconPath": "imgs/toolbar/publish.png",
         "selectedIconPath": "imgs/toolbar/publish@selected.png"
+      },
+      {
+        "pagePath": "pages/messagelist/messagelist",
+        "text": "消息",
+        "iconPath": "imgs/toolbar/messagelist.png",
+        "selectedIconPath": "imgs/toolbar/messagelist@selected.png"
       },
       {
         "pagePath": "pages/my/my",
@@ -69,6 +71,11 @@
     "borderStyle": "#5a9ec8",
     "selectedColor": "#002366",
     "color": "#5a9ec8",
-    "backgroundColor": "#e7eae9"
+    "backgroundColor": "#e7eae9",
+    "permission": {
+      "scope.userLocation": {
+        "desc": "您的位置信息将用于查询天气信息及信息发布"
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@
   <view class="category-detail-box">
 
     <view class="category-title">
-      <text>全部{{bannerTitle}}</text>
+      <text>{{bannerTitle}}</text>
     </view>
 
     <scroll-view class="category-main" scroll-y>

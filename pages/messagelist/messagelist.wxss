@@ -1,0 +1,84 @@
+/* pages/messagelist/messagelist.wxss */
+
+.items-list {
+  display: flex;
+  overflow: hidden;
+  border-bottom: 1rpx solid #dbdbdb;
+  margin: 10rpx;
+  height: max-content;
+  align-items: center;
+}
+.u_content text {
+  display: block;
+}
+
+.p_content {
+  position: absolute;
+  right: 10rpx;
+}
+
+.p_content text {
+  width: 120rpx;
+  height: 120rpx;
+  color: #8a8a8a;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nickname {
+  font-size: 40rpx;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7fbcd2;
+  margin-bottom: 10rpx;
+}
+
+.c_content {
+  font-size: 35rpx;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7fbcd2;
+  width: 400rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.createTime {
+  font-size: 35rpx;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7fbcd2;
+}
+
+.avator image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.p_content image{
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.u_content image {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.endbox {
+  align-content: center;
+  text-align: center;
+  color: #001f56;
+}
+
+.endbox text::before, .endbox text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}

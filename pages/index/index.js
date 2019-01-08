@@ -2,8 +2,9 @@
 import {
   Index
 } from 'index_model.js';
- 
+
 var index = new Index();
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -15,151 +16,161 @@ Page({
       '/imgs/swiper/swiper-02.jpg',
       '/imgs/swiper/swiper-01.jpg'
     ],
+    // goodDetail: [
+    //   { title: '正品霍尼韦尔复合智能移动探测器'},
+    //   {title:'霍尼韦尔光电式烟感探测器'},
+    //   {title:'ZigBee智能家居网关'}
+    // ],
     themeArr: [{
-        url: '/imgs/index/corevalue3.jpg',
+        url: '/imgs/index/corevalue3.png',
       },
       {
-        url: '/imgs/index/corevalue4.jpg',
+        url: '/imgs/index/corevalue4.png',
       },
       {
-        url: '/imgs/index/corevalue1.jpg',
+        url: '/imgs/index/corevalue1.png',
       }
     ],
-    cores: [
-      [{
-          id: 'smartHome',
-          name: '智能家居',
-          disabled: true,
-          image: '/imgs/index/smartHome.jpg',
-          // url: '../second/smarthome/smarthome'
-          url: '../category/category'
-        },
-        {
-          id: 'cloudAlert',
-          name: '云报警',
-          disabled: true,
-          image: '/imgs/index/cloudAlert.jpg',
-          // url: '../second/alert/alert'
-          url: '../category/category'
-        },
-        {
-          id: 'cloudFireControl',
-          name: '云消防',
-          disabled: true,
-          image: '/imgs/index/cloudFireControl.jpg',
-          // url: '../second/firecontrol/firecontrol'
-          url: '../category/category'
-        },
-        {
-          id: 'farm',
-          name: '智慧农场',
-          disabled: true,
-          image: '/imgs/index/farm.png',
-          // url: '../second/farm/farm'
-          url: '../category/category'
-        },
-        {
-          id: 'smartHotel',
-          name: '智慧酒店',
-          disabled: true,
-          image: '/imgs/index/smartHotel.png',
-          // url: '../second/hotel/hotel'
-          url: '../category/category'
-        },
-        {
-          id: 'safeCity',
-          name: '平安城市',
-          disabled: true,
-          image: '/imgs/index/safeCity.png',
-          // url: '../second/s-city/s-city'
-          url: '../category/category'
-        },
-        {
-          id: 'smartCommunity',
-          name: '智慧社区',
-          disabled: true,
-          image: '/imgs/index/smartCommunity.jpg',
-          // url: '../second/community/community'
-          url: '../category/category'
-        },
-        {
-          id: 'smartSchool',
-          name: '智慧校园',
-          disabled: true,
-          image: '/imgs/index/smartSchool.png',
-          // url: '../second/school/school'
-          url: '../category/category'
-        },
-        {
-          id: 'smartOld',
-          name: '智慧养老',
-          disabled: true,
-          image: '/imgs/index/smartOld.png',
-          // url: '../second/old/old'
-          url: '../category/category'
-        },
-        {
-          id: 'smartOffice',
-          name: '智慧办公',
-          disabled: true,
-          image: '/imgs/index/smartOffice.png',
-          // url: '../second/office/office'
-          url: '../category/category'
-        },
-        {
-          id: 'smartCity',
-          name: '智慧城市',
-          disabled: true,
-          image: '/imgs/index/smartCity.png',
-          // url: '../second/city/city'
-          url: '../category/category'
-        },
-        {
-          id: 'bigData',
-          name: '大数据',
-          disabled: true,
-          image: '/imgs/index/bigData.jpg',
-          url: '../home/home'
-        },
-        {
-          id: 'artificialIntelligence',
-          name: '人工智能',
-          disabled: true,
-          image: '/imgs/index/artificialIntelligence.jpg',
-          // url: '../second/ai/ai'
-          url: '../category/category'
-        },
-        {
-          id: 'serviceSupport',
-          name: '服务支持',
-          disabled: true,
-          image: '/imgs/index/team.png',
-          url: '../second/support/support'
-        },
-        {
-          id: 'companyIntroduction',
-          name: '关于冠川',
-          disabled: true,
-          image: '/imgs/index/company.png',
-          url: '../second/company/company'
-        },
-      ],
-    ],
+    // cores: [
+    //   [{
+    //       id: 'smartHome',
+    //       name: '智能家居',
+    //       disabled: true,
+    //       image: '/imgs/index/smartHome.png',
+    //       // url: '../second/smarthome/smarthome'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'bigData',
+    //       name: '大数据',
+    //       disabled: true,
+    //       image: '/imgs/index/bigData.png',
+    //       url: '../home/home'
+    //     },
+    //     {
+    //       id: 'smartHotel',
+    //       name: '智慧酒店',
+    //       disabled: true,
+    //       image: '/imgs/index/smartHotel.png',
+    //       url: '../second/hotel/hotel'
+    //       // url: '../category/category'
+    //     },
+    //     {
+    //       id: 'cloudAlert',
+    //       name: '云报警',
+    //       disabled: true,
+    //       image: '/imgs/index/cloudAlert.png',
+    //       // url: '../second/alert/alert'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'cloudFireControl',
+    //       name: '云消防',
+    //       disabled: true,
+    //       image: '/imgs/index/cloudFireControl.png',
+    //       // url: '../second/firecontrol/firecontrol'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'farm',
+    //       name: '智慧农场',
+    //       disabled: true,
+    //       image: '/imgs/index/farm.png',
+    //       // url: '../second/farm/farm'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'safeCity',
+    //       name: '平安城市',
+    //       disabled: true,
+    //       image: '/imgs/index/safeCity.png',
+    //       // url: '../second/s-city/s-city'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'smartCommunity',
+    //       name: '智慧社区',
+    //       disabled: true,
+    //       image: '/imgs/index/smartCommunity.png',
+    //       // url: '../second/community/community'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'smartSchool',
+    //       name: '智慧校园',
+    //       disabled: true,
+    //       image: '/imgs/index/smartSchool.png',
+    //       // url: '../second/school/school'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'smartOld',
+    //       name: '智慧养老',
+    //       disabled: true,
+    //       image: '/imgs/index/smartOld.png',
+    //       // url: '../second/old/old'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'smartOffice',
+    //       name: '智慧办公',
+    //       disabled: true,
+    //       image: '/imgs/index/smartOffice.png',
+    //       // url: '../second/office/office'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'smartCity',
+    //       name: '智慧城市',
+    //       disabled: true,
+    //       image: '/imgs/index/smartCity.png',
+    //       // url: '../second/city/city'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'artificialIntelligence',
+    //       name: '人工智能',
+    //       disabled: true,
+    //       image: '/imgs/index/artificialIntelligence.png',
+    //       // url: '../second/ai/ai'
+    //       url: '../category/category'
+    //     },
+    //     {
+    //       id: 'serviceSupport',
+    //       name: '服务支持',
+    //       disabled: true,
+    //       image: '/imgs/index/team.png',
+    //       url: '../second/support/support'
+    //     },
+    //     {
+    //       id: 'companyIntroduction',
+    //       name: '关于冠川',
+    //       disabled: true,
+    //       image: '/imgs/index/company.png',
+    //       url: '../second/company/company'
+    //     },
+    //   ],
+    // ],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.getWeather();
+    var content = app.getLanuage(app.globalData.language);
     this.setData({
-        index1: "show",
-        index2: "show",
-        index0: "show",
-        index01: "hide",
-        index02: "hide",
-        index00: "hide",
-      }),
-      this.getWeather();
+      cores: content.cores,
+      netStatus: app.globalData.netStatus
+    })
+  },
+
+  onShow: function() {
+    var content = app.getLanuage(app.globalData.language);
+    this.setData({
+      cores: content.cores,
+      netStatus: app.globalData.netStatus
+    })
   },
 
   getWeather: function() {
@@ -169,13 +180,15 @@ Page({
       type: 'wgs84',
       success: function(res) {
         var locationString = res.longitude + "," + res.latitude;
-        // console.log(locationString);
         var param = {
           location: locationString,
           coord_type: 'wgs84',
           output: 'json',
           ak: 'H8ZPS35wSxtZ3tCur8S4X2KDrvAdy8jA'
-        }
+        };
+        _this.setData({
+          netStatus: app.globalData.netStatus
+        });
         index.getWeather(param, (res) => {
           // console.log(res);
           var weatherData = res.data.results[0];
@@ -209,23 +222,18 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    // this.getWeather()
-  },
-
   weather: function() {
     var _this = this;
     if (_this.data.currentcity === '重新加载') {
       _this.openConfirm();
     }
-    // else{
-    //   wx.navigateTo({
-    //     url: '/pages/weather/weather',
-    //   })
-    // }
+  },
+
+  goToWeather: function() {
+    var currentcity = this.data.currentcity;
+    wx.navigateTo({
+      url: '/pages/weather/weather?currentcity=' + currentcity,
+    })
   },
 
   openConfirm: function() {
@@ -261,57 +269,8 @@ Page({
     var location = Number(index.getDataSet(e, 'index'));
     var cores = this.data.cores[0];
     var url = cores[location].url;
-    if (location == 11 || location == 13 || location == 14) {
-      wx.navigateTo({
-        url: url,
-      })
-    } else {
-      wx.switchTab({
-        url: url,
-      })
-    }
-
+    wx.navigateTo({
+      url: url,
+    })
   }
-
-
-  // show: function(event) {
-  //   var newindex = event.currentTarget.dataset.index
-  //   if (newindex == 0) {
-  //     this.setData({
-  //       index0: "hide",
-  //       index00: "show"
-  //     })
-  //   } else if (newindex == 1) {
-  //     this.setData({
-  //       index1: "hide",
-  //       index01: "show"
-  //     })
-  //   } else if (newindex == 2) {
-  //     this.setData({
-  //       index2: "hide",
-  //       index02: "show"
-  //     })
-  //   }
-  // },
-
-  // hide: function(event) {
-  //   var newindex = event.currentTarget.dataset.index
-  //   if (newindex == 0) {
-  //     this.setData({
-  //       index0: "show",
-  //       index00: "hide"
-  //     })
-  //   } else if (newindex == 1) {
-  //     this.setData({
-  //       index1: "show",
-  //       index01: "hide"
-  //     })
-  //   } else if (newindex == 2) {
-  //     this.setData({
-  //       index2: "show",
-  //       index02: "hide"
-  //     })
-  //   }
-  // },
-
 })

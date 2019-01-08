@@ -1,4 +1,8 @@
 <!--pages/release/release.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 <view>
   <form bindsubmit="formSubmit" bindreset="formReset" name="detail">
     <view class="description">

@@ -18,6 +18,7 @@ class Base {
       if (!params.method) {
         params.method = 'GET';
       }
+      console.log(params);
       wx.request({
         url: url,
         data: params.data,
@@ -27,7 +28,7 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
-          console.log(res.data)
+          // console.log(res)
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
           if (startChar == '2') {
@@ -71,40 +72,33 @@ class Base {
 
   realTimeDevice(params) {
     var url = this.webSocketUrl + params.url;
-    console.log(url);
     var deviceId = params.deviceId;
-    // var gatewayId = params.gatewayId;
     var socketTask = wx.connectSocket({
       url: url,
-      success: function(res) {
-        //params.sConnectCb && params.sConnectCb(res);
+      success: function (res) {
+        params.sConnectCb && params.sConnectCb(res);
         console.log('connect success?');
       },
-      fail: function(err) {
+      fail: function (err) {
         params.fConnectCb && params.fConnectCb(err);
       }
     });
-
-    wx.onSocketOpen(function(res) {
+    wx.onSocketOpen(function (res) {
       console.log('Connected！');
       params.sConnectCb && params.sConnectCb(res);
-      // if (params.flag == 1) {
-      //   sendSocketMessage('{"gatewayId":"' + gatewayId + '"}');
-      // } else {
       sendSocketMessage('{"deviceId":"' + deviceId + '"}');
-      // }
     });
 
-    wx.onSocketClose(function(res) {
+    wx.onSocketClose(function (res) {
       console.log("Disconnected: ");
     });
 
-    wx.onSocketError(function(err) {
+    wx.onSocketError(function (err) {
       console.log("WebSocket连接打开失败，请检查！" + err.message);
       params.fConnectCb && params.fConnectCb(err);
     });
 
-    wx.onSocketMessage(function(data) {
+    wx.onSocketMessage(function (data) {
       console.log("Msg received:");
       params.onMsgCb && params.onMsgCb(data.data);
     });
@@ -126,7 +120,7 @@ class Base {
     var socketTask = wx.connectSocket({
       url: url,
       success: function(res) {
-        //params.sConnectCb && params.sConnectCb(res);
+        params.sConnectCb && params.sConnectCb(res);
         console.log('connect success?');
       },
       fail: function(err) {
@@ -200,6 +194,9 @@ class Base {
   /*获得元素绑定的值*/
   getDataSet(event, key) {
     return event.currentTarget.dataset[key];
+  }
+  getDataSet2(event, key) {
+    return event.target.dataset[key];
   }
 
   getDataSet1(event, key) {

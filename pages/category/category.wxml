@@ -3,6 +3,10 @@
 <import src="../tpls/group/group-tpl.wxml" />
 <import src="../tpls/scene/scene-tpl.wxml" />
 <import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 
 <view class='container category-container'>
   <view class='category-box'>
@@ -38,7 +42,7 @@
       <!--显示所有网关-->
       <block wx:for="{{categoryName}}" wx:key="*this">
         <view class='foods-type-box'>
-          <template is="gateway" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,gatewayImg,imgUrl,iASZoneImg,bannerTitle,gatewayDevice,currentId,statusTable,customerId,statusTableOne}}"></template>
+          <template is="gateway" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,gatewayImg,imgUrl,iASZoneImg,bannerTitle,gatewayName,gatewayDevice,currentId,statusTable,customerId,statusTableOne}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>

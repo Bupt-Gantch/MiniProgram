@@ -14,6 +14,7 @@ class Category extends Base{
         callback && callback(data);
       }
     };
+    console.log(param);
     this.request(param);
   }
 
@@ -379,7 +380,6 @@ class Category extends Base{
   getRealtimeData(gatewayId, sConCb, fConCb, onDataCb) {
     var param = {
       url: "/device",
-      flag:1,
       gatewayId: gatewayId,
       sConnectCb: function (res) {
         sConCb && sConCb(res);

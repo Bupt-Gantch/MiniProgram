@@ -405,7 +405,8 @@ Page({
   onLoad: function(options) {
     var customerId = app.globalData.customerId;
     this.setData({
-      theCustomerId: customerId
+      theCustomerId: customerId,
+      netStatus: app.globalData.netStatus
     });
 
     this._selectComponent();
@@ -413,13 +414,8 @@ Page({
   },
 
   onUnload: function() {
-    console.log("de_sensor unload");
-    /**卸载页面时断开socket连接 */
-    if (this.data.socketTasks.length > 0) {
-      this.data.socketTasks.forEach(function(e) {
-        e.close();
-      })
-    }
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
   },
 
   _selectComponent: function() {
@@ -433,6 +429,9 @@ Page({
 
   //load所有设备并分类
   _loadAllDevices: function(customerId) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     home.getAllDevices(customerId, (res) => {
       let allDevices = res.data;
       this._categoryForDevices(allDevices);
@@ -472,6 +471,7 @@ Page({
   },
 
   _getTempPmDevice: function(categoryDeviceArr) {
+    var _this = this;
     if (categoryDeviceArr.temp_humi.length === 0) {
       wx.showToast({
         title: '您还没有任何温湿度传感器',
@@ -481,7 +481,15 @@ Page({
       gaugeComponent.lineComponent.init(initChart_line)
     } else {
       let firstTempDeviceId = categoryDeviceArr.temp_humi[0].id;
-      this._loadRealtimeData(firstTempDeviceId);
+      _this._loadLatestData(firstTempDeviceId);
+      var cleanId = setInterval(
+        function () {
+          _this._loadLatestData(firstTempDeviceId);
+        }, 5000)
+      this.setData({
+        cleanId: cleanId
+      })
+      
       this._loadHistoryData(firstTempDeviceId, 'temperature');
       this._loadHistoryData(firstTempDeviceId, 'humidity');
     }
@@ -518,6 +526,9 @@ Page({
       // 86400000,
       aggregation: "AVG"
     }
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     home.getHistoryData(param, (res) => {
       _this.data.lineDeviceArr['historyTime'] = [];
       var arrayValue = res;
@@ -556,22 +567,11 @@ Page({
     })
   },
 
-  _loadRealtimeData: function(deviceid) {
-    var _this = this;
-    var sConCb = function(res) {
-      wx.showToast({
-        title: '连接成功！',
-        duration: 1000,
-        icon: 'success'
-      })
-    };
-    var fConCb = function() {};
-    //以上为callback
-    let socketTask = home.getRealtimeData(deviceid, sConCb, fConCb, (data) => {
-      //收到服务器端发回数据，更新view层数据
-      var sensorData = JSON.parse(data).data;
+  _loadLatestData:function(deviceId){
+    home.getlatestData(deviceId,(res)=>{
+      var sensorData = res;
       console.log(sensorData);
-      sensorData.forEach(function(e) {
+      sensorData.forEach(function (e) {
         if (e.key === 'temperature') {
           curTemprature = Number(e.value);
           gaugeComponent.tempComponent.init(initChart_temp);
@@ -580,12 +580,7 @@ Page({
           curHumidity = Number(e.value);
           gaugeComponent.humiComponent.init(initChart_hum);
         }
-        // if (e.key === 'PM2.5') {
-        //   curPm25 = Number(e.value);
-        //   gaugeComponent.pm25Component.init(initChart_pm25);
-        // }
       })
-    });
-    this.data.socketTasks.push(socketTask);
-  },
+    })
+  }
 });

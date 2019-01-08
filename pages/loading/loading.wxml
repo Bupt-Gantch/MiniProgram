@@ -1,10 +1,10 @@
 <!--pages/loading/loading.wxml-->
- <view class="poster-view">
-    <image src="/imgs/swiper/logo.jpg" class="poster-image" mode="scaleToFill"></image>
+<import src="../tpls/roll/roll_tpl.wxml" />
+  <view wx:if="{{!netStatus}}">
+    <template is="netAlert"/>
   </view>
-  <view>{{code}}</view>
-  <view>{{openid}}</view>
 <view class="enter-container">
-  <button class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>{{content.welcome}}</button>
-  <!-- <view class="language" bindtap='changeLanuage'>{{content.button}}</view> -->
+  <button class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>
+    <image src="/imgs/swiper/logo.png" class="poster-image" mode="scaleToFill"></image>
+  </button>
 </view>

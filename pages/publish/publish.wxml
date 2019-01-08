@@ -1,5 +1,9 @@
 <!--pages/publish/publish.wxml-->
-<view>
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view> 
   <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
     <block wx:for="{{imgUrls}}" wx:key="item">
       <swiper-item>
@@ -71,7 +75,6 @@
   </scroll-view>
   <view class="endbox" wx:if="{{end}}">
     <text>End</text>
-    <view class='line'></view>
   </view>
   <view>
     <image class="circle-float" src='/imgs/icon/insert.png' bindtap='addNews'></image>

@@ -1,4 +1,8 @@
 <!--pages/mypublish/mypublish.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
   <view class='items-list' wx:for="{{infolist}}" wx:key="item">
     <view class='info-content'>
@@ -36,5 +40,4 @@
 </scroll-view>
   <view class="endbox" wx:if="{{end}}">
     <text>End</text>
-    <view class='line'></view>
   </view>

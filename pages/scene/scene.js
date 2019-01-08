@@ -40,24 +40,22 @@ Page({
    */
   onLoad: function(options) {
     var sceneName = options.sceneName;
-    var gatewayName = options.gatewayName;
+    var parentdeviceId = app.globalData.gatewayId;
       this.setData({
         bannerTitle: sceneName,
-        gatewayName: gatewayName
+        parentdeviceId: parentdeviceId
       })
-    this._loadCateDevices(gatewayName)
-  },
+      console.log(parentdeviceId);
+    this._loadCateDevices(parentdeviceId)
+  }, 
 
   //load所有场景设备
-  _loadCateDevices: function (gatewayName) {
+  _loadCateDevices: function (parentdeviceId) {
     var _this = this
-    var param = {
-      customerId: app.globalData.customerId,
-      gatewayName: gatewayName,
-    }
-    scene.getAllDevices(param, (data) => {
+    scene.getAllSonDevices(parentdeviceId, (data) => {
+      console.log(data);
       this.setData({
-        categoryAllDevices: data.data
+        categoryAllDevices: data
       });
       /*========获取场景开关设备=============*/
       var currentType = this.data.sceneType[0];
@@ -75,38 +73,38 @@ Page({
     });
   },
 
-  onDeviceLongPress: function(event) {
-    var deviceId = scene.getDataSet(event, 'deviceid');
-    var deviceType = scene.getDataSet(event, 'type');
-    this.setData({
-      deviceId: deviceId
-    })
-    if (deviceType == 'dimmableLight') {
-      this.setData({
-        showBulb1: true
-      })
-    } else if (deviceType == '色温灯') {
-      this.setData({
-        showBulb2: true
-      })
-    } else if (deviceType == '调光灯') {
-      this.setData({
-        showBulb3: true
-      })
-    } else if (deviceType == '门锁') {
-      this.setData({
-        showLock: true
-      })
-    } else if (deviceType == 'switch') {
-      this.setData({
-        showSwitch: true
-      })
-    } else if (deviceType == 'curtain') {
-      this.setData({
-        showCurtain: true
-      })
-    }
-  },
+  // onDeviceLongPress: function(event) {
+  //   var deviceId = scene.getDataSet(event, 'deviceid');
+  //   var deviceType = scene.getDataSet(event, 'type');
+  //   this.setData({
+  //     deviceId: deviceId
+  //   })
+  //   if (deviceType == 'dimmableLight') {
+  //     this.setData({
+  //       showBulb1: true
+  //     })
+  //   } else if (deviceType == '色温灯') {
+  //     this.setData({
+  //       showBulb2: true
+  //     })
+  //   } else if (deviceType == '调光灯') {
+  //     this.setData({
+  //       showBulb3: true
+  //     })
+  //   } else if (deviceType == '门锁') {
+  //     this.setData({
+  //       showLock: true
+  //     })
+  //   } else if (deviceType == 'switch') {
+  //     this.setData({
+  //       showSwitch: true
+  //     })
+  //   } else if (deviceType == 'curtain') {
+  //     this.setData({
+  //       showCurtain: true
+  //     })
+  //   }
+  // },
 
   /**
    * 弹出框蒙层截断touchmove事件
@@ -172,7 +170,37 @@ Page({
     this.hideModal()
   },
   //保存场景
-  saveScene: function() {
+  saveScene: function(e) {
+    console.log(e);
+    var question = e.detail.value;
+    var deviceArr = [];
+    var switchArr = [];
+    // var lightArr = [];
+    for (var key in question) {
+      if (key[0] === 'd')
+        deviceArr.push(question[key]);
+      if(key[0] === 's')
+        switchArr.push(question[key])
+    };
+    deviceArr.forEach(function(element,index){
+      if(element.length!=0){
+        var data1;
+        if (switchArr[index]){
+          data1 = 1
+        }else{
+          data1 = 0
+        }
+        var sceneDevice = {
+          "deviceId": element[0],
+          "data1": data1,
+          "data2": 200,
+          "data3": 0,
+          "data4": 0,
+        }
+        sceneDevicesArray.push(sceneDevice);
+      }
+    })
+    console.log(sceneDevicesArray);
     var _this = this
     if (sceneDevicesArray.length == 0) {
       wx.showToast({
@@ -187,11 +215,6 @@ Page({
         "sceneInfo": sceneDevicesArray,
       }
       sceneDevicesArray = [];
-      wx.showLoading({
-        title: "创建中...",
-      })
-      setTimeout(function() {
-        wx.hideLoading()
         scene.addscene(sceneType, (res) => {
           if (res === "success") {
             wx.showToast({
@@ -199,7 +222,7 @@ Page({
               duration: 2000,
             })
             setTimeout(function() {
-              wx.reLaunch({
+              wx.navigateBack({
                 url: '../category/category',
               })
             }, 1000)
@@ -211,7 +234,6 @@ Page({
             })
           }
         })
-      }, 1000)
     }
   }
 })

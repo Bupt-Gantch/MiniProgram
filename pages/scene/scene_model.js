@@ -17,6 +17,18 @@ class Scene extends Base {
     this.request(params);
   }
 
+
+  //获取所有子设备
+  getAllSonDevices(parentdeviceId, callback) {
+    var param = {
+      url: `deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
   getDeviceById(deviceid, callback) {
     var param = {
       url: 'deviceaccess/device/'+deviceid,

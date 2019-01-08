@@ -17,22 +17,15 @@ class Home extends Base{
   }
 
   
-  /**获取设备实时数据 */
-  getRealtimeData(deviceId, sConCb, fConCb, onDataCb) {
+  //获取设备最新数据
+  getlatestData(deviceId, callback) {
     var param = {
-      url: "",
-      deviceId: deviceId,
-      sConnectCb: function (res) {
-        sConCb && sConCb(res);
-      },
-      fConnectCb: function (err) {
-        fConCb && fConCb(err);
-      },
-      onMsgCb: function (data) {
-        onDataCb: onDataCb(data);
+      url: `deviceaccess/data/alllatestdata/${deviceId}`,
+      sCallback: function (data) {
+        callback && callback(data);
       }
     };
-    return this.realTimeDevice(param);
+    this.request(param)
   }
 
   //获取设备历史数据

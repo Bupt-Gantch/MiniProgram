@@ -52,6 +52,7 @@
   border: 2rpx solid #ddd;
   border-radius: 4rpx;
   font-size: 28rpx;
+  margin-bottom: 30rpx;
 }
 
 .scene-input{
@@ -59,6 +60,8 @@
   background: #fff;
   border: 2rpx solid #ddd;
   border-radius: 4rpx;
+  padding: 10rpx;
+  font-size: 30rpx;
 }
 
 
@@ -74,7 +77,7 @@
 
 input-holder {
   color: #666;
-  font-size: 28rpx;
+  font-size: 40rpx;
 }
 
 .modal-footer {
@@ -111,4 +114,11 @@ input-holder {
 .sectiongap{
   margin-top:10rpx!important;
   margin-bottom: 10rpx; 
+}
+
+.sceneDetail_gap{
+  display: flex;
+  flex-direction: row;
+  height: 86rpx;
+  line-height: 86rpx;
 }

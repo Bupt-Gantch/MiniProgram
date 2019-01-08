@@ -39,6 +39,8 @@
                 <image wx:if="{{item.model == 'BOT'}}" src='{{iASZoneImg[0]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:elif="{{item.model == 'SMF'}}" src='{{iASZoneImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:elif="{{item.model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:elif="{{item.model == 'DOS'}}" src='{{iASZoneImg[3]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:elif="{{item.model == 'SOS'}}" src='{{iASZoneImg[4]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
 
               <block wx:else>
@@ -68,6 +70,9 @@
     <view class="category-title">
       <text>{{bannerTitle}}</text>
     </view>
+    <view class='title-alarm'>
+      长按网关，显示该网关下设备
+    </view>
     <scroll-view class="category-main" scroll-y>
       <view class='category-main-view'>
         <block wx:for="{{gatewayDevice}}" wx:key="{{item.id}}">
@@ -75,8 +80,14 @@
           <view class="category-goods-items {{index%3==1?'middle':''}}" bindlongpress="onGatewayLongPress">
             <view class='image_switch'>
               <block>
-                <image wx:if="{{item.customerId===customerId}}" src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
-                <image wx:else src='{{gatewayImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <view wx:if="{{item.customerId===customerId}}">
+                  <image wx:if="{{item.name!=gatewayName}}" src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                  <image wx:else src='{{gatewayImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                </view>
+                <view wx:else>
+                  <image wx:if="{{item.name!=gatewayName}}" src='{{gatewayImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                  <image wx:else src='{{gatewayImg[3]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                </view>
               </block>
               <view class='switch'>
                 <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />

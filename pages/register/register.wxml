@@ -1,5 +1,9 @@
 <!--pages/register/register.wxml-->
 <wxs src="../../utils/common.wxs" module="util"/>
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 <view class="register">
   <image class="logo" src="/imgs/icon/logo.png"></image>
   <!-- <text>{{content.userreg}}</text> -->

@@ -26,7 +26,8 @@ Page({
     },
     content2: {
       title: '用户信息',
-      placeholder: '被分享者手机号'
+      placeholder1: '用户手机号',
+      placeholder2: '用户备注信息'
     },
     phoneNumber: '',
     content3: {
@@ -41,12 +42,14 @@ Page({
   },
   //首次加载
   onLoad: function() {
+    console.log(app.globalData.gatewayName);
     this.setData({
+      netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       gatewayName: app.globalData.gatewayName,
-      customerId: app.globalData.customerId
+      customerId: app.globalData.customerId,
+      userphoneNumber:app.globalData.phoneNumber,
     })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -77,12 +80,16 @@ Page({
 
   onShow: function() {
     this.setData({
+      netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       gatewayName: app.globalData.gatewayName
     })
   },
   //获取用户信息
   getUserInfo: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -110,6 +117,9 @@ Page({
 
   //扫码添加网关
   onScan: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     wx.scanCode({
       success: function(res) {
         if (res.result != null) {
@@ -125,6 +135,7 @@ Page({
               customerId: app.globalData.customerId,
               gateway_user: gateway_user
             };
+            console.log(param);
             my.addDevice(param, (res) => {
               if (res.data == 1) {
                 wx.showToast({
@@ -166,20 +177,24 @@ Page({
    * 设备入网
    */
   refreshGateway: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var gatewayName = app.globalData.gatewayName;
     var param = {
-      customerId: app.globalData.customerId,
+      customerId: app.globalData.gatewayCustomerId,
       gateway_user: gatewayName
     };
     my.refresh(gatewayName, (res) => {
       if (res == 'success') {
-        wx.showLoading({
-          title: '请您耐心等待',
-          mask: true
+        wx.showToast({
+          title:'设备入网中',
+          icon:'none',
+          duration: 2000,
         })
         setTimeout(function() {
           my.addDevice(param, (res) => {
-            wx.hideLoading();
+            console.log(res);
             if (res.data == 1) {
               wx.showToast({
                 title: '设备入网成功',
@@ -194,7 +209,7 @@ Page({
             }
           })
         }, 60000)
-      } else if (res == 'fail') {
+      } else{
         wx.showToast({
           title: '设备入网失败，请稍后重试',
           icon: 'none',
@@ -208,6 +223,9 @@ Page({
    * 删除网关
    *  */
   deleteGateway: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this
     var gatewayList = new Array();
     var customerId = app.globalData.customerId;
@@ -235,7 +253,7 @@ Page({
           };
           if (gatewayFirst.length - 1 == index) {
             my.getAllDevices(customerId, (res) => {
-              res.data.forEach(function (element) {
+              res.data.forEach(function(element) {
                 if (element.deviceType === "Gateway") {
                   gatewayList.push(element)
                 }
@@ -260,9 +278,9 @@ Page({
             })
           }
         })
-      }else{
+      } else {
         my.getAllDevices(customerId, (res) => {
-          res.data.forEach(function (element) {
+          res.data.forEach(function(element) {
             if (element.deviceType === "Gateway") {
               gatewayList.push(element)
             }
@@ -293,6 +311,9 @@ Page({
    * 主动解绑网关
    */
   unBindGateway: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var unbindGateway = e.detail.value.gateway;
     if (unbindGateway.length == 0) {
@@ -361,6 +382,9 @@ Page({
    * 分享网关
    */
   onShare: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this
     var gatewayList = new Array();
     var customerId = app.globalData.customerId
@@ -379,7 +403,7 @@ Page({
       } else {
         this.setData({
           gatewayList: gatewayList,
-          showEdit: true
+          showDevice: true
         })
       }
     })
@@ -389,7 +413,9 @@ Page({
    * 分享网关
    */
   shareGateway: function(e) {
-    this.hideModal();
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var gatewayArrs = e.detail.value.gateway;
     console.log(e.detail);
     console.log(gatewayArrs);
@@ -400,30 +426,19 @@ Page({
         duration: 1000
       })
     } else {
+      this.hideModal();
       var gatewayArr = gatewayArrs.join(",");
-      var param = {
-        phone: this.data.phoneNumber,
-        customerid: app.globalData.customerId,
-        gateids: gatewayArr
-      }
-      console.log(param);
-      my.shareGateway(param, (res) => {
-        if (res.status == 'success') {
-          wx.showToast({
-            title: '分享成功',
-          })
-        } else {
-          wx.showToast({
-            title: '分享失败',
-            icon: 'none',
-            duration: 1000
-          })
-        }
-      });
+      this.setData({
+        gateids: gatewayArr,
+        showEdit: true
+      })
     }
   },
 
   onUnShare: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var param = {
       customerid: app.globalData.customerId
@@ -447,6 +462,7 @@ Page({
                 my.getDeviceById(e, (res) => {
                   if (res.id != undefined) {
                     res.phone = element.phone;
+                    res.remark = element.remark;
                     gates.push(res);
                     _this.setData({
                       sharedDetail: gates
@@ -466,6 +482,9 @@ Page({
   },
 
   unGatewaySelector: function(event) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var deleteGateway = event.detail.value.gateway;
     var gatewayDetail = deleteGateway.split(",");
     var param = {
@@ -509,10 +528,14 @@ Page({
     this.hideModal();
   },
   /**
-   *输入手机号对话框确认按钮点击事件
+   *输入手机号、备注信息对话框确认按钮点击事件
    */
   onEditConfirm: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var phoneNumber = this.data.phoneNumber.trim();
+    var information = this.data.information;
     if (phoneNumber === "") {
       wx.showToast({
         title: '电话号码不能为空',
@@ -524,10 +547,28 @@ Page({
         icon: 'none'
       })
     } else {
-      this.hideModal();
-      this.setData({
-        showDevice: true
-      })
+      var param = {
+        phone: this.data.phoneNumber,
+        remark: information,
+        customerid: app.globalData.customerId,
+        gateids: this.data.gateids
+      }
+      console.log(param);
+      my.shareGateway(param, (res) => {
+        console.log(res);
+        if (res.status == 'success') {
+          this.hideModal();
+          wx.showToast({
+            title: '分享成功',
+          })
+        } else {
+          wx.showToast({
+            title: res.resultMsg,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      });
     }
   },
   cancel: function() {
@@ -537,6 +578,10 @@ Page({
   inputChange: function(event) {
     var inputValue = event.detail.value;
     this.data.phoneNumber = inputValue;
+  },
+  informationChange: function(event) {
+    var inputValue = event.detail.value;
+    this.data.information = inputValue;
   },
 
   changeLanuage: function() {

@@ -1,10 +1,15 @@
 <import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
 <view class="my-container">
   <view class="my-header">
     <view class="userinfo">
       <block>
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <text>{{userphoneNumber}}</text>
       </block>
     </view>
   </view>
@@ -31,9 +36,9 @@
     <view class="my-item" bindtap='onContactTap'>
       <text>{{content.feedback}}</text>
     </view>
-    <!-- <view class="language" bindtap='changeLanuage'>{{content.button}}</view> -->
+    <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
   </view>
-  <template is="changeName" data="{{showEdit,content:content2}}">
+  <template is="shareInformation" data="{{showEdit,content:content2}}">
   </template>
   <template is="devices" data="{{showDevice,content:content1,devices:gatewayList,customerId}}">
   </template>

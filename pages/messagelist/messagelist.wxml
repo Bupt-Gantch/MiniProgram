@@ -1,0 +1,23 @@
+<!--pages/messagelist/messagelist.wxml-->
+<scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
+  <view class='items-list' wx:for="{{tips}}" wx:key="item" bindtap='getDetail' data-pid="{{item.p_id}}">
+
+    <view class='avator'>
+      <image src='{{item.avator}}'></image>
+    </view>
+    <view class='u_content'>
+      <text class='nickname'>{{item.nickname}}</text>
+      <text wx:if="{{item.c_content}}" class='c_content'>{{item.c_content}}</text>
+      <image wx:else src='/imgs/icon/up@success.png'></image>
+      <text class='createTime'>{{item.createTime}}</text>
+    </view>
+    <view class='p_content'>
+      <image wx:if="{{item.image!=null}}" src="{{item.image}}"></image>
+      <text wx:else>{{item.p_content}}</text>
+    </view>
+
+  </view>
+</scroll-view>
+<view class="endbox">
+  <text>End</text>
+</view>

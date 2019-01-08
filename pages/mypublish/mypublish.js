@@ -31,6 +31,7 @@ Page({
     }
     this._loadInfoList(data)
     this.setData({
+        netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       end: false
     })
@@ -46,6 +47,9 @@ Page({
    * 获取信息列表/按页显示
    */
   _loadInfoList: function(data) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this;
     var newinfoList = new Array();
     mypublish.getMyPublish(data, (res) => {
@@ -86,6 +90,9 @@ Page({
   },
   //删除信息
   delete: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var that = this
     var params = {
       pId: e.currentTarget.dataset.infoid,

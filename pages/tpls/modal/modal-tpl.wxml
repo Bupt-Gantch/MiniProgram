@@ -202,6 +202,26 @@
 </template>
 
 <!--修改设备名弹窗-->
+<template name="shareInformation">
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showEdit}}"></view>
+  <view class="modal-dialog" wx:if="{{showEdit}}">
+    <view class="modal-title">{{content.title}}</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <input placeholder-class="input-holder" type="text" maxlength="20" focus="true" bindinput="inputChange" class="input" placeholder="{{content.placeholder1}}"></input>
+      </view>
+      <view class="modal-input">
+        <input placeholder-class="input-holder" type="text" maxlength="20" bindinput="informationChange" class="input" placeholder="{{content.placeholder2}}"></input>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onEditConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+</template>
+
+<!--修改设备名弹窗-->
 <template name="changePassword">
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showPassword}}"></view>
   <view class="modal-dialog" wx:if="{{showPassword}}">
@@ -229,7 +249,7 @@
           <view wx:if="{{item.nickname}}" class='sceneDeviceName'>{{item.nickname}}</view>
           <view wx:else class='sceneDeviceName'>{{item.name}}</view>
           <view wx:if="{{item.deviceType=='dimmableLight'}}">
-            <view class="section section_gap">
+            <view class="section sceneDetail_gap">
               <view class="section__title">开关</view>
               <block wx:if="{{item.data1 == 1}}">
                 <switch disabled="true" checked='true' />
@@ -238,17 +258,17 @@
                 <switch disabled="true" />
               </block>
             </view>
-            <view class="section section_gap">
+            <view class="section sceneDetail_gap">
               <view class="section__title">亮度</view>
               <slider disabled="true" min="1" max="255" value='{{item.data2}}' show-value></slider>
             </view>
-            <view class="section section_gap">
+            <view class="section sceneDetail_gap">
               <view class="section__title">色温</view>
               <slider disabled="true" min="1" max="255" value='{{item.data3}}' show-value></slider>
             </view>
           </view>
           <view wx:if="{{item.deviceType=='switch'}}">
-            <view class="section section_gap">
+            <view class="section sceneDetail_gap">
               <view class="section__title">开关</view>
               <block wx:if="{{item.data1 == 1}}">
                 <switch disabled="true" checked='true' />
@@ -259,7 +279,7 @@
             </view>
           </view>
           <view wx:if="{{item.deviceType=='curtain'}}">
-            <view class="section section_gap">
+            <view class="section sceneDetail_gap">
               <view class="section__title">开关</view>
               <block wx:if="{{item.data1 == 1}}">
                 <switch disabled="true" checked='true' />
@@ -407,9 +427,9 @@
             <scroll-view scroll-y="true" scroll-with-animation="true" class='scroll-view'>
               <view wx:for="{{sharedDetail}}" wx:key="item" class="sectiongap">
                 <label wx:if="{{item.nickname!=null}}">
-                  <radio value="{{item.id}},{{item.phone}}" />网关名:{{item.nickname}}/手机号:{{item.phone}}</label>
+                  <radio value="{{item.id}},{{item.phone}}" />{{item.nickname}}/{{item.remark}}:{{item.phone}}</label>
                 <label wx:else>
-                  <radio value="{{item.id}},{{item.phone}}" />网关名:{{item.name}}/手机号:{{item.phone}}</label>
+                  <radio value="{{item.id}},{{item.phone}}" />{{item.name}}/{{item.remark}}:{{item.phone}}</label>
               </view>
             </scroll-view>
           </radio-group>
@@ -460,25 +480,40 @@
               <slider min="0" max="100" name="threshold2" value='0' show-value></slider>
             </view>
             <view wx:else>
+              <!-- <view wx:if="{{deviceType=='lock'}}">开锁</view> -->
               <view wx:if="{{deviceType=='lightSensor'}}">光照度</view>
               <view wx:elif="{{deviceType=='PM2.5'}}">PM2.5</view>
               <view wx:elif="{{deviceType=='IASZone'}}">
-              <view wx:if="{{model == 'BOT'}}">红外</view>
+                <view wx:if="{{model == 'BOT'}}">红外</view>
                 <view wx:elif="{{model == 'SMF'}}">烟雾</view>
                 <view wx:elif="{{model == 'WTS'}}">水浸</view>
+                <view wx:elif="{{model == 'SOS'}}">紧急按钮</view>
+                <view wx:elif="{{model == 'DOS'}}">门磁</view>
               </view>
               <!-- <view class="section__title">普通选择器</view> -->
               <view wx:if="{{deviceType=='IASZone'}}">
               </view>
+              <view wx:elif="{{deviceType=='lock'}}">
+                <radio-group name="condition3">
+                  <label>
+                    <radio value="1" />关门</label>
+                  <label>
+                    <radio value="2" />开门</label>
+                  <label>
+                    <radio value="3" />非法操作</label>
+                  <label>
+                    <radio value="5" />非法卡</label>
+                </radio-group>
+              </view>
               <view wx:else>
-              <radio-group name="condition3">
-                <label>
-                  <radio value="大于" />大于</label>
-                <label>
-                  <radio value="等于" />等于</label>
-                <label>
-                  <radio value="小于" />小于</label>
-              </radio-group>
+                <radio-group name="condition3">
+                  <label>
+                    <radio value="大于" />大于</label>
+                  <label>
+                    <radio value="等于" />等于</label>
+                  <label>
+                    <radio value="小于" />小于</label>
+                </radio-group>
               </view>
               <slider wx:if="{{deviceType=='lightSensor'}}" min="1" max="500" name="threshold3" value='1' show-value></slider>
               <slider wx:elif="{{deviceType=='PM2.5'}}" min="0" max="250" name="threshold3" value='0' show-value></slider>
@@ -494,9 +529,9 @@
             <checkbox-group name="linkage">
               <view wx:for="{{devices}}" wx:key="item" class="sectiongap">
                 <label wx:if="{{item.nickname!=null}}">
-                  <checkbox value="{{item.id}},{{index}}"/>{{item.nickname}}</label>
+                  <checkbox value="{{item.id}},{{index}}" />{{item.nickname}}</label>
                 <label wx:else>
-                  <checkbox value="{{item.id}},{{index}}"/>{{item.name}}</label>
+                  <checkbox value="{{item.id}},{{index}}" />{{item.name}}</label>
                 <label>
                   <switch name="*witch{{index}}" />
                 </label>

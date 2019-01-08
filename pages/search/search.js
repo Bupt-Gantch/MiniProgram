@@ -58,6 +58,7 @@ Page({
     var _this = this
     var newinfoList = new Array();
     search.getSearch(data, (res) => {
+      console.log(res.data);
       _this.setData({
         infoList: res.data
       });
@@ -106,7 +107,7 @@ Page({
     // var pictures = e.currentTarget.dataset.pictures.pictures;
     wx.previewImage({
       current: src,
-      urls: pictures,
+      urls: src,
     })
   },
 

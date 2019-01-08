@@ -15,8 +15,8 @@ Config.switchOnUrl = ['../../imgs/test/switch@on.png', '../../imgs/test/socket@o
 Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curtain-closed.png']; //开关和插座亮时的图片
 Config.dimmableLightOnUrl = ['../../imgs/test/bump2.png', '../../imgs/test/bump2@on.png'], //开关和插座亮时的图片
   Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curtain-closed.png'], //开关和插座亮时的图片
-  Config.gatewayUrl = ['../../imgs/test/default.png', '../../imgs/test/gateway.png'],
-  Config.iASZoneUrl = ['../../imgs/test/infrared.png', '../../imgs/test/smoke.png','../../imgs/test/flooding.png'],
+  Config.gatewayUrl = ['../../imgs/test/default.png', '../../imgs/test/gateway.png', '../../imgs/test/nowgateway.png', '../../imgs/test/nowgateway1.png'],
+  Config.iASZoneUrl = ['../../imgs/test/infrared.png', '../../imgs/test/smoke.png', '../../imgs/test/flooding.png', '../../imgs/test/dos.png', '../../imgs/test/sos.png'],
   Config.categoryImgUrl = '../../imgs/category/',
   Config.findAllPosts = 'findAllPosts',
   Config.findAllPostsByOpenId = 'findAllPostsByOpenId',
@@ -100,10 +100,10 @@ Config.valueName = {
   '0.0*': '正常',
   '1*': '异常',
   '0*': '正常',
-  '1': '关门',
-  '2': '开门',
-  '3': '非法操作报警',
-  '5': '非法卡',
+  '1**': '关门',
+  '2**': '开门',
+  '3**': '非法操作报警',
+  '5**': '非法卡',
   'Duress alarm': '胁迫报警',
   'Double verification mode': '双人验证模式',
   'Verify the administrator to enter the menu': '验证管理员进入菜单',

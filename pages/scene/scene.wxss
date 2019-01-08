@@ -3,7 +3,7 @@
 @import "../tpls/modal/modal-tpl.wxss";
 @import "../tpls/roll/roll_tpl.wxss";
 page{
-  background-color: #E3E3E3
+  background-color: #fffef9
 }
 
 .group-wrapper{
@@ -28,4 +28,18 @@ page{
   right: 30rpx;
   width: 100rpx;
   height: 100rpx;
+}
+
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+}
+.td {
+    width:25%;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10rpx;
 }

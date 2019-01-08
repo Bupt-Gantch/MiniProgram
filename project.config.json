@@ -1,14 +1,14 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.4",
+	"libVersion": "2.4.0",
 	"appid": "wx9e12afc5dec75b6f",
 	"projectname": "postgantch",
 	"isGameTourist": false,
@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 17,
+			"current": 19,
 			"list": [
 				{
 					"id": -1,
@@ -139,6 +139,17 @@
 					"name": "sceneselector",
 					"pathName": "pages/sceneselector/sceneselector",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "hotel",
+					"pathName": "pages/second/hotel/hotel",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "company",
+					"pathName": "pages/second/company/company"
 				}
 			]
 		}

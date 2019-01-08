@@ -1,5 +1,6 @@
 @import "../tpls/category/category-tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
 
 .category-container{
     /*min-height: 100vh;*/
@@ -13,7 +14,7 @@
 .left-box{
     flex: 0 1 150rpx;
     border-right:1rpx solid #5a9ec8;
-    background-color: #E3E3E3;
+    background-color: #fffef9;
     height: 100%;
 }
 .group-btn{
@@ -120,6 +121,8 @@
   width: 100%;
   height: 80%;
   text-align: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .picker-indicator{
   height: 50px;

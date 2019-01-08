@@ -36,6 +36,7 @@ Page({
      */
     page = 0;
     this.setData({
+      netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       end: false
     })
@@ -44,6 +45,7 @@ Page({
 
   onShow: function() {
       this.setData({
+        netStatus: app.globalData.netStatus,
         content: app.getLanuage(app.globalData.language),
       })
   },
@@ -52,9 +54,13 @@ Page({
    * 获取信息列表/按页显示
    */
   _loadInfoList: function(page) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var _this = this
     var newinfoList = new Array();
     publish.getInfoList(page, (res) => {
+      console.log(res.data);
       _this.setData({
         infoList: res.data
       });
@@ -113,6 +119,9 @@ Page({
    * 点击图片查看
    */
   imageClick: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var src = e.currentTarget.dataset.src;
     var pictures = e.currentTarget.dataset.pictures.image;
     console.log(pictures)
@@ -125,6 +134,9 @@ Page({
    * 评论
    */
   clickComment: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var infoid = e.currentTarget.dataset.infoid;
     var index = e.currentTarget.dataset.index;
     this.setData({
@@ -145,14 +157,21 @@ Page({
    * 点赞
    */
   clickUp: function(e){
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var infoid = e.currentTarget.dataset.infoid;
     if (this.data.statusTable[infoid] === undefined || this.data.statusTable[infoid] === false) {
       this.data.statusTable[infoid] = true;
       var addUp = {
         pId: infoid,
-        num:1
+        num:1,
+        nickName: app.globalData.userInfo.nickName,
+        avator: app.globalData.userInfo.avatarUrl,
       };
+      console.log(addUp);
       publish.addUp(addUp, (res) => {
+        console.log(res);
         if(res===1){
         var index = e.currentTarget.dataset.index;
         this.data.infolist[index].favoritenum++;
@@ -173,7 +192,10 @@ Page({
       var deleteUp = {
         pId: infoid,
         num:-1,
+        nickName: app.globalData.userInfo.nickName,
+        avator: app.globalData.userInfo.avatarUrl,
       }
+      console.log(deleteUp);
       publish.addUp(deleteUp, (res) => {
         if (res===1) {
           var index = e.currentTarget.dataset.index;
@@ -200,6 +222,9 @@ Page({
    * 发表评论
    */
   add: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var infoid = this.data.infoid;
     this.data.commentTable[infoid] = false;
     var newcommentTable = this.data.commentTable;
@@ -208,10 +233,14 @@ Page({
     })
     var comment = {
       nickName: app.globalData.userInfo.nickName,
+      avator: app.globalData.userInfo.avatarUrl,
+      openid:app.globalData.openid,
       cContent: e.detail.value,
       pId: infoid,
     }
+    console.log(comment);
     publish.addComment(comment, (res) => {
+      console.log(res);
       var index = this.data.index
       var ans = {
         nickName: comment.nickName,
@@ -234,6 +263,9 @@ Page({
   },
 
   onPullDownRefresh: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     info = [];
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
@@ -251,6 +283,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     if(!this.data.end){
       page = page + 1;
       // 显示加载图标

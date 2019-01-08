@@ -1,4 +1,8 @@
 <!--index.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+  <view wx:if="{{!netStatus}}">
+    <template is="netAlert"/>
+  </view>
 <view class='container'>
 
   <!-- 仪表盘容器 -->
