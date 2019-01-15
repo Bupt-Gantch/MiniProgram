@@ -1,0 +1,3 @@
+/* pages/second/ai/ai.wxss */
+@import "../../tpls/base.wxss";
+@import "../../tpls/staticSecondPage/staticSecondPage.wxss";
