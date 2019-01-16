@@ -1,20 +1,28 @@
 <!--pages/second/hotel/hotel.wxml-->
-<wxs src="../../../utils/common.wxs" module="util"/>
-<import src="../../tpls/roll/roll_tpl.wxml" />
-<view wx:if="{{!netStatus}}">
-  <template is="netAlert" />
-</view>
- <view class="poster-view">
-    <image src="/imgs/swiper/hotel.jpg" class="poster-image" mode="scaleToFill"></image>
-  </view> 
-<view class="loginHotel">
-  <form bindsubmit="loginHotel">
-  <view class="usercontainer">
-    <input bindinput="getHomeNumber" type="number" class="user" type="text" name="homenumber" placeholder="请输入您的入住号"/>
-  </view>
-  <view class="usercontainer">
-    <input class="user" bindinput="getPhone" type="number" name="phone" placeholder="请输入您的手机号"/>
-  </view>
-  <button class="btn" form-type='submit' key='value' disabled="{{util.validatePhone(phone)?false:true}}">进入智慧酒店</button>
-    </form>
+<view class="main">
+    <view class="categroy-left">
+        <view wx:for="{{category}}" wx:key="index" data-id="{{item.id}}" data-index="{{index}}"
+            bindtap="switchTab"
+            class="cate-list {{curIndex === index?'on':''}}">{{item.name}}</view>
+    </view>
+
+    <scroll-view class="categroy-right" scroll-y="{{isScroll}}" scroll-into-view="{{toView}}" scroll-with-animation="true">
+         <block wx:for="{{detail}}" wx:for-index wx:key="idx">
+            <view id="{{item.id}}" class="cate-box">
+                <view class="cate-banner">
+                    <image src="{{item.banner}}"></image>
+                </view>
+                <view class="cate-title">
+                    <text>{{item.cate}}</text>
+                </view>
+                <view class="product">
+                    <view class="product-list" wx:for="{{item.detail}}" wx:key="index" wx:for-item="val">
+                            <image src="{{val.thumb}}"></image>
+                            <text class='product-list-item'>{{val.name}}</text>
+                    </view>
+                </view>
+            </view>
+        </block> 
+    </scroll-view>
+
 </view>
