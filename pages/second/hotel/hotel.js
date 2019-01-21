@@ -1,66 +1,132 @@
 // pages/second/hotel/hotel.js
-const app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
- 
+    category: [
+      { name: '酒店业务', id: 'service' },
+      { name: '门禁', id: 'door-lock' },
+      { name: '照明灯', id: 'lamp' },
+      { name: '中央空调', id: 'cac' },
+      { name: '窗帘', id: 'curtain' },
+      { name: '插座', id: 'soc' },
+      { name: 'Wifi', id: 'wifi' },
+      { name: '其他', id: 'others' },
+    ],
+    detail: [
+      {
+        "id": "service",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "酒店业务",
+        "detail": [{
+          "thumb": "/imgs/static/phone.jpg",
+          "name": "前台咨询"
+        },
+          {
+            "thumb": "/imgs/static/dining.jpg",
+            "name": "叫餐"
+          }]
+      },
+      {
+        "id": "door-lock",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "门禁",
+        "detail": [{
+          "thumb": "/imgs/test/smartLock.png",
+          "name": "一键开门"
+        }]
+      },
+      {
+        "id": "lamp",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "照明灯",
+        "detail": [{
+          "thumb": "/imgs/test/switch@off.png",
+          "name": "主灯"
+        },
+          {
+            "thumb": "/imgs/test/switch@off.png",
+            "name": "台灯"
+          },
+          {
+            "thumb": "/imgs/test/switch@off.png",
+            "name": "卫生间灯"
+          }]
+      },
+      {
+        "id": "cac",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "中央空调",
+        "detail": [{
+          "thumb": "/imgs/static/tem.jpg",
+          "name": "温度"
+        },
+          {
+            "thumb": "/imgs/static/wet.jpg",
+            "name": "湿度"
+          },
+          {
+            "thumb": "/imgs/static/wind.jpg",
+            "name": "风速"
+          },
+          ]
+      },
+      {
+        "id": "curtain",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "窗帘",
+        "detail": [{
+          "thumb": "/imgs/test/curtain.png",
+          "name": "主窗帘"
+        }]
+      },
+      {
+        "id": "soc",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "插座",
+        "detail": [{
+          "thumb": "/imgs/test/socket@off.png",
+          "name": "插座A"
+        }]
+      },
+      {
+        "id": "wifi",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "Wifi",
+        "detail": [{
+          "thumb": "/imgs/static/wifi.jpg",
+          "name": "一键接入"
+        }]
+      },
+      {
+        "id": "others",
+        "banner": "/imgs/swiper/swiper-03.jpg",
+        "cate": "其他",
+        "detail": [{
+        }]
+      },
+    ],
+    curIndex: 0,
+    isScroll: false,
+    toView: 'service'
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  onReady() {
+  },
+  switchTab(e) {
+    const self = this;
     this.setData({
-      netStatus: app.globalData.netStatus
-    });
-  },
-
-  //获取入住号
-  getHomeNumber:function(e){
-    let that = this
-    let homeNumber = e.detail.value // 获取输入框的数据
-    that.setData({
-      homeNumber:homeNumber
-    });
-  },
-
-  //获取手机号
-  getPhone: function (e) {
-    let that = this
-    let phone = e.detail.value // 获取输入框的数据
-    that.setData({
-      phone: phone
-    });
-  },
-
-  loginHotel:function(){
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var phone = this.data.phone;
-    var homeNumber = this.data.homeNumber;
-    if(phone == undefined){
-      wx.showToast({
-        title: '请输入您的入住号',
-        icon:'none',
-        duration:2500,
+      isScroll: true
+    })
+    setTimeout(function () {
+      self.setData({
+        toView: e.target.dataset.id,
+        curIndex: e.target.dataset.index
       })
-    }else{
-      wx.showToast({
-        title: '请核实您的手机号和入住号',
-        icon: 'none',
-        duration: 2500,
+    }, 0)
+    setTimeout(function () {
+      self.setData({
+        isScroll: false
       })
-    }
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+    }, 1)
 
   }
+
 })
