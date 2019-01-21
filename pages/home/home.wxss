@@ -1,5 +1,5 @@
 /* pages/gauge/gauge.wxss */
-
+ @import "../tpls/roll/roll_tpl.wxss";
 /* echarts图表的container要用绝对定位，因为ec-canvas标签内没有内容，不能撑开container，所以显示不出来*/
 /* 用绝对定位让container显示出来才行*/
 /* 第一个container从2%位置开始，占20%高度*/
@@ -30,17 +30,17 @@
   
 } 
 #temperature{
-  width: 33%;
+  width: 50%;
   height: 100%;
 }
 #humidity{
-  width: 33%;
+  width: 50%;
   height: 100%;
 }
-#pm25{
+/* #pm25{
   width: 33%;
   height: 100%;
-}
+} */
 
 /* 饼图容器从25%高度开始，占35*/
 .count_container{

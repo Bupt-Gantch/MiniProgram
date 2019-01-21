@@ -1,35 +1,51 @@
 {
   "pages": [
-    "pages/home/home",
     "pages/loading/loading",
+    "pages/home/home",
+    "pages/search/search",
     "pages/device/device",
+    "pages/messagelist/messagelist",
     "pages/category/category",
     "pages/my/my",
     "pages/contact/contact",
     "pages/release/release",
     "pages/publish/publish",
     "pages/mypublish/mypublish",
-    "pages/mynews/mynews"
+    "pages/register/register",
+    "pages/scene/scene",
+    "pages/group/group",
+    "pages/index/index",
+    "pages/ruleDetail/ruleDetail",
+    "pages/weather/weather",
+    "pages/sceneselector/sceneselector",
+    "pages/second/smarthome/smarthome",
+    "pages/second/alert/alert",
+    "pages/second/firecontrol/firecontrol",
+    "pages/second/farm/farm",
+    "pages/second/hotel/hotel",
+    "pages/second/city/city",
+    "pages/second/community/community",
+    "pages/second/school/school",
+    "pages/second/old/old",
+    "pages/second/office/office",
+    "pages/second/s-city/s-city",
+    "pages/second/company/company",
+    "pages/second/ai/ai",
+    "pages/second/support/support"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#AB956D",
-    "navigationBarTitleText": "冠川智能家居",
+    "navigationBarBackgroundColor": "#9ABAF5",
+    "navigationBarTitleText": "冠川智能",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true,
-    "backgroundColor": "#eeeeee"
+    "backgroundColor": "#E3E3E3"
   },
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "imgs/toolbar/home.png",
-        "selectedIconPath": "imgs/toolbar/home@selected.png"
-      },
-      {
-        "pagePath": "pages/category/category",
-        "text": "设备",
         "iconPath": "imgs/toolbar/home.png",
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
@@ -40,15 +56,26 @@
         "selectedIconPath": "imgs/toolbar/publish@selected.png"
       },
       {
+        "pagePath": "pages/messagelist/messagelist",
+        "text": "消息",
+        "iconPath": "imgs/toolbar/messagelist.png",
+        "selectedIconPath": "imgs/toolbar/messagelist@selected.png"
+      },
+      {
         "pagePath": "pages/my/my",
         "text": "我的",
         "iconPath": "imgs/toolbar/my.png",
         "selectedIconPath": "imgs/toolbar/my@selected.png"
       }
     ],
-    "borderStyle": "#AB956D",
-    "selectedColor": "#AB956D",
-    "color": "#989898",
-    "backgroundColor": "#F5F5F5"
+    "borderStyle": "#5a9ec8",
+    "selectedColor": "#002366",
+    "color": "#5a9ec8",
+    "backgroundColor": "#e7eae9",
+    "permission": {
+      "scope.userLocation": {
+        "desc": "您的位置信息将用于查询天气信息及信息发布"
+      }
+    }
   }
 }

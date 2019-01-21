@@ -1,52 +1,43 @@
 <!--pages/mypublish/mypublish.wxml-->
- <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
-    <view class='items-list' wx:for="{{infolist}}" wx:for-index="index" data-index="{{index}}">
-      <view class='info-user'>
-        <image src='/imgs/icon/one.png' class='info-pic'></image>
-        <view class='info-nati'>
-          <view class='info-name'>{{item.name}}</view>
-          <text class='info-time'>{{item.time}}</text>
-        </view>
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
+  <view class='items-list' wx:for="{{infolist}}" wx:key="item">
+    <view class='info-content'>
+      <view>
+        <text class='info-detail'>{{item.pContent}}</text>
       </view>
-
-      <view class='info-content'>
-        <view>
-          <text class='info-detail'>{{item.detail}}</text>
-        </view>
-        <view class='div'>
-          <!-- <view class="info-pictures" wx:for="{{item.pictures}}" wx:for-item="img">
-          <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode='widthFix'></image> -->
-          <image src='/imgs/icon/1.png' style='width:32%' mode='widthFix'></image>
-          <!-- </view> -->
-
-
-        </view>
-        <view class='info-place'>{{item.place}}</view>
+      <view class='showPic'>
+      <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img" class='picture-view'>
+        <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
+      </block>
+    </view>
+      <text class='info-time'>{{item.timeStamp}}</text>
+      <view class='info-place'>{{item.location}}</view>
+    </view>
+    <view class='info-footer'>
+      <view class='info-uc'>
+        <image class='info-delete' data-infoid="{{item.pId}}" data-index="{{index}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
       </view>
-      <view class='info-footer'>
-        <view class='info-uc'>
-        <image class='info-delete' data-userid="{{item.id}}" bindtap='delete' src='/imgs/icon/delete.png'></image>
-        </view>
-      </view>
-
-      <view class='div'>
-
-        <!-- <view class='uppeople' wx:for='{{item.up}}'>
-        <image src='{{item}}'></image>
-      </view> -->
-        <view class='uppeople' wx:if="{{item.like_num}}">
+    </view>
+          <view class='div'>
+        <view class='uppeople' wx:if="{{item.favoritenum}}">
           <image src='/imgs/icon/up@success.png'></image>
-          <text>{{item.like_num}}次</text>
+          <text>{{item.favoritenum}}</text>
         </view>
       </view>
-
-      <view class='comments' wx:for='{{item.comments}}'>
-        <text class='comment-name'>{{item.name}}</text>
-        <text class='comment-content'>:{{item.comments}}</text>
+          <view class='comments' wx:for='{{item.comments}}' wx:key="item">
+        <text class='comment-name'>{{item.nickName}}</text>
+        <text class='comment-content'>: {{item.cContent}}</text>
       </view>
 
       <view class='comment-box'>
-        <input wx:if="{{commentTable[item.id]}}" data-userid="{{item.id}}" bindconfirm='add' type="text" placeholder='评论' cursor-spacing='10'></input>
+        <input wx:if="{{commentTable[item.pId]}}" data-userid="{{item.pId}}" bindconfirm='add' type="text" placeholder='{{content.comment}}' cursor-spacing='10'></input>
       </view>
-    </view>
-  </scroll-view>
+  </view>
+</scroll-view>
+  <view class="endbox" wx:if="{{end}}">
+    <text>End</text>
+  </view>

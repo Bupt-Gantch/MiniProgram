@@ -1,6 +1,15 @@
 @import "../tpls/base.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
+
+page{
+  width: 100%;
+  height: 100%;
+  background-color:#fffef9;
+}
+
 .detail-container {
-  background-color:#F9F9F9;/*#24292e*/
+  background-color:#fffef9;/*#24292e*/
   color:#F9F9F9;
   padding: 0rpx 0;
   box-sizing: border-box;
@@ -9,7 +18,7 @@
 }
 
 .detail-header{
-  background-color: #24292e;
+  background-color: #a8d3ba;
   margin-bottom: 20px;
   height: 60px;
   width: 100%;
@@ -33,9 +42,12 @@
 .detail-header view view{
   margin: 0 10rpx;
 }
+.device-image{
+  background-color: #fffef9;
+}
 
 .detail-main{
-  background-color: #24292e;
+  background-color: #a8d3ba;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -59,7 +71,7 @@
 /*table */
 .IASZtable{
   margin-bottom: 20px; 
-  background-color: #24292e;
+  background-color: #a8d3ba;
 }
 .tr {
   display: flex;
@@ -115,104 +127,86 @@
   background-color: wheat;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/*选择数量和添加到购物车*/
-.cart-box{
-  width: 660rpx;
-  height: 100rpx;
-  margin: 30rpx auto;
-  border-radius: 100rpx;
-  background-color: #AB956D;
-  color: #fff;
-  display: flex;
-  align-items: center;
+.curtain-btn{
+  width:95%;
+  height:200rpx;
+  display:flex;
+  text-align:center;
+  justify-content:space-around;
+  align-items:center;
+  flex-direction:row;
 }
 
-.product-counts,.add-cart-btn{
-  height: 100%;
+.view_footer button {
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  padding: 0rpx 0;
+  font-family: "Microsoft Yahei";
+  margin: 30rpx;
+}
+
+.detailview {
   display: flex;
-  font-size: 24rpx;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-family: "Microsoft Yahei";
+  margin-top: 30rpx;
 }
-.product-counts{
-  width: 50%;
+
+.deviceDetail {
+  align-items: center;
+  margin-right: 10rpx;
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
 }
-.add-cart-btn{
+
+.deviceDetail text{
+  font-size: 40rpx
+}
+
+.btn-confirm {
+  width: 200rpx;
+}
+
+.deviceDetailView {
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
+
+.linkage-view{
+  display: block;
+  margin-top: 20rpx;
+  height: 500rpx;
+}
+
+.linkageDetail{
+  width: 100%;
+  height: 60rpx;
+  border-bottom: 5rpx solid #E3E3E3;
+  font-size: 40rpx;
+  color: #f9f9f9;
+  margin: 10rpx;
+}
+
+.linkageDetail image{
+  position: absolute;
+  right: 0rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.name image{
   position: relative;
-  flex: 1;
+  top:0rpx;
+  right: 0rpx;
+  width: 30rpx;
+  height: 30rpx;
 }
-.add-cart-btn:active{
-  color: #fff;
-}
-.add-cart-btn.disabled{
-  color: #D5D5DB;
-}
-
-
-
-
-/*数量选择器*/
-.product-counts picker{
-  margin: 0 auto;
-  height: 100rpx;
-  width: 100%;
-  color: #fff;
-}
-.product-counts picker.disabled{
-  color: #D5D5DB;
-}
-.product-counts picker view{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100rpx;
-}
-.counts-tips,.counts-data,.counts-icon{
-  margin: 0 20rpx;
-}
-.counts-data{
-  font-size: 28rpx;
-}
-.counts-icon{
-  height: 48rpx;
-  width: 48rpx;
-}
-
-.add-cart-btn .cart-icon{
-  margin-left: 40rpx;
-  height: 32rpx;
-  width: 32rpx;
-}
-
-
-
-.tabs-item{
-  width: 33.3%;
-  color: #C7C7CB;
-  font-size: 28rpx;
-  display: flex;  
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1rpx solid #D0D0D7;
-}
-.tabs-item.selected{
-  /*color: #AB956D;*/
-  color: rgba(171,149,109,.8);
-  /*border-bottom: 2px solid #AB956D;*/
-  border-bottom: 2px solid rgba(171,149,109,.8);
-}
-
-
-

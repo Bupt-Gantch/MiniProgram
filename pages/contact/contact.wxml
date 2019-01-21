@@ -5,10 +5,10 @@
   </view>
   <view class='contact-email'>
     <view class='title'></view>
-    <text class='address' selectable='true'>chenjiaxi_byr@163.com</text>
+    <text class='address' selectable='true'>gckj2008@126.com</text>
   </view>
   <view class='contact-bottom'>
-    <text class='create'>Created By CJX</text> 
+    <text class='create'>Created By Gantch</text> 
   </view>
   
 </view>

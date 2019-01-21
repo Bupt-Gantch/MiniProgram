@@ -1,27 +1,32 @@
 import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js'
 class myPublish extends Base {
   constructor() {
     super()
   }
 
-  getMyPublish(openid, callback) {
-    var param = {
-      url: '?openid=' + openid,
+  getMyPublish(param, callback) {
+    var params = {
+      url: 'wechatPost/findAllPosts',
+      method:'POST',
+      data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param)
+    this.request(params)
   }
 
-  deleteInformation(id,callback){
-    var param = {
-      url: 'infolist/by_page?page='+id,
+  deleteInformation(param,callback){
+    var params = {
+      url: 'wechatPost/deletePost',
+      method:'POST',
+      data:param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    this.request(params);
   }
 }
 

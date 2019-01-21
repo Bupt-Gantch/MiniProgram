@@ -1,17 +1,24 @@
 /* pages/contact/contact.wxss */
+
+
+page{
+  width: 100%;
+  height: 100%;
+  background-color:#fffef9;
+}
 .container{
   width: 100%;
   height: 100vh;
-  background-color: #EDEDED;
+  background-color: #fffef9;
   justify-content:center;
-  text-align: center
+  text-align: center;
+  color: #002366
 }
 .contact-bottom{
   text-align: center;
   width:100%;
-  
   padding: 50rpx;
-  color: #AB956D;
+  color: #002366;
 }
 .contact-need{
   width:98%;

@@ -1,12 +1,16 @@
 // pages/publish/publish.js
-import { Config } from '../../utils/config.js';
-import { Publish } from 'publish_model.js';
+import {
+  Config
+} from '../../utils/config.js';
+import {
+  Publish
+} from 'publish_model.js';
 var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var publish = new Publish();
 var app = getApp();
-var page = 0; 
-var info  =[]
+var page = 0;
+var info = [];
 
 Page({
 
@@ -21,48 +25,77 @@ Page({
     ],
     statusTable: {},
     commentTable: {},
-    // infolist:[{
-    //   pictures:[
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
-    //     'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png'
-    //   ]
-    // }]
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(option) {
-    Config.test = '1';
-    info = []
+    info = [];
     /**
      * 通过后台服务器获取数据
      */
-    page  = 0;
+    page = 0;
     this.setData({
-      content: app.getLanuage(app.globalData.language)
+      netStatus: app.globalData.netStatus,
+      content: app.getLanuage(app.globalData.language),
+      end: false
     })
-    this._loadInfoList(page);
-    info.push(this.data.infoList)
-    this.setData({
-      infolist:info[0]
-    })
+    this._loadInfoList(page)
   },
 
-  onShow: function () {
-    this.setData({
-      content: app.getLanuage(app.globalData.language)
-    })
+  onShow: function() {
+      this.setData({
+        netStatus: app.globalData.netStatus,
+        content: app.getLanuage(app.globalData.language),
+      })
   },
 
   /**
    * 获取信息列表/按页显示
    */
   _loadInfoList: function(page) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var _this = this
+    var newinfoList = new Array();
     publish.getInfoList(page, (res) => {
-      this.setData({
+      console.log(res.data);
+      _this.setData({
         infoList: res.data
       });
+      if (_this.data.infoList.length!=undefined){
+        _this.data.infoList.forEach(function (element) {
+          if (element.image != null) {
+            if (element.image[0] == "[") {
+              var newimage = element.image.substr(1, element.image.length - 2);
+            } else {
+              var newimage = element.image;
+            }
+            var arr = newimage.split(",");
+            element.image = arr;
+            element.nickName = publish.matchPhoneNum(element.nickName);
+            newinfoList.push(element)
+          } else {
+            element.nickName = publish.matchPhoneNum(element.nickName);
+            newinfoList.push(element)
+          }
+        });
+      }
+      _this.setData({
+        infoList:newinfoList
+      })
+      if (_this.data.infoList.length%9!=0||_this.data.infoList.length===0){
+        page=page-1
+        this.setData({
+          end: true
+        })
+      }
+      for (var i = 0; i < _this.data.infoList.length; i++)
+        info.push(_this.data.infoList[i])
+      this.setData({
+        infolist: info,
+      })
     })
   },
 
@@ -75,17 +108,22 @@ Page({
     })
   },
   //搜索获取数据
-  searchNews:function(e){
-    this._loadInfoList(e.detail.value)
+  searchNews: function(e) {
+    app.search = e.detail.value
+    wx.navigateTo({
+      url: '../search/search',
+    })
   },
 
   /**
    * 点击图片查看
    */
   imageClick: function(e) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
     var src = e.currentTarget.dataset.src;
-    var pictures = e.currentTarget.dataset.pictures.pictures;
-    var that = this
+    var pictures = e.currentTarget.dataset.pictures.image;
     console.log(pictures)
     wx.previewImage({
       current: src,
@@ -96,11 +134,19 @@ Page({
    * 评论
    */
   clickComment: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    if (this.data.commentTable[userid] === undefined || this.data.commentTable[userid] === false) {
-      this.data.commentTable[userid] = true;
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var infoid = e.currentTarget.dataset.infoid;
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      infoid:infoid,
+      index:index
+    })
+    if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
+      this.data.commentTable[infoid] = true;
     } else {
-      this.data.commentTable[userid] = false;
+      this.data.commentTable[infoid] = false;
     }
     var newcommentTable = this.data.commentTable;
     this.setData({
@@ -110,26 +156,61 @@ Page({
   /**
    * 点赞
    */
-  clickUp: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    if (this.data.statusTable[userid] === undefined || this.data.statusTable[userid] === false) {
-      this.data.statusTable[userid] = true;
+  clickUp: function(e){
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var infoid = e.currentTarget.dataset.infoid;
+    if (this.data.statusTable[infoid] === undefined || this.data.statusTable[infoid] === false) {
+      this.data.statusTable[infoid] = true;
       var addUp = {
-        avatarUrl: app.globalData.userInfo.avatarUrl,
-        id:userid,
-        oppenid:'',
+        pId: infoid,
+        num:1,
+        nickName: app.globalData.userInfo.nickName,
+        avator: app.globalData.userInfo.avatarUrl,
       };
-      publish.addUp(addUp,(res)=>{
-
+      console.log(addUp);
+      publish.addUp(addUp, (res) => {
+        console.log(res);
+        if(res===1){
+        var index = e.currentTarget.dataset.index;
+        this.data.infolist[index].favoritenum++;
+        var newinfolist = this.data.infolist
+        this.setData({
+          infolist: newinfolist
+        })
+        }else{
+          wx.showToast({
+            title: '操作失败',
+            icon:'none',
+            duration: 1500,
+          })
+        }
       })
     } else {
-      this.data.statusTable[userid] = false;
+      this.data.statusTable[infoid] = false;
       var deleteUp = {
-        id:userid,
-        oppenid:'',
+        pId: infoid,
+        num:-1,
+        nickName: app.globalData.userInfo.nickName,
+        avator: app.globalData.userInfo.avatarUrl,
       }
-      publish.deleteUp(deleteUp,(res)=>{
-
+      console.log(deleteUp);
+      publish.addUp(deleteUp, (res) => {
+        if (res===1) {
+          var index = e.currentTarget.dataset.index;
+          this.data.infolist[index].favoritenum--;
+          var newinfolist = this.data.infolist
+          this.setData({
+            infolist: newinfolist
+          })
+        } else {
+          wx.showToast({
+            title: '操作失败',
+            icon: 'none',
+            duration: 1500,
+          })
+        }
       })
     }
     var newStatusTable = this.data.statusTable;
@@ -141,49 +222,56 @@ Page({
    * 发表评论
    */
   add: function(e) {
-    var userid = e.currentTarget.dataset.userid;
-    this.data.commentTable[userid] = false;
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    var infoid = this.data.infoid;
+    this.data.commentTable[infoid] = false;
     var newcommentTable = this.data.commentTable;
     this.setData({
       commentTable: newcommentTable
     })
     var comment = {
-      nickname:app.globalData.userInfo.nickName,
-      detail:e.detail.value,
-      id:userid,
-      oppenid:'',
+      nickName: app.globalData.userInfo.nickName,
+      avator: app.globalData.userInfo.avatarUrl,
+      openid:app.globalData.openid,
+      cContent: e.detail.value,
+      pId: infoid,
     }
-    publish.addComment(comment,(res)=>{
-      
+    console.log(comment);
+    publish.addComment(comment, (res) => {
+      console.log(res);
+      var index = this.data.index
+      var ans = {
+        nickName: comment.nickName,
+        cContent:comment.cContent,
+      }
+      if(res===1){
+        this.data.infolist[index].comments.push(ans)
+        var newinfolist = this.data.infolist
+        this.setData({
+          infolist: newinfolist
+        })
+      }else{
+        wx.showToast({
+          title: '操作失败',
+          icon: 'none',
+          duration: 1500,
+        })
+      }
     })
   },
-  // 下拉刷新
-  // onReachTop: function() {
-  //   page = 1;
-  //   // 显示顶部刷新图标
-  //   wx.showNavigationBarLoading();
-  //   // this._loadInfoList(page);
-  //   // 使用 Mock获取假数据
-  //   var that = this
-  //   API.ajax('', function (res) {
-  //     that.setData({
-  //       infolist: res.data
-  //     })
-  //   })
-  //   //隐藏导航栏加载框
-  //   wx.hideNavigationBarLoading();
-  //   // 停止下拉动作
-  //   wx.stopPullDownRefresh();
-  // },
+
   onPullDownRefresh: function() {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    info = [];
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
 
-    page = 1;
+    page = 0;
     this._loadInfoList(page);
-    this.setData({
-      infolist: this.data.infoList
-    })
 
     // 隐藏导航栏加载框
     wx.hideNavigationBarLoading();
@@ -195,18 +283,18 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    page = page + 1;
-    // 显示加载图标
-    wx.showLoading({
-      title: '加载中',
-    })
-    this._loadInfoList(page);
-    for(var i=0;i<this.data.infoList.length;i++)
-    info[0].push(this.data.infoList[i])
     this.setData({
-      infolist: info[0]
-    })
-    // 隐藏加载框
-    wx.hideLoading();
+      netStatus: app.globalData.netStatus
+    });
+    if(!this.data.end){
+      page = page + 1;
+      // 显示加载图标
+      wx.showLoading({
+        title: '加载中',
+      })
+      this._loadInfoList(page);
+      // 隐藏加载框
+      wx.hideLoading();
+    }
   },
 })

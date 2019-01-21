@@ -1,51 +1,25 @@
 /* pages/loading/loading.wxss */
-swiper {
+@import "../tpls/roll/roll_tpl.wxss";
+
+
+page {
   width: 100%;
-  height: 340rpx;
+  height: 100%;
+  background-color: #fffef9
 }
 
-swiper image {
-  display: block;
+.enter-container {
   width: 100%;
   height: 100%;
 }
 
-.search-view {
-  opacity: 0.5;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 500;
+.enter-button {
+  padding: 0 0;
   width: 100%;
-  height: 100rpx;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
-.scroll-view{
-  margin-top: 20rpx;
-  margin-bottom: 20rpx;
-  height: 650rpx;
-  font-size: 30rpx;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: gainsboro
-}
-
-.enter-container{
+.poster-image {
   width: 100%;
-}
-
-.enter-button{
-  width: 70%;
-  border-radius: 20rpx 20rpx
-}
-
-.language {
-  position: fixed;
-  display: flex;
-  bottom: 10rpx;
-  right: 10rpx;
-  font-size: 35rpx;
-  color: #ab956d;
+  height: 100%;
 }

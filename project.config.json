@@ -8,9 +8,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.4",
-	"appid": "wx5ef2de2111a9a82a",
-	"projectname": "gantch",
+	"libVersion": "2.4.0",
+	"appid": "wx9e12afc5dec75b6f",
+	"projectname": "postgantch",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 19,
 			"list": [
 				{
 					"id": -1,
@@ -58,8 +58,8 @@
 				},
 				{
 					"id": 4,
-					"name": "设备详情",
-					"pathName": "pages/device/device",
+					"name": "scene",
+					"pathName": "pages/scene/scene",
 					"query": ""
 				},
 				{
@@ -79,6 +79,77 @@
 					"name": "loading",
 					"pathName": "pages/loading/loading",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "register",
+					"pathName": "pages/register/register",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mypublish",
+					"pathName": "pages/mypublish/mypublish",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "分组&场景",
+					"pathName": "pages/scene/scene",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mynews",
+					"pathName": "pages/mynews/mynews",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "group",
+					"pathName": "pages/group/group",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "device",
+					"pathName": "pages/device/device",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "weather",
+					"pathName": "pages/weather/weather",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "contact",
+					"pathName": "pages/contact/contact",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "sceneselector",
+					"pathName": "pages/sceneselector/sceneselector",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "hotel",
+					"pathName": "pages/second/hotel/hotel",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "company",
+					"pathName": "pages/second/company/company"
 				}
 			]
 		}

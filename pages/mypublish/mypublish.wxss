@@ -1,9 +1,12 @@
 /* pages/mypublish/mypublish.wxss */
+ @import "../tpls/roll/roll_tpl.wxss";
+ 
 
-page {
+page{
   width: 100%;
   height: 100%;
   font-size: 30rpx;
+  background-color: #fffef9
 }
 
 /* .scroll-view{
@@ -46,19 +49,16 @@ page {
   font-size: 28rpx;
 }
 
-.div {
+.showPic{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.info-pictures {
+.showPic image{
   width: 32%;
-}
-
-.info-pictures image {
-  width: 100%;
-  padding: 5rpx;
+  height: 200rpx;
+  padding-right: 8rpx 
 }
 
 .info-place {
@@ -102,4 +102,29 @@ page {
   height: 30rpx;
   border: 1rpx solid rgb(174, 200, 247);
   border-radius: 10rpx;
+}
+
+.endbox{
+  align-content: center;
+  text-align: center;
+  color:#001f56;
+}
+
+.endbox text::before, .endbox text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}
+
+.line{
+  height: 3rpx;
+  background-color:#001f56;
+  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
 }

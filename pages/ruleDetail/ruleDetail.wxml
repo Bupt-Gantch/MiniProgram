@@ -1,0 +1,54 @@
+<!--pages/ruleDetail/ruleDetail.wxml-->
+<view>
+  <view class='curtain-btn'>
+    <button type='primary' wx:if="{{ruleStatus}}" bindtap='onActiveRule'>激活规则</button>
+    <button type='primary' wx:else bindtap='onSuspendRule'>暂停规则</button>
+    <button type='primary' bindtap='onDeleteRule'>删除规则</button>
+  </view>
+  <view class="section_gap">
+  <view class="section__title">联动名：{{name}}</view>
+  </view>
+  <view class="section_gap">
+    <view class="section__title">联动条件:</view>
+    <view wx:for="{{conditions}}" wx:key="item">
+      <view wx:if="{{item.key=='temperature'}}">温度{{item.value}}</view>
+      <view wx:elif="{{item.key=='humidity'}}">湿度{{item.value}}</view>
+      <view wx:elif="{{item.key=='illumination'}}">光照度{{item.value}}</view>
+      <view wx:elif="{{item.key=='PM2.5'}}">PM2.5值{{item.value}}</view>
+      <view wx:elif="{{item.key=='operate'}}">{{item.value}}</view>
+      <view wx:elif="{{item.key=='alarm'}}">
+      <view wx:if="{{model == 'SMF'}}">烟雾报警</view>
+      <view wx:elif="{{model == 'BOT'}}">人体红外</view>
+      <view wx:elif="{{model == 'WTS'}}">水浸报警</view>
+            <view wx:elif="{{model == 'SOS'}}">紧急按钮</view>
+      <view wx:elif="{{model == 'DOS'}}">门磁</view>
+      </view>
+      <!-- <view wx:elif="{{item.key=='operate'}}">开门</view> -->
+    </view>
+  </view>
+  <view class="section_gap">
+    <view class="section__title">报警:</view>
+    <view wx:if="{{rule_type=='alarm'}}">开启</view>
+    <view wx:else>关闭</view>
+  </view>
+  <view class='sectiongap'>
+    <view class='section__title'>联动操作:</view>
+    <view wx:if="{{operations}}">
+    <view wx:for="{{operations}}" wx:key="item">
+      <view wx:if="{{item.deviceType=='curtain'}}">设备名:{{item.name}}
+        <view wx:if="{{item.status == '1'}}">操作:打开窗帘</view>
+        <view wx:else>操作:关闭窗帘</view>
+      </view>
+      <view wx:if="{{item.deviceType=='switch'}}">设备名:{{item.name}}
+          <view wx:if="{{item.status}}">操作:打开开关</view>
+        <view wx:else>操作:关闭开关</view>
+      </view>
+            <view wx:if="{{item.deviceType=='dimmableLight'}}">设备名:{{item.name}}
+          <view wx:if="{{item.status}}">操作:打开调光灯</view>
+        <view wx:else>操作:关闭调光灯</view>
+      </view>
+    </view>
+    </view>
+    <view wx:else>无</view>
+  </view>
+</view>

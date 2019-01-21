@@ -1,5 +1,4 @@
 {
-  "enablePullDownRefresh": false,
-  "navigationBarTitleText": "设备详情"
-
+  "navigationBarTitleText": "设备详情",
+  "enablePullDownRefresh": false
 }

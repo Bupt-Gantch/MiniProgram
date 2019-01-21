@@ -1,0 +1,10 @@
+<!--pages/group/group.wxml-->
+<import src="../tpls/category/category-tpl.wxml"/>
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view class='container group-wrapper'>
+  <template is="categorytop" data="{{switchOnImg,imgUrl,bannerTitle,iASZoneImg,categoryProducts:groupDevices,statusTable}}">
+  </template>
+</view>

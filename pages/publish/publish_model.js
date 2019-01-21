@@ -1,11 +1,16 @@
-import {Base} from '../../utils/base.js'
+import { Base } from '../../utils/base.js'
+import { Config } from '../../utils/config.js'
 class Publish extends Base{
   constructor(){
     super()
   }
   getInfoList(page, callback) {
     var param = {
-      url: 'infolist/by_page?page=' + page,
+      url: 'wechatPost/findAllPosts',
+      data:{
+        page:page,
+      },
+      method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -15,8 +20,8 @@ class Publish extends Base{
 
   addComment(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url: 'wechatPost/addComment',
+      data:data,
       method:'POST',
       sCallback:function(data){
         callback&&callback(data);
@@ -27,23 +32,14 @@ class Publish extends Base{
 
   addUp(data,callback){
     var param = {
-      url:'',
-      data:data.data,
+      url: 'wechatPost/favorite',
+      data:data,
+      method:"POST",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
     this.request(param)
-  }
-
-  deleteUp(data, callback) {
-    var param = {
-      url: '',
-      data: data.data,
-      sCallback: function (data) {
-        callback && callback(data);
-      }
-    }
   }
 }
 

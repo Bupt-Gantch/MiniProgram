@@ -1,28 +1,180 @@
 var English = {
   button: "中文",
   mypublish: "Album",
-  mynews:"Friends' Comments",
+  mynews: "Friends' Comments",
   feedback: "Feedback",
+  scan:"Add Gateway",
+  deleteGateway:"Delete Gateway",
+  refreshGateway:"Equipment connected to network",
+  share:'Sharing Gateway',
+  unshare:'Unshare Gateway',
   myfeedback: "If you have any suggessions,please contact me",
   search: "Search...",
   content: "What do you want to say...",
-  comment:"Comment",
+  comment: "Comment",
   submit: "Post",
   place: "Location",
   alldevice: "All equipment",
+  categoryName : ['All', 'Bulb', 'Curtain', 'Socket', 'Monitor', 'Lock', 'Infrared', 'Sensor', 'Others'],
+  gatewayGroup:['Gateways'],
+  sceneGroup:['Groups','Scenes'],
+  categoryType : {
+    'Bulb': ['dimmableLight','switch'],
+    // 'Switch': ['switch'],
+    'Curtain': ['curtain'],
+    'Socket': ['outlet'],
+    'Monitor': ['monitor'],
+    'Lock': ['lock'],
+    'Infrared': ['infrared'],
+    'Sensor': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
+    'Others': ['dimmableLight', 'curtain', 'switch'],
+  },
+  cores: [
+    [{
+      id: 'smartHome',
+      name: 'Home',
+      disabled: true,
+      image: '/imgs/index/smartHome.png',
+      // url: '../second/smarthome/smarthome'
+      url: '../category/category'
+    },
+    {
+      id: 'bigData',
+      name: 'Big Data',
+      disabled: true,
+      image: '/imgs/index/bigData.png',
+      url: '../home/home'
+    },
+    {
+      id: 'smartHotel',
+      name: 'Smart Hotel',
+      disabled: true,
+      image: '/imgs/index/smartHotel.png',
+      url: '../second/hotel/hotel'
+      // url: '../category/category'
+    },
+    {
+      id: 'cloudAlert',
+      name: 'Cloud Alert',
+      disabled: true,
+      image: '/imgs/index/cloudAlert.png',
+      // url: '../second/alert/alert'
+      url: '../category/category'
+    },
+    {
+      id: 'cloudFireControl',
+      name: 'Fire Control',
+      disabled: true,
+      image: '/imgs/index/cloudFireControl.png',
+      // url: '../second/firecontrol/firecontrol'
+      url: '../category/category'
+    },
+    {
+      id: 'farm',
+      name: 'Farm',
+      disabled: true,
+      image: '/imgs/index/farm.png',
+      // url: '../second/farm/farm'
+      url: '../category/category'
+    },
+    {
+      id: 'safeCity',
+      name: 'Safe City',
+      disabled: true,
+      image: '/imgs/index/safeCity.png',
+      // url: '../second/s-city/s-city'
+      url: '../category/category'
+    },
+    {
+      id: 'smartCommunity',
+      name: 'Community',
+      disabled: true,
+      image: '/imgs/index/smartCommunity.png',
+      // url: '../second/community/community'
+      url: '../category/category'
+    },
+    {
+      id: 'smartSchool',
+      name: 'School',
+      disabled: true,
+      image: '/imgs/index/smartSchool.png',
+      // url: '../second/school/school'
+      url: '../category/category'
+    },
+    {
+      id: 'smartOld',
+      name: 'Old',
+      disabled: true,
+      image: '/imgs/index/smartOld.png',
+      // url: '../second/old/old'
+      url: '../category/category'
+    },
+    {
+      id: 'smartOffice',
+      name: 'Office',
+      disabled: true,
+      image: '/imgs/index/smartOffice.png',
+      // url: '../second/office/office'
+      url: '../category/category'
+    },
+    {
+      id: 'smartCity',
+      name: 'Smart City',
+      disabled: true,
+      image: '/imgs/index/smartCity.png',
+      // url: '../second/city/city'
+      url: '../category/category'
+    },
+    {
+      id: 'artificialIntelligence',
+      name: 'AI',
+      disabled: true,
+      image: '/imgs/index/artificialIntelligence.png',
+      // url: '../second/ai/ai'
+      url: '../category/category'
+    },
+    {
+      id: 'serviceSupport',
+      name: 'Service',
+      disabled: true,
+      image: '/imgs/index/team.png',
+      url: '../second/support/support'
+    },
+    {
+      id: 'companyIntroduction',
+      name: 'Gantch',
+      disabled: true,
+      image: '/imgs/index/company.png',
+      url: '../second/company/company'
+    },
+    ],
+  ],
   bulb: "Bulb",
   socket: "Socket",
   curtain: "Curtain",
   sensor: "Sensor",
   swi: "Switch",
+  monitor: "Monitor",
+  lock: "Gate lock",
   othertypes: "Other types",
+  scenetypes: "Scene types",
   temperature: "Temperature",
   humidity: "humidity",
+  infrared: "infrared",
   name: "name",
   success: "success",
   failure: "failure",
-  introduce: "Gantch Smart Technology Shares Ltd. is a IOT smart products R & D, design, production, sales and service as one of the diversified high-tech enterprises. Products relates to IOT Smart home control system and IOT smart control system of agriculture, urban network security alarm system, IP/GPRS/PSTN multi network interconnection control system, Perimeter alarm system, Internet video monitoring system, urban anti-terrorism system series of high-tech products.Gantch smart technology development oriented, focus on technology innovation, the technology research and development centers are located in Beijing and Shenzhen of China, partners with professional and technical personnel and the strong support of international cooperation, and the strong backing of Chinese Academy of Sciences.Gantch wisdom Home Furnishing intelligent home appliances, intelligent curtain, intelligent lighting, background music, intelligent security, video surveillance, access control, environmental monitoring, intelligent management of health care equipment, let you no matter where, all can manage your home, make your life more healthy, comfortable, convenient and safe.As Gantch in the industry took the lead through the ISO9001 international quality management system certification.Products by the national Ministry of public security testing center inspection and comprehensive through the CCC, CE, FCC, RoHS and other international certification.Products have been exported to Europe, Asia, America more than 50 countries and regions, with China Petroleum, China petrochemical and other international well - known enterprises to establish a long-term cooperative relations, Gantch as CSGIA member units and SSPIA member units to prevent, consecutive years won the 'Chinese consumers are satisfied with the famous brand', 'Safe city construction recommended brand'、'Product quality user enterprise' and other honorary titles.",
-  welcome:"It's time for smart living"
+  welcome: "It's time for smart living",
+  register: 'Create an account',
+  email: 'Email...',
+  phone: 'Phone...',
+  userreg: 'Sing up',
+  failed: 'Login failure',
+  failedmess: "We did't find your informaton,please sign up firstly.",
+  del: 'Delete',
+  delmes: 'Are you sure you want to do this?',
+  loading: 'Loading',
+  wrong: "Can't get your location"
 }
 
 module.exports = {

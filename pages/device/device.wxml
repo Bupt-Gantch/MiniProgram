@@ -1,87 +1,124 @@
 <!--pages/device/device.wxml-->
+<import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+
 <view class='detail-container'>
   <!-- header复用一个，保持不变 -->
   <view class='detail-header'>
-    <view class='content'>
-      <image src='{{deviceImgUrl[deviceType]}}' mode="aspectFit"></image>
+    <view class='content' bindlongpress="onChangeName">
+      <view wx:if="{{deviceType == 'IASZone'}}" class='device-image'>
+        <image wx:if="{{model == 'BOT'}}" src='{{iASZoneImg[0]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'SMF'}}" src='{{iASZoneImg[1]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'DOS'}}" src='{{iASZoneImg[3]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'SOS'}}" src='{{iASZoneImg[4]}}' mode="aspectFit"></image>
+        <image wx:else="{{model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit"></image>
+      </view>
+      <view wx:else class='device-image'>
+        <image src='{{deviceImgUrl[deviceType]?deviceImgUrl[deviceType]:deviceImgUrl["default"]}}' mode="aspectFit"></image>
+      </view>
       <view class='title'>名称</view>
-      <!-- <view class='name'>{{deviceDetail.name}}</view> -->
-      <view class='name'>{{deviceType}}</view>
-    </view>
-  </view>
-
-  <!-- 根据设备类型显示面板，用block分隔 -->
-  <!-- IASZone -->
-  <block wx:if="{{deviceType === 'IASZone'}}">
-  <view class="IASZtable">
-    <view class="tr bg-w">
-      <view class="th">最后更新时间</view>
-      <view class="th">键</view>
-      <view class="th ">值</view>
-    </view>
-    <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
-      <view class="tr" >
-        <view class="td">{{item.ts}}</view>
-        <view class="td">{{item.key}}</view>
-        <view class="td">{{item.value}}</view>
-      </view>
-    </block>
-  </view>
-  <view class='detail-main'>
-    <view class='deviceInfo'>
-
-      <view class='status'>
-        <view class='title'>状态：</view>
-        <view class='currentStatus'>{{deviceStatus.status}}</view>
-      </view>
-      <view class='status'>
-        <view class='title'>防拆：</view>
-        <view class='currentStatus'>{{deviceStatus.fangchai}}</view>
-      </view>
-      <view class='status'>
-        <view class='title'>电量：</view>
-        <view class='currentStatus'>{{deviceStatus.battery}}</view>
-      </view>
-    </view>
-
-    <view class='bottom'>
-      <button type="warn" class='warningRecord' 
-            hover-class='button-hover'>报警记录</button>
-      <view class='msgPublish'>
-        <view class='title'>消息推送</view>
-        <switch bindchange="switchChange"></switch>
+      <view class='name'>{{deviceName}}
+        <image src='/imgs/icon/alert.png' bindtouchstart='showAlert'></image>
       </view>
     </view>
   </view>
+
+  <template is="changeName" data="{{showEdit,content}}">
+  </template>
+
+  <!-- 传感器 -->
+  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5' || deviceType === 'lightSensor' || deviceType === 'IASZone' || deviceType === 'lock'}}">
+    <view class='detail-main'>
+      <view class='deviceInfo'>
+
+        <view class="table">
+          <view class="tr bg-w">
+            <view class="th">最后更新时间</view>
+            <view class="th">键</view>
+            <view class="th ">值</view>
+          </view>
+          <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+            <view class="tr">
+              <view class="td">{{item.ts}}</view>
+              <view class="td">{{item.key}}</view>
+              <view class="td">{{item.value}}</view>
+            </view>
+          </block>
+        </view>
+
+      </view>
+    </view>
+    <view wx:if="{{deviceType == 'lock'}}" class='view_footer'>
+      <button bindtap='remoteUnlock'>远程开锁</button>
+      <button bindtap='addLinkage'>添加联动</button>
+    </view>
+    <view wx:else class='view_footer'>
+      <button bindtap='addLinkage'>添加联动</button>
+    </view>
   </block>
 
-  <!-- PM2.5 或 temperature -->
-  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5'}}">
-  <view class='detail-main'>
-    <view class='deviceInfo'>
-
-      <view class="table">
-        <view class="tr bg-w">
-          <view class="th">最后更新时间</view>
-          <view class="th">键</view>
-          <view class="th ">值</view>
+  <!-- dimmableLight -->
+  <block wx:if="{{deviceType === 'dimmableLight'}}">
+    <view class='detail-main'>
+      <view class='deviceInfo'>
+        <view style='text-align:center'>
+          <switch wx:if="{{dimmableLight}}" checked style='zoom:1.5' bindchange='onSwitchChange'></switch>
+          <switch wx:else style='zoom:1.5' bindchange='onSwitchChange'></switch>
         </view>
-        <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
-          <view class="tr">
-            <view class="td">{{item.ts}}</view>
-            <view class="td">{{item.key}}</view>
-            <view class="td">{{item.value}}</view>
-          </view>
-        </block>
+        <slider min='{{bulb.dimmableMinVal}}' max='{{bulb.dimmableMaxVal}}' step='{{bulb.dimmableStep}}' show-value='true' bindchange='onSliderChange'>
+        </slider>
       </view>
-      
+
+    </view>
+  </block>
+
+  <!-- curtain -->
+  <block wx:if="{{deviceType === 'curtain'}}">
+    <view class='detail-main'>
+      <view class='deviceInfo'>
+        <view class='curtain-btn'>
+          <button type='primary' data-value="{{'1'}}" bindtap='onCurtainTap'>开</button>
+          <button type='primary' data-value="{{'2'}}" bindtap='onCurtainTap'>停</button>
+          <button type='primary' data-value="{{'0'}}" bindtap='onCurtainTap'>关</button>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{deviceType === 'Gateway'}}">
+    <view wx:if="{{showButton}}" class='view_footer'>
+      <button wx:if="{{deployment}}" bindtap='deployment'>布防</button>
+      <button wx:else bindtap='disarming'>撤防</button>
     </view>
 
-  </view>
+    <view class='detailview'>
+      <view class='deviceDetail' wx:if="{{showLinkage}}">
+        <text>联动信息</text>
+        <scroll-view scroll-y="true" class='linkage-view'>
+          <block class="deviceDetailView" wx:for="{{linkageDetail}}" wx:key="item">
+            <view class='linkageDetail' bindtap='gotoLinkageDetail' data-id="{{item.rule.ruleId}}">{{item.rule.name}}
+              <image src='/imgs/icon/arrow@grey.png'></image>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
   </block>
 
   <!-- <view class='history-data'>
   </view> -->
 
-  
+
 </view>
+
+<template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
+<template is="changePassword" data="{{showPassword,content:content2}}">
+</template>
+<template is="changePassword" data="{{showPassword,content:content3}}">
+</template>
+
+
+<!-- <button bindtap='getRealData'>查看实时数据</button> -->

@@ -4,23 +4,11 @@ class Home extends Base{
   constructor(){
     super();
   }
-  // getBannerData(id,callback){
-  //   var params = {
-  //     url: 'banner/' + id,
-  //     sCallback:function(res){
-  //       callback && callback(res.items);
-  //     }
-  //   }
-  //   this.request(params);
-  // }
-
-  /**
-   * mock data
-   */
-
-  loadTestData(callback) {
+ 
+  getAllDevices(customerId, callback) {
     var param = {
-      url: '',
+      //url: 'deviceaccess/tenant/devices/2?limit=1000',
+      url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function (data) {
         callback && callback(data);
       }
@@ -28,26 +16,28 @@ class Home extends Base{
     this.request(param);
   }
 
-  /**mock end */
-
   
-  /**获取设备实时数据 */
-  getRealtimeData(deviceId, sConCb, fConCb, onDataCb) {
+  //获取设备最新数据
+  getlatestData(deviceId, callback) {
     var param = {
-      url: "",
-      deviceId: deviceId,
-      sConnectCb: function (res) {
-        sConCb && sConCb(res);
-      },
-      fConnectCb: function (err) {
-        fConCb && fConCb(err);
-      },
-      onMsgCb: function (data) {
-        onDataCb: onDataCb(data);
+      url: `deviceaccess/data/alllatestdata/${deviceId}`,
+      sCallback: function (data) {
+        callback && callback(data);
       }
     };
+    this.request(param)
+  }
 
-    return this.realTimeDevice(param);
+  //获取设备历史数据
+  getHistoryData(param, callback){
+    var params = {
+      url: `deviceaccess/data/alldata/${param.deviceId}`,
+      data:param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params)
   }
 }
 

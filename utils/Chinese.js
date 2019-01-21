@@ -3,26 +3,179 @@ var Chinese = {
   mypublish:"我发布的",
   mynews:"消息列表",
   feedback:"意见反馈",
+  scan:"绑定网关",
+  deleteGateway:"解绑网关",
+  refreshGateway:"设备入网",
+  share:'分享网关',
+  unshare: '取消分享',
   myfeedback:"如果您有任何建议或想法，请联系我：）",
   search:"请输入搜索内容",
   content:"您要发布的内容...",
   comment: "评论",
   submit:"发布",
   place:"所在位置",
+  categoryName: ['所有设备', '灯泡', '窗帘', '插座', '监控', '门锁', '红外宝', '传感器', '其他类型'],
+  gatewayGroup: ['所有网关'],
+  sceneGroup: ['分组', '场景'],
+  categoryType: {
+    '灯泡': ['dimmableLight','switch'],
+    // '开关': ['switch'],
+    '窗帘': ['curtain'],
+    '插座': ['outlet'],
+    '监控': ['monitor'],
+    '门锁': ['lock'],
+    '红外宝': ['infrared'],
+    '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
+    '场景开关': ['dimmableLight', 'curtain', 'switch'],
+  },
+  cores: [ 
+    [{
+      id: 'smartHome',
+      name: '智能家居',
+      disabled: true,
+      image: '/imgs/index/smartHome.png',
+      // url: '../second/smarthome/smarthome'
+      url: '../category/category'
+    },
+    {
+      id: 'bigData',
+      name: '大数据',
+      disabled: true,
+      image: '/imgs/index/bigData.png',
+      url: '../home/home'
+    },
+    {
+      id: 'smartHotel',
+      name: '智慧酒店',
+      disabled: true,
+      image: '/imgs/index/smartHotel.png',
+      url: '../second/hotel/hotel'
+      // url: '../category/category'
+    },
+    {
+      id: 'cloudAlert',
+      name: '云报警',
+      disabled: true,
+      image: '/imgs/index/cloudAlert.png',
+      // url: '../second/alert/alert'
+      url: '../category/category'
+    },
+    {
+      id: 'cloudFireControl',
+      name: '云消防',
+      disabled: true,
+      image: '/imgs/index/cloudFireControl.png',
+      // url: '../second/firecontrol/firecontrol'
+      url: '../category/category'
+    },
+    {
+      id: 'farm',
+      name: '智慧农场',
+      disabled: true,
+      image: '/imgs/index/farm.png',
+      // url: '../second/farm/farm'
+      url: '../category/category'
+    },
+    {
+      id: 'safeCity',
+      name: '平安城市',
+      disabled: true,
+      image: '/imgs/index/safeCity.png',
+      // url: '../second/s-city/s-city'
+      url: '../category/category'
+    },
+    {
+      id: 'smartCommunity',
+      name: '智慧社区',
+      disabled: true,
+      image: '/imgs/index/smartCommunity.png',
+      // url: '../second/community/community'
+      url: '../category/category'
+    },
+    {
+      id: 'smartSchool',
+      name: '智慧校园',
+      disabled: true,
+      image: '/imgs/index/smartSchool.png',
+      // url: '../second/school/school'
+      url: '../category/category'
+    },
+    {
+      id: 'smartOld',
+      name: '智慧养老',
+      disabled: true,
+      image: '/imgs/index/smartOld.png',
+      // url: '../second/old/old'
+      url: '../category/category'
+    },
+    {
+      id: 'smartOffice',
+      name: '智慧办公',
+      disabled: true,
+      image: '/imgs/index/smartOffice.png',
+      // url: '../second/office/office'
+      url: '../category/category'
+    },
+    {
+      id: 'smartCity',
+      name: '智慧城市',
+      disabled: true,
+      image: '/imgs/index/smartCity.png',
+      // url: '../second/city/city'
+      url: '../category/category'
+    },
+    {
+      id: 'artificialIntelligence',
+      name: '人工智能',
+      disabled: true,
+      image: '/imgs/index/artificialIntelligence.png',
+      // url: '../second/ai/ai'
+      url: '../category/category'
+    },
+    {
+      id: 'serviceSupport',
+      name: '服务支持',
+      disabled: true,
+      image: '/imgs/index/team.png',
+      url: '../second/support/support'
+    },
+    {
+      id: 'companyIntroduction',
+      name: '关于冠川',
+      disabled: true,
+      image: '/imgs/index/company.png',
+      url: '../second/company/company'
+    },
+    ],
+  ],
   alldevice:"所有设备",
   bulb:"灯泡",
   socket:"插座",
   curtain:"窗帘",
   sensor:"传感器",
   swi:"开关",
+  monitor:"监控",
+  lock:"门锁",
   othertypes:"其他类型",
+  scenetypes:"场景开关",
   temperature:"温度",
   humidity:"湿度",
+  infrared:"红外宝",
   name:"名称",
   success:"应用成功",
   failure:"应用失败",
-  introduce: "北京冠川智能技术股份有限公司是一家物联网智慧城市产品的研发、设计、生产、销售和服务为一体的多元化高科技企业。公司产品涉及物联网智能家居控制系统，物联网智慧农业控制系统，物联网防盗报警系统，IP/GPRS/PSTN多网互联控制系统，周界防范报警系统，互联网视频监控系统，城市反恐系统等系列高科技产品。冠川智能以科技发展为导向，注重技术创新，在中国北京和深圳分别设立了技术研发中心，凭借雄厚的专业技术人才和国际化合作伙伴的支持，以及中国科学院半导体研究所的强大后盾。冠川智慧家居实现了智能家电、智能窗帘、 智能灯光、背景音乐、智能安防、视频监控、门禁控制、环境监测、健康医疗等设备的智能化管理，让您无论身在何地，都可以随心所欲管理您的家，让您的生活更加健康、舒心、便捷和安全。冠川在业内率先通过了ISO9001国际质量管理体系认证。产品经国家公安部检测中心检验合格，全面通过CCC、CE、FCC和RoHS等国际认证。公司产品已远销欧洲、亚洲、美洲、非洲及中东等50多个国家和地区，同CROSS、中国石油、中国石化等国际知名企业建立了长期的合作关系，冠川作为中国安全防范行业协会会员单位和深圳市安全防范行业协会会员单位，连续多年荣获'中国消费者满意名特优品牌'、'平安城市建设推荐品牌'、'产品质量用户信得过企业'等荣誉称号。",
-  welcome:"开启智能家居之旅"
+  welcome:"启动未来",
+  register: '注册',
+  email:'请输入邮箱',
+  phone:'请输入电话',
+  userreg:'用户注册',
+  failed:'登录失败',
+  failedmess:"未查询到相关信息，请您先注册",
+  del:'删除',
+  delmes: '确定要删除该条信息吗？',
+  loading:'登录中',
+  wrong:'获取失败'
+
 }
 
 module.exports = {

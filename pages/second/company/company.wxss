@@ -1,0 +1,65 @@
+/* pages/second/company/company.wxss */
+@import "../../tpls/base.wxss";
+
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.map_container{
+  position: absolute;
+  top: 10rpx;
+  bottom: 10rpx;
+  left: 10rpx;
+  right: 10rpx;
+}
+.map{
+  width: 100%;
+  height: 65%;
+}
+
+.detail{
+  position: absolute;
+  top: 65%;
+}
+
+.aboutUs {
+  display: flex; 
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 30rpx;
+  color: #27342b;
+}
+
+.address{
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 26rpx;
+  color: #27342b;
+  margin-left: 130rpx;
+}
+
+.aboutUs image {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 10rpx;
+}
+
+.gantch_code{
+  position: relative;
+  top: 90%;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.gantch_code image{
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.text_view{
+  font-size: 30rpx;
+  color: #27342b;
+}

@@ -1,0 +1,34 @@
+<!--pages/register/register.wxml-->
+<wxs src="../../utils/common.wxs" module="util"/>
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view class="register">
+  <image class="logo" src="/imgs/icon/logo.png"></image>
+  <!-- <text>{{content.userreg}}</text> -->
+  <form bindsubmit="register">
+  <view class="usercontainer">
+    <image src="/imgs/icon/email.png" class="icon"></image>
+    <input bindinput="getEmail" class="user" type="text" name="email" placeholder="{{content.email}}" />
+    <image wx:if="{{util.validateEmail(email)}}" src="/imgs/icon/right.png" class="emailinfo"></image>
+  <image wx:else src="/imgs/icon/wrong.png" class="emailinfo"></image>
+  </view>
+  <view class="usercontainer">
+    <image src="/imgs/icon/phone.png" class='icon'></image>
+    <input class="user" bindinput="getPhone" type="text" name="phone" placeholder="{{content.phone}}" />
+       <image wx:if="{{util.validatePhone(phone)}}" src="/imgs/icon/right.png" class="emailinfo"></image>
+  <image wx:else src="/imgs/icon/wrong.png" class="emailinfo"></image>
+  </view>
+  
+  <view class="usercontainer">
+    <image src="/imgs/icon/address.png" class='icon'></image>
+    <picker bindchange="changeRegin" mode="region" value="{{region}}">
+      <view class="user address">{{region[0]}} - {{region[1]}} - {{region[2]}}</view>
+    </picker>
+  </view>
+
+  <!-- <view hidden="{{err==null}}" class="err">{{err}}</view> -->
+  <button class="btn" form-type='submit' key='value' disabled="{{util.validateEmail(email)&&util.validatePhone(phone)?false:true}}">{{content.register}}</button>
+    </form>
+</view>

@@ -1,0 +1,59 @@
+<template name="scene">
+  <view class="category-detail-box">
+
+    <view class="category-title">
+      <text>{{bannerTitle}}</text>
+    </view>
+
+    <scroll-view class="category-main" scroll-y>
+      <view class='category-main-view'>
+        <block wx:for="{{allSceneArr}}" wx:key="{{item.scene_id}}">
+          <!-- 下面存放单个设备的div  -->
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-sceneid="{{item.scene_id}}" data-scenename="{{item.sceneNickName}}"
+          data-parentid="{{item.parentName}}" bindtap="onSceneItemTap" bindlongpress="onSceneLongPress">
+            <view class='group-image'>
+              <image src='{{imgUrl["scene"]}}' mode="aspectFit"></image>
+            </view>
+            <view>{{item.sceneNickName}}</view>
+          </view>
+          <!-- end -->
+        </block>
+        <view class='category-goods-items'>
+          <view class='group-image'>
+            <image src='/imgs/icon/addScene.png' mode="aspectFit" bindtap='onAddScene'></image>
+          </view>
+          <view>添加场景</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<template name="scenecategory">
+  <view class="category-detail-box">
+    <view class="category-title">
+      <text>{{bannerTitle}}</text>
+    </view>
+    <scroll-view class="category-main" scroll-y>
+      <view class='category-main-view'>
+        <block wx:for="{{categoryProducts}}" wx:key="{{item.id}}">
+          <!-- 下面存放单个设备的div  -->
+          <view class="category-goods-items {{index%3==1?'middle':''}}" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}" bindtap="onDevicesItemTap" bindlongpress="onDeviceLongPress">
+
+            <view class='image_view'>
+              <block>
+                <image src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit"></image>
+              </block>
+            </view>
+              <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
+            <view wx:else class='devicename'>{{item.name}}</view>
+          </view>
+          <!-- end -->
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<template name="scenedetail">
+</template>

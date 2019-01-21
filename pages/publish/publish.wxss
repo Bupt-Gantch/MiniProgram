@@ -1,11 +1,14 @@
 /* pages/publish/publish.wxss */
+ @import "../tpls/roll/roll_tpl.wxss";
+ 
 page{
   width: 100%;
   height: 100%;
   font-size: 30rpx;
+  background-color: #fffef9
 }
 .container {
-  background-color: #f2f2f2;
+  background-color: #a8d3ba;
   min-height: 100%;
 }
 
@@ -22,10 +25,7 @@ swiper image {
 
 .search-view {
   opacity: 0.5;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
+  position:absolute;
   z-index: 500;
   width: 100%;
   height: 100rpx;
@@ -34,7 +34,7 @@ swiper image {
 }
 
 .search-content {
-  background: white;
+  background: #E3E3E3;
   width: 650rpx;
   display: flex;
   flex-direction: row;
@@ -56,17 +56,44 @@ swiper image {
 .search-input {
   width: 500rpx;
   font-size: 28rpx;
+  /* display:block */
 }
 
-/* .scroll-view{
-  height: 800rpx;
-} */
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
+
+.endbox{
+  align-content: center;
+  text-align: center;
+  color:#001f56
+}
+
+.endbox text::before, .endbox text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}
+
+.line{
+  height: 3rpx;
+  background-color:#001f56;
+  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
 
 .circle-float {
   position: fixed;
   display: flex;
   bottom: 10rpx;
-  right: 10rpx;
+  left: 10rpx;
   width: 89rpx;
   height: 89rpx;
 }
@@ -78,6 +105,7 @@ swiper image {
 
 .info-user{
   overflow: hidden;
+  margin-bottom: 20rpx
 }
 .info-pic{
   float: left;
@@ -92,38 +120,36 @@ swiper image {
 .info-name{
   font-size: 40rpx;
   font-weight: bold;
-  font-family: cursive;
-  color: #001F56;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7fbcd2;
 }
 
 .info-time{
   font-size: 25rpx;
-  color: rgb(67, 68, 68);
+  color: #7fbcd2;
 }
 
 .info-detail{
   word-break:break-all;
   font-size: 28rpx;
+  border-bottom: 10rpx
 }
 
-.div{
+.showPic{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.info-pictures{
+.showPic image{
   width: 32%;
-}
-
-.info-pictures image{
-  width: 100%;
-  padding: 5rpx;
+  height: 200rpx;
+  padding-right: 8rpx 
 }
 
 .info-place{
   font-size: 25rpx;
-  color: rgb(67, 68, 68);
+  color: #7fbcd2;
 }
 
 .info-up{
@@ -143,7 +169,7 @@ swiper image {
 
 .info-uc{
   float: right;
-    display: flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -160,12 +186,18 @@ swiper image {
 
 .comments{
   font-size: 25rpx;
-  color: rgb(67, 68, 68);
+  color: #000;
+}
+
+.comment-name{
+  font-size: 30rpx;
+  font-family: cursive;
+  color: #7fbcd2;
 }
 
 .comment-box input{
   width:100%;
-  height: 30rpx;
-  border: 1rpx solid rgb(174, 200, 247);
+  height: 20rpx;
+  border: 1rpx solid gray;
   border-radius: 10rpx;
 }

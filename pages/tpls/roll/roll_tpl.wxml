@@ -1,0 +1,17 @@
+<template name="roll">
+  <block>
+    <swiper autoplay interval="0" duration="5000" circular="true">
+      <swiper-item wx:for="{{news}}" wx:key="item">
+        <view class='reds'>{{item.title}}
+        </view>
+      </swiper-item>
+    </swiper>
+  </block>
+</template>
+
+<template name='netAlert'>
+  <view class='netStatus'>
+    <image src='/imgs/icon/alert.png'></image>
+    <text>当前网络不可用，请检查您的网络设置</text>
+  </view>
+</template>

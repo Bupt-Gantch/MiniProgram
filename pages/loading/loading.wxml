@@ -1,17 +1,10 @@
 <!--pages/loading/loading.wxml-->
-<swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
-  <block wx:for="{{imgUrls}}">
-    <swiper-item>
-      <image src="{{item}}" class="slide-image" width="355" height="150" />
-    </swiper-item>
-  </block>
-</swiper>
-<scroll-view class='scroll-view' scroll-y="true">
-{{content.introduce}}
-</scroll-view>
-
+<import src="../tpls/roll/roll_tpl.wxml" />
+  <view wx:if="{{!netStatus}}">
+    <template is="netAlert"/>
+  </view>
 <view class="enter-container">
-  <button plain="true" class="enter-button" type='primary' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">{{content.welcome}}
+  <button class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>
+    <image src="/imgs/swiper/logo.png" class="poster-image" mode="scaleToFill"></image>
   </button>
-      <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
 </view>
