@@ -1,6 +1,3 @@
 /* pages/second/alert/alert.wxss */
 @import "../../tpls/base.wxss";
-page{
-    width: 100%;
-    height: 100%;
-  }
+@import "../../tpls/staticSecondPage/staticSecondPage.wxss";
