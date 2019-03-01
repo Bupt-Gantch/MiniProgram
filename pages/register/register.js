@@ -102,10 +102,17 @@ Page({
               })
             }, 1000)
           } else {
-            wx.showModal({
-              title: '注册失败',
-              content: '请重新注册',
-            })
+            if (res.resultMsg==="phone number already exist!"){
+              wx.showModal({
+                title: '注册失败',
+                content: '手机号码已被注册',
+              })
+            }else{
+              wx.showModal({
+                title: '注册失败',
+                content: '请重新注册',
+              })
+            }
           }
       }, 1000)
     })

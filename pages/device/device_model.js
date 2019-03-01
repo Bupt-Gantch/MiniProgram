@@ -12,7 +12,7 @@ class Device extends Base {
   getDeviceInfo(id, callback) {
     var param = {
       url: `deviceaccess/device/${id}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -23,7 +23,7 @@ class Device extends Base {
   getAllSonDevices(parentdeviceId, callback) {
     var param = {
       url: `deviceaccess/parentdevices/${parentdeviceId}?limit=1000`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -35,7 +35,7 @@ class Device extends Base {
       url: 'deviceaccess/device',
       method: 'POST',
       data: param,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -46,7 +46,7 @@ class Device extends Base {
   getlatestData(deviceId, callback) {
     var param = {
       url: `deviceaccess/data/alllatestdata/${deviceId}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -67,7 +67,7 @@ class Device extends Base {
     delete data['deviceArr'];
     delete data['transforms'];
     // if (deviceArr.length!=0){
-    deviceArr.forEach(function (element, index) {
+    deviceArr.forEach(function(element, index) {
       var _data = {};
       var serviceName = '';
       if (element.deviceType === "curtain") {
@@ -79,7 +79,7 @@ class Device extends Base {
       };
       that.getDeviceAttr(element.id)
         //获取设备属性
-        .then(function (res) {
+        .then(function(res) {
           if (res) {
             _data.attr = res;
             var triad = {
@@ -98,7 +98,7 @@ class Device extends Base {
           }
         })
         //获取设备服务
-        .then(function (res) {
+        .then(function(res) {
           if (res) {
             var abilityDes = null;
             for (let i = 0; i < res.length; i++) {
@@ -113,7 +113,7 @@ class Device extends Base {
             var serviceBody = abilityDes.serviceBody;
             var params = serviceBody.params;
             //根据键值查设备属性值
-            var getAttrVal = function (key, list) {
+            var getAttrVal = function(key, list) {
               for (let i = 0; i < list.length; i++) {
                 if (list[i].key == key)
                   return list[i].value;
@@ -124,7 +124,7 @@ class Device extends Base {
               serviceName: abilityDes.serviceName,
               methodName: serviceBody.methodName
             };
-            params.forEach(function (e) {
+            params.forEach(function(e) {
               body[e.key] = getAttrVal(e.key, _data.attr);
             });
             for (var p in body) {
@@ -165,7 +165,7 @@ class Device extends Base {
             console.log(transform);
             transforms.push(transform);
             if (index === deviceArr.length - 1) {
-              setTimeout(function () {
+              setTimeout(function() {
                 data.transforms = transforms;
                 return that.createRule(data);
               }, 2000)
@@ -197,15 +197,15 @@ class Device extends Base {
   createRule(param, callback) {
     console.log(param);
     var that = this;
-    var p = new Promise(function (resolve, reject) {
+    var p = new Promise(function(resolve, reject) {
       var params = {
         url: `smartruler/add`,
         data: param,
         method: 'POST',
-        sCallback: function (res) {
+        sCallback: function(res) {
           resolve && resolve(res);
         },
-        fCallback: function (err) {
+        fCallback: function(err) {
           reject && reject(err);
         }
       }
@@ -217,22 +217,22 @@ class Device extends Base {
   //创建规则接口
   createRule1(param, callback) {
     console.log(param);
-      var params = {
-        url: `smartruler/add`,
-        data: param,
-        method: 'POST',
-        sCallback: function (data) {
-          callback && callback(data);
-        }
+    var params = {
+      url: `smartruler/add`,
+      data: param,
+      method: 'POST',
+      sCallback: function(data) {
+        callback && callback(data);
       }
-      this.request(params);
+    }
+    this.request(params);
   }
 
   //通过网关ID获得规则接口
   getRulesByGatewayId(gatewayId, callback) {
     var param = {
       url: `smartruler/ruleByGateway/${gatewayId}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -243,7 +243,7 @@ class Device extends Base {
   getAlarmActiveRule(gatewayId, callback) {
     var param = {
       url: `smartruler/alarmActiveRule/${gatewayId}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -254,7 +254,7 @@ class Device extends Base {
   activateAlarmRule(gatewayId, callback) {
     var param = {
       url: `smartruler/alarmRule/activate/${gatewayId}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -265,7 +265,7 @@ class Device extends Base {
   suspendAlarmRule(gatewayId, callback) {
     var param = {
       url: `smartruler/alarmRule/suspend/${gatewayId}`,
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -278,7 +278,7 @@ class Device extends Base {
       url: `wechatPost/follow`,
       data: param,
       method: 'POST',
-      sCallback: function (data) {
+      sCallback: function(data) {
         callback && callback(data);
       }
     };
@@ -292,16 +292,16 @@ class Device extends Base {
 
   getService(triad) {
     var that = this;
-    var p = new Promise(function (resolve, reject) {
+    var p = new Promise(function(resolve, reject) {
       var manufacture = triad.manufacture;
       var deviceType = triad.deviceType;
       var model = triad.model;
       var param = {
         url: `servicemanagement/ability/${manufacture}/${deviceType}/${model}`,
-        sCallback: function (res) {
+        sCallback: function(res) {
           resolve && resolve(res);
         },
-        fCallback: function (err) {
+        fCallback: function(err) {
           reject && reject(err);
         }
       }
@@ -318,13 +318,13 @@ class Device extends Base {
    */
   getDeviceAttr(deviceId) {
     var that = this;
-    var p = new Promise(function (resolve, reject) {
+    var p = new Promise(function(resolve, reject) {
       var param = {
         url: `deviceaccess/allattributes/${deviceId}`,
-        sCallback: function (res) {
+        sCallback: function(res) {
           resolve && resolve(res);
         },
-        fCallback: function (err) {
+        fCallback: function(err) {
           reject && reject(err);
         }
       }
@@ -341,15 +341,15 @@ class Device extends Base {
   sendControl(deviceId, requestId, body) {
     //body可以是对象
     var that = this;
-    var p = new Promise(function (resolve, reject) {
+    var p = new Promise(function(resolve, reject) {
       var param = {
         url: 'deviceaccess/rpc/' + deviceId + '/' + requestId,
         method: 'POST',
         data: body,
-        sCallback: function (res) {
+        sCallback: function(res) {
           resolve && resolve(res);
         },
-        fCallback: function (err) {
+        fCallback: function(err) {
           reject && reject(err);
         }
       };
@@ -367,7 +367,8 @@ class Device extends Base {
     var serviceName = data.serviceName;
     this.getDeviceAttr(data.deviceId)
       //获取设备属性
-      .then(function (res) {
+      .then(function(res) {
+        console.log(res);
         if (res) {
           _data.attr = res;
           return that.getService(data.triad);
@@ -379,10 +380,10 @@ class Device extends Base {
             // mask: true
           });
         }
-
       })
       //获取设备服务
-      .then(function (res) {
+      .then(function(res) {
+        console.log(res);
         if (res) {
           var abilityDes = null;
           for (let i = 0; i < res.length; i++) {
@@ -392,13 +393,14 @@ class Device extends Base {
               abilityDes = _abilityDes;
               break;
             }
+
           }
           _data.service = abilityDes;
           var serviceBody = abilityDes.serviceBody;
           var params = serviceBody.params;
 
           //根据键值查设备属性值
-          var getAttrVal = function (key, list) {
+          var getAttrVal = function(key, list) {
             for (let i = 0; i < list.length; i++) {
               if (list[i].key == key)
                 return list[i].value;
@@ -409,18 +411,18 @@ class Device extends Base {
             serviceName: abilityDes.serviceName,
             methodName: serviceBody.methodName
           }
-          params.forEach(function (e) {
+          params.forEach(function(e) {
             body[e.key] = getAttrVal(e.key, _data.attr);
           });
           for (let key in body) {
             if (data.npassword != undefined) {
               if (key === 'status') {
                 body[key] = data.value;
-              } if (key === 'password') {
+              }
+              if (key === 'password') {
                 body[key] = data.npassword;
               }
-            }
-            else if (body[key] === undefined) {
+            } else if (body[key] === undefined) {
               body[key] = data.value;
               break;
             }

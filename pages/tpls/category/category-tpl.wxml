@@ -50,7 +50,7 @@
                 <switch checked='{{statusTable[item.id]}}' wx:if="{{item.deviceType=='switch'||item.deviceType=='outlet'||item.deviceType=='dimmableLight'}}" bindchange="switchChange" data-deviceinfo="{{item}}" />
               </view>
             </view>
-            <view wx:if="{{statusTableOne[item.id]}}" class='online'></view>
+            <view wx:if="{{gatewayStatus=='online'&&statusTableOne[item.id]}}" class='online'></view>
             <view wx:else class='offline'></view>
             <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
             <view wx:else class='devicename'>{{item.name}}</view>
@@ -71,7 +71,8 @@
       <text>{{bannerTitle}}</text>
     </view>
     <view class='title-alarm'>
-      长按网关，显示该网关下设备
+    {{message}}
+      <!-- 长按网关，显示该网关下设备 -->
     </view>
     <scroll-view class="category-main" scroll-y>
       <view class='category-main-view'>
@@ -81,12 +82,12 @@
             <view class='image_switch'>
               <block>
                 <view wx:if="{{item.customerId===customerId}}">
-                  <image wx:if="{{item.name!=gatewayName}}" src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
-                  <image wx:else src='{{gatewayImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                  <image wx:if="{{item.name!=gatewayName}}" src='{{imgUrl[item.deviceType]?imgUrl[item.deviceType]:imgUrl["default"]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}" data-gatewaystatus="{{item.status}}"></image>
+                  <image wx:else src='{{gatewayImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}" data-gatewaystatus="{{item.status}}"></image>
                 </view>
                 <view wx:else>
-                  <image wx:if="{{item.name!=gatewayName}}" src='{{gatewayImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
-                  <image wx:else src='{{gatewayImg[3]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                  <image wx:if="{{item.name!=gatewayName}}" src='{{gatewayImg[1]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}" data-gatewaystatus="{{item.status}}"></image>
+                  <image wx:else src='{{gatewayImg[3]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}" data-gatewaystatus="{{item.status}}"></image>
                 </view>
               </block>
               <view class='switch'>
@@ -94,8 +95,8 @@
               </view>
             </view>
 
-            <view class='online'></view>
-            <!-- <view wx:else class='offline'></view> -->
+            <view wx:if="{{item.status=='online'}}" class='online'></view>
+            <view wx:else class='offline'></view>
 
             <view wx:if="{{item.nickname}}" class='devicename'>{{item.nickname}}</view>
             <view wx:else class='devicename'>{{item.name}}</view>

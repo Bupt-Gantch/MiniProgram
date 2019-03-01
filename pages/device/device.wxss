@@ -1,4 +1,5 @@
 @import "../tpls/base.wxss";
+@import "../tpls/category/category-tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
  @import "../tpls/roll/roll_tpl.wxss";
 
@@ -137,12 +138,22 @@ page{
   flex-direction:row;
 }
 
+.viewfooter{
+   display:flex;
+   justify-content: center;
+}
+
 .view_footer button {
   background-color: #a8d3ba;
   color: #f9f9f9;
   padding: 0rpx 0;
   font-family: "Microsoft Yahei";
   margin: 30rpx;
+}
+
+.disarming{
+  background-color: red;
+  color: #f9f9f9;
 }
 
 .detailview {
@@ -209,4 +220,13 @@ page{
   right: 0rpx;
   width: 30rpx;
   height: 30rpx;
+}
+
+.deployment{
+  color: green;
+  font-size: 30rpx;
+}
+.unDeployment{
+  color: red;
+  font-size: 30rpx;
 }

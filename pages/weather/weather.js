@@ -19,11 +19,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var content = app.getLanuage(app.globalData.language);
     this.setData({
-      netStatus: app.globalData.netStatus
+      netStatus: app.globalData.netStatus,
+      content: app.getLanuage(app.globalData.language),
+      chooseCity: content.chooseCity,
+      searchWea: content.searchWea,
     });
     var currentcity = options.currentcity;
-    if (currentcity == '重新加载' || currentcity == undefined) {
+    if (currentcity == '重新加载' || currentcity == undefined||currentcity == 'Reload') {
     } else {
       var param = {
         location: currentcity,
@@ -69,9 +73,10 @@ Page({
     weather.getWeather(param, (res) => {
       console.log(res);
       if (res.data.status == 'No result available'){
+        var currentTem = this.data.content.currentTem;
         this.setData({
           showWeather: true,
-          currentTem: '查无结果',
+          currentTem: currentTem,
           today: '',
           weatherData: [],
         })

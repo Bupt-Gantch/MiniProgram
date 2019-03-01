@@ -1,9 +1,10 @@
 /* pages/ruleDetail/ruleDetail.wxss */
 @import "../tpls/base.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
 
 .curtain-btn{
-  width:95%;
+  width:100%;
   height:200rpx;
   display:flex;
   text-align:center;
@@ -26,4 +27,23 @@
   border-bottom: 3rpx solid #ec5300;
   font-size: 45rpx;
   color: #ec5300;
+}
+
+.suspendRule{
+  background-color: red;
+  color: #f9f9f9;
+}
+
+.ruleActivateStatus{
+  display: flex;
+  justify-content: center;
+  color: green;
+  font-size: 30rpx;
+}
+
+.ruleSuspendStatus{
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: 30rpx;
 }

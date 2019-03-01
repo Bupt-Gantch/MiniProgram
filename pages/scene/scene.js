@@ -20,10 +20,10 @@ Page({
     statusTable: {},
     switchOnImg: Config.switchOnUrl,
     requestId: 1000000, //请求id100w 递减
-    categoryName: Config.categoryName,
-    categoryType: Config.categoryType,
+    // categoryName: Config.categoryName,
+    // categoryType: Config.categoryType,
     categoryTypeArray: Config.categoryTypeArray,
-    sceneType: Config.secneType,
+    // sceneType: Config.secneType,
 
     showBulb1: false,
     showBulb2: false,
@@ -39,18 +39,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var content = app.getLanuage(app.globalData.language);
     var sceneName = options.sceneName;
     var parentdeviceId = app.globalData.gatewayId;
-      this.setData({
-        bannerTitle: sceneName,
-        parentdeviceId: parentdeviceId
-      })
-      console.log(parentdeviceId);
+    this.setData({
+      bannerTitle: sceneName,
+      parentdeviceId: parentdeviceId,
+      categoryName: content.categoryName,
+      categoryType: content.categoryType,
+      sceneType: content.scenetypes
+    })
+    console.log(parentdeviceId);
     this._loadCateDevices(parentdeviceId)
-  }, 
+  },
 
   //load所有场景设备
-  _loadCateDevices: function (parentdeviceId) {
+  _loadCateDevices: function(parentdeviceId) {
     var _this = this
     scene.getAllSonDevices(parentdeviceId, (data) => {
       console.log(data);
@@ -58,7 +62,7 @@ Page({
         categoryAllDevices: data
       });
       /*========获取场景开关设备=============*/
-      var currentType = this.data.sceneType[0];
+      var currentType = this.data.sceneType;
       var _arrayType = this.data.categoryType[currentType];
       var typeDevices = new Array();
 
@@ -68,7 +72,7 @@ Page({
         }
       });
       this.setData({
-        sceneDevices:typeDevices
+        sceneDevices: typeDevices
       })
     });
   },
@@ -179,15 +183,15 @@ Page({
     for (var key in question) {
       if (key[0] === 'd')
         deviceArr.push(question[key]);
-      if(key[0] === 's')
+      if (key[0] === 's')
         switchArr.push(question[key])
     };
-    deviceArr.forEach(function(element,index){
-      if(element.length!=0){
+    deviceArr.forEach(function(element, index) {
+      if (element.length != 0) {
         var data1;
-        if (switchArr[index]){
+        if (switchArr[index]) {
           data1 = 1
-        }else{
+        } else {
           data1 = 0
         }
         var sceneDevice = {
@@ -215,25 +219,25 @@ Page({
         "sceneInfo": sceneDevicesArray,
       }
       sceneDevicesArray = [];
-        scene.addscene(sceneType, (res) => {
-          if (res === "success") {
-            wx.showToast({
-              title: '创建成功',
-              duration: 2000,
+      scene.addscene(sceneType, (res) => {
+        if (res === "success") {
+          wx.showToast({
+            title: '创建成功',
+            duration: 2000,
+          })
+          setTimeout(function() {
+            wx.navigateBack({
+              url: '../category/category',
             })
-            setTimeout(function() {
-              wx.navigateBack({
-                url: '../category/category',
-              })
-            }, 1000)
-          } else {
-            wx.showToast({
-              title: '创建失败',
-              icon: 'none',
-              duration: 2000
-            })
-          }
-        })
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: '创建失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
     }
   }
 })

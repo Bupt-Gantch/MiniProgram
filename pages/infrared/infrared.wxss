@@ -1,0 +1,46 @@
+/* pages/infrared/infrared.wxss */
+@import "../tpls/roll/roll_tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
+
+image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.view-main {
+  margin: 0 auto;
+  margin-top:10rpx;  
+  width: 85%;
+  border: 2rpx solid;
+  border-radius: 20rpx 20rpx;
+}
+
+.view-top{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx;
+}
+
+.view-top-img{
+  margin: 50rpx 100rpx;
+  font-size: 30rpx;
+  font-family: cursive;
+  text-align: center;
+}
+
+.view-middle-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-middle-img image{
+  margin: 0 60rpx;
+}
+
+.view-down{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

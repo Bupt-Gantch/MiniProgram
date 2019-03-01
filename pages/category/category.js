@@ -9,7 +9,7 @@ var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var category = new Category();
 const app = getApp();
-
+ 
 Page({
 
   /**
@@ -33,7 +33,7 @@ Page({
     // sceneGroup: ['分组', '场景'],
     // gatewayGroup: ['所有网关'],
     showModal: false,
-    content: {
+    content1: {
       title: "创建设备组",
       placeholder: "请输入设备组名"
     },
@@ -63,7 +63,6 @@ Page({
     var customerId = app.globalData.customerId;
     var content = app.getLanuage(app.globalData.language);
     var name = content.gatewayGroup[0]; 
-    console.log(customerId);
     this.setData({
       categoryName: content.categoryName,
       gatewayGroup: content.gatewayGroup,
@@ -72,10 +71,12 @@ Page({
       currentTabsIndex: -2,
       currentBottomIndex: -2,
       customerId: customerId,
-      netStatus: app.globalData.netStatus
+      netStatus: app.globalData.netStatus,
+      content: content,
+      message: content.gatewayMessage,
     });
     this._loadBaannerTitle(name);
-    this._loadGateway();
+    this._loadAllGateway();
   },
 
   onHide: function() {
@@ -102,157 +103,75 @@ Page({
   },
 
   //加载所有网关
-  _loadGateway: function() {
+  _loadAllGateway: function () {
     var _this = this;
-    var gatewayList = new Array();
     var customerId = app.globalData.customerId;
-    this.setData({
-      customerId: customerId
-    });
-    var param = {
-      customerid: customerId
+    var data = {
+      customerId: this.data.customerId
     };
     this.setData({
+      customerId: customerId,
       netStatus: app.globalData.netStatus
     });
-    category.getShareGateway(param, (res) => {
-      console.log(res);
-      var answer = res.data;
-      if (res.status === "success"&&answer.length!=0&&answer!=undefined) {
-        console.log(res.data);
-        var gatewayFirst = res.data;
-        gatewayFirst.forEach(function(e, index) {
-          var gatewayData = e.split(",")
-          if (gatewayData.length != 0) {
-            gatewayData.forEach(function(element) {
-              if (element != "") {
-                category.getDeviceById(element, (res) => {
-                  if (res.id != undefined) {
-                    gatewayList.push(res);
-                  };
-                  _this.setData({
-                    gatewayDevice: gatewayList
-                  });
-                  if (gatewayList.length >= 1) {
-                    if (app.globalData.gatewayName != null) {
-                      _this.setData({
-                        gatewayName: app.globalData.gatewayName,
-                        parentdeviceId: app.globalData.gatewayId
-                      });
-                      _this._loadAllGroup();
-                      _this._loadAllScene(app.globalData.gatewayName);
-                      _this._loadCateDevices(0);
-                    } else {
-                      app.globalData.gatewayName = gatewayList[0].name;
-                      app.globalData.gatewayId = gatewayList[0].id;
-                      app.globalData.gatewayCustomerId = gatewayList[0].customerId;
-                      _this.setData({
-                        gatewayName: gatewayList[0].name,
-                        parentdeviceId: gatewayList[0].id
-                      });
-                      _this._loadAllGroup();
-                      _this._loadAllScene(gatewayList[0].name);
-                      _this._loadCateDevices(0);
-                    }
-                  }
-                })
-              }
-            })
-          };
-          if (gatewayFirst.length - 1 == index) {
-            category.getAllDevices(customerId, (res) => {
-              res.data.forEach(function(element) {
-                if (element.deviceType === "Gateway") {
-                  gatewayList.push(element)
-                }
-              });
+    var gatewayList = new Array();
+    category.getAllGateway(data, (res) => {
+      var arr = Object.keys(res);
+      var len = arr.length;
+      let flag = 0;
+      if (len == 0) {
+        this.setData({
+          message: this.data.content.noGateway,
+        })
+        wx.showToast({
+          title: '您还没有任何网关',
+          icon: 'none',
+          duration: 2000,
+        })
+        _this.setData({
+          categoryAllDevices: null,
+          gatewayName: null,
+          parentdeviceId: null,
+        })
+        app.globalData.gatewayName = null;
+        app.globalData.gatewayId = null;
+        app.globalData.gatewayCustomerId = null;
+        app.globalData.gatewayStatus = "online";
+        _this._loadCateDevices(0);
+      } else {
+        for (var id in res) {
+          let status = res[id];
+          category.getDeviceById(id, (result) => {
+            flag++;
+            result.status = status;
+            gatewayList.push(result);
+            if (flag == len) {
               _this.setData({
                 gatewayDevice: gatewayList
-              })
-              if (gatewayList.length >= 1) {
-                if (app.globalData.gatewayName != null) {
-                  _this.setData({
-                    gatewayName: app.globalData.gatewayName,
-                    parentdeviceId: app.globalData.gatewayId
-                  });
-                  _this._loadAllGroup();
-                  _this._loadAllScene(app.globalData.gatewayName);
-                  _this._loadCateDevices(0);
-                } else {
-                  app.globalData.gatewayName = gatewayList[0].name;
-                  app.globalData.gatewayId = gatewayList[0].id;
-                  app.globalData.gatewayCustomerId = gatewayList[0].customerId;
-                  _this.setData({
-                    gatewayName: gatewayList[0].name,
-                    parentdeviceId: gatewayList[0].id
-                  });
-                  _this._loadAllGroup();
-                  _this._loadAllScene(gatewayList[0].name);
-                  _this._loadCateDevices(0);
-                }
-              } else if (gatewayList.length == 0) {
-                // wx.showToast({
-                //   title: '您还没有绑定任何网关',
-                //   icon: 'none',
-                //   duration: 2000
-                // });
-                _this.setData({
-                  categoryAllDevices: null,
-                  gatewayName: null,
-                  parentdeviceId: null,
-                })
-                app.globalData.gatewayName = null;
-                app.globalData.gatewayId = null;
-                app.globalData.gatewayCustomerId = null;
-                _this._loadCateDevices(0);
-              }
-            });
-          }
-        })
-      } else {
-        category.getAllDevices(customerId, (res) => {
-          res.data.forEach(function(element) {
-            if (element.deviceType === "Gateway") {
-              gatewayList.push(element)
-            }
-          });
-          _this.setData({
-            gatewayDevice: gatewayList
-          })
-          if (gatewayList.length >= 1) {
-            if (app.globalData.gatewayName != null) {
-              _this.setData({
-                gatewayName: app.globalData.gatewayName,
-                parentdeviceId: app.globalData.gatewayId
               });
+              if (app.globalData.gatewayName != null) {
+                _this.setData({
+                  gatewayName: app.globalData.gatewayName,
+                  parentdeviceId: app.globalData.gatewayId,
+                  gatewayStatus: app.globalData.gatewayStatus,
+                });
+              } else {
+                app.globalData.gatewayName = gatewayList[0].name;
+                app.globalData.gatewayId = gatewayList[0].id;
+                app.globalData.gatewayCustomerId = gatewayList[0].customerId;
+                app.globalData.gatewayStatus = gatewayList[0].status;
+                _this.setData({
+                  gatewayName: gatewayList[0].name,
+                  parentdeviceId: gatewayList[0].id,
+                  gatewayStatus: gatewayList[0].status,
+                });
+              }
               _this._loadAllGroup();
               _this._loadAllScene(app.globalData.gatewayName);
               _this._loadCateDevices(0);
-            } else {
-              app.globalData.gatewayName = gatewayList[0].name;
-              app.globalData.gatewayId = gatewayList[0].id;
-              app.globalData.gatewayCustomerId = gatewayList[0].customerId;
-              _this.setData({
-                gatewayName: gatewayList[0].name,
-                parentdeviceId: gatewayList[0].id
-              });
-              _this._loadAllGroup();
-              _this._loadAllScene(gatewayList[0].name);
-              _this._loadCateDevices(0);
             }
-          } else if (gatewayList.length == 0) {
-            _this.setData({
-              categoryAllDevices: null,
-              gatewayName: null,
-              parentdeviceId: null,
-            })
-            app.globalData.gatewayName = null;
-            app.globalData.gatewayId = null;
-            app.globalData.gatewayCustomerId = null;
-            _this._loadCateDevices(0);
-          }
-        });
-      };
+          })
+        }
+      }
     });
   },
 
@@ -268,7 +187,7 @@ Page({
       var id = JSON.parse(data).deviceId;
       //收到服务器端发回数据，更新view层数据
       var sensorData = JSON.parse(data).data;
-      // console.log(sensorData);
+      console.log(sensorData);
       var newStatusTableOne = _this.data.statusTableOne;
       var newStatusTable = _this.data.statusTable;
       sensorData.forEach(function(e) {
@@ -285,7 +204,6 @@ Page({
             newStatusTable[id] = false;
           }
         };
-        // console.log(newStatusTable);
         _this.setData({
           statusTableOne: newStatusTableOne,
           statusTable: newStatusTable
@@ -296,7 +214,7 @@ Page({
   },
 
   //长按网关选定该网关
-  onGatewayLongPress: function(event) {
+  onGatewayLongPress: function (event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -304,20 +222,23 @@ Page({
     var parentdeviceId = event.target.dataset.deviceid;
     var gatewayName = event.target.dataset.deviceinfo.name;
     var gatewayCustomerId = event.target.dataset.deviceinfo.customerId;
+    var gatewayStatus = event.target.dataset.gatewaystatus;
     var param = {
       customerId: app.globalData.customerId,
       gatewayName: gatewayName
     }
     this.setData({
       parentdeviceId: parentdeviceId,
-      gatewayName: gatewayName
+      gatewayName: gatewayName,
+      gatewayStatus: gatewayStatus
     })
     category.getAllSonDevices(parentdeviceId, (res) => {
       app.globalData.gatewayName = gatewayName;
       app.globalData.gatewayId = parentdeviceId;
       app.globalData.gatewayCustomerId = gatewayCustomerId;
+      app.globalData.gatewayStatus = gatewayStatus;
       var allDevices = new Array();
-      res.forEach(function(element) {
+      res.forEach(function (element) {
         if (element.deviceType != "Gateway") {
           if (element.deviceType == "IASZone") {
             var model = element.model;
@@ -327,7 +248,6 @@ Page({
             allDevices.push(element);
           }
         };
-        console.log(allDevices);
         _this.data.statusTableOne[element.id] = true;
         var newStatusTableOne = _this.data.statusTableOne;
         _this.setData({
@@ -340,7 +260,7 @@ Page({
       _this._loadAllGroup();
       _this._loadAllScene(gatewayName);
       if (_this.data.socketTasks.length > 0) {
-        _this.data.socketTasks.forEach(function(e) {
+        _this.data.socketTasks.forEach(function (e) {
           e.close();
         });
         this.setData({
@@ -348,7 +268,7 @@ Page({
         })
       };
       wx.showToast({
-        title: '为您展现该网关下设备',
+        title: this.data.content.gatewayMessage1,
         icon: 'none',
         duration: 3000
       })
@@ -479,7 +399,7 @@ Page({
     var deviceid = event.target.dataset.deviceid;
     if (this.data.allGroupArr.length === 0) {
       wx.showToast({
-        title: '您还没有创建任何分组',
+        title: this.data.content.gatewayMessage2,
         icon: 'none'
       });
     } else {
@@ -524,11 +444,11 @@ Page({
     var groupId = this.data.pickeredGroup.id;
     category.assignDeviceToGroup(groupId, deviceId, (res) => {
       wx.showToast({
-        title: '应用成功',
+        title: this.data.content.applySuccess,
       });
     }, (err) => {
       wx.showToast({
-        title: '应用失败',
+        title: this.data.content.applyFailure,
         image: '../../imgs/icon/pay@error.png',
         duration: 1000,
         // mask: true
@@ -544,10 +464,8 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    console.log(event);
     var _this = this;
     var status = event.detail.value;
-    console.log(status);
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
@@ -575,7 +493,7 @@ Page({
           statusTable: newStatusTable
         });
         wx.showToast({
-          title: '应用成功',
+          title: this.data.content.applySuccess,
           icon: 'success',
           duration: 1000,
           // mask: true
@@ -587,7 +505,7 @@ Page({
           statusTable: newStatusTable
         });
         wx.showToast({
-          title: '应用失败',
+          title: this.data.content.applyFailure,
           image: '../../imgs/icon/pay@error.png',
           duration: 1000,
           // mask: true
@@ -600,12 +518,11 @@ Page({
         statusTable: newStatusTable
       });
       wx.showToast({
-        title: '应用失败',
+        title: this.data.content.applyFailure,
         image: '../../imgs/icon/pay@error.png',
         duration: 1000,
         // mask: true
       });
-      console.log(err);
     });
 
     this.data.requestId--;
@@ -633,7 +550,6 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    console.log(event.detail);
     var index = Number(category.getDataSet(event, 'index'));
     // var name = category.getDataSet(event, 'name');
     var index = Number(event.target.dataset.index);
@@ -643,7 +559,7 @@ Page({
       currentTabsIndex: index
     });
     this._loadBaannerTitle(name);
-    this._loadGateway();
+    this._loadAllGateway();
   },
 
   /**
@@ -671,7 +587,7 @@ Page({
     });
     category.createGroup(customerId, groupName, (res) => {
       wx.showToast({
-        title: '设备组创建成功',
+        title: this.data.content.createSuccess,
       });
       this._loadAllGroup();
     })
@@ -683,7 +599,7 @@ Page({
     });
     category.deleteGroup(groupId, (res) => {
       wx.showToast({
-        title: '设备组删除成功',
+        title: this.data.content.deleteSuccess,
       });
       this._loadAllGroup();
 
@@ -705,8 +621,8 @@ Page({
     var _this = this;
     var groupid = category.getDataSet(event, 'groupid');
     wx.showModal({
-      title: '删除设备分组',
-      content: '您确定要删除该设备分组吗？',
+      title: this.data.content.deleteGroup,
+      content: this.data.content.deleteGroupCertain,
       success: function(res) {
         if (res.confirm) {
           _this._deleteGroup(groupid);
@@ -743,7 +659,7 @@ Page({
     var submitGroupName = this.data.groupName.trim();
     if (submitGroupName === "") {
       wx.showToast({
-        title: '设备组名不能为空',
+        title: this.data.content.groupNameAlert,
         icon: 'none'
       })
     } else {
@@ -788,7 +704,7 @@ Page({
     var gatewayName = this.data.gatewayName;
     category.createScene(params, (res) => {
       wx.showToast({
-        title: '场景修改成功',
+        title: this.data.content.groupChanged,
       });
       this._loadAllScene(gatewayName);
     })
@@ -805,13 +721,13 @@ Page({
     category.deleteScene(sceneid, (res) => {
       if (res == "success") {
         wx.showToast({
-          title: '场景删除成功',
+          title: this.data.content.deleteSuccess,
           duration: 2000
         });
         this._loadAllScene(gatewayName);
       } else {
         wx.showToast({
-          title: '场景删除失败',
+          title: this.data.content.deleteFailure,
           icon: 'none',
           duration: 2000
         })
@@ -865,7 +781,6 @@ Page({
           sceneList: newSceneList
         });
       }
-      // console.log(newSceneList);
       this.setData({
         showDetail: true
       })
@@ -882,8 +797,8 @@ Page({
     var _this = this;
     var sceneid = category.getDataSet(event, 'sceneid');
     wx.showModal({
-      title: '删除场景',
-      content: '您确定要删除该场景吗？',
+      title: this.data.content.deleteScene,
+      content: this.data.content.deleteSceneCertain,
       success: function(res) {
         if (res.confirm) {
           _this._deleteScene(sceneid);
@@ -931,12 +846,12 @@ Page({
         category.bindSceneSelector(param, (res) => {
           if (res == "success") {
             wx.showToast({
-              title: '操作成功',
+              title: this.data.content.applySuccess,
               duration: 2000
             })
           } else {
             wx.showToast({
-              title: '操作失败',
+              title: this.data.content.applyFailure,
               icon: 'none',
               duration: 2000
             })
@@ -957,13 +872,13 @@ Page({
     category.useScene(sceneid, (res) => {
       if (res == "success") {
         wx.showToast({
-          title: '应用成功',
+          title: this.data.content.applySuccess,
           duration: 2000
         });
         this.onCancel();
       } else {
         wx.showToast({
-          title: '应用失败',
+          title: this.data.content.applyFailure,
           inco: 'none',
           duration: 2000
         })
@@ -1014,7 +929,7 @@ Page({
     var submitGroupName = this.data.sceneName.trim();
     if (submitGroupName === "") {
       wx.showToast({
-        title: '场景名不能为空',
+        title: this.data.content.sceneNameAlert,
         icon: 'none',
         duration: 2000
       })
@@ -1035,7 +950,7 @@ Page({
     var categoryAllDevices = this.data.categoryAllDevices
     if (categoryAllDevices === null || categoryAllDevices.length === 0) {
       wx.showToast({
-        title: '您还没有设备',
+        title: this.data.content.deviceNullAlert,
         icon: 'none',
         duration: 2000
       })
@@ -1060,11 +975,10 @@ Page({
     var index = category.getDataSet(event, 'index');
     var newAllDevices = this.data.categoryAllDevices;
     var parentdeviceId = this.data.parentdeviceId;
-    console.log(parentdeviceId);
     var gatewayName = this.data.gatewayName;
     wx.showModal({
-      title: '注意',
-      content: '删除设备后网关将与设备断开连接，请您慎重选择！',
+      title: this.data.content.attention,
+      content: this.data.content.deviceAlert,
       success(res) {
         if (res.confirm) {
           category.deleteDevice(deviceid, (res) => {
@@ -1088,7 +1002,7 @@ Page({
               })
             } else {
               wx.showToast({
-                title: '删除失败',
+                title: this.data.content.deleteFailure,
                 icon: 'none',
                 duration: 1000
               })
@@ -1107,10 +1021,10 @@ Page({
     var _this = this;
     var currentBottomIndex = this.data.currentBottomIndex;
     wx.showLoading({
-      title: '正在刷新设备...',
+      title: this.data.content.devicerefresh,
     })
     if (currentBottomIndex == -2) {
-      this._loadGateway();
+      this._loadAllGateway();
       setTimeout(function() {
         wx.hideLoading({
           success: function() {
@@ -1123,7 +1037,6 @@ Page({
       var parentdeviceId = this.data.parentdeviceId;
       var gatewayName = this.data.gatewayName;
       var currentTabIndex = this.data.currentTabsIndex;
-      console.log(parentdeviceId);
       var param = {
         customerId: app.globalData.gatewayCustomerId,
         gateway_user: gatewayName
@@ -1132,7 +1045,6 @@ Page({
 
       });
       category.getAllSonDevices(parentdeviceId, (res) => {
-        console.log(res);
         var allDevices = new Array();
         res.forEach(function(element) {
           if (element.deviceType != "Gateway") {

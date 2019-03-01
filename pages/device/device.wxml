@@ -14,6 +14,7 @@
         <image wx:elif="{{model == 'SMF'}}" src='{{iASZoneImg[1]}}' mode="aspectFit"></image>
         <image wx:elif="{{model == 'DOS'}}" src='{{iASZoneImg[3]}}' mode="aspectFit"></image>
         <image wx:elif="{{model == 'SOS'}}" src='{{iASZoneImg[4]}}' mode="aspectFit"></image>
+        <image wx:elif="{{model == 'GAS'}}" src='{{iASZoneImg[5]}}' mode="aspectFit"></image>
         <image wx:else="{{model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit"></image>
       </view>
       <view wx:else class='device-image'>
@@ -88,10 +89,17 @@
     </view>
   </block>
 
+  <!--gateway-->
   <block wx:if="{{deviceType === 'Gateway'}}">
-    <view wx:if="{{showButton}}" class='view_footer'>
-      <button wx:if="{{deployment}}" bindtap='deployment'>布防</button>
-      <button wx:else bindtap='disarming'>撤防</button>
+    <view wx:if="{{showButton}}" class='viewfooter'>
+      <!-- wx:if="{{deployment}}" -->
+      <!-- wx:else -->
+      <button type='primary' bindtap='deployment'>一键布防</button>
+      <view wx:if="{{deploymentStatus}}">
+      <view  class='deployment' wx:if="{{deployment}}">已布防</view>
+      <view  class='unDeployment' wx:else>未布防</view>
+      </view>
+      <button class="disarming" bindtap='disarming'>一键撤防</button>
     </view>
 
     <view class='detailview'>
@@ -108,10 +116,24 @@
     </view>
   </block>
 
-  <!-- <view class='history-data'>
-  </view> -->
-
-
+  <!-- infrared-->
+  <block wx:if="{{deviceType === 'infrared'||deviceType === 'newInfrared'}}">
+    <view class="category-detail-box">
+      <scroll-view class="category-main" scroll-y>
+        <view class='category-main-view'>
+          <block wx:for="{{infraredImg}}" wx:key="{{item.id}}">
+            <!-- 下面存放单个设备的div  -->
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="goToInfrared">
+              <view class='group-image'>
+                <image src='{{item.img}}' mode="aspectFit"></image>
+              </view>
+              <view class='devicename'>{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
 </view>
 
 <template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>

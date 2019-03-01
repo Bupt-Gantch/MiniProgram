@@ -1,0 +1,120 @@
+<!--pages/infrared/infrared.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<!-- <view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view> -->
+
+<!--空调-->
+<block wx:if="{{id=='1'}}">
+  <view class='view-main'>
+    <view class='view-top'>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[0].img}}'></image>
+        <view>{{conditionerImg[0].name}}</view>
+      </view>
+            <view class='view-top-img'>
+        <image src='{{conditionerImg[3].img}}'></image>
+        <view>{{conditionerImg[3].name}}</view>
+      </view>
+    </view>
+
+    <view class='view-top'>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[1].img}}'></image>
+        <view>{{conditionerImg[1].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[2].img}}'></image>
+        <view>{{conditionerImg[2].name}}</view>
+      </view>
+    </view>
+    <view class='view-top'>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[4].img}}'></image>
+        <view>{{conditionerImg[4].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[5].img}}'></image>
+        <view>{{conditionerImg[5].name}}</view>
+      </view>
+    </view>
+
+    <view class='view-top'>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[6].img}}'></image>
+        <view>{{conditionerImg[6].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{conditionerImg[7].img}}'></image>
+        <view>{{conditionerImg[7].name}}</view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!--电视-->
+<block wx:if="{{id=='2'}}">
+  <view class='view-main'>
+    <view class='view-top'>
+      <view class='view-top-img'>
+        <image src='{{tvImg[0].img}}'></image>
+        <view>{{tvImg[0].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{tvImg[1].img}}'></image>
+        <view>{{tvImg[1].name}}</view>
+      </view>
+    </view>
+    <view class='view-middle'>
+      <view class='view-middle-img'>
+        <image src='{{tvImg[2].img}}'></image>
+      </view>
+      <view class='view-middle-img'>
+        <image src='{{tvImg[4].img}}'></image>
+        <image src='{{tvImg[5].img}}'></image>
+      </view>
+      <view class='view-middle-img'>
+        <image src='{{tvImg[3].img}}'></image>
+      </view>
+    </view>
+    <view class='view-down'>
+      <view class='view-top-img'>
+        <image src='{{tvImg[6].img}}'></image>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{tvImg[7].img}}'></image>
+      </view>
+    </view>
+    <view class='view-down'>
+      <view class='view-top-img'>
+        <image src='{{tvImg[8].img}}'></image>
+        <view>{{tvImg[8].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{tvImg[9].img}}'></image>
+        <view>{{tvImg[9].name}}</view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!--机顶盒-->
+<block wx:if="{{id=='3'}}">
+  <view></view>
+  <view></view>
+  <view></view>
+</block>
+
+<!--DVD-->
+<block wx:if="{{id=='4'}}">
+  <view></view>
+  <view></view>
+  <view></view>
+</block>
+
+<!--自定义学习-->
+<block wx:if="{{id=='5'}}">
+  <view></view>
+  <view></view>
+  <view></view>
+</block>

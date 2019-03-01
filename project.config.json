@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 19,
+			"current": 20,
 			"list": [
 				{
 					"id": -1,
@@ -149,7 +149,13 @@
 				{
 					"id": -1,
 					"name": "company",
-					"pathName": "pages/second/company/company"
+					"pathName": "pages/second/company/company",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "infrared",
+					"pathName": "pages/infrared/infrared"
 				}
 			]
 		}

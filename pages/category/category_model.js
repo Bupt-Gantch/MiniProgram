@@ -18,6 +18,144 @@ class Category extends Base{
     this.request(param);
   }
 
+  /**==================获取所有网关============= */
+  /**
+   * 获取所有设备
+   */
+
+  getAllDevicesTest(customerId) {
+    var that = this;
+    var p = new Promise(function (resolve, reject) {
+      var param = {
+        url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
+        sCallback: function (res) {
+          resolve && resolve(res);
+        },
+        fCallback: function (err) {
+          reject && reject(err);
+        }
+      }
+      that.request(param);
+    })
+    return p;
+  }
+
+  /**
+   * 获取分享的网关
+   */
+  getShareGatewayTest(params) {
+    var that = this;
+    var p = new Promise(function (resolve, reject) {
+      var param = {
+        url: `account/getBinderGates`,
+        data: params,
+        method: 'POST',
+        sCallback: function (res) {
+          resolve && resolve(res);
+        },
+        fCallback: function (err) {
+          reject && reject(err);
+        }
+      }
+      that.request(param);
+    })
+    return p;
+  }
+
+  /**
+   * 根据设备id获取设备详情信息
+   */
+  getDeviceByIdTest(deviceid) {
+    var that = this;
+    var p = new Promise(function (resolve, reject) {
+      var param = {
+        url: 'deviceaccess/device/' + deviceid,
+        sCallback: function (res) {
+          resolve && resolve(res);
+        },
+        fCallback: function (err) {
+          reject && reject(err);
+        }
+      }
+      that.request(param);
+    })
+    return p;
+  }
+
+  //获取网关离线在线状态
+  getGatewayStatus(params) {
+    var that = this;
+    var p = new Promise(function (resolve, reject) {
+      var param = {
+        url: `deviceaccess/device/status/2`,
+        data: params,
+        method: 'POST',
+        sCallback: function (res) {
+          resolve && resolve(res);
+        },
+        fCallback: function (err) {
+          reject && reject(err);
+        }
+      }
+      that.request(param);
+    })
+    return p;
+  }
+
+  /**获取所有网关*/
+  getAllGateway(data, sCallback, fCallback) {
+    var that = this;
+    var param = {
+      customerid: data.customerId
+    };
+    var deviceIdArray = [];
+    var gatewayArray = [];
+    this.getShareGatewayTest(param)
+      //获取分享网关
+      .then(function (res) {
+        var answer = res.data;
+        if (res.status === "success" && answer.length != 0 && answer != undefined) {
+          var gatewayFirst = res.data;
+          gatewayFirst.forEach(function (e, index) {
+            var gatewayData = e.split(",")
+            if (gatewayData.length != 0) {
+              gatewayData.forEach(function (element) {
+                if (element != "") {
+                  deviceIdArray.push(element);
+                }
+              })
+            }
+          })
+        }
+        return that.getAllDevicesTest(data.customerId);
+      })
+      //获取所有设备
+      .then(function (res) {
+        res.data.forEach(function (element) {
+          if (element.deviceType === "Gateway") {
+            deviceIdArray.push(element.id)
+          }
+        });
+        var gatewayIdArray = {
+          "deviceId": deviceIdArray
+        };
+        return that.getGatewayStatus(gatewayIdArray);
+      })
+      //获取网关属性
+      .then(function (res) {
+        return res;
+      })
+      //获取网关状态
+      .then((res) => {
+        sCallback && sCallback(res);
+      })
+      .catch((err) => {
+        fCallback && fCallback(err);
+      });
+  }
+
+  /**=================测试end====================== */
+
 //获取所有子设备
   getAllSonDevices(parentdeviceId,callback){
     var param = {
@@ -130,6 +268,7 @@ class Category extends Base{
     this.getDeviceAttr(data.deviceId)
     //获取设备属性
     .then(function(res){
+      console.log(res);
       if(res){
         _data.attr = res;
         return that.getService(data.triad);
@@ -144,6 +283,7 @@ class Category extends Base{
     })
     //获取设备服务
     .then(function(res){
+      console.log(res);
       if(res){
         var abilityDes = JSON.parse(res[0].abilityDes);
         _data.service = abilityDes;
@@ -167,7 +307,7 @@ class Category extends Base{
           body[e.key] = getAttrVal(e.key,_data.attr);
         })
         body.status = data.status;
-
+        console.log(body);
         return that.sendControl(data.deviceId,data.requestId,body);
       }else{
         wx.showToast({

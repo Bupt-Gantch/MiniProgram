@@ -18,7 +18,7 @@ class Base {
       if (!params.method) {
         params.method = 'GET';
       }
-      console.log(params);
+      // console.log(params);
       wx.request({
         url: url,
         data: params.data,
@@ -45,8 +45,7 @@ class Base {
     }
   }
 
-  request_test(params) {
-    console.log(params);
+  request_test(params) { 
     if (!params.method) {
       params.method = 'GET';
     }

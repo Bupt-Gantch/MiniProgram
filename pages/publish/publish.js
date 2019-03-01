@@ -30,6 +30,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(option) {
+  },
+
+  onShow: function() {
     info = [];
     /**
      * 通过后台服务器获取数据
@@ -41,13 +44,6 @@ Page({
       end: false
     })
     this._loadInfoList(page)
-  },
-
-  onShow: function() {
-      this.setData({
-        netStatus: app.globalData.netStatus,
-        content: app.getLanuage(app.globalData.language),
-      })
   },
 
   /**
@@ -169,9 +165,7 @@ Page({
         nickName: app.globalData.userInfo.nickName,
         avator: app.globalData.userInfo.avatarUrl,
       };
-      console.log(addUp);
       publish.addUp(addUp, (res) => {
-        console.log(res);
         if(res===1){
         var index = e.currentTarget.dataset.index;
         this.data.infolist[index].favoritenum++;

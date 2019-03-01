@@ -1,5 +1,6 @@
 /* pages/publish/publish.wxss */
  @import "../tpls/roll/roll_tpl.wxss";
+
  
 page{
   width: 100%;
@@ -200,4 +201,46 @@ swiper image {
   height: 20rpx;
   border: 1rpx solid gray;
   border-radius: 10rpx;
+}
+
+.category-detail-box {
+  overflow: hidden;
+  padding: 10rpx 10rpx 0rpx;
+  height: 100%;
+  background-color: #fffef9;
+}
+
+.category-main {
+  height: 91%;
+}
+
+.category-main-view {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.category-goods-items {
+  width: 32%;
+  margin-bottom: 10rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.category-goods-items.middle {
+  margin-bottom:10rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.category-goods-items .group-image image {
+  height: 220rpx;
+  width: 220rpx;
+  border-radius: 0;
 }

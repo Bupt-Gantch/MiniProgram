@@ -14,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    ruleStatus: true,
+    ruleStatus: false,
   },
 
   /**
@@ -22,7 +22,7 @@ Page({
    */
   onLoad: function(options) {
     var ruleId = options.ruleId;
-    console.log(ruleId);
+    // console.log(ruleId);
     this.setData({
       ruleId: ruleId
     });
@@ -62,6 +62,13 @@ Page({
             value = '非法卡';
           }
         };
+        if (key == 'alarm') {
+          if (value == '===0') {
+            value = '正常';
+          } else if (value == '===1') {
+            value = '报警';
+          }
+        };
         rule.getDeviceById(alarmId, (res) => {
           if (res.deviceType == "IASZone") {
             var model = res.model;
@@ -71,11 +78,11 @@ Page({
             })
           }
         });
-        console.log(alarmId);
+        // console.log(alarmId);
         condition.key = key;
         condition.value = value;
         conditions.push(condition);
-        console.log(conditions);
+        // console.log(conditions);
         _this.setData({
           conditions: conditions,
           name: rulename,
@@ -115,7 +122,7 @@ Page({
       });
       if (res.rule.state == 'ACTIVE') {
         _this.setData({
-          ruleStatus: false
+          ruleStatus: true
         })
       }
     })
@@ -127,7 +134,7 @@ Page({
       console.log(res);
       if (res == 'Suspend') {
         this.setData({
-          ruleStatus: true
+          ruleStatus: false
         })
       }
     })
@@ -138,7 +145,7 @@ Page({
     rule.activateRuleById(ruleId, (res) => {
       if (res == "Activate")
         this.setData({
-          ruleStatus: false
+          ruleStatus: true
         })
     })
   },

@@ -40,6 +40,8 @@
   </view>
   <template is="shareInformation" data="{{showEdit,content:content2}}">
   </template>
+    <template is="shareInformation" data="{{showEdit:showAddGateway,content:content5}}">
+  </template>
   <template is="devices" data="{{showDevice,content:content1,devices:gatewayList,customerId}}">
   </template>
   <template is="devices" data="{{showDevice:showGateway,content:content3,devices:gatewayArray,customerId}}">

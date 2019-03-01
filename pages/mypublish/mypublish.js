@@ -40,7 +40,7 @@ Page({
   onShow: function () {
     this.setData({
       content: app.getLanuage(app.globalData.language)
-    })
+    });
   },
 
   /**

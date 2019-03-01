@@ -3,7 +3,7 @@
 <view wx:if="{{!netStatus}}">
   <template is="netAlert" />
 </view>
-<view> 
+<view>
   <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
     <block wx:for="{{imgUrls}}" wx:key="item">
       <swiper-item>
@@ -32,20 +32,27 @@
 
       <view class='info-content'>
         <view>
-         <text class='info-detail'>{{item.pContent}}</text>
+          <text class='info-detail'>{{item.pContent}}</text>
         </view>
-        <!-- <view class='div'>
-        <view class="info-pictures" wx:for="{{item.image}}" wx:for-item="img" wx:key="img">
-        <view class='picture-view'>       
-          <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
-          </view>
-          </view>
-        </view> -->
-      <view class='showPic'>
+        <!-- <view class='showPic'>
       <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img" class='picture-view'>
         <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
       </block>
-    </view>
+    </view> -->
+        <view class="category-detail-box">
+          <view class="category-main">
+            <view class='category-main-view'>
+              <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img">
+                <!-- 下面存放单个设备的div  -->
+                <view class="category-goods-items {{index%3==1?'middle':''}}">
+                  <view class='group-image'>
+                    <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
         <view wx:if='{{item.location}}' class='info-place'>{{item.location}}</view>
       </view>
       <view class='info-footer'>

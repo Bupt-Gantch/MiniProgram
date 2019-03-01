@@ -86,7 +86,6 @@ Page({
             success: function(res) {
               wx.hideLoading();
               var answer = res.data;
-              console.log(answer);
               if (answer == undefined || answer == "" || answer == null) {
                 wx.showToast({
                   title: '请求错误',
@@ -98,13 +97,8 @@ Page({
                   app.globalData.unionid = answer.unionid,
                   loading.findOpenid(answer.openid, (res) => {
                     if (res.status === "success") {
-                      console.log(res);
                       app.globalData.customerId = res.data.id;
                       app.globalData.phoneNumber = res.data.phone;
-                      // wx.showToast({
-                      //   title: '登录成功',
-                      //   duration: 2000,
-                      // })
                         wx.reLaunch({
                           url: '../index/index',
                         })

@@ -4,6 +4,7 @@
     "pages/home/home",
     "pages/search/search",
     "pages/device/device",
+    "pages/infrared/infrared",
     "pages/messagelist/messagelist",
     "pages/category/category",
     "pages/my/my",

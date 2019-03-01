@@ -67,8 +67,8 @@ page{
 }
 
 .info-delete {
-  width: 35rpx;
-  height: 35rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .info-footer {

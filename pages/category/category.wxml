@@ -42,7 +42,7 @@
       <!--显示所有网关-->
       <block wx:for="{{categoryName}}" wx:key="*this">
         <view class='foods-type-box'>
-          <template is="gateway" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,gatewayImg,imgUrl,iASZoneImg,bannerTitle,gatewayName,gatewayDevice,currentId,statusTable,customerId,statusTableOne}}"></template>
+          <template is="gateway" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,gatewayImg,imgUrl,iASZoneImg,bannerTitle,gatewayName,gatewayDevice,currentId,statusTable,customerId,statusTableOne,message}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>
@@ -53,8 +53,8 @@
       <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{categoryName}}" wx:key="*this">
         <view class='foods-type-box'>
-          <template wx:if="{{index == 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,statusTableOne,showDelete}}"></template>
-          <template wx:if="{{index != 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable,statusTableOne}}"></template>
+          <template wx:if="{{index == 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,statusTableOne,showDelete,gatewayStatus}}"></template>
+          <template wx:if="{{index != 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable,statusTableOne,gatewayStatus}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>
       </block>
@@ -74,7 +74,7 @@
       </block>
     </view>
   </view>
-  <template is="modalDialog" data="{{showModal,content}}">
+  <template is="modalDialog" data="{{showModal,content:content1}}">
   </template>
   <template is="modalScene" data="{{showModalScene,contentScene}}">
   </template>

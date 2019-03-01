@@ -16,6 +16,7 @@ Page({
   data: {
     deviceImgUrl: Config.deviceImgUrl,
     iASZoneImg: Config.iASZoneUrl,
+    infraredImg: Config.infraredImg,
     bulb: {
       dimmableMinVal: 1,
       dimmableMaxVal: 255,
@@ -29,7 +30,9 @@ Page({
     showLinkage: false,
     showDevice: false,
     deployment: true,
+    deploymentStatus: false,
     showPassword: false,
+    addRule: false,
     content: {
       title: "修改设备名",
       placeholder: "请输入设备名"
@@ -94,7 +97,7 @@ Page({
       deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
       _this._loadLatestData(deviceid);
       var cleanId = setInterval(
-        function () {
+        function() {
           _this._loadLatestData(deviceid);
         }, 5000)
       _this.setData({
@@ -123,14 +126,14 @@ Page({
   },
 
 
-  _loadLatestData: function (deviceId){
+  _loadLatestData: function(deviceId) {
     var _this = this;
-    device.getlatestData(deviceId,(res)=>{
+    device.getlatestData(deviceId, (res) => {
       console.log(res);
       var sensorData = res;
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
-      sensorData.forEach(function (e) {
+      sensorData.forEach(function(e) {
         if (e.key === 'status') {
           if (e.value === 'true' || e.value === true) {
             _this.setData({
@@ -148,15 +151,15 @@ Page({
           var test = ''
           if (_this.data.deviceType == 'IASZone') {
             test = e.value + '*';
-          } else if (_this.data.deviceType == 'lock'&&e.key=='操作'){
-            test = e.value+'**';
-          }else{
+          } else if (_this.data.deviceType == 'lock' && e.key == '操作') {
+            test = e.value + '**';
+          } else {
             test = e.value;
           }
           var question = test.toString();
           var value = question.split("|");
           var answer = '';
-          value.forEach(function (element, index) {
+          value.forEach(function(element, index) {
             if (valueName[element] != undefined) {
               if (index != 1 && index != 0) {
                 answer += ',';
@@ -251,23 +254,26 @@ Page({
       };
     }
     device.applyControl(data, (res) => {
-      if (res.indexOf("device") === -1) { //状态码为200则应用成功
-        wx.showToast({
-          title: '应用成功',
-          icon: 'success',
-          duration: 1000,
-          // mask: true
-        });
-        this.hideModal();
-      } else { //状态码不是200  应用失败
-        wx.showToast({
-          title: '应用失败',
-          image: '../../imgs/icon/pay@error.png',
-          duration: 1000,
-          // mask: true
-        });
+      if (deviceInfo.deviceType == 'infrared' || deviceInfo.deviceType == 'newInfrared') {
+        console.log(res);
+      } else {
+        if (res.indexOf("device") === -1) { //状态码为200则应用成功
+          wx.showToast({
+            title: '应用成功',
+            icon: 'success',
+            duration: 1000,
+            // mask: true
+          });
+          this.hideModal();
+        } else { //状态码不是200  应用失败
+          wx.showToast({
+            title: '应用失败',
+            image: '../../imgs/icon/pay@error.png',
+            duration: 1000,
+            // mask: true
+          });
+        }
       }
-
     }, (err) => {
       wx.showToast({
         title: '应用失败',
@@ -395,17 +401,17 @@ Page({
         devices: allDevices
       });
       console.log(allDevices);
-      if (allDevices.length == 0) {
-        wx.showToast({
-          title: '没有可用于创建规则的设备',
-          icon: 'none',
-          duration: 2000
-        })
-      } else {
-        this.setData({
-          showDevice: true
-        })
-      }
+      // if (allDevices.length == 0) {
+      //   wx.showToast({
+      //     title: '没有可用于创建规则的设备',
+      //     icon: 'none',
+      //     duration: 2000
+      //   })
+      // } else {
+      this.setData({
+        showDevice: true
+      })
+      // }
     })
   },
 
@@ -439,11 +445,11 @@ Page({
       rule_type = 'alarm'
     } else {
       rule_type = 'common'
-    }; 
+    };
     var condition1 = device.changeOperator(answer.condition1);
     var condition2 = device.changeOperator(answer.condition2);
     var condition3 = answer.condition3;
-    if(deviceType!='lock'){
+    if (deviceType != 'lock') {
       condition3 = device.changeOperator(answer.condition3);
     }
     var threshold1 = answer.threshold1;
@@ -469,14 +475,16 @@ Page({
       "gatewayId": `${gatewayId}`,
       "rule_type": `${rule_type}`
     };
+    console.log(devices.length);
     if (deviceType === 'temperature') {
-      if (name == null || (devices.length == 0 && rule_type == 'common') || (condition1 == "" && condition2 == "")) {
+      if (name == null || ((devices.length == 0 || devices.length == undefined) && rule_type == 'common') || (condition1 == "" && condition2 == "")) {
         wx.showToast({
           title: '请完善规则内容',
           icon: 'none',
           duration: 1000
         })
       } else {
+        this.data.addRule = true;
         if (condition1 != "") {
           var filter = {
             "type": "",
@@ -498,14 +506,14 @@ Page({
       if (deviceType == 'IASZone') {
         condition3 = '===';
       }
-      console.log(condition3)
-      if (name == null || (devices.length == 0 && rule_type == 'common') || condition3 == "") {
+      if (name == null || ((devices.length == 0 || devices.length == undefined) && rule_type == 'common') || condition3 == "") {
         wx.showToast({
           title: '请完善规则内容',
           icon: 'none',
           duration: 1000
         })
       } else {
+        this.data.addRule = true;
         var key = '';
         if (deviceType == "lightSensor") {
           key = "illumination";
@@ -514,7 +522,12 @@ Page({
         } else if (deviceType == 'IASZone') {
           key = 'alarm';
           condition3 = '===';
-          threshold3 = '1';
+          condition2 = answer.condition2;
+          if (condition2 == 0) {
+            threshold3 = '0';
+          } else {
+            threshold3 = '1';
+          }
         } else if (deviceType == 'lock') {
           key = 'operate';
           threshold3 = condition3;
@@ -549,57 +562,86 @@ Page({
     param.filters = filters;
     console.log(param);
     console.log(controlDevices.length);
-    if(controlDevices.length!=0){
-      controlDevices.forEach(function (element, index) {
-        device.getDeviceInfo(element.id, (res) => {
-          element.manufacture = res.manufacture;
-          element.model = res.model;
-          element.deviceType = res.deviceType;
-          controlDeviceArr.push(element);
-          wx.showLoading({
-            title: '创建中',
-          })
-          setTimeout(function () {
-            if (index == controlDevices.length - 1) {
-              param.deviceArr = controlDeviceArr;
-              device.addRule(param, (res) => {
-                wx.hideLoading();
-                console.log(res);
-                // if (res == 'OK') {
-                wx.showToast({
-                  title: '添加成功',
-                  duration: 1000,
-                  // mask: true
+    if (!this.data.addRule) {
+      wx.showToast({
+        title: '请完善规则内容',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      if (controlDevices.length != 0) {
+        controlDevices.forEach(function(element, index) {
+          device.getDeviceInfo(element.id, (res) => {
+            element.manufacture = res.manufacture;
+            element.model = res.model;
+            element.deviceType = res.deviceType;
+            controlDeviceArr.push(element);
+            wx.showLoading({
+              title: '创建中',
+            })
+            setTimeout(function() {
+              if (index == controlDevices.length - 1) {
+                param.deviceArr = controlDeviceArr;
+                device.addRule(param, (res) => {
+                  wx.hideLoading();
+                  console.log(res);
+                  // if (res == 'OK') {
+                  if (rule_type == "alarm") {
+                    wx.showModal({
+                      title: '提示',
+                      content: '规则创建成功，您需要关注‘冠川智能’公众号来接收报警信息',
+                      success(res) {
+                        if (res.confirm) {} else if (res.cancel) {}
+                      }
+                    })
+                  } else {
+                    wx.showToast({
+                      title: "规则创建成功",
+                      duration: 2000,
+                      icon: 'none',
+                      // mask: true
+                    });
+                  }
+                  _this.setData({
+                    showDevice: false
+                  })
+                  // }
                 });
-                _this.setData({
-                  showDevice: false
-                })
-                // }
-              });
-            }
-          }, 1000);
+              }
+            }, 1000);
+          })
         })
-      })
-    }else{
-      wx.showLoading({
-        title: '创建中',
-      })
-      transforms.push(transform);
-      param.transforms = transforms;
-      device.createRule1(param, (res) => {
-        wx.hideLoading();
-        console.log(res);
-        // if (res == 'OK') {
-        wx.showToast({
-          title: '添加成功',
-          duration: 1000,
-          // mask: true
+      } else {
+        wx.showLoading({
+          title: '创建中',
+        })
+        transforms.push(transform);
+        param.transforms = transforms;
+        device.createRule1(param, (res) => {
+          wx.hideLoading();
+          console.log(res);
+          if (rule_type == "alarm") {
+            wx.showModal({
+              title: '提示',
+              content: '规则创建成功，您需要关注‘冠川智能’公众号来接收报警信息',
+              success(res) {
+                if (res.confirm) {} else if (res.cancel) {}
+              }
+            })
+          } else {
+            wx.showToast({
+              title: "规则创建成功",
+              duration: 2000,
+              icon: 'none',
+              // mask: true
+            });
+          }
+          _this.setData({
+            showDevice: false
+          })
+          // }
         });
-        _this.setData({
-          showDevice: false
-        })
-        // }
-      });
+      }
     }
   },
 
@@ -658,7 +700,8 @@ Page({
   //布防
   deployment: function() {
     this.setData({
-      netStatus: app.globalData.netStatus
+      netStatus: app.globalData.netStatus,
+      deploymentStatus: true
     });
     var _this = this;
     var gatewayId = this.data.deviceId;
@@ -677,13 +720,13 @@ Page({
               duration: 2000
             });
             _this.setData({
-              deployment: false
+              deployment: true
             });
           }
         })
       } else {
         wx.showToast({
-          title: '布防失败，请您先关注"冠川智能"微信公众号来接收报警信息',
+          title: '布防失败，请您先关注"冠川智能"微信公众号并重新登录小程序',
           icon: 'none',
           duration: 2000
         })
@@ -694,14 +737,19 @@ Page({
   //撤防
   disarming: function() {
     this.setData({
-      netStatus: app.globalData.netStatus
+      netStatus: app.globalData.netStatus,
+      deploymentStatus: true
     });
     var gatewayId = this.data.deviceId;
     device.suspendAlarmRule(gatewayId, (res) => {
       if (res == 'SuspendAllRule') {
+        wx.showToast({
+          title: '撤防成功',
+          duration: 2000
+        });
         this.setData({
-          deployment: true
-        })
+          deployment: false
+        });
       }
     })
   },
@@ -764,5 +812,16 @@ Page({
     }
     var serviceName = this.data.serviceName.controlLock;
     this._sendControl(serviceName, value, this.data.deviceInfo);
+  },
+
+
+  /**红外宝*/
+  goToInfrared: function(e) {
+    var id = device.getDataSet(e, 'id');
+    var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    console.log(deviceInfo);
+    wx.navigateTo({
+      url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
+    });
   },
 })
