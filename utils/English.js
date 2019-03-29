@@ -5,6 +5,7 @@ var English = {
   mynews: "Friends' Comments",
   feedback: "Feedback",
   scan:"Add Gateway",
+  bindGateway: ['Scan', 'Input'],
   deleteGateway:"Delete Gateway",
   refreshGateway:"Equipment connected to network",
   share:'Sharing Gateway',

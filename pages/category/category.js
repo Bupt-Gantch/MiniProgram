@@ -148,6 +148,7 @@ Page({
               _this.setData({
                 gatewayDevice: gatewayList
               });
+              console.log(this.data.gatewayDevice);
               if (app.globalData.gatewayName != null) {
                 _this.setData({
                   gatewayName: app.globalData.gatewayName,
@@ -474,7 +475,7 @@ Page({
       deviceType: deviceInfo.deviceType,
       manufacture: deviceInfo.manufacture,
       model: deviceInfo.model
-    }
+    } 
 
     /**控制需要的请求数据 */
     var data = {

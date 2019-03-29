@@ -9,7 +9,6 @@ var util = require('../../utils/util.js');
 var device = new Device();
 const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -133,6 +132,11 @@ Page({
       var sensorData = res;
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
+      var alarmFlag1 = false;
+      var surpervisionFlag1 = false;
+      var alarmFlag2 = false;
+      var surpervisionFlag2 = false;
+      var ts = 0;
       sensorData.forEach(function(e) {
         if (e.key === 'status') {
           if (e.value === 'true' || e.value === true) {
@@ -145,7 +149,8 @@ Page({
             })
           }
         };
-        if (keyName[e.key] != undefined) {
+        if (keyName[e.key] != undefined && e.value != undefined) {
+          var nowts = e.ts;
           e.ts = util.formatTime(new Date(e.ts));
           e.key = keyName[e.key];
           var test = ''
@@ -169,17 +174,67 @@ Page({
               answer = element;
             }
           })
+          if (e.key == 'alarm') {
+            alarmFlag1 = true;
+            if (nowts>ts){
+              ts = nowts;
+            }
+            if (answer == '报警') {
+              alarmFlag2 = true;
+            }
+          }
+          if (e.key == 'surpervision') {
+            surpervisionFlag1 = true;
+            console.log(e.ts);
+            if (nowts > ts) {
+              ts = nowts;
+            }
+            if (answer == '正常') {
+              surpervisionFlag2 = true;
+            }
+          }
           e.value = answer;
         } else {
           e.ts = '';
           e.key = '',
-            e.value = ''
+          e.value = ''
+        }
+      })
+      console.log(alarmFlag1)
+      console.log(alarmFlag2)
+      console.log(surpervisionFlag1)
+      console.log(surpervisionFlag2)
+      if (alarmFlag1 && surpervisionFlag1) {
+        if (alarmFlag2 && surpervisionFlag2){
+          var test = new Object();
+          test.ts = util.formatTime(new Date(ts));
+          test.key='状态值';
+          test.value="报警";
+          sensorData.push(test);
+        } else if (!alarmFlag2 && !surpervisionFlag2){
+          var test = new Object();
+          test.ts = util.formatTime(new Date(ts));
+          test.key = '状态值';
+          test.value = "正常";
+          sensorData.push(test);
+        } else if (!alarmFlag2 && surpervisionFlag2) {
+          var test = new Object();
+          test.ts = util.formatTime(new Date(ts));
+          test.key = '状态值';
+          test.value = "周期上报";
+          sensorData.push(test);
+        }
+      }
+      sensorData.forEach(function (e, index){
+        if (e.key == 'alarm' || e.key =='surpervision'){
+          sensorData.splice(index,1);
         }
       })
       _this.setData({
         lastRtData: sensorData,
       });
     })
+    console.log(this.data.lastRtData);
     // lastRtData
   },
   /**
@@ -520,6 +575,12 @@ Page({
         } else if (deviceType == 'PM2.5') {
           key = 'PM2.5';
         } else if (deviceType == 'IASZone') {
+          var filter = {
+            "type": "",
+            "name": `${name}`,
+            "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
+          };
+          filters.push(filter);
           key = 'alarm';
           condition3 = '===';
           condition2 = answer.condition2;

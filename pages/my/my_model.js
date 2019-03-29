@@ -47,7 +47,7 @@ class My extends Base {
 /**删除设备 */
   deleteGateway(param,callback){
     var params = {
-      url:`deviceaccess/unassign/${param.customerId}?gateway_name=${param.gatewayName}`,
+      url:`deviceaccess/unassign/${param.customerid}?gateway_name=${param.gatewayName}`,
       sCallback:function(data){
         callback && callback(data);
       }
@@ -155,6 +155,41 @@ onGuestUnShare(param, callback) {
   };
   this.request(params)
 }
+
+  onUnShareAllThings(param,callback){
+    var params = {
+      url: 'controller/unassign',
+      data: param,
+      method: 'POST',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params)
+  }
+  //删除某条规则
+  deleteRule(ruleId, callback) {
+    var param = {
+      url: `smartruler/remove/${ruleId}`,
+      method: 'DELETE',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
+  //通过网关ID获得规则接口
+  getRulesByGatewayId(gatewayId, callback) {
+    var param = {
+      url: `smartruler/ruleByGateway/${gatewayId}`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+
 }
 
 export {

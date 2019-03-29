@@ -131,7 +131,7 @@ Page({
       })
     }
   },
-
+ 
   changeLanuage: function() {
     var version = app.globalData.language;
     if (version == "中文") {

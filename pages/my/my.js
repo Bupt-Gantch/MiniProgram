@@ -17,7 +17,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     showEdit: false,
-    showAddGateway:false,
+    showAddGateway: false,
     showDevice: false,
     showGateway: false,
     showSharedDetail: false,
@@ -46,17 +46,18 @@ Page({
       placeholder2: '云平台密码'
     },
     gatewayAddName: '',
-    gatewayPassword:'',
+    gatewayPassword: '',
   },
   //首次加载
   onLoad: function() {
-    console.log(app.globalData.gatewayName);
+    var password = app.globalData.phoneNumber.substring(3,7);
     this.setData({
       netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       gatewayName: app.globalData.gatewayName,
       customerId: app.globalData.customerId,
       userphoneNumber: app.globalData.phoneNumber,
+      userPassword: password+app.globalData.customerId
     })
     if (app.globalData.userInfo) {
       this.setData({
@@ -123,10 +124,11 @@ Page({
     });
   },
 
-  onScan: function() {
+  onScan: function() { 
     var _this = this;
     wx.showActionSheet({
-      itemList: ['扫一扫', '手动绑定'],
+      // itemList: ['扫一扫', '手动绑定'],
+      itemList: this.data.content.bindGateway,
       success(res) {
         console.log(res.tapIndex);
         var number = res.tapIndex;
@@ -134,7 +136,7 @@ Page({
           _this.onScanTest();
         } else if (number == 1) {
           _this.setData({
-            showAddGateway:true,
+            showAddGateway: true,
           });
         }
       },
@@ -180,7 +182,7 @@ Page({
                   success: function(res) {
                     if (res.confirm) {
                       wx.makePhoneCall({
-                        phoneNumber: '13837468256'
+                        phoneNumber: '18610873103'
                       })
                     }
                   }
@@ -338,6 +340,27 @@ Page({
     })
   },
 
+  onDeleteRule: function() {
+    var ruleId = this.data.ruleId;
+    rule.deleteRule(ruleId, (res) => {
+      console.log(res);
+      if (res === "OK") {
+        wx.showToast({
+          title: '删除成功',
+          duration: 1000
+        });
+        wx.navigateBack({
+
+        })
+      } else {
+        wx.showToast({
+          title: '删除失败',
+          icon: 'none',
+        })
+      }
+    })
+  },
+
   /**
    * 主动解绑网关
    */
@@ -359,9 +382,27 @@ Page({
       var gatewayname = gatewayArr[2];
       if (customerId === app.globalData.customerId) {
         var param = {
-          customerId: app.globalData.customerId,
+          customerid: app.globalData.customerId,
+          gateids: gatewayid,
           gatewayName: gatewayname
         }
+        console.log(param);
+        // my.onUnShareAllThings(param, (res) => {
+        //   console.log(res);
+        //   if (res == 1) {
+        //     wx.showToast({
+        //       title: '解绑成功',
+        //     });
+        //     var customerId = app.globalData.customerId;
+        //     _this.deleteGateway(customerId);
+        //   } else {
+        //     wx.showToast({
+        //       title: '解绑失败',
+        //       icon: 'none',
+        //       duration: 1000
+        //     });
+        //   }
+        // })
         my.deleteGateway(param, (res) => {
           console.log(res);
           if (res == 1) {
@@ -370,14 +411,11 @@ Page({
               gateid: gatewayid,
             };
             my.onUnShareAll(params, (res) => {
-              console.log(res);
-              if (res.status == "success") {
                 wx.showToast({
                   title: '解绑成功',
                 });
                 var customerId = app.globalData.customerId;
                 _this.deleteGateway(customerId);
-              }
             });
           } else {
             wx.showToast({
@@ -477,7 +515,7 @@ Page({
     var gates = Array();
     my.getShareGateway(param, (res) => {
       var shareList = res.data;
-      if (shareList.length == 0) {
+      if (shareList == null || shareList.length == 0) {
         this.hideModal();
         wx.showToast({
           title: '您还没有分享过网关',
@@ -547,10 +585,10 @@ Page({
   hideModal: function() {
     this.setData({
       showEdit: false,
-      showAddGateway:false,
+      showAddGateway: false,
       showDevice: false,
       showGateway: false,
-      showSharedDetail: false
+      showSharedDetail: false,
     });
   },
   /**
@@ -567,15 +605,15 @@ Page({
     _this.setData({
       netStatus: app.globalData.netStatus
     });
-    if (_this.data.showEdit){
+    if (_this.data.showEdit) {
       _this.onShareGateway();
-    } else if (_this.data.showAddGateway){
+    } else if (_this.data.showAddGateway) {
       _this.onAddGateway();
     }
 
   },
 
-  onAddGateway:function(){
+  onAddGateway: function() {
     var gatewayAddName = this.data.gatewayAddName;
     var gatewayPassword = this.data.gatewayPassword;
     if (gatewayAddName === "" || gatewayPassword === "") {
@@ -583,12 +621,37 @@ Page({
         title: '网关号和云平台密码不能为空',
         icon: 'none'
       })
-    }else{
-      
+    } else {
+      var param = {
+        customerId: app.globalData.customerId,
+        gateway_user: "Gateway_" + gatewayAddName
+      };
+      console.log(param);
+      my.addDevice(param, (res) => {
+        if (res.data == 1) {
+          this.hideModal();
+          wx.showToast({
+            title: '添加成功',
+            duration: 3000,
+          })
+        } else {
+          wx.showModal({
+            title: '添加失败',
+            content: '该设备已被其他用户添加，请联系管理员。',
+            success: function (res) {
+              if (res.confirm) {
+                wx.makePhoneCall({
+                  phoneNumber: '18610873103'
+                })
+              }
+            }
+          })
+        }
+      })
     }
   },
 
-  onShareGateway:function(){
+  onShareGateway: function() {
     var phoneNumber = this.data.phoneNumber.trim();
     var information = this.data.information;
     if (phoneNumber === "") {
@@ -633,9 +696,9 @@ Page({
 
   inputChange: function(event) {
     var inputValue = event.detail.value;
-    if (this.data.showAddGateway){
+    if (this.data.showAddGateway) {
       this.data.gatewayAddName = inputValue;
-    } else if (this.data.showEdit){
+    } else if (this.data.showEdit) {
       this.data.phoneNumber = inputValue;
     }
   },

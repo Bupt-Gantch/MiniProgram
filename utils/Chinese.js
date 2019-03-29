@@ -5,6 +5,7 @@ var Chinese = {
   mynews:"消息列表",
   feedback:"意见反馈",
   scan:"绑定网关",
+  bindGateway: ['扫一扫', '手动添加'],
   deleteGateway:"解绑网关",
   refreshGateway:"设备入网",
   share:'分享网关',

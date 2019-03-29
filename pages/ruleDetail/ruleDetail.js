@@ -79,9 +79,12 @@ Page({
           }
         });
         // console.log(alarmId);
+        console.log(key);
         condition.key = key;
         condition.value = value;
-        conditions.push(condition);
+        if(key!='surpervision'){
+          conditions.push(condition);
+        }
         // console.log(conditions);
         _this.setData({
           conditions: conditions,

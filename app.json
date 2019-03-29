@@ -46,37 +46,37 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "",
         "iconPath": "imgs/toolbar/home.png",
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
       {
         "pagePath": "pages/publish/publish",
-        "text": "发布",
+        "text": "",
         "iconPath": "imgs/toolbar/publish.png",
         "selectedIconPath": "imgs/toolbar/publish@selected.png"
       },
       {
         "pagePath": "pages/messagelist/messagelist",
-        "text": "消息",
+        "text": "",
         "iconPath": "imgs/toolbar/messagelist.png",
         "selectedIconPath": "imgs/toolbar/messagelist@selected.png"
       },
       {
         "pagePath": "pages/my/my",
-        "text": "我的",
+        "text": "",
         "iconPath": "imgs/toolbar/my.png",
         "selectedIconPath": "imgs/toolbar/my@selected.png"
       }
     ],
-    "borderStyle": "#5a9ec8",
+    "borderStyle": "white",
     "selectedColor": "#002366",
     "color": "#5a9ec8",
-    "backgroundColor": "#e7eae9",
-    "permission": {
-      "scope.userLocation": {
-        "desc": "您的位置信息将用于查询天气信息及信息发布"
-      }
+    "backgroundColor": "#e7eae9"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于查询天气信息及信息发布"
     }
   }
 }

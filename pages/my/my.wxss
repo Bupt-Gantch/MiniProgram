@@ -18,7 +18,7 @@ page {
 }
 
 .my-header {
-  height: 20%;
+  height: 25%;
   background-color: #9ABAF5;
   color: #dbe8f1;
   display: flex;

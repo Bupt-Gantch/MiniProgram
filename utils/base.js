@@ -28,14 +28,14 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
-          // console.log(res)
+          console.log(res)
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
           if (startChar == '2') {
             params.sCallback && params.sCallback(res.data);
           } else {
             params.fCallback && params.fCallback(res);
-          }
+          } 
         },
         fail: function(err) {
           console.log(err);

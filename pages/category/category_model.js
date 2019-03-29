@@ -238,7 +238,7 @@ class Category extends Base{
    * sendControl
    */
   sendControl(deviceId,requestId,body){
-    
+    console.log(deviceId);
     //body可以是对象
     var that = this;
     var p = new Promise(function(resolve,reject){
@@ -286,6 +286,7 @@ class Category extends Base{
       console.log(res);
       if(res){
         var abilityDes = JSON.parse(res[0].abilityDes);
+        console.log(abilityDes);
         _data.service = abilityDes;
         var serviceBody = abilityDes.serviceBody;
         var params = serviceBody.params;

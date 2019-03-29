@@ -227,7 +227,9 @@ Config.keyName = {
   'operate': '操作',
   'unlock method': '解锁方式',
   'PM2.5': 'PM2.5',
-  'alarm': '状态值',
+  'alarm': 'alarm',
+  'surpervision':'surpervision',
+  'battery':'电量状态',
 };
 
 Config.valueName = {
