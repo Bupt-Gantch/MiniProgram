@@ -146,7 +146,7 @@ var Chinese = {
     },
     {
       id: 'companyIntroduction',
-      name: '关于冠川',
+      name: '关于天慧',
       disabled: true,
       image: '/imgs/index/company.png',
       url: '../second/company/company'

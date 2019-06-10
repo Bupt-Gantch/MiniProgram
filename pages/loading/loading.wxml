@@ -5,6 +5,6 @@
   </view>
 <view class="enter-container">
   <button class="enter-button" open-type='getUserInfo' bindgetuserinfo='getUserInfo'>
-    <image src="/imgs/swiper/logo.png" class="poster-image" mode="scaleToFill"></image>
+    <image src="/imgs/swiper/logo.jpg" class="poster-image" mode="scaleToFill"></image>
   </button>
 </view>

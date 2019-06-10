@@ -41,6 +41,7 @@
                 <image wx:elif="{{item.model == 'WTS'}}" src='{{iASZoneImg[2]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:elif="{{item.model == 'DOS'}}" src='{{iASZoneImg[3]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
                 <image wx:elif="{{item.model == 'SOS'}}" src='{{iASZoneImg[4]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
+                <image wx:elif="{{item.model == 'GAS'}}" src='{{iASZoneImg[5]}}' mode="aspectFit" bindtap="onDevicesItemTap" data-deviceid="{{item.id}}" data-deviceinfo="{{item}}" data-type="{{item.deviceType}}"></image>
               </block>
 
               <block wx:else>
@@ -71,7 +72,7 @@
       <text>{{bannerTitle}}</text>
     </view>
     <view class='title-alarm'>
-    {{message}}
+      {{message}}
       <!-- 长按网关，显示该网关下设备 -->
     </view>
     <scroll-view class="category-main" scroll-y>

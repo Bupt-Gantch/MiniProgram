@@ -146,7 +146,7 @@ var English = {
     },
     {
       id: 'companyIntroduction',
-      name: 'Gantch',
+      name: 'Sky Smart',
       disabled: true,
       image: '/imgs/index/company.png',
       url: '../second/company/company'

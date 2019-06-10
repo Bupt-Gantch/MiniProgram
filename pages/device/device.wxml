@@ -134,13 +134,13 @@
       </scroll-view>
     </view>
   </block>
-</view>
+</view> 
 
 <template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
 <template is="changePassword" data="{{showPassword,content:content2}}">
 </template>
-<template is="changePassword" data="{{showPassword,content:content3}}">
-</template>
+<!-- <template is="changePassword" data="{{showPassword,content:content3}}">
+</template> -->
 
 
 <!-- <button bindtap='getRealData'>查看实时数据</button> -->

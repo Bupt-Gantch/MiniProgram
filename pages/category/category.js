@@ -255,6 +255,7 @@ Page({
           statusTableOne: newStatusTableOne
         });
       });
+      console.log(allDevices);
       _this.setData({
         categoryAllDevices: allDevices
       });
@@ -299,6 +300,8 @@ Page({
     this._loadBaannerTitle(name); //加载本地banner和标题
     this._loadCateDevices(index); //点击时获取数据
   },
+
+  
 
   //load所有设备并分类
   _loadCateDevices: function(index) {
@@ -358,6 +361,8 @@ Page({
       /* ===========end================= */
     }
   },
+
+
 
 
   onDevicesItemTap: function(event) {

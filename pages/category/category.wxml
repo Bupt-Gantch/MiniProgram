@@ -49,6 +49,7 @@
     </view>
 
 
+
     <view wx:elif="{{currentBottomIndex===-1}}" class='right-box {{transClassArr[currentTabsIndex]}}'>
       <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{categoryName}}" wx:key="*this">
@@ -59,6 +60,8 @@
         </view>
       </block>
     </view>
+
+
     <!-- 分组right-box -->
     <view wx:else class='right-box {{transClassArr[currentBottomIndex]}}'>
       <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
@@ -74,6 +77,8 @@
       </block>
     </view>
   </view>
+
+  
   <template is="modalDialog" data="{{showModal,content:content1}}">
   </template>
   <template is="modalScene" data="{{showModalScene,contentScene}}">

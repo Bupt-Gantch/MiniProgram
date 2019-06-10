@@ -48,10 +48,6 @@ Page({
       title: "远程开锁",
       placeholder: "请输入锁密码",
     },
-    content3: {
-      title: '远程关锁',
-      placeholder: '请输入锁密码',
-    },
     array: ['大于', '等于', '小于'],
   },
 
@@ -200,10 +196,6 @@ Page({
           e.value = ''
         }
       })
-      console.log(alarmFlag1)
-      console.log(alarmFlag2)
-      console.log(surpervisionFlag1)
-      console.log(surpervisionFlag2)
       if (alarmFlag1 && surpervisionFlag1) {
         if (alarmFlag2 && surpervisionFlag2){
           var test = new Object();
@@ -650,7 +642,7 @@ Page({
                   if (rule_type == "alarm") {
                     wx.showModal({
                       title: '提示',
-                      content: '规则创建成功，您需要关注‘冠川智能’公众号来接收报警信息',
+                      content: '规则创建成功，您需要关注‘天慧云谷’公众号来接收报警信息',
                       success(res) {
                         if (res.confirm) {} else if (res.cancel) {}
                       }
@@ -684,7 +676,7 @@ Page({
           if (rule_type == "alarm") {
             wx.showModal({
               title: '提示',
-              content: '规则创建成功，您需要关注‘冠川智能’公众号来接收报警信息',
+              content: '规则创建成功，您需要关注‘天慧云谷’公众号来接收报警信息',
               success(res) {
                 if (res.confirm) {} else if (res.cancel) {}
               }
@@ -787,7 +779,7 @@ Page({
         })
       } else {
         wx.showToast({
-          title: '布防失败，请您先关注"冠川智能"微信公众号并重新登录小程序',
+          title: '布防失败，请您先关注"天慧云谷"微信公众号并重新登录小程序',
           icon: 'none',
           duration: 2000
         })

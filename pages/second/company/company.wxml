@@ -23,5 +23,5 @@
 
 <view class='gantch_code'>
 <image src='http://cbu01.alicdn.com/img/ibank/qr_jz/m.gantch.cn.jpg' data-src='http://cbu01.alicdn.com/img/ibank/qr_jz/m.gantch.cn.jpg' bindtap='previewImage'></image>
-<view class='text_view'>冠川智能官网</view>
+<view class='text_view'>天慧官网</view>
 </view>

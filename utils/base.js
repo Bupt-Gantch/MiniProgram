@@ -28,7 +28,6 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
-          console.log(res)
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
           if (startChar == '2') {

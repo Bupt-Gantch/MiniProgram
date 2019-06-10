@@ -160,6 +160,7 @@ Page({
           console.log(first);
           console.log(second);
           var answer = gateway.substring(first + 2, second);
+          // answer += " ";
           console.log(answer);
           if (first != -1 && second != -1) {
             var gateway_user = "Gateway_";
@@ -170,6 +171,7 @@ Page({
             };
             console.log(param);
             my.addDevice(param, (res) => {
+              console.log(res);
               if (res.data == 1) {
                 wx.showToast({
                   title: '添加成功',
