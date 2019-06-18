@@ -73,7 +73,7 @@ Page({
             title: '登录中',
           }),
           //发送请求获取openid
-          // console.log(res.code);
+          console.log("res.code:" + res.code);
           wx.request({
               url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
             data: {
@@ -84,6 +84,7 @@ Page({
               'content-type': 'application/json' //默认值
             },
             success: function(res) {
+              console.log("res:" + JSON.stringify(res))
               wx.hideLoading();
               var answer = res.data;
               if (answer == undefined || answer == "" || answer == null) {
