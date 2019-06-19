@@ -12,6 +12,8 @@
 	"appid": "wx9e12afc5dec75b6f",
 	"projectname": "postgantch",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

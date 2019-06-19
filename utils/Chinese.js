@@ -152,11 +152,11 @@ var Chinese = {
         url: '../second/company/company'
       },
       {
-        id: 'companyIntroduction',
+        id: 'videoInterface',
         name: '视频接入',
         disabled: true,
         image: '/imgs/index/video.png',
-        url: '../second/company/company'
+        url: '../second/yingshi/yingshi'
       },
     ],
   ],

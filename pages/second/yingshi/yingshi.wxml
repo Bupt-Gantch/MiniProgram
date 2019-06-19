@@ -1,0 +1,29 @@
+<view class="page-body">
+  <view class="page-section tc">
+    <live-player id="player" src="{{streamUrl}}" mode="live" autoplay="{{isPlay}}" bindstatechange="statechange" binderror="error" muted="{{muted}}" orientation="{{orientation}}" bindfullscreenchange="onFullScreenChange" object-fit="contain" />
+    <cover-view class="video-menu">
+      <cover-view class="video-log-container">
+        <cover-view class="video-log-text">{{videoLog}}</cover-view>
+        <!-- <cover-view class="video-log-text">videoLog</cover-view> -->
+      </cover-view>
+      <!-- 非全屏 -->
+      <cover-view wx:if="{{!fullScreen}}" class="video-option-menu">
+        <cover-image class="flex-box video-image" src="../../../imgs/test/{{isPlay?'pause':'play'}}.png" bindtap="bindPlay"></cover-image>
+        <cover-image class="flex-box video-image-60" src="../../../imgs/test/stop.png" bindtap="bindStop"></cover-image>
+        <!-- 音量  -->
+        <cover-image class="flex-box video-image-80" src="../../../imgs/test/{{openVoice?'voice':'voice-close'}}.png" bindtap="bindMute"></cover-image>
+        <!--非全屏或全屏  -->
+        <cover-image class="flex-box video-image-60" src="../../../imgs/test/{{fullScreen?'exitScreen':'fullScreen'}}.png" bindtap="bindScreen"></cover-image>
+      </cover-view>
+      <!-- 全屏 -->
+      <cover-view wx:if="{{fullScreen}}" class="video-option-menu">
+        <cover-image wx:if="{{isPlay}}" class="flex-box video-image" src="../../images/pause.png" bindtap="bindPlay"></cover-image>
+        <cover-image class="flex-box video-image-60" src="../../images/stop.png" bindtap="bindStop"></cover-image>
+        <!-- 音量  -->
+        <cover-image wx:if="{{!openVoice}}" class="flex-box video-image-80" src="../../images/{{openVoice?'voice':'voice-close'}}.png" bindtap="bindMute"></cover-image>
+        <!--退出全屏  -->
+        <cover-image class="flex-box video-image-60" src="../../images{{fullScreen?'exitScreen':'fullScreen'}}.png" bindtap="bindScreen"></cover-image>
+      </cover-view>
+    </cover-view>  
+  </view>
+</view>
