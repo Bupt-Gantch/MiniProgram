@@ -1,6 +1,7 @@
 <view class="page-body">
   <view class="page-section tc">
-    <live-player id="player" src="{{streamUrl}}" mode="live" autoplay="{{isPlay}}" bindstatechange="statechange" binderror="error" muted="{{muted}}" orientation="{{orientation}}" bindfullscreenchange="onFullScreenChange" object-fit="contain" />
+    <live-player id="player" class="live-player" src="{{streamUrl}}" mode="live" autoplay="{{isPlay}}" bindstatechange="statechange" binderror="error" muted="{{muted}}" orientation="{{orientation}}" bindfullscreenchange="onFullScreenChange" object-fit="contain" bindtap="bindvideobtnPlay" bindlongpress="bindvideoFullScreen"/>
+    <em class="btn"></em>
     <cover-view class="video-menu">
       <cover-view class="video-log-container">
         <cover-view class="video-log-text">{{videoLog}}</cover-view>
