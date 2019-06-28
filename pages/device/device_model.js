@@ -53,6 +53,148 @@ class Device extends Base {
     this.request(param)
   }
 
+  // //封装规则json体
+  // addRule(data, sCallback, fCallback) {
+  //   var that = this;
+  //   var transforms = [];
+  //   if (data.transforms != undefined) {
+  //     transforms.push(data.transforms)
+  //   }
+  //   console.log(data);
+  //   var transform = {};
+  //   var deviceArr = data.deviceArr;
+  //   console.log(deviceArr);
+  //   delete data['deviceArr'];
+  //   delete data['transforms'];
+  //   // if (deviceArr.length!=0){
+  //   deviceArr.forEach(function(element, index) {
+  //     var _data = {};
+  //     var serviceName = '';
+  //     if (element.deviceType === "curtain") {
+  //       serviceName = "control curtain";
+  //     } else if (element.deviceType === "dimmableLight") {
+  //       serviceName = "control switch";
+  //     } else if (element.deviceType === "switch") {
+  //       serviceName = "control switch";
+  //     };
+  //     that.getDeviceAttr(element.id)
+  //       //获取设备属性
+  //       .then(function(res) {
+  //         if (res) {
+  //           _data.attr = res;
+  //           var triad = {
+  //             manufacture: element.manufacture,
+  //             model: element.model,
+  //             deviceType: element.deviceType,
+  //           };
+  //           return that.getService(triad);
+  //         } else {
+  //           wx.showToast({
+  //             title: '添加失败',
+  //             image: '../../imgs/icon/pay@error.png',
+  //             duration: 1000,
+  //             // mask: true
+  //           });
+  //         }
+  //       })
+  //       //获取设备服务
+  //       .then(function(res) {
+  //         if (res) {
+  //           var abilityDes = null;
+  //           for (let i = 0; i < res.length; i++) {
+  //             let _abilityDes = JSON.parse(res[i].abilityDes);
+  //             let _serviceName = _abilityDes.serviceName;
+  //             if (_serviceName === serviceName) {
+  //               abilityDes = _abilityDes;
+  //               break;
+  //             }
+  //           }
+  //           _data.service = abilityDes;
+  //           var serviceBody = abilityDes.serviceBody;
+  //           var params = serviceBody.params;
+  //           //根据键值查设备属性值
+  //           var getAttrVal = function(key, list) {
+  //             for (let i = 0; i < list.length; i++) {
+  //               if (list[i].key == key)
+  //                 return list[i].value;
+  //             }
+  //             return undefined;
+  //           }
+  //           var body = {
+  //             serviceName: abilityDes.serviceName,
+  //             methodName: serviceBody.methodName
+  //           };
+  //           params.forEach(function(e) {
+  //             body[e.key] = getAttrVal(e.key, _data.attr);
+  //           });
+  //           for (var p in body) {
+  //             var status = '';
+  //             if (body[p] === undefined) {
+  //               if (element.deviceType === "curtain") {
+  //                 if (element.status) {
+  //                   status = 1;
+  //                 } else {
+  //                   status = 0;
+  //                 }
+  //               } else if (element.deviceType === "switch") {
+  //                 if (element.status) {
+  //                   status = true;
+  //                 } else {
+  //                   status = false;
+  //                 }
+  //               } else if (element.deviceType === "dimmableLight") {
+  //                 if (element.status === true) {
+  //                   status = true;
+  //                 } else {
+  //                   status = false;
+  //                 }
+  //               };
+  //               body[p] = status;
+  //             }
+  //           };
+  //           var transform = {
+  //             "name": "RestfulPlugin",
+  //             "url": "http://restfulplugin:8600/api/v1/restfulplugin/sendRequest",
+  //             "method": "POST",
+  //             "requestBody": {
+  //               "method": "POST",
+  //               "url": `http://deviceaccess:8100/api/v1/deviceaccess/rpc/${element.id}/76`,
+  //             }
+  //           };
+  //           transform.requestBody.body = body;
+  //           console.log(transform);
+  //           transforms.push(transform);
+  //           if (index === deviceArr.length - 1) {
+  //             setTimeout(function() {
+  //               data.transforms = transforms;
+  //               return that.createRule(data);
+  //             }, 2000)
+  //           }
+  //         } else {
+  //           wx.showToast({
+  //             title: '添加失败',
+  //             image: '../../imgs/icon/pay@error.png',
+  //             duration: 1000,
+  //             // mask: true
+  //           });
+  //         }
+  //       })
+  //       .then((res) => {
+  //         sCallback && sCallback(res);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         fCallback && fCallback(err);
+  //       });
+  //   })
+  //   // }
+  //   // else{
+  //   //   that.createRule(data);
+  //   // }
+  // }
+
+
+
   //封装规则json体
   addRule(data, sCallback, fCallback) {
     var that = this;
@@ -66,8 +208,7 @@ class Device extends Base {
     console.log(deviceArr);
     delete data['deviceArr'];
     delete data['transforms'];
-    // if (deviceArr.length!=0){
-    deviceArr.forEach(function(element, index) {
+    deviceArr.forEach(function (element, index) {
       var _data = {};
       var serviceName = '';
       if (element.deviceType === "curtain") {
@@ -79,7 +220,7 @@ class Device extends Base {
       };
       that.getDeviceAttr(element.id)
         //获取设备属性
-        .then(function(res) {
+        .then(function (res) {
           if (res) {
             _data.attr = res;
             var triad = {
@@ -98,7 +239,7 @@ class Device extends Base {
           }
         })
         //获取设备服务
-        .then(function(res) {
+        .then(function (res) {
           if (res) {
             var abilityDes = null;
             for (let i = 0; i < res.length; i++) {
@@ -113,7 +254,7 @@ class Device extends Base {
             var serviceBody = abilityDes.serviceBody;
             var params = serviceBody.params;
             //根据键值查设备属性值
-            var getAttrVal = function(key, list) {
+            var getAttrVal = function (key, list) {
               for (let i = 0; i < list.length; i++) {
                 if (list[i].key == key)
                   return list[i].value;
@@ -124,7 +265,7 @@ class Device extends Base {
               serviceName: abilityDes.serviceName,
               methodName: serviceBody.methodName
             };
-            params.forEach(function(e) {
+            params.forEach(function (e) {
               body[e.key] = getAttrVal(e.key, _data.attr);
             });
             for (var p in body) {
@@ -165,10 +306,10 @@ class Device extends Base {
             console.log(transform);
             transforms.push(transform);
             if (index === deviceArr.length - 1) {
-              setTimeout(function() {
                 data.transforms = transforms;
                 return that.createRule(data);
-              }, 2000)
+            }else {
+              return "gantch";
             }
           } else {
             wx.showToast({
@@ -187,11 +328,11 @@ class Device extends Base {
           fCallback && fCallback(err);
         });
     })
-    // }
-    // else{
-    //   that.createRule(data);
-    // }
   }
+
+
+
+
 
   //创建规则接口
   createRule(param, callback) {
@@ -283,6 +424,25 @@ class Device extends Base {
       }
     };
     this.request(params);
+  }
+
+//获取设备信息
+  get_Device_Info(deviceId) {
+    var that = this;
+    var p = new Promise(function (resolve, reject) {
+      var param = {
+        url: `deviceaccess/device/${deviceId}`,
+        sCallback: function (res) {
+          resolve && resolve(res);
+        },
+        fCallback: function (err) {
+          reject && reject(err);
+        }
+      }
+      that.request(param);
+    })
+
+    return p;
   }
 
   /**==================控制设备============= */

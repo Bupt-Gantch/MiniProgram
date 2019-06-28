@@ -220,6 +220,7 @@ Page({
       customerId: app.globalData.gatewayCustomerId,
       gateway_user: gatewayName
     };
+    //待完善
     my.refresh(gatewayName, (res) => {
       if (res == 'success') {
         wx.showToast({
@@ -237,7 +238,7 @@ Page({
               })
             } else {
               wx.showToast({
-                title: '设备入网失败，请稍后重试',
+                title: '设备入网成功',
                 icon: 'none',
                 duration: 2000
               })
@@ -246,7 +247,7 @@ Page({
         }, 60000)
       } else {
         wx.showToast({
-          title: '设备入网失败，请稍后重试',
+          title: '设备入网失败，请检查网关网络状况',
           icon: 'none',
           duration: 2000
         })

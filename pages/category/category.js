@@ -1008,7 +1008,7 @@ Page({
               })
             } else {
               wx.showToast({
-                title: this.data.content.deleteFailure,
+                title: _this.data.content.deleteFailure,
                 icon: 'none',
                 duration: 1000
               })

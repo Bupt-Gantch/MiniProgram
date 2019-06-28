@@ -1,6 +1,6 @@
 <template name="roll">
   <block>
-    <swiper autoplay interval="0" duration="5000" circular="true">
+    <swiper autoplay interval="0" duration="8000" circular="true">
       <swiper-item wx:for="{{news}}" wx:key="item">
         <view class='reds'>{{item.title}}
         </view>

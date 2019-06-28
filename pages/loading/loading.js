@@ -84,7 +84,7 @@ Page({
               'content-type': 'application/json' //默认值
             },
             success: function(res) {
-              console.log("res:" + JSON.stringify(res))
+              // console.log("res:" + JSON.stringify(res))
               wx.hideLoading();
               var answer = res.data;
               if (answer == undefined || answer == "" || answer == null) {
