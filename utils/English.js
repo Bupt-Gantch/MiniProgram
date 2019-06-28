@@ -152,11 +152,11 @@ var English = {
         url: '../second/company/company'
       },
       {
-        id: 'companyIntroduction',
+        id: 'videoInterface',
         name: 'Video',
         disabled: true,
         image: '/imgs/index/video.png',
-        url: '../second/company/company'
+        url: '../second/yingshi/yingshi'
       }
     ],
   ],

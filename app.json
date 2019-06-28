@@ -32,7 +32,8 @@
     "pages/second/s-city/s-city",
     "pages/second/company/company",
     "pages/second/ai/ai",
-    "pages/second/support/support"
+    "pages/second/support/support",
+    "pages/second/yingshi/yingshi"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -78,5 +79,6 @@
     "scope.userLocation": {
       "desc": "您的位置信息将用于查询天气信息及信息发布"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
