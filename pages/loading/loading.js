@@ -2,7 +2,7 @@
 import {
   Config
 } from '../../utils/config.js';
-import {
+import { 
   Loading
 } from 'loading_model.js';
 var loading = new Loading();
@@ -73,7 +73,6 @@ Page({
             title: '登录中',
           }),
           //发送请求获取openid
-          console.log("res.code:" + res.code);
           wx.request({
               url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
             data: {

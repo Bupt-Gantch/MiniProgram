@@ -39,13 +39,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(app.globalData.customerId);
     var deviceid = options.deviceid;
     var deviceName = options.deviceName;
+    var deviceType = options.deviceType;
     this.setData({
       customerId:app.globalData.customerId,
       deviceId: deviceid,
-      deviceName: deviceName
+      deviceName: deviceName,
+      deviceType: deviceType,
     });
     this._loadData(deviceid);
     this._loadDeviceDetail(deviceid);

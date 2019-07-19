@@ -50,14 +50,14 @@ Page({
   },
   //首次加载
   onLoad: function() {
-    var password = app.globalData.phoneNumber.substring(3,7);
+    var password = app.globalData.phoneNumber.substring(3, 7);
     this.setData({
       netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
       gatewayName: app.globalData.gatewayName,
       customerId: app.globalData.customerId,
       userphoneNumber: app.globalData.phoneNumber,
-      userPassword: password+app.globalData.customerId
+      userPassword: password + app.globalData.customerId
     })
     if (app.globalData.userInfo) {
       this.setData({
@@ -124,7 +124,7 @@ Page({
     });
   },
 
-  onScan: function() { 
+  onScan: function() {
     var _this = this;
     wx.showActionSheet({
       // itemList: ['扫一扫', '手动绑定'],
@@ -271,6 +271,7 @@ Page({
     my.getSharedGateway(param, (res) => {
       if (res.status === "success") {
         var gatewayFirst = res.data;
+        console.log(gatewayFirst);
         gatewayFirst.forEach(function(e, index) {
           var gatewayData = e.split(",")
           if (gatewayData.length != 0) {
@@ -390,35 +391,24 @@ Page({
           gatewayName: gatewayname
         }
         console.log(param);
-        // my.onUnShareAllThings(param, (res) => {
-        //   console.log(res);
-        //   if (res == 1) {
-        //     wx.showToast({
-        //       title: '解绑成功',
-        //     });
-        //     var customerId = app.globalData.customerId;
-        //     _this.deleteGateway(customerId);
-        //   } else {
-        //     wx.showToast({
-        //       title: '解绑失败',
-        //       icon: 'none',
-        //       duration: 1000
-        //     });
-        //   }
-        // })
         my.deleteGateway(param, (res) => {
           console.log(res);
           if (res == 1) {
+            app.globalData.gatewayCustomerId = null;
+            app.globalData.getewayId = null;
+            app.globalData.gatewayName = null;
+            app.globalData.status = null;
             var params = {
               customerid: app.globalData.customerId,
               gateid: gatewayid,
             };
+            // deepDeleteGateway
             my.onUnShareAll(params, (res) => {
-                wx.showToast({
-                  title: '解绑成功',
-                });
-                var customerId = app.globalData.customerId;
-                _this.deleteGateway(customerId);
+              wx.showToast({
+                title: '解绑成功',
+              });
+              var customerId = app.globalData.customerId;
+              _this.deleteGateway(customerId);
             });
           } else {
             wx.showToast({
@@ -436,6 +426,14 @@ Page({
         console.log(param);
         my.onGuestUnShare(param, (res) => {
           if (res.status == "success") {
+
+            app.globalData.gatewayCustomerId = null;
+            app.globalData.getewayId = null;
+            app.globalData.gatewayName = null;
+            app.globalData.status = null;
+            wx.showToast({
+              title: '解绑成功',
+            });
             var customerId = app.globalData.customerId;
             _this.deleteGateway(customerId);
           } else {
@@ -518,6 +516,7 @@ Page({
     var gates = Array();
     my.getShareGateway(param, (res) => {
       var shareList = res.data;
+      console.log(shareList);
       if (shareList == null || shareList.length == 0) {
         this.hideModal();
         wx.showToast({
@@ -641,7 +640,7 @@ Page({
           wx.showModal({
             title: '添加失败',
             content: '该设备已被其他用户添加，请联系管理员。',
-            success: function (res) {
+            success: function(res) {
               if (res.confirm) {
                 wx.makePhoneCall({
                   phoneNumber: '18610873103'

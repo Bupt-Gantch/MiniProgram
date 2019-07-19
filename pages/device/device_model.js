@@ -217,6 +217,8 @@ class Device extends Base {
         serviceName = "control switch";
       } else if (element.deviceType === "switch") {
         serviceName = "control switch";
+      } else if (element.deviceType === "SoundLightAlarm") {
+        serviceName = "control SoundLightAlarm";
       };
       that.getDeviceAttr(element.id)
         //获取设备属性
@@ -288,6 +290,12 @@ class Device extends Base {
                     status = true;
                   } else {
                     status = false;
+                  }
+                } else if (element.deviceType === "SoundLightAlarm") {
+                  if (element.status) {
+                    status = '01';
+                  } else {
+                    status = '00';
                   }
                 };
                 body[p] = status;

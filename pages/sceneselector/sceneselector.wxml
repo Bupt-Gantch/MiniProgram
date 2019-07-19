@@ -1,7 +1,7 @@
 <!--pages/sceneselector/sceneselector.wxml-->
 <import src="../tpls/modal/modal-tpl.wxml" />
 <view class='detail-container'>
-  <!-- header复用一个，保持不变 -->
+  <!-- header复用一个，保持不变 --> 
   <view class='detail-header'>
     <view class='content' bindlongpress="onChangeName">
       <view class='device-image'>
@@ -31,8 +31,8 @@
     <radio value="{{item.id}}"  checked='true' disabled='true'/>{{item.name}}</label>
     </radio-group>
 
-  <!-- <view wx:if="{{item.nickname!=null}}">{{item.nickname}}</view>
-  <view wx:else>{{item.name}}</view> -->
+  <view wx:if="{{item.nickname!=null}}">{{item.nickname}}</view>
+  <view wx:else>{{item.name}}</view>
    <button formType="submit" class="btn-confirm">解绑</button>
     </form>
   </view>
@@ -87,7 +87,7 @@
           </view>
         </block>
       </scroll-view>
-      <!-- <button class='unBind' bindtap='unBindScene'>解除该场景</button> -->
+      <button class='unBind' bindtap='unBindScene'>解除该场景</button>
   </view>
   </view>
 </view>

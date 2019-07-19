@@ -8,13 +8,11 @@ class Category extends Base{
 
   getAllDevices(customerId,callback){
     var param = {
-      //url: 'deviceaccess/tenant/devices/2?limit=1000',
       url: `deviceaccess/customerdevices/2/${customerId}?limit=1000`,
       sCallback: function(data){
         callback && callback(data);
       }
     };
-    console.log(param);
     this.request(param);
   }
 
@@ -238,7 +236,6 @@ class Category extends Base{
    * sendControl
    */
   sendControl(deviceId,requestId,body){
-    console.log(deviceId);
     //body可以是对象
     var that = this;
     var p = new Promise(function(resolve,reject){
@@ -286,7 +283,6 @@ class Category extends Base{
       console.log(res);
       if(res){
         var abilityDes = JSON.parse(res[0].abilityDes);
-        console.log(abilityDes);
         _data.service = abilityDes;
         var serviceBody = abilityDes.serviceBody;
         var params = serviceBody.params;
@@ -308,7 +304,6 @@ class Category extends Base{
           body[e.key] = getAttrVal(e.key,_data.attr);
         })
         body.status = data.status;
-        console.log(body);
         return that.sendControl(data.deviceId,data.requestId,body);
       }else{
         wx.showToast({
@@ -531,7 +526,7 @@ class Category extends Base{
       onMsgCb: function (data) {
         onDataCb: onDataCb(data);
       }
-    };
+    }; 
     return this.realTimeDeviceTest(param);
   }
 

@@ -230,7 +230,7 @@ Config.keyName = {
   'unlock method': '解锁方式',
   'PM2.5': 'PM2.5',
   'alarm': 'alarm',
-  // 'surpervision':'surpervision',
+  'surpervision':'surpervision',
   'battery':'电量状态',
 };
 

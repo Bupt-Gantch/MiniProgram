@@ -9,7 +9,7 @@ var chinese = require("../../utils/Chinese.js")
 var english = require("../../utils/English.js")
 var category = new Category();
 const app = getApp();
- 
+
 Page({
 
   /**
@@ -52,17 +52,20 @@ Page({
     pickeredGroup: {},
     socketTasks: [],
     requestId: 1000000, //请求id100w 递减
+
+    // gatewayTest: [{ "name": "b" }, { "name": "c" }, { "name": "d" }, { "name": "a" }],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
     var index = 0; //从tab栏跳转过来 
     // var name = this.data.gatewayGroup[0]; //从tab栏跳转过来
     var customerId = app.globalData.customerId;
     var content = app.getLanuage(app.globalData.language);
-    var name = content.gatewayGroup[0]; 
+    var name = content.gatewayGroup[0];
     this.setData({
       categoryName: content.categoryName,
       gatewayGroup: content.gatewayGroup,
@@ -80,9 +83,19 @@ Page({
   },
 
   onHide: function() {
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
   },
   onShow: function() {
-    if(app.globalData.gatewayName!=null){
+    var _this = this;
+    var cleanId = setInterval(
+      function() {
+        _this._loadAllGateway();
+      }, 10000)
+    _this.setData({
+      cleanId: cleanId
+    })
+    if (app.globalData.gatewayName != null) {
       this._loadAllScene(app.globalData.gatewayName);
     }
   },
@@ -90,20 +103,21 @@ Page({
   onUnload: function() {
     var _this = this;
     if (_this.data.socketTasks.length > 0) {
-      _this.data.socketTasks.forEach(function (e) {
+      _this.data.socketTasks.forEach(function(e) {
         e.close();
       });
     };
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
-  },
+  onReady: function() {},
 
   //加载所有网关
-  _loadAllGateway: function () {
+  _loadAllGateway: function() {
     var _this = this;
     var customerId = app.globalData.customerId;
     var data = {
@@ -145,10 +159,10 @@ Page({
             result.status = status;
             gatewayList.push(result);
             if (flag == len) {
+              gatewayList.sort(_this.compare());
               _this.setData({
                 gatewayDevice: gatewayList
               });
-              console.log(this.data.gatewayDevice);
               if (app.globalData.gatewayName != null) {
                 _this.setData({
                   gatewayName: app.globalData.gatewayName,
@@ -174,6 +188,12 @@ Page({
         }
       }
     });
+  },
+
+  compare: function() {
+    return function(a, b) {
+      return a["name"].localeCompare(b["name"]);
+    }
   },
 
   _loadRealtimeData: function(gatewayId) {
@@ -215,7 +235,7 @@ Page({
   },
 
   //长按网关选定该网关
-  onGatewayLongPress: function (event) {
+  onGatewayLongPress: function(event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -239,7 +259,7 @@ Page({
       app.globalData.gatewayCustomerId = gatewayCustomerId;
       app.globalData.gatewayStatus = gatewayStatus;
       var allDevices = new Array();
-      res.forEach(function (element) {
+      res.forEach(function(element) {
         if (element.deviceType != "Gateway") {
           if (element.deviceType == "IASZone") {
             var model = element.model;
@@ -255,6 +275,7 @@ Page({
           statusTableOne: newStatusTableOne
         });
       });
+      allDevices.sort(_this.compare());
       console.log(allDevices);
       _this.setData({
         categoryAllDevices: allDevices
@@ -262,7 +283,7 @@ Page({
       _this._loadAllGroup();
       _this._loadAllScene(gatewayName);
       if (_this.data.socketTasks.length > 0) {
-        _this.data.socketTasks.forEach(function (e) {
+        _this.data.socketTasks.forEach(function(e) {
           e.close();
         });
         this.setData({
@@ -292,6 +313,7 @@ Page({
       this._loadRealtimeData(app.globalData.gatewayId);
     };
     var index = Number(category.getDataSet(event, 'index')); //number化
+
     var name = category.getDataSet(event, 'name');
     this.setData({
       currentTabsIndex: index,
@@ -299,9 +321,12 @@ Page({
     });
     this._loadBaannerTitle(name); //加载本地banner和标题
     this._loadCateDevices(index); //点击时获取数据
+
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
   },
 
-  
+
 
   //load所有设备并分类
   _loadCateDevices: function(index) {
@@ -328,6 +353,7 @@ Page({
             statusTableOne: newStatusTableOne
           });
         });
+        allDevices.sort(_this.compare());
         _this.setData({
           categoryAllDevices: allDevices
         })
@@ -382,7 +408,7 @@ Page({
     }
     if (deviceType === 'sceneSelector') {
       wx.navigateTo({
-        url: '../sceneselector/sceneselector?deviceid=' + deviceid + '&deviceName=' + deviceName
+        url: '../sceneselector/sceneselector?deviceid=' + deviceid + '&deviceName=' + deviceName + '&deviceType=' + deviceType
       });
     } else {
       wx.navigateTo({
@@ -480,7 +506,7 @@ Page({
       deviceType: deviceInfo.deviceType,
       manufacture: deviceInfo.manufacture,
       model: deviceInfo.model
-    } 
+    }
 
     /**控制需要的请求数据 */
     var data = {
@@ -540,6 +566,8 @@ Page({
    */
 
   onBottomTab: function(event) {
+    var cleanId = this.data.cleanId;
+    clearInterval(cleanId);
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -553,6 +581,7 @@ Page({
   },
 
   onGatewayTab: function(event) {
+    var _this = this;
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -566,6 +595,13 @@ Page({
     });
     this._loadBaannerTitle(name);
     this._loadAllGateway();
+    var cleanId = setInterval(
+      function() {
+        _this._loadAllGateway();
+      }, 5000)
+    _this.setData({
+      cleanId: cleanId
+    })
   },
 
   /**
@@ -767,11 +803,11 @@ Page({
     var _this = this;
     var newSceneList = [];
     category.getSceneDevices(sceneid, (data) => {
-      if(data.length!=0){
+      if (data.length != 0) {
         _this.setData({
           sceneLists: data,
         });
-        _this.data.sceneLists.forEach(function (element) {
+        _this.data.sceneLists.forEach(function(element) {
           category.getDeviceById(element.deviceId, (data) => {
             element.deviceType = data.deviceType,
               element.name = data.name,
@@ -782,7 +818,7 @@ Page({
             });
           })
         });
-      }else{
+      } else {
         _this.setData({
           sceneList: newSceneList
         });
@@ -1068,6 +1104,7 @@ Page({
             statusTableOne: newStatusTableOne
           });
         });
+        allDevices.sort(_this.compare());
         _this.setData({
           categoryAllDevices: allDevices
         });

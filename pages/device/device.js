@@ -50,7 +50,7 @@ Page({
     },
     array: ['大于', '等于', '小于'],
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
@@ -60,12 +60,19 @@ Page({
     });
     var _this = this;
     var deviceid = options.deviceid;
-    // var deviceid = "0ebf9550-130d-11e9-a8fa-cdbfb1819a9d";
-    // console.log(deviceid);
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
-    var customerId = options.customerId;
+    console.log("customerId:" + app.globalData.gatewayCustomerId);
     var model = options.model;
+
+    //=========测试===============
+    // var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
+    // var deviceName = "newInfrared_2971";
+    // var customerId = 108;
+    // var model = "FNB56-ZIR04FB1.2";
+    // var deviceType = "newInfrared";
+    //==============================
+
     this._loadData(deviceid);
     if (deviceType === 'Gateway') {
       this._loadLinkage(deviceid);
@@ -75,7 +82,6 @@ Page({
       deviceType: deviceType,
       deviceId: deviceid,
       deviceName: deviceName,
-      bindedId: customerId,
       model: model
     });
   },
@@ -146,7 +152,7 @@ Page({
               dimmableLight: false
             })
           }
-        }
+        } 
         if (keyName[e.key] != undefined && e.value != undefined) {
           var nowts = e.ts;
           e.ts = util.formatTime(new Date(e.ts));
@@ -212,7 +218,7 @@ Page({
           test.value = "正常";
           sensorData.push(test);
         };
-      } else {
+      } else if (this.data.deviceType == "IASZone") {
         var test = new Object();
         test.ts = util.formatTime(new Date(ts));
         test.key = '状态值';
@@ -503,7 +509,6 @@ Page({
     var controlDeviceArr = [];
     var deviceType = this.data.deviceType;
     var deviceId = this.data.deviceId;
-    var customerId = this.data.bindedId;
     var gatewayId = app.globalData.gatewayId;
     var deviceName = this.data.deviceName;
     var name = this.data.linkageName;
@@ -598,12 +603,12 @@ Page({
         } else if (deviceType == 'PM2.5') {
           key = 'PM2.5';
         } else if (deviceType == 'IASZone') {
-          var filter = {
-            "type": "",
-            "name": `${name}`,
-            "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
-          };
-          filters.push(filter);
+          // var filter = {
+          //   "type": "",
+          //   "name": `${name}`,
+          //   "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
+          // };
+          // filters.push(filter);
           key = 'alarm';
           condition3 = '===';
           condition2 = answer.condition2;
@@ -636,7 +641,7 @@ Page({
           "deviceName": `${deviceName}`,
           "deviceType": `${deviceType}`,
           "alarmDetail": `${alarmMessage}`,
-          "customerId": `${customerId}`,
+          "customerId": `${app.globalData.gatewayCustomerId}`,
           "gatewayId": `${gatewayId}`,
         }
       };
@@ -736,7 +741,6 @@ Page({
         param.transforms = transforms;
         device.createRule1(param, (res) => {
           wx.hideLoading();
-          // console.log(res);
           if (rule_type == "alarm") {
             wx.showModal({
               title: '提示',
@@ -822,7 +826,6 @@ Page({
     });
     var _this = this;
     var gatewayId = this.data.deviceId;
-    // console.log(gatewayId);
     var param = {
       unionid: app.globalData.unionid,
       openid: app.globalData.openid
@@ -830,7 +833,6 @@ Page({
     device.judgeFollow(param, (res) => {
       if (res == '1') {
         device.activateAlarmRule(gatewayId, (res) => {
-          // console.log(res);
           if (res == 'ActivateAllRule') {
             wx.showToast({
               title: '布防成功',
@@ -922,7 +924,6 @@ Page({
     for (var i = 0; i < 6; i++) {
       npassword += password[i] ^ key[i];
     };
-    // console.log(npassword);
     var value = {
       npassword: npassword,
       statusValue: statusValue
@@ -936,7 +937,6 @@ Page({
   goToInfrared: function(e) {
     var id = device.getDataSet(e, 'id');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    // console.log(deviceInfo);
     wx.navigateTo({
       url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
     });

@@ -20,13 +20,13 @@ Page({
     methodName: Config.methodName,
     requestId: 1000000, //请求id100w 递减
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     this.setData({
-      id:'2',
+      id:options.id,
       tvImg: this.data.tvImg,
       conditionerImg: this.data.conditionerImg
     })
