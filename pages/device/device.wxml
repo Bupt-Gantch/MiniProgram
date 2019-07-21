@@ -89,6 +89,18 @@
     </view>
   </block>
 
+    <!-- SoundLightAlarm -->
+  <block wx:if="{{deviceType === 'SoundLightAlarm'}}">
+    <view class='detail-main'>
+      <view class='deviceInfo'>
+        <view class='curtain-btn'>
+          <button type='primary' data-value="{{'01'}}" bindtap='onSoundLightAlarm'>启动</button>
+          <button type='primary' data-value="{{'00'}}" bindtap='onSoundLightAlarm'>停止</button>
+        </view>
+      </view>
+    </view>
+  </block>
+
   <!--gateway-->
   <block wx:if="{{deviceType === 'Gateway'}}">
     <view wx:if="{{showButton}}" class='viewfooter'>
@@ -115,7 +127,7 @@
       </view>
     </view>
   </block>
-
+ 
   <!-- infrared-->
   <block wx:if="{{deviceType === 'infrared'||deviceType === 'newInfrared'}}">
     <view class="category-detail-box">
@@ -135,7 +147,7 @@
     </view>
   </block>
 </view> 
-
+ 
 <template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
 <template is="changePassword" data="{{showPassword,content:content2}}">
 </template>

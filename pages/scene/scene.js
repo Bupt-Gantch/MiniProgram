@@ -220,6 +220,7 @@ Page({
       }
       sceneDevicesArray = [];
       scene.addscene(sceneType, (res) => {
+        console.log(res);
         if (res === "success") {
           wx.showToast({
             title: '创建成功',

@@ -43,7 +43,6 @@ Page({
     });
     var allDevices = new Array();
     group.loadGroupDevices(groupid, (data) => {
-      console.log(data.data);
       data.data.forEach(function(element) {
         if (element.deviceType == "IASZone") {
           var model = element.model;

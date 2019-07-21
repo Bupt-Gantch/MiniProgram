@@ -68,6 +68,7 @@ Config.deviceImgUrl = {
   'lock': '../../imgs/test/smartLock.png',
   'infrared': '../../imgs/test/infraredO.png',
   'newInfrared': '../../imgs/test/infraredO.png',
+  'SoundLightAlarm':'../../imgs/test/SoundLightAlarm.png',
   //...以此类推
 };
 
@@ -206,6 +207,7 @@ Config.serviceName = {
   controlCurtain: 'control curtain',
   controlLock: 'control lock',
   controlIR: 'control IR',
+  controlSoundLightAlarm:'control SoundLightAlarm',
 };
 
 Config.methodName = {

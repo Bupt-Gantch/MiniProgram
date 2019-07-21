@@ -12,7 +12,7 @@ page{
 .detail-container {
   background-color:#fffef9;/*#24292e*/
   color:#F9F9F9;
-  padding: 0rpx 0;
+  /* padding: 0rpx 0; */
   box-sizing: border-box;
   font-family: "Microsoft Yahei";
   height: 100vh;
@@ -57,7 +57,7 @@ page{
   
 }
 .deviceInfo{
-  padding: 10px 10px 30px 10px;
+  padding: 10px 0px 10px 0px;
   width: 100%;
 }
 .firstLine,.lines{

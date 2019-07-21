@@ -107,6 +107,16 @@ Page({
                 title: '注册失败',
                 content: '手机号码已被注册',
               })
+            } else if (res.resultMsg === "email already exist!") {
+              wx.showModal({
+                title: '注册失败',
+                content: '邮箱已被注册',
+              })
+            } else if (res.resultMsg === "user has already existed!") {
+              wx.showModal({
+                title: '注册失败',
+                content: '用户已存在',
+              })
             }else{
               wx.showModal({
                 title: '注册失败',

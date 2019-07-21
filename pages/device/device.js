@@ -50,7 +50,7 @@ Page({
     },
     array: ['大于', '等于', '小于'],
   },
-
+ 
   /**
    * 生命周期函数--监听页面加载
    */
@@ -62,8 +62,17 @@ Page({
     var deviceid = options.deviceid;
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
-    var customerId = options.customerId;
+    console.log("customerId:" + app.globalData.gatewayCustomerId);
     var model = options.model;
+
+    //=========测试===============
+    // var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
+    // var deviceName = "newInfrared_2971";
+    // var customerId = 108;
+    // var model = "FNB56-ZIR04FB1.2";
+    // var deviceType = "newInfrared";
+    //==============================
+
     this._loadData(deviceid);
     if (deviceType === 'Gateway') {
       this._loadLinkage(deviceid);
@@ -73,7 +82,6 @@ Page({
       deviceType: deviceType,
       deviceId: deviceid,
       deviceName: deviceName,
-      bindedId: customerId,
       model: model
     });
   },
@@ -124,7 +132,7 @@ Page({
   _loadLatestData: function(deviceId) {
     var _this = this;
     device.getlatestData(deviceId, (res) => {
-      console.log(res);
+      // console.log(res);
       var sensorData = res;
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
@@ -144,7 +152,7 @@ Page({
               dimmableLight: false
             })
           }
-        };
+        } 
         if (keyName[e.key] != undefined && e.value != undefined) {
           var nowts = e.ts;
           e.ts = util.formatTime(new Date(e.ts));
@@ -172,7 +180,7 @@ Page({
           })
           if (e.key == 'alarm') {
             alarmFlag1 = true;
-            if (nowts>ts){
+            if (nowts > ts) {
               ts = nowts;
             }
             if (answer == '报警') {
@@ -181,7 +189,7 @@ Page({
           }
           if (e.key == 'surpervision') {
             surpervisionFlag1 = true;
-            console.log(e.ts);
+            // console.log(e.ts);
             if (nowts > ts) {
               ts = nowts;
             }
@@ -193,41 +201,60 @@ Page({
         } else {
           e.ts = '';
           e.key = '',
-          e.value = ''
+            e.value = ''
         }
       })
-      if (alarmFlag1 && surpervisionFlag1) {
-        if (alarmFlag2 && surpervisionFlag2){
+      if (alarmFlag1) {
+        if (alarmFlag2 && surpervisionFlag2) {
           var test = new Object();
           test.ts = util.formatTime(new Date(ts));
-          test.key='状态值';
-          test.value="报警";
+          test.key = '状态值';
+          test.value = "报警";
           sensorData.push(test);
-        } else if (!alarmFlag2 && !surpervisionFlag2){
+        } else {
           var test = new Object();
           test.ts = util.formatTime(new Date(ts));
           test.key = '状态值';
           test.value = "正常";
           sensorData.push(test);
-        } else if (!alarmFlag2 && surpervisionFlag2) {
-          var test = new Object();
-          test.ts = util.formatTime(new Date(ts));
-          test.key = '状态值';
-          test.value = "周期上报";
-          sensorData.push(test);
-        }
+        };
+      } else if (this.data.deviceType == "IASZone") {
+        var test = new Object();
+        test.ts = util.formatTime(new Date(ts));
+        test.key = '状态值';
+        test.value = "正常";
+        sensorData.push(test);
       }
-      sensorData.forEach(function (e, index){
-        if (e.key == 'alarm' || e.key =='surpervision'){
-          sensorData.splice(index,1);
+      // if (alarmFlag1 && surpervisionFlag1) {
+      //   if (alarmFlag2 && surpervisionFlag2){
+      //     var test = new Object();
+      //     test.ts = util.formatTime(new Date(ts));
+      //     test.key='状态值';
+      //     test.value="报警";
+      //     sensorData.push(test);
+      //   } else if (!alarmFlag2 && !surpervisionFlag2){
+      //     var test = new Object();
+      //     test.ts = util.formatTime(new Date(ts));
+      //     test.key = '状态值';
+      //     test.value = "正常";
+      //     sensorData.push(test);
+      //   } else if (!alarmFlag2 && surpervisionFlag2) {
+      //     var test = new Object();
+      //     test.ts = util.formatTime(new Date(ts));
+      //     test.key = '状态值';
+      //     test.value = "周期上报";
+      //     sensorData.push(test);
+      //   }
+      // }
+      sensorData.forEach(function(e, index) {
+        if (e.key == 'alarm' || e.key == 'surpervision') {
+          sensorData.splice(index, 1);
         }
       })
       _this.setData({
         lastRtData: sensorData,
       });
     })
-    console.log(this.data.lastRtData);
-    // lastRtData
   },
   /**
    * =================dimmableLight=======================
@@ -267,6 +294,22 @@ Page({
     this._sendControl(serviceName, value, this.data.deviceInfo);
   },
 
+
+
+  /**
+   * ====================SoundLightAlarm==========================
+   * =====================================================
+   */
+
+  onSoundLightAlarm: function(event) {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    let value = device.getDataSet(event, 'value');
+    let serviceName = this.data.serviceName.controlSoundLightAlarm;
+    this._sendControl(serviceName, value, this.data.deviceInfo);
+  },
+
   /**
    * ====================sendControl==========================
    * =====================================================
@@ -302,7 +345,7 @@ Page({
     }
     device.applyControl(data, (res) => {
       if (deviceInfo.deviceType == 'infrared' || deviceInfo.deviceType == 'newInfrared') {
-        console.log(res);
+        // console.log(res);
       } else {
         if (res.indexOf("device") === -1) { //状态码为200则应用成功
           wx.showToast({
@@ -328,7 +371,7 @@ Page({
         duration: 1000,
         // mask: true
       });
-      console.log(err);
+      // console.log(err);
     });
 
     this.data.requestId--;
@@ -440,21 +483,13 @@ Page({
     device.getAllSonDevices(parentdeviceId, (res) => {
       var allDevices = new Array();
       res.forEach(function(element) {
-        if (element.deviceType === "switch" || element.deviceType === "curtain" || element.deviceType === "dimmableLight") {
+        if (element.deviceType === "switch" || element.deviceType === "curtain" || element.deviceType === "dimmableLight" || element.deviceType === "SoundLightAlarm") {
           allDevices.push(element);
         };
       });
       _this.setData({
         devices: allDevices
       });
-      console.log(allDevices);
-      // if (allDevices.length == 0) {
-      //   wx.showToast({
-      //     title: '没有可用于创建规则的设备',
-      //     icon: 'none',
-      //     duration: 2000
-      //   })
-      // } else {
       this.setData({
         showDevice: true
       })
@@ -474,7 +509,6 @@ Page({
     var controlDeviceArr = [];
     var deviceType = this.data.deviceType;
     var deviceId = this.data.deviceId;
-    var customerId = this.data.bindedId;
     var gatewayId = app.globalData.gatewayId;
     var deviceName = this.data.deviceName;
     var name = this.data.linkageName;
@@ -483,7 +517,7 @@ Page({
       alarmMessage = '家居状态反常，请及时进行处理'
     };
     var answer = e.detail.value;
-    console.log(answer);
+    // console.log(answer);
     var rule_type = [];
     var deviceArr = [];
     var linkageDevices = this.data.devices;
@@ -512,6 +546,9 @@ Page({
       var e = element.split(",");
       obj.id = e[0];
       obj.status = deviceArr[Number(e[1])];
+      obj.manufacture = e[2];
+      obj.model = e[3];
+      obj.deviceType = e[4];
       controlDevices.push(obj);
     });
     param.rule = {
@@ -522,7 +559,6 @@ Page({
       "gatewayId": `${gatewayId}`,
       "rule_type": `${rule_type}`
     };
-    console.log(devices.length);
     if (deviceType === 'temperature') {
       if (name == null || ((devices.length == 0 || devices.length == undefined) && rule_type == 'common') || (condition1 == "" && condition2 == "")) {
         wx.showToast({
@@ -567,12 +603,12 @@ Page({
         } else if (deviceType == 'PM2.5') {
           key = 'PM2.5';
         } else if (deviceType == 'IASZone') {
-          var filter = {
-            "type": "",
-            "name": `${name}`,
-            "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
-          };
-          filters.push(filter);
+          // var filter = {
+          //   "type": "",
+          //   "name": `${name}`,
+          //   "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
+          // };
+          // filters.push(filter);
           key = 'alarm';
           condition3 = '===';
           condition2 = answer.condition2;
@@ -596,7 +632,6 @@ Page({
         filters.push(filter);
       }
     }
-    console.log(filters);
     if (rule_type == "alarm") {
       var transform = {
         "name": "WechatPlugin",
@@ -606,15 +641,13 @@ Page({
           "deviceName": `${deviceName}`,
           "deviceType": `${deviceType}`,
           "alarmDetail": `${alarmMessage}`,
-          "customerId": `${customerId}`,
+          "customerId": `${app.globalData.gatewayCustomerId}`,
           "gatewayId": `${gatewayId}`,
         }
       };
       param.transforms = transform;
     }
     param.filters = filters;
-    console.log(param);
-    console.log(controlDevices.length);
     if (!this.data.addRule) {
       wx.showToast({
         title: '请完善规则内容',
@@ -623,47 +656,83 @@ Page({
       })
     } else {
       if (controlDevices.length != 0) {
-        controlDevices.forEach(function(element, index) {
-          device.getDeviceInfo(element.id, (res) => {
-            element.manufacture = res.manufacture;
-            element.model = res.model;
-            element.deviceType = res.deviceType;
-            controlDeviceArr.push(element);
-            wx.showLoading({
-              title: '创建中',
+        param.deviceArr = controlDevices;
+        device.addRule(param, (res) => {
+          console.log(res);
+          if (res == 'OK') {
+            if (rule_type == "alarm") {
+              wx.showModal({
+                title: '提示',
+                content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
+                success(res) {
+                  if (res.confirm) {} else if (res.cancel) {}
+                }
+              })
+            } else {
+              wx.showToast({
+                title: "规则创建成功",
+                duration: 2000,
+                icon: 'none',
+                // mask: true
+              });
+            }
+            _this.setData({
+              showDevice: false
             })
-            setTimeout(function() {
-              if (index == controlDevices.length - 1) {
-                param.deviceArr = controlDeviceArr;
-                device.addRule(param, (res) => {
-                  wx.hideLoading();
-                  console.log(res);
-                  // if (res == 'OK') {
-                  if (rule_type == "alarm") {
-                    wx.showModal({
-                      title: '提示',
-                      content: '规则创建成功，您需要关注‘天慧云谷’公众号来接收报警信息',
-                      success(res) {
-                        if (res.confirm) {} else if (res.cancel) {}
-                      }
-                    })
-                  } else {
-                    wx.showToast({
-                      title: "规则创建成功",
-                      duration: 2000,
-                      icon: 'none',
-                      // mask: true
-                    });
-                  }
-                  _this.setData({
-                    showDevice: false
-                  })
-                  // }
-                });
-              }
-            }, 1000);
-          })
-        })
+          } else if (res != "gantch") {
+            wx.showToast({
+              title: "规则创建失败",
+              duration: 2000,
+              icon: 'none',
+              // mask: true
+            });
+          }
+        });
+
+        //=================================================================//
+        // controlDevices.forEach(function (element, index) {
+        // device.getDeviceInfo(element.id, (res) => {
+        //   element.manufacture = res.manufacture;
+        //   element.model = res.model;
+        //   element.deviceType = res.deviceType;
+        //   controlDeviceArr.push(element);
+        //   wx.showLoading({
+        //     title: '创建中',
+        //   })
+        //   setTimeout(function() {
+        //     if (index == controlDevices.length - 1) {
+        //       param.deviceArr = controlDeviceArr;
+        //       device.addRule(param, (res) => {
+        //         wx.hideLoading();
+        //         console.log(res);
+        //         // if (res == 'OK') {
+        //         if (rule_type == "alarm") {
+        //           wx.showModal({
+        //             title: '提示',
+        //             content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
+        //             success(res) {
+        //               if (res.confirm) {} else if (res.cancel) {}
+        //             }
+        //           })
+        //         } else {
+        //           wx.showToast({
+        //             title: "规则创建成功",
+        //             duration: 2000,
+        //             icon: 'none',
+        //             // mask: true
+        //           });
+        //         }
+        //         _this.setData({
+        //           showDevice: false
+        //         })
+        //         // }
+        //       });
+        //     }
+        //   }, 1000);
+        // })
+        // })
+        //=================================================================//
+
       } else {
         wx.showLoading({
           title: '创建中',
@@ -672,11 +741,10 @@ Page({
         param.transforms = transforms;
         device.createRule1(param, (res) => {
           wx.hideLoading();
-          console.log(res);
           if (rule_type == "alarm") {
             wx.showModal({
               title: '提示',
-              content: '规则创建成功，您需要关注‘天慧云谷’公众号来接收报警信息',
+              content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
               success(res) {
                 if (res.confirm) {} else if (res.cancel) {}
               }
@@ -738,7 +806,7 @@ Page({
       netStatus: app.globalData.netStatus
     });
     device.getAlarmActiveRule(gatewayId, (res) => {
-      console.log(res);
+      // console.log(res);
       if (!res) {
         this.setData({
           deployment: true
@@ -758,7 +826,6 @@ Page({
     });
     var _this = this;
     var gatewayId = this.data.deviceId;
-    console.log(gatewayId);
     var param = {
       unionid: app.globalData.unionid,
       openid: app.globalData.openid
@@ -766,7 +833,6 @@ Page({
     device.judgeFollow(param, (res) => {
       if (res == '1') {
         device.activateAlarmRule(gatewayId, (res) => {
-          console.log(res);
           if (res == 'ActivateAllRule') {
             wx.showToast({
               title: '布防成功',
@@ -858,7 +924,6 @@ Page({
     for (var i = 0; i < 6; i++) {
       npassword += password[i] ^ key[i];
     };
-    console.log(npassword);
     var value = {
       npassword: npassword,
       statusValue: statusValue
@@ -872,7 +937,6 @@ Page({
   goToInfrared: function(e) {
     var id = device.getDataSet(e, 'id');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    console.log(deviceInfo);
     wx.navigateTo({
       url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
     });

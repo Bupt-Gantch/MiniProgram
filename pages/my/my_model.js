@@ -17,6 +17,7 @@ class My extends Base {
         callback && callback(data);
       }
     };
+    console.log(params);
     this.request_test(params)
   }
 
@@ -47,8 +48,22 @@ class My extends Base {
 /**删除设备 */
   deleteGateway(param,callback){
     var params = {
+      //removeGateway
       url:`deviceaccess/unassign/${param.customerid}?gateway_name=${param.gatewayName}`,
       sCallback:function(data){
+        callback && callback(data);
+      }
+    };
+    this.request(params);
+  }
+
+//深度解绑网关
+  deepDeleteGateway(param, callback) {
+    var params = {
+      url: "account/deepUnBindedALLGate",
+      data: param,
+      method: 'POST',
+      sCallback: function (data) {
         callback && callback(data);
       }
     };
@@ -113,7 +128,7 @@ class My extends Base {
   }
 
 /**
- * 主人取消分享
+ * 客人取消分享
  */
   onOwnerUnShare(param,callback){
     var params = {
@@ -126,9 +141,9 @@ class My extends Base {
     };
     this.request(params)
   }
-
+ 
   /**
-   * 客人取消分享
+   * 主人取消分享
    */
   onUnShareAll(param, callback) {
     var params = {
