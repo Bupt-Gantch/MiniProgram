@@ -33,7 +33,8 @@
     "pages/second/company/company",
     "pages/second/ai/ai",
     "pages/second/support/support",
-    "pages/second/yingshi/yingshi"
+    "pages/second/yingshi/yingshi",
+    "pages/second/cameralist/cameralist"
   ],
   "window": {
     "backgroundTextStyle": "light",
