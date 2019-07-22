@@ -132,7 +132,7 @@ Page({
   _loadLatestData: function(deviceId) {
     var _this = this;
     device.getlatestData(deviceId, (res) => {
-      // console.log(res);
+      console.log(res);
       var sensorData = res;
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
@@ -189,7 +189,6 @@ Page({
           }
           if (e.key == 'surpervision') {
             surpervisionFlag1 = true;
-            // console.log(e.ts);
             if (nowts > ts) {
               ts = nowts;
             }
@@ -205,7 +204,7 @@ Page({
         }
       })
       if (alarmFlag1) {
-        if (alarmFlag2 && surpervisionFlag2) {
+        if (alarmFlag2) {
           var test = new Object();
           test.ts = util.formatTime(new Date(ts));
           test.key = '状态值';
@@ -225,27 +224,6 @@ Page({
         test.value = "正常";
         sensorData.push(test);
       }
-      // if (alarmFlag1 && surpervisionFlag1) {
-      //   if (alarmFlag2 && surpervisionFlag2){
-      //     var test = new Object();
-      //     test.ts = util.formatTime(new Date(ts));
-      //     test.key='状态值';
-      //     test.value="报警";
-      //     sensorData.push(test);
-      //   } else if (!alarmFlag2 && !surpervisionFlag2){
-      //     var test = new Object();
-      //     test.ts = util.formatTime(new Date(ts));
-      //     test.key = '状态值';
-      //     test.value = "正常";
-      //     sensorData.push(test);
-      //   } else if (!alarmFlag2 && surpervisionFlag2) {
-      //     var test = new Object();
-      //     test.ts = util.formatTime(new Date(ts));
-      //     test.key = '状态值';
-      //     test.value = "周期上报";
-      //     sensorData.push(test);
-      //   }
-      // }
       sensorData.forEach(function(e, index) {
         if (e.key == 'alarm' || e.key == 'surpervision') {
           sensorData.splice(index, 1);
@@ -688,51 +666,6 @@ Page({
             });
           }
         });
-
-        //=================================================================//
-        // controlDevices.forEach(function (element, index) {
-        // device.getDeviceInfo(element.id, (res) => {
-        //   element.manufacture = res.manufacture;
-        //   element.model = res.model;
-        //   element.deviceType = res.deviceType;
-        //   controlDeviceArr.push(element);
-        //   wx.showLoading({
-        //     title: '创建中',
-        //   })
-        //   setTimeout(function() {
-        //     if (index == controlDevices.length - 1) {
-        //       param.deviceArr = controlDeviceArr;
-        //       device.addRule(param, (res) => {
-        //         wx.hideLoading();
-        //         console.log(res);
-        //         // if (res == 'OK') {
-        //         if (rule_type == "alarm") {
-        //           wx.showModal({
-        //             title: '提示',
-        //             content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
-        //             success(res) {
-        //               if (res.confirm) {} else if (res.cancel) {}
-        //             }
-        //           })
-        //         } else {
-        //           wx.showToast({
-        //             title: "规则创建成功",
-        //             duration: 2000,
-        //             icon: 'none',
-        //             // mask: true
-        //           });
-        //         }
-        //         _this.setData({
-        //           showDevice: false
-        //         })
-        //         // }
-        //       });
-        //     }
-        //   }, 1000);
-        // })
-        // })
-        //=================================================================//
-
       } else {
         wx.showLoading({
           title: '创建中',
@@ -741,17 +674,27 @@ Page({
         param.transforms = transforms;
         device.createRule1(param, (res) => {
           wx.hideLoading();
-          if (rule_type == "alarm") {
-            wx.showModal({
-              title: '提示',
-              content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
-              success(res) {
-                if (res.confirm) {} else if (res.cancel) {}
-              }
-            })
+          console.log(res);
+          if(res == 'OK') {
+            if (rule_type == "alarm") {
+              wx.showModal({
+                title: '提示',
+                content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
+                success(res) {
+                  if (res.confirm) { } else if (res.cancel) { }
+                }
+              })
+            } else {
+              wx.showToast({
+                title: "规则创建成功",
+                duration: 2000,
+                icon: 'none',
+                // mask: true
+              });
+            }
           } else {
             wx.showToast({
-              title: "规则创建成功",
+              title: "规则创建失败",
               duration: 2000,
               icon: 'none',
               // mask: true

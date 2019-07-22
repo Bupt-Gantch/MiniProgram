@@ -238,6 +238,7 @@ class Category extends Base{
   sendControl(deviceId,requestId,body){
     //body可以是对象
     var that = this;
+    console.log(body);
     var p = new Promise(function(resolve,reject){
       var param = {
         url: 'deviceaccess/rpc/' + deviceId + '/' + requestId,
