@@ -80,5 +80,6 @@
     "scope.userLocation": {
       "desc": "您的位置信息将用于查询天气信息及信息发布"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

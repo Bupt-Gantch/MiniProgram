@@ -47,26 +47,27 @@ Page({
     videoLog: '',
     // 全屏状态
     fullScreen: false,
-    streamUrl: 'rtmp://rtmp01open.ys7.com/openlive/77c99cc69e4443aeaef0c1fd8ac1e5e6',
+    streamUrl: '',
     streamSerial:'',
     streamName:'默认',
     streamType:'分享自：',
     muted: false,
     orientation: 'vertical',
-    videohidden:false
+    videohidden:false,
+    wxssNum:1
   },
 
   onLoad: function (options) {
     //获取全部摄像头列表
     var param = {
       "customerId": app.globalData.customerId,
-      "url": "https://smart.gantch.cn/api/v1/camera/getDevices"
+      "url": "camera/getDevices"
     };
     camerasShow.getCamerasByUid(param, (res) => {
       var _this = this;
-      let resCode = res.data.status
+      let resCode = res.status
          if (resCode=="200"){
-           let resData = res.data.data
+           let resData = res.msg
            console.log(resData)
            for (var i = 0; resData !=undefined && i < resData.length;i++){
              let cameraItem = resData[i]
@@ -84,7 +85,8 @@ Page({
          }
          else{
            wx.showToast({
-             title: '调用失败，请刷新试试',
+             title: res.msg,
+             icon:'none',
              duration: 2000
            })
         }
@@ -117,7 +119,7 @@ Page({
     if (this.data.inputName.length == 0) {
       wx.showToast({
         title: '别名不能为空',
-        icon: 'loading',
+        icon: 'none',
         duration: 2000
       })
     }
@@ -126,11 +128,11 @@ Page({
         "customerId": app.globalData.customerId,
         "serial": this.data.streamSerial,
         "name": this.data.inputName,
-        "url": "https://smart.gantch.cn/api/v1/camera/updateDeviceInfo"
+        "url": "camera/updateDeviceInfo"
       };
       camerasShow.updateCameraInfo(param, (res) => {
         console.log(res)
-        let resCode = res.data.status
+        let resCode = res.status
         if (resCode == "200") {
           console.log(res)
           let resData = this.data.cameraList
@@ -148,7 +150,8 @@ Page({
           })
         } else {
           wx.showToast({
-            title: '修改失败，请重新试试',
+            title: "更新失败",
+            icon:'none',
             duration: 2000
           })
         }
@@ -203,6 +206,7 @@ Page({
   },
   // 筛选导航栏事件
   menuClick: function (e) {
+    var _this = this;
     // 获取通过wxml  data-hi="{{ idx }}" 传过来的索引
     var menuNum = e.currentTarget.dataset.hi;
 
@@ -210,35 +214,37 @@ Page({
     var menuSrc = "meunShow[" + menuNum + "].isShows";
 
     // 循环data中设置的meunShow
-    for (var n = 0; n < this.data.meunShow.length; n++) {
+    for (var n = 0; n < _this.data.meunShow.length; n++) {
       // 拼接 ，使我们可以获取到menuShow里面每一个isSHows
       var menuSrcs = "meunShow[" + n + "].isShows";
       // 解决重复点击不能隐藏的问题
       if (n != menuNum) {
         // 初始化，每次点击时先全部隐藏，但是重复点击不会隐藏
-        this.setData({
+        _this.setData({
           [menuSrcs]: true
         });
       };
     };
 
     // 给当前点击的去反data中设置的meunShow，使之显示， 只写此处只会显示不能隐藏
-    this.setData({
-      [menuSrc]: !this.data.meunShow[e.currentTarget.dataset.hi].isShows,
-    });
-    if (menuNum === 0) {
-      this.setData({
-        videohidden: !this.data.videohidden
+    if (_this.data.meunShow[e.currentTarget.dataset.hi].isShows==true){
+      _this.setData({
+        [menuSrc]: !_this.data.meunShow[e.currentTarget.dataset.hi].isShows,
+        videohidden: true
       });
+    }
+    else{
+      _this.setData({
+        [menuSrc]: !_this.data.meunShow[e.currentTarget.dataset.hi].isShows,
+        videohidden: false
+      });
+    }
+    if (menuNum === 0) {
+     
     }
     else if (menuNum === 1){
       wx.scanCode({
         success(res) {
-          wx.showToast({
-            title: res.result,
-            icon: 'none',
-            duration: 2000
-          })
           let result = res.result
           let list = result.trim().split(/\s+/)
           //console.log(list)
@@ -249,51 +255,46 @@ Page({
             "validateCode": list[2],
             "name": list[3],
             "discription": list[3],
-            "url": "https://smart.gantch.cn/api/v1/camera/addDevice"
+            "url": "camera/addDevice"
           };
           camerasShow.addCamera(paramAdd, (res) => {
             console.log(res)
-            let resCode = res.data.status;
+            let resCode = res.status;
             if (resCode == "200") {
-              this.data.cameraList.push({
-                "cameraName": res.data.msg.deviceName,
-                "cameraSerial": res.data.msg.deviceSerial,
-                "cameraStatus": res.data.msg.status,
-                "isPlaying": false
+              _this.data.cameraList.push({
+                "cameraName": res.msg.deviceName,
+                "cameraSerial": res.msg.deviceSerial,
+                "cameraStatus": res.msg.status,
+                "isPlaying": 0
               })
-              this.setData({
-                cameraList: this.data.cameraList
+              _this.setData({
+                cameraList: _this.data.cameraList,
               })
               wx.showToast({
                 title: '添加成功',
-                duration: 2000
-              })
-            }
-            else if (resCode == 500) {
-              wx.showToast({
-                title: '该设备已经添加',
+                icon:'success',
                 duration: 2000
               })
             }
             else{
               wx.showToast({
-                title: '添加失败',
+                title: res.msg,
+                icon: 'none',
                 duration: 2000
               })
             }
           })
         }
       })
+      _this.setData({
+        videohidden: !_this.data.videohidden,
+      })
     }
     else if (menuNum === 2) {
-      this.setData({
-        videohidden: !this.data.videohidden
-      });
+      
     } 
     else if (menuNum === 3){
-      this.setData({
-        videohidden: !this.data.videohidden
-      });
+      
     }
   },
   //区域列表事件选择其他功能
@@ -305,7 +306,7 @@ Page({
       this.setData({
         ["meunShow[3].isShows"]: !this.data.meunShow[3].isShows,
         videohidden: !this.data.videohidden,
-        hiddenUpdateUser: !this.data.hiddenUpdateUser,
+        hiddenUpdateUser: false,
         getUpdateUserFocus: !this.data.getUpdateUserFocus
       });
     };
@@ -330,7 +331,7 @@ Page({
     if(this.data.inputAppKey.length==0||this.data.inputSecret.length==0){
       wx.showToast({
         title: '账号不能为空',
-        icon: 'loading',
+        icon:'none',
         duration: 2000
       })
     }
@@ -339,10 +340,10 @@ Page({
         "customerId": app.globalData.customerId,
         "appKey": this.data.inputAppKey,
         "appSecret": this.data.inputSecret,
-        "url": "https://smart.gantch.cn/api/v1/camera/user/update"
+        "url": "camera/user/update"
       };
       camerasShow.updateUser(param, (res) => {
-        let resCode = res.data.status;
+        let resCode = res.status;
         if (resCode == 200) {
           wx.showToast({
             title: '更新成功',
@@ -353,8 +354,8 @@ Page({
         }
         else {
           wx.showToast({
-            title: '请确认账号正确',
-            icon: 'fail',
+            title: res.msg,
+            icon: 'none',
             duration: 2000
           })
         }
@@ -367,49 +368,53 @@ Page({
   },
   //区域列表事件选择删除
   rowClickForDel:function(e){
+    var _this = this;
     if (e.currentTarget.dataset.hi >= 0) {
       // 获取wxml  data-hi="{{ index }}" 传过来的索引
       var rowNum = e.currentTarget.dataset.hi;
       console.log(rowNum);
-      console.log(this.data.cameraList[rowNum]);
+      console.log(_this.data.cameraList[rowNum]);
       // 同上
-      var param = {
+      var paramclose = {
         "customerId": app.globalData.customerId,
-        "serial": this.data.cameraList[rowNum].cameraSerial,
-        "url": "https://smart.gantch.cn/api/v1/camera/delDevice"
+        "url": "camera/closeLive",
+        "serial": _this.data.streamSerial
       };
-      camerasShow.deleteCamera(param, (res) => {
-        console.log(res)
-        let resCode = res.data.status;
-        if (resCode=="200"){
-          if (this.data.streamSerial == this.data.cameraList[rowNum].cameraSerial) {
-            var paramclose = {
-              "customerId": app.globalData.customerId,
-              "url": "https://smart.gantch.cn/api/v1/camera/closeLive",
-              "serial": this.data.streamSerial
-            };
-            camerasShow.closeCameraRtmp(paramclose, (res) => {
-              this.setData({
-                ["cameraList[" + rowNum + "].isPlaying"]: 0
+      camerasShow.closeCameraRtmp(paramclose, (res) => {
+          var param = {
+            "customerId": app.globalData.customerId,
+            "serial": _this.data.cameraList[rowNum].cameraSerial,
+            "url": "camera/delDevice"
+          };
+          camerasShow.deleteCamera(param, (res) => {
+            console.log(res)
+            let resCode = res.status;
+            if (resCode == "200") {
+              var list = _this.data.cameraList
+              list.splice(rowNum, 1)
+              console.log(_this.data.cameraList)
+              _this.setData({
+                cameraList:list,
               })
-            })
-          }
-          this.data.cameraList.splice(rowNum,1)
-          console.log(this.data.cameraList)
-          this.setData({
-            cameraList: this.data.cameraList
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+            else {
+              wx.showToast({
+                title: res.msg,
+                icon: 'none',
+                duration: 2000
+              })
+            }
           })
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-            duration: 2000
-          })
-        }
+        _this.setData({
+          ["meunShow[2].isShows"]: !_this.data.meunShow[2].isShows,
+          videohidden: false
+        });
       })
-      this.setData({
-        ["meunShow[2].isShows"]: !this.data.meunShow[2].isShows,
-        videohidden: !this.data.videohidden
-      });
     };
   },
   // 区域列表事件选择播放
@@ -423,11 +428,12 @@ Page({
       if (this.data.cameraList[rowNum].cameraStatus==0){
         wx.showToast({
           title: '掉线摄像头不能正常播放',
+          icon:'none',
           duration: 2000
         })
         this.setData({
           ["meunShow[0].isShows"]: !this.data.meunShow[0].isShows,
-          videohidden: !this.data.videohidden,
+          videohidden: false,
         });
       }
       else{
@@ -435,7 +441,7 @@ Page({
         if(this.data.streamSerial!=''){
           var paramclose = {
             "customerId": app.globalData.customerId,
-            "url": "https://smart.gantch.cn/api/v1/camera/closeLive",
+            "url": "camera/closeLive",
             "serial": this.data.streamSerial
           };
           camerasShow.closeCameraRtmp(paramclose, (res) =>{
@@ -444,15 +450,22 @@ Page({
             })
           })
         }
+        //开启视频直播流
+        var paramopen = {
+          "customerId": app.globalData.customerId,
+          "url": "camera/openLive",
+          "serial": this.data.cameraList[rowNum].cameraSerial
+        };
+        camerasShow.openCameraRtmp(paramopen, (res) =>{})
         //启动摄像头直播
         var param = {
           "customerId": app.globalData.customerId,
-          "url": "https://smart.gantch.cn/api/v1/camera/getLiveAddressbySerial",
+          "url": "camera/getLiveAddressbySerial",
           "serial": this.data.cameraList[rowNum].cameraSerial
         };
         camerasShow.startCameraRtmp(param, (res) =>{
           console.log(res)
-          if (res.data.status=="200"){
+          if (res.status=="200"){
             wx.showToast({
               title: '加载中',
               icon: 'loading',
@@ -460,13 +473,20 @@ Page({
             })
             this.setData({
               ["meunShow[0].isShows"]: !this.data.meunShow[0].isShows,
-              videohidden: !this.data.videohidden,
-              streamUrl: res.data.msg[0].rtmp,
-              streamSerial: res.data.msg[0].deviceSerial,
-              streamName: res.data.msg[0].deviceName,
+              videohidden: false,
+              streamUrl: res.msg[0].rtmp,
+              streamSerial: res.msg[0].deviceSerial,
+              streamName: res.msg[0].deviceName,
               ["cameraList["+rowNum +"].isPlaying"]:1,
               noChoose:false
             });
+          }
+          else{
+            wx.showToast({
+              title: res.msg,
+              icon: 'none',
+              duration: 2000//持续的时间
+            })
           }
         })
       }
@@ -584,8 +604,14 @@ Page({
       this.ctx.requestFullScreen({
         direction: 0,
       })
+      this.setData({
+        wxssNum:2
+      })
     } else {
       this.ctx.exitFullScreen({
+      })
+      this.setData({
+        wxssNum: 1
       })
     }
   },

@@ -15,14 +15,14 @@
             <view class="meun-txt" hidden='{{ meunShow[0].isShows ? true : false }}'>
                 <view class='menu-text-list'>
                     <view class='menu-text-list-left over-auto'>
-                        <text wx:for="{{ cameraList }}" wx:key="name" class='meun-city-txt' bindtap="rowClick"  data-hi="{{ index }}">{{ item.cameraName+"-"+cameraState[item.cameraStatus]+cameraPlayState[item.isPlaying]}}</text>
+                        <text wx:for="{{ cameraList }}" wx:key="name" class='meun-city-txt' bindtap="rowClick"  data-hi="{{ index }}">{{item.cameraName+"-"+cameraState[item.cameraStatus]+cameraPlayState[item.isPlaying]}}</text>
                     </view>
                 </view> 
             </view>
             <view class="meun-txt" hidden='{{ meunShow[2].isShows ? true : false }}'>
                 <view class='menu-text-list'>
                     <view class='menu-text-list-left over-auto'>
-                        <text wx:for="{{ cameraList }}" wx:key="name" class='meun-city-txt' bindtap="rowClickForDel"  data-hi="{{ index }}">{{ item.cameraName+"-"+cameraState[item.cameraStatus] }}</text>
+                        <text wx:for="{{ cameraList }}" wx:key="name" class='meun-city-txt' bindtap="rowClickForDel"  data-hi="{{ index }}">{{ item.cameraName+"-"+cameraState[item.cameraStatus]+cameraPlayState[item.isPlaying] }}</text>
                     </view>
                 </view> 
             </view>
@@ -43,15 +43,14 @@
     </view>
     <!-- 播放器与开关 -->
   <view class="page-section tc" hidden='{{videohidden}}'>
-    <live-player id="player" class="live-player" src="{{streamUrl}}" mode="RTC" autoplay="{{isPlay}}" bindstatechange="statechange" binderror="error" muted="{{muted}}" orientation="{{orientation}}" bindfullscreenchange="onFullScreenChange" object-fit="contain" bindtap="bindvideobtnPlay" bindlongpress="bindvideoFullScreen"/>
-    <em class="btn"></em>
-    <cover-view class="video-menu">
+    <live-player id="player" class="live-player" src="{{streamUrl}}" mode="RTC" autoplay="{{isPlay}}" bindstatechange="statechange" binderror="error" muted="{{muted}}" orientation="{{orientation}}" bindfullscreenchange="onFullScreenChange" object-fit="contain" bindtap="bindvideobtnPlay" bindlongpress="bindvideoFullScreen">
+    <cover-view class="video-menu{{wxssNum}}">
       <cover-view class="video-log-container">
         <cover-view class="video-log-text">{{videoLog}}</cover-view>
         <!-- <cover-view class="video-log-text">videoLog</cover-view> -->
       </cover-view>
       <!-- 非全屏 -->
-      <cover-view wx:if="{{!fullScreen}}" class="video-option-menu">
+      <cover-view wx:if="{{fullScreen}}" class="video-option-menu">
         <cover-image class="flex-box video-image" src="../../../imgs/test/{{isPlay?'pause':'play'}}.png" bindtap="bindPlay"></cover-image>
         <cover-image class="flex-box video-image-60" src="../../../imgs/test/stop.png" bindtap="bindStop"></cover-image>
         <!-- 音量  -->
@@ -60,15 +59,16 @@
         <cover-image class="flex-box video-image-60" src="../../../imgs/test/{{fullScreen?'exitScreen':'fullScreen'}}.png" bindtap="bindScreen"></cover-image>
       </cover-view>
       <!-- 全屏 -->
-      <cover-view wx:if="{{fullScreen}}" class="video-option-menu">
-        <cover-image wx:if="{{isPlay}}" class="flex-box video-image" src="../../images/pause.png" bindtap="bindPlay"></cover-image>
-        <cover-image class="flex-box video-image-60" src="../../images/stop.png" bindtap="bindStop"></cover-image>
+      <cover-view wx:if="{{!fullScreen}}" class="video-option-menu">
+        <cover-image class="flex-box video-image" src="../../../imgs/test/{{isPlay?'pause':'play'}}.png" bindtap="bindPlay"></cover-image>
+        <cover-image class="flex-box video-image-60" src="../../../imgs/test/stop.png" bindtap="bindStop"></cover-image>
         <!-- 音量  -->
-        <cover-image wx:if="{{!openVoice}}" class="flex-box video-image-80" src="../../images/{{openVoice?'voice':'voice-close'}}.png" bindtap="bindMute"></cover-image>
+        <cover-image class="flex-box video-image-80" src="../../../imgs/test/{{openVoice?'voice':'voice-close'}}.png" bindtap="bindMute"></cover-image>
         <!--退出全屏  -->
-        <cover-image class="flex-box video-image-60" src="../../images{{fullScreen?'exitScreen':'fullScreen'}}.png" bindtap="bindScreen"></cover-image>
+        <cover-image class="flex-box video-image-60" src="../../../imgs/test/{{fullScreen?'exitScreen':'fullScreen'}}.png" bindtap="bindScreen"></cover-image>
       </cover-view>
-    </cover-view>  
+    </cover-view>
+    </live-player>  
   </view>
   <view class='menu-po'>
   <!-- 摄像头相关信息 -->

@@ -7,15 +7,16 @@ class YingShiRegister extends Base {
   }
   //判断用户提交的appKey是否有效
   checkYingShiInfo(param, callback) {
+    console.log(param)
     var params = {
       url: param.url,
-      data: param,
+      data:param,
       method:'POST',
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //判断用户是否提交过appKey且有效
   getAccessToken(param, callback) {
@@ -26,7 +27,7 @@ class YingShiRegister extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
 }
 

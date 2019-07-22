@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "萤石"
+  "navigationBarTitleText": "萤石",
+  "enablePullDownRefresh": false
 }
