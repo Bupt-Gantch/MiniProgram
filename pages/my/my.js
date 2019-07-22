@@ -402,8 +402,8 @@ Page({
               customerid: app.globalData.customerId,
               gateid: gatewayid,
             };
-            // deepDeleteGateway
-            my.onUnShareAll(params, (res) => {
+            //onUnShareAll
+            my.deepDeleteGateway(params, (res) => {
               wx.showToast({
                 title: '解绑成功',
               });
