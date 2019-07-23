@@ -63,10 +63,11 @@ Page({
       "url": "https://smart.gantch.cn/api/v1/camera/getDevices"
     };
     camerasShow.getCamerasByUid(param, (res) => {
+      console.log(res.data);
       var _this = this;
-      let resCode = res.data.status
+      let resCode = res.data.data.status;
          if (resCode=="200"){
-           let resData = res.data.data
+           let resData = res.data.data.msg
            console.log(resData)
            for (var i = 0; resData !=undefined && i < resData.length;i++){
              let cameraItem = resData[i]
@@ -251,6 +252,7 @@ Page({
             "discription": list[3],
             "url": "https://smart.gantch.cn/api/v1/camera/addDevice"
           };
+          console.log(paramAdd);
           camerasShow.addCamera(paramAdd, (res) => {
             console.log(res)
             let resCode = res.data.status;

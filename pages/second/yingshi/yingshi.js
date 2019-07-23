@@ -3,6 +3,7 @@ import {
   YingShiRegister
 } from 'yingshi_model.js';
 var yingShiRegister = new YingShiRegister();
+var app = getApp();
 Page({
   data: {
     appKey: '',
@@ -11,6 +12,7 @@ Page({
   onLoad: function (options) {
     //判断用户是否已经提交appkey且有效
     //满足则跳转否则进行提交
+    console.log(app.globalData.customerId)
     var param = {
       //"accountID": app.globalData.openid
       "customerId": app.globalData.customerId,
@@ -57,6 +59,7 @@ Page({
           "url": "https://smart.gantch.cn/api/v1/camera/register"
         };
         yingShiRegister.checkYingShiInfo(param, (res) => {
+          console.log(res);
           let resCode = res.data.status;
           let msg = res.data.msg;
           if (resCode=="200" && msg=="注册成功"){
