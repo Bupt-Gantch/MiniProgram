@@ -41,10 +41,10 @@
     height: 80rpx;
 }
 .cameraMenu-nav{
-    width: 30%;
+    width: 80%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 .cameraMenu-nav image{
     width: 72rpx;
@@ -137,9 +137,20 @@ live-player {
   padding: 0rpx 0;
   box-sizing: border-box;
 } 
-.video-menu{
+.video-menu1{
   position: relative;
-  /* top:-90rpx; */
+  top:380rpx; 
+  height: 135rpx;
+  width:100%;
+  display: flex;
+  /* background: linear-gradient(rgba(255, 255, 255, 0), #000000); */
+  color: #ffffff;
+  align-items:center;
+  /* background-image: url(images/gradualBg.png); */
+  flex-direction: column;
+}
+.video-menu2{
+  position: relative; 
   height: 135rpx;
   width:100%;
   display: flex;

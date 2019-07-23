@@ -15,7 +15,18 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
+  }
+  //启动摄像头的推流
+  openCameraRtmp(param, callback) {
+    var params = {
+      url: param.url,
+      data: param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params)
   }
   //启动某一摄像头的直播
   startCameraRtmp(param, callback) {
@@ -26,7 +37,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //关闭某一摄像头的直播
   closeCameraRtmp(param, callback) {
@@ -37,7 +48,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //添加摄像头
   addCamera(param, callback) {
@@ -49,7 +60,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //删除摄像头
   deleteCamera(param, callback) {
@@ -60,7 +71,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //更新摄像头信息
   updateCameraInfo(param, callback) {
@@ -72,7 +83,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
   //更新萤石云信息
   updateUser(param, callback) {
@@ -84,7 +95,7 @@ class CamerasShow extends Base {
         callback && callback(data);
       }
     };
-    this.request_test(params)
+    this.request(params)
   }
 }
 
