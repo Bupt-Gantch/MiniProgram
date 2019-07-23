@@ -34,7 +34,7 @@ Config.dimmableLightOnUrl = ['../../imgs/test/bump2.png', '../../imgs/test/bump2
     '开关': ['switch'],
     '窗帘': ['curtain'],
     '插座': ['outlet'],
-    '监控': ['monitor'],
+    // '监控': ['monitor'],
     '门锁': ['lock'],
     '红外宝': ['infrared', 'newInfrared'],
     '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
@@ -46,12 +46,13 @@ Config.homeCategoryType = {
   '窗帘': ['curtain'],
   '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
   '开关': ['switch'],
-  '监控': ['monitor'],
+  // '监控': ['monitor'],
   '门锁': ['lock'],
   '红外宝': ['infrared', 'newInfrared'],
 };
 
-Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5', 'IASZone', 'lightSensor', 'switch', 'monitor', 'lock', 'infrared', 'newInfrared'];
+// Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5', 'IASZone', 'lightSensor', 'switch', 'monitor', 'lock', 'infrared', 'newInfrared'];
+Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5', 'IASZone', 'lightSensor', 'switch', 'lock', 'infrared', 'newInfrared'];
 
 Config.deviceImgUrl = {
   'dimmableLight': '../../imgs/test/bump2.png',

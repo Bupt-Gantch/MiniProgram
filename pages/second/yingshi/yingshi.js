@@ -4,7 +4,6 @@ import {
   YingShiRegister
 } from 'yingshi_model.js';
 var yingShiRegister = new YingShiRegister();
-var app = getApp();
 Page({
   data: {
     appKey: '',

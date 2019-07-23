@@ -19,7 +19,8 @@ var Chinese = {
   del: '删除消息',
   delmes: '您确定要删除此条消息吗？',
   noGateway: '您还没有网关',
-  categoryName: ['所有设备', '灯泡', '窗帘', '插座', '监控', '门锁', '红外宝', '传感器', '其他类型'],
+  // categoryName: ['所有设备', '灯泡', '窗帘', '插座', '监控', '门锁', '红外宝', '传感器', '其他类型'],
+  categoryName: ['所有设备', '灯泡', '窗帘', '插座', '门锁', '红外宝', '传感器', '其他类型'],
   gatewayGroup: ['所有网关'],
   sceneGroup: ['分组', '场景'],
   categoryType: {
@@ -27,7 +28,7 @@ var Chinese = {
     // '开关': ['switch'],
     '窗帘': ['curtain'],
     '插座': ['outlet'],
-    '监控': ['monitor'],
+    // '监控': ['monitor'],
     '门锁': ['lock'],
     '红外宝': ['infrared', 'newInfrared'],
     '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],

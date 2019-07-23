@@ -803,16 +803,20 @@ Page({
     var _this = this;
     var newSceneList = [];
     category.getSceneDevices(sceneid, (data) => {
+      console.log(data);
       if (data.length != 0) {
         _this.setData({
           sceneLists: data,
         });
         _this.data.sceneLists.forEach(function(element) {
+          console.log(element.deviceId);
           category.getDeviceById(element.deviceId, (data) => {
+            console.log(data);
             element.deviceType = data.deviceType,
               element.name = data.name,
               element.nickname = data.nickname,
               newSceneList.push(element);
+              // console.log(newSceneList);
             _this.setData({
               sceneList: newSceneList
             });
