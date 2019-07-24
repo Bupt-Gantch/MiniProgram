@@ -41,6 +41,12 @@ Page({
       secret: e.detail.value
     })
   },
+  //帮助跳转
+  bindHelp:function(){
+    wx.navigateTo({
+      url: '../../help/help',
+    })
+  },
   // 登录 
   login: function () {
     if (this.data.appKey.length == 0 || this.data.secret.length == 0) {

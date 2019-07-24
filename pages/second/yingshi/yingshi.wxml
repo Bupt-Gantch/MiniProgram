@@ -15,15 +15,14 @@
   <image class="keyImage" src="../../../imgs/icon/inputItem.png"></image> 
   <label class="loginLab" for="SecretId">Secret</label> 
   <input class="inputText" id="SecretId" placeholder="请输入Secret" bindinput="passwordInput" /> 
- </view> 
+ </view>
  <!--按钮-->
  <view class="loginBtnView"> 
   <button class="loginBtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="login">提交</button> 
  </view>
- <!--帮助文档-->
- <view class='helpText'></view>
-  <button class='helpBtn'>
-   <!--daikaifa-->
-  </button> 
- </view> 
+ </view>
 </view>
+<cover-view class='footer'>
+<!--帮助文档-->
+  <cover-image class="flex-box helpbtn"  src="../../../imgs/tip/help.png" bindtap="bindHelp"></cover-image>
+</cover-view>
