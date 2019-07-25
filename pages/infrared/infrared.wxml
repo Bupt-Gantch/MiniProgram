@@ -3,7 +3,7 @@
 <!-- <view wx:if="{{!netStatus}}">
   <template is="netAlert" />
 </view> -->
-
+ 
 <!--空调-->
 <block wx:if="{{id=='1'}}">
   <view class='view-main'>
@@ -12,7 +12,7 @@
         <image src='{{conditionerImg[0].img}}'></image>
         <view>{{conditionerImg[0].name}}</view>
       </view>
-            <view class='view-top-img'>
+      <view class='view-top-img'>
         <image src='{{conditionerImg[3].img}}'></image>
         <view>{{conditionerImg[3].name}}</view>
       </view>
@@ -44,7 +44,7 @@
         <image src='{{conditionerImg[6].img}}'></image>
         <view>{{conditionerImg[6].name}}</view>
       </view>
-      <view class='view-top-img'>
+      <view class='view-top-img' bindtap='onLearnTap' >
         <image src='{{conditionerImg[7].img}}'></image>
         <view>{{conditionerImg[7].name}}</view>
       </view>

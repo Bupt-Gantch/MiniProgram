@@ -2,7 +2,7 @@
 import {
   Infrared
 } from 'infrared_model.js';
-import {
+import { 
   Config
 } from '../../utils/config.js';
 var util = require('../../utils/util.js');
@@ -26,24 +26,16 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      id:options.id,
-      tvImg: this.data.tvImg,
-      conditionerImg: this.data.conditionerImg
-    })
-    // this.setData({
-    //   netStatus: app.globalData.netStatus
-    // });
-    // var _this = this;
-    // var id = options.id;
-    // var deviceInfo = JSON.parse(options.deviceInfo);
-    // this.setData({
-    //   deviceInfo: deviceInfo,
-    //   id: id
-    // });
-    // this.onLearnTap();
-    // this.onMatchTap();
-    // this.onPenetrateTap();
-    // this.onCurrentKeyTap();
+      netStatus: app.globalData.netStatus
+    });
+    var _this = this;
+    var id = options.id;
+    var deviceInfo = JSON.parse(options.deviceInfo);
+    this.setData({
+      deviceId: deviceInfo.id,
+      id: id
+    });
+    console.log(deviceInfo.id);
   },
 
   /**
@@ -64,13 +56,14 @@ Page({
    * ====================sendControl==========================
    * =====================================================
    */
-  _sendControl: function(serviceName, methodName, value, deviceInfo) {
+  _sendControl: function(serviceName, methodName, value) {
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
+    var _this = this;
     var triad = {
-      deviceType: deviceInfo.deviceType,
-      manufacture: deviceInfo.manufacture,
-      model: deviceInfo.model
+      deviceType: _this.deviceInfo.deviceType,
+      manufacture: _this.deviceInfo.manufacture,
+      model: _this.deviceInfo.model
     }
 
     var data = '';
@@ -122,11 +115,12 @@ Page({
 
   //学习
   onLearnTap: function(e) {
-    // var id = infrared.getDataSet(e, 'id');
-    let value = this.data.id;
+    var deviceId = this.data.deviceId;
+
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.learn;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+
+    this._sendControl(serviceName, methodName, value);
   },
 
   //匹配
@@ -134,7 +128,7 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.match;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   },
 
   //控制
@@ -142,7 +136,7 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   },
 
   //当前设备参数接口
@@ -150,7 +144,7 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.currentKey;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   },
 
   //删除按键
@@ -158,7 +152,7 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.deleteKey;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   },
 
   //删除全部按键
@@ -166,7 +160,7 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.deleteAllKey;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   },
 
   //退出
@@ -174,6 +168,6 @@ Page({
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.exit;
-    this._sendControl(serviceName, methodName, value, this.data.deviceInfo);
+    this._sendControl(serviceName, methodName, value);
   }
 })

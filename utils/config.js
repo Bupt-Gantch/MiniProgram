@@ -198,7 +198,7 @@ Config.conditionerImg = [
   {
     'img': '../../imgs/icon/mate.png',
     'id': '8',
-    'name': '匹配'
+    'name': '学习'
   },
 ];
 

@@ -1,7 +1,7 @@
 /* pages/infrared/infrared.wxss */
 @import "../tpls/roll/roll_tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
-
+ 
 image {
   width: 100rpx;
   height: 100rpx;
