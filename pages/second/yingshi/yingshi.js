@@ -68,7 +68,7 @@ Page({
           console.log(res);
           let resCode = res.status;
           let msg = res.msg;
-          if (resCode=="200" && msg=="注册成功"){
+          if (resCode=="200"){
             wx.redirectTo({
               url: '../cameralist/cameralist',
             })
