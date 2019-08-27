@@ -1,0 +1,21 @@
+.netStatus{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  font-size: 30rpx;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #FDDDDE;
+  color: #836E6B;
+  z-index: 100;
+}
+
+.netStatus image{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 20rpx 20rpx;
+  vertical-align: middle;
+}
+
+.netStatus text{
+  vertical-align: middle;
+}

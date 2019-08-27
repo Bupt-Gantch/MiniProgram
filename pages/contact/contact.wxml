@@ -1,0 +1,14 @@
+<!--pages/contact/contact.wxml-->
+<view class='container'>
+  <view class='contact-title'>
+    <text>{{content.myfeedback}}</text>
+  </view>
+  <view class='contact-email'>
+    <view class='title'></view>
+    <text class='address' selectable='true'>gckj2008@126.com</text>
+  </view>
+  <view class='contact-bottom'>
+    <text class='create'>Created By Sky Smart</text> 
+  </view>
+  
+</view>

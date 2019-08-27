@@ -1,0 +1,23 @@
+/* pages/group/group.wxss */
+@import "../tpls/category/category-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
+
+.group-wrapper{
+    width: 100%;
+    
+}
+.category-detail-box{
+  width: 100%;
+}
+.category-goods-items{
+    width: 25%;
+    margin-bottom: 20rpx;
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.category-goods-items.middle{
+    margin:0 0 20rpx 0;
+}

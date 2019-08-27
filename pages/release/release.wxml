@@ -1,0 +1,37 @@
+<!--pages/release/release.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view>
+  <form bindsubmit="formSubmit" bindreset="formReset" name="detail">
+    <view class="description">
+      <textarea placeholder='{{content.content}}' name='textarea'
+      id='content' maxlength='200'></textarea>
+    </view>
+ 
+<view class="category-detail-box">
+          <view class="category-main">
+            <view class='category-main-view'>
+              <block wx:for="{{imageList}}" wx:for-item="image" wx:key="image">
+                <!-- 下面存放单个设备的div  -->
+                <view class="category-goods-items {{index%3==1?'middle':''}}" data-src="image" bindtap="previewImage">
+                  <view class='group-image'>
+                    <image bindtap='imageClick' src='{{image}}' mode="aspectFill"></image>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+
+    <view class='picture'>
+      <image src="/imgs/icon/addpicture.png" bindtap='chooseImg'></image>
+    </view>
+    <view class="line"></view>
+    <view bindtap='addPlace'>{{place}}</view>
+    <view class="btn-publish">
+      <button form-type='submit' key='value'>{{content.submit}}</button>
+    </view>
+  </form>
+</view>

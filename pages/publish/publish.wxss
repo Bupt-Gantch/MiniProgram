@@ -1,0 +1,246 @@
+/* pages/publish/publish.wxss */
+ @import "../tpls/roll/roll_tpl.wxss";
+
+ 
+page{
+  width: 100%;
+  height: 100%;
+  font-size: 30rpx;
+  background-color: #fffef9
+}
+.container {
+  background-color: #a8d3ba;
+  min-height: 100%;
+}
+
+swiper {
+  width: 100%;
+  height: 340rpx;
+}
+
+swiper image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.search-view {
+  opacity: 0.5;
+  position:absolute;
+  z-index: 500;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-content {
+  background: #E3E3E3;
+  width: 650rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: auto;
+  padding-left: 20rpx;
+  padding-bottom: auto;
+  margin: auto;
+  height: 70rpx;
+  border-radius: 20px 20px;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.search-input {
+  width: 500rpx;
+  font-size: 28rpx;
+  /* display:block */
+}
+
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
+
+.endbox{
+  align-content: center;
+  text-align: center;
+  color:#001f56
+}
+
+.endbox text::before, .endbox text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}
+
+.line{
+  height: 3rpx;
+  background-color:#001f56;
+  margin-bottom: 20rpx;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
+
+.circle-float {
+  position: fixed;
+  display: flex;
+  bottom: 10rpx;
+  left: 10rpx;
+  width: 89rpx;
+  height: 89rpx;
+}
+
+.items-list{
+  overflow: hidden;
+  padding: 20rpx;
+}
+
+.info-user{
+  overflow: hidden;
+  margin-bottom: 20rpx
+}
+.info-pic{
+  float: left;
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.info-nati{
+  margin-left: 120rpx;
+}
+
+.info-name{
+  font-size: 40rpx;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #7fbcd2;
+}
+
+.info-time{
+  font-size: 25rpx;
+  color: #7fbcd2;
+}
+
+.info-detail{
+  word-break:break-all;
+  font-size: 28rpx;
+  border-bottom: 10rpx
+}
+
+.showPic{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.showPic image{
+  width: 32%;
+  height: 200rpx;
+  padding-right: 8rpx 
+}
+
+.info-place{
+  font-size: 25rpx;
+  color: #7fbcd2;
+}
+
+.info-up{
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.info-comment{
+  width: 35rpx;
+  height: 35rpx;
+  margin-left: 20rpx;
+}
+
+.info-footer{
+  overflow: hidden;
+}
+
+.info-uc{
+  float: right;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.uppeople image{
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.uppeople text{
+  color: rgb(214, 118, 118);
+  font-size: 30rpx
+}
+
+.comments{
+  font-size: 25rpx;
+  color: #000;
+}
+
+.comment-name{
+  font-size: 30rpx;
+  font-family: cursive;
+  color: #7fbcd2;
+}
+
+.comment-box input{
+  width:100%;
+  height: 20rpx;
+  border: 1rpx solid gray;
+  border-radius: 10rpx;
+}
+
+.category-detail-box {
+  overflow: hidden;
+  padding: 10rpx 10rpx 0rpx;
+  height: 100%;
+  background-color: #fffef9;
+}
+
+.category-main {
+  height: 91%;
+}
+
+.category-main-view {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.category-goods-items {
+  width: 32%;
+  margin-bottom: 10rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.category-goods-items.middle {
+  margin-bottom:10rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.category-goods-items .group-image image {
+  height: 220rpx;
+  width: 220rpx;
+  border-radius: 0;
+}

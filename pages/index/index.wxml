@@ -1,0 +1,57 @@
+<!--pages/index/index.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+
+  <view wx:if="{{!netStatus}}">
+    <template is="netAlert"/>
+  </view>
+
+<view class='title_view'>
+  <view class='otherCity' bindtap='goToWeather'>
+    <image src='/imgs/icon/search-pic.png'></image>
+  </view>
+  <view class='city_view' bindtap='weather'>
+    {{currentcity}}
+  </view>
+  <view class='weather_view'>
+    <template is="roll" data="{{news:weatherData}}" />
+  </view>
+</view>
+<view class="container">
+  <swiper class="swiper_box" indicator-dots="true" autoplay="true" circular="true">
+    <block wx:for="{{imgUrls}}" wx:key="item">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <swiper-item class="main-core" wx:for="{{cores}}" wx:for-item="core" wx:key="id">
+    <block wx:for="{{core}}" wx:key="id">
+      <view wx:if="{{item.disabled}}" data-index="{{index}}" class="main-core-item" url="{{item.url}}" bindtap='changePage'>
+        <image class="core-item-icon" src="{{item.image}}"></image>
+        <text class="core-item-name">{{item.name}}</text>
+      </view>
+      <view wx:else class="main-core-item disabled" bindtap="disabled_item">
+        <image class="core-item-icon" src="{{item.image}}"></image>
+        <text class="core-item-name">{{item.name}}</text>
+      </view>
+    </block>
+  </swiper-item>
+  <view class='home-main'>
+    <view class='home-main-theme'>
+      <view class='theme-box'>
+        <block wx:for="{{themeArr}}" wx:key="item">
+          <view wx:if="{{index==1}}" class="theme-item" data-index='{{index}}'>
+            <image src="{{item.url}}"></image>
+          </view>
+          <view wx:elif="{{index==0}}" class="theme-item" data-index='{{index}}'>
+            <image src="{{item.url}}"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>
+
+  <!-- <view class='goods_view'>
+    <template is="roll" data="{{news:goodDetail}}" />
+  </view> -->

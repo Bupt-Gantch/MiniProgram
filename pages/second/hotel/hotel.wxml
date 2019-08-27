@@ -1,0 +1,20 @@
+<!--pages/second/hotel/hotel.wxml-->
+<wxs src="../../../utils/common.wxs" module="util"/>
+<import src="../../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+ <!-- <view class="poster-view">
+    <image src="/imgs/swiper/hotel.jpg" class="poster-image" mode="scaleToFill"></image>
+  </view>  -->
+<view class="loginHotel">
+  <form bindsubmit="loginHotel">
+  <view class="usercontainer">
+    <input bindinput="getHomeNumber" type="number" class="user" type="text" name="homenumber" placeholder="请输入您的入住号"/>
+  </view>
+  <view class="usercontainer">
+    <input class="user" bindinput="getPhone" type="number" name="phone" placeholder="请输入您的手机号"/>
+  </view>
+  <button class="btn" form-type='submit' key='value' disabled="{{util.validatePhone(phone)?false:true}}">进入智慧酒店</button>
+    </form>
+</view>

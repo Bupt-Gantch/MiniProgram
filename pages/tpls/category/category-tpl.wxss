@@ -1,0 +1,160 @@
+.category-detail-box {
+  overflow: hidden;
+  padding: 30rpx 20rpx 0rpx;
+  height: 100%;
+  background-color: #fffef9;
+}
+
+.category-header {
+  height: 70%;
+  text-align: center;
+}
+
+.category-header image {
+  border-radius: 5rpx;
+  width: 520rpx;
+  height: 200rpx;
+  max-height: 100%;
+}
+
+.category-title {
+  margin: 30rpx 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-title text {
+  font-size: 30rpx;
+  color: #002366;
+}
+
+.title-alarm{
+  margin: 30rpx 30rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25rpx;
+  color: #002366;
+}
+
+.category-title text::before, .category-title text::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -6rpx;
+  width: 70rpx;
+  height: 2rpx;
+  margin: 0 20rpx;
+  background-color: #979797;
+}
+
+.category-main {
+  height: 85%;
+}
+
+.category-main-view {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.category-goods-items {
+  width: 30%;
+  margin-bottom: 20rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.category-goods-items.middle {
+  margin: 0 20rpx;
+}
+
+.category-goods-items view.image_switch {
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 150rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.category-goods-items view image {
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 150rpx;
+}
+
+.category-goods-items view switch {
+  zoom: 0.7;
+}
+
+.image_switch view.switch {
+}
+
+.category-goods-items view {
+  color: #002366;
+  font-size: 24rpx;
+}
+
+.category-goods-items view.online {
+  height: 12rpx;
+  width: 12rpx;
+  border-radius: 50%;
+  background-color: rgb(1, 247, 1);
+  margin: 5rpx;
+}
+
+.category-goods-items view.offline {
+  height: 12rpx;
+  width: 12rpx;
+  border-radius: 50%;
+  background-color: #a8d3ba;
+  margin: 5rpx;
+}
+
+.devicename {
+  white-space: nowrap;
+  overflow: scroll;
+  width: 100%;
+}
+
+/*
+ * 针对group的样式
+ */
+
+.category-goods-items .group-image image {
+  height: 150rpx;
+  width: 150rpx;
+  border-radius: 0;
+}
+
+.circle-float {
+  position: fixed;
+  display: flex;
+  top: 40rpx;
+  right: 15rpx;
+  width: 89rpx;
+  height: 89rpx;
+} 
+
+.delete-view{
+  position:relative;
+  width: 100%;
+}
+
+.deleteCertain {
+  width: 65rpx !important;
+  height: 65rpx !important;
+  position:absolute;
+  top:-6rpx;
+  right: -10rpx;
+  /* cursor: pointer; */
+}

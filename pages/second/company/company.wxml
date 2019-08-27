@@ -1,0 +1,27 @@
+<!--pages/second/company/company.wxml-->
+<!-- <view class="poster-view">
+    <image src="/imgs/swiper/bg.jpg" class="poster-image" mode="scaleToFill"></image>
+  </view> -->
+<view class="map_container">
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" markers="{{markers}}"></map>  
+</view>
+<view class='detail'>
+  <view class='aboutUs'>
+    <image src='/imgs/icon/address.png'></image>
+    地址：北京市顺义区金马工业区金益街7号</view>
+    <view class='address'>深圳市龙岗区坂田风门路48号禾坪岗工业园A栋5楼</view>
+  <view class='aboutUs'>
+    <image src='/imgs/icon/phone.png'></image>
+    电话：86 010 84935219/0755-28192199</view>
+  <view class='aboutUs'>
+    <image src='/imgs/icon/fax.png'></image>
+    传真：86 010 84935321/0755-29577919</view>
+  <view class='aboutUs' bindtap='gotoGantch'>
+    <image src='/imgs/icon/net.png'></image>
+    公司网址：http://www.gantch.cn/</view>
+</view>
+
+<view class='gantch_code'>
+<image src='http://cbu01.alicdn.com/img/ibank/qr_jz/m.gantch.cn.jpg' data-src='http://cbu01.alicdn.com/img/ibank/qr_jz/m.gantch.cn.jpg' bindtap='previewImage'></image>
+<view class='text_view'>天慧官网</view>
+</view>

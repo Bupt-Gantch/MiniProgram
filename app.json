@@ -1,0 +1,86 @@
+{
+  "pages": [
+    "pages/loading/loading",
+    "pages/home/home",
+    "pages/search/search",
+    "pages/device/device",
+    "pages/infrared/infrared",
+    "pages/messagelist/messagelist",
+    "pages/category/category",
+    "pages/my/my",
+    "pages/contact/contact",
+    "pages/release/release",
+    "pages/publish/publish",
+    "pages/mypublish/mypublish",
+    "pages/register/register",
+    "pages/scene/scene",
+    "pages/group/group",
+    "pages/index/index",
+    "pages/ruleDetail/ruleDetail",
+    "pages/weather/weather",
+    "pages/sceneselector/sceneselector",
+    "pages/second/smarthome/smarthome",
+    "pages/second/alert/alert",
+    "pages/second/firecontrol/firecontrol",
+    "pages/second/farm/farm",
+    "pages/second/hotel/hotel",
+    "pages/second/city/city",
+    "pages/second/community/community",
+    "pages/second/school/school",
+    "pages/second/old/old",
+    "pages/second/office/office",
+    "pages/second/s-city/s-city",
+    "pages/second/company/company",
+    "pages/second/ai/ai",
+    "pages/second/support/support",
+    "pages/second/yingshi/yingshi",
+    "pages/second/cameralist/cameralist",
+    "pages/help/help"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#9ABAF5",
+    "navigationBarTitleText": "天慧云谷",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#E3E3E3"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "",
+        "iconPath": "imgs/toolbar/home.png",
+        "selectedIconPath": "imgs/toolbar/home@selected.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "",
+        "iconPath": "imgs/toolbar/publish.png",
+        "selectedIconPath": "imgs/toolbar/publish@selected.png"
+      },
+      {
+        "pagePath": "pages/messagelist/messagelist",
+        "text": "",
+        "iconPath": "imgs/toolbar/messagelist.png",
+        "selectedIconPath": "imgs/toolbar/messagelist@selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "",
+        "iconPath": "imgs/toolbar/my.png",
+        "selectedIconPath": "imgs/toolbar/my@selected.png"
+      }
+    ],
+    "borderStyle": "white",
+    "selectedColor": "#002366",
+    "color": "#5a9ec8",
+    "backgroundColor": "#e7eae9"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于查询天气信息及信息发布"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

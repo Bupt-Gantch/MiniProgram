@@ -1,0 +1,232 @@
+@import "../tpls/base.wxss";
+@import "../tpls/category/category-tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
+
+page{
+  width: 100%;
+  height: 100%;
+  background-color:#fffef9;
+}
+
+.detail-container {
+  background-color:#fffef9;/*#24292e*/
+  color:#F9F9F9;
+  /* padding: 0rpx 0; */
+  box-sizing: border-box;
+  font-family: "Microsoft Yahei";
+  height: 100vh;
+}
+
+.detail-header{
+  background-color: #a8d3ba;
+  margin-bottom: 20px;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.detail-header view.content{
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.detail-header image{
+  height: 80rpx;
+  width: 80rpx;
+  margin: 0 10rpx;
+}
+.detail-header view view{
+  margin: 0 10rpx;
+}
+.device-image{
+  background-color: #fffef9;
+}
+
+.detail-main{
+  background-color: #a8d3ba;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  justify-content: flex-start;  /*主轴*/
+  
+}
+.deviceInfo{
+  padding: 10px 0px 10px 0px;
+  width: 100%;
+}
+.firstLine,.lines{
+  width: 95%;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*table */
+.IASZtable{
+  margin-bottom: 20px; 
+  background-color: #a8d3ba;
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.td {
+    width:40%;
+    justify-content: center;
+    text-align: center;
+}
+
+.th {
+  width: 40%;
+  justify-content: center;
+  color: #fff;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+} 
+/* end*/
+.detail-main view.status{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.detail-main view.bottom{
+  margin: 10px; /* 上右下左*/
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+}
+.warningRecord{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.msgPublish{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.msgPublish view{
+  margin: 0px 10px;
+}
+
+.button-hover {
+  background-color: wheat;
+}
+
+.curtain-btn{
+  width:95%;
+  height:200rpx;
+  display:flex;
+  text-align:center;
+  justify-content:space-around;
+  align-items:center;
+  flex-direction:row;
+}
+
+.viewfooter{
+   display:flex;
+   justify-content: center;
+}
+
+.view_footer button {
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  padding: 0rpx 0;
+  font-family: "Microsoft Yahei";
+  margin: 30rpx;
+}
+
+.disarming{
+  background-color: red;
+  color: #f9f9f9;
+}
+
+.detailview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Microsoft Yahei";
+  margin-top: 30rpx;
+}
+
+.deviceDetail {
+  align-items: center;
+  margin-right: 10rpx;
+  background-color: #a8d3ba;
+  color: #f9f9f9;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.deviceDetail text{
+  font-size: 40rpx
+}
+
+.btn-confirm {
+  width: 200rpx;
+}
+
+.deviceDetailView {
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.scroll-view{
+  display: block;
+  margin-top:80rpx
+}
+
+.linkage-view{
+  display: block;
+  margin-top: 20rpx;
+  height: 500rpx;
+}
+
+.linkageDetail{
+  width: 100%;
+  height: 60rpx;
+  border-bottom: 5rpx solid #E3E3E3;
+  font-size: 40rpx;
+  color: #f9f9f9;
+  margin: 10rpx;
+}
+
+.linkageDetail image{
+  position: absolute;
+  right: 0rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.name image{
+  position: relative;
+  top:0rpx;
+  right: 0rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.deployment{
+  color: green;
+  font-size: 30rpx;
+}
+.unDeployment{
+  color: red;
+  font-size: 30rpx;
+}

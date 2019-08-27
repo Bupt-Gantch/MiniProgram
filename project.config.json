@@ -1,0 +1,186 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.4.0",
+	"appid": "touristappid",
+	"projectname": "postgantch",
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 23,
+			"list": [
+				{
+					"id": -1,
+					"name": "分类",
+					"pathName": "pages/category/category",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "publish",
+					"pathName": "pages/publish/publish",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "release",
+					"pathName": "pages/release/release",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "scene",
+					"pathName": "pages/scene/scene",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "my",
+					"pathName": "pages/my/my",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "home",
+					"pathName": "pages/home/home",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "loading",
+					"pathName": "pages/loading/loading",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "register",
+					"pathName": "pages/register/register",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mypublish",
+					"pathName": "pages/mypublish/mypublish",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "分组&场景",
+					"pathName": "pages/scene/scene",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "mynews",
+					"pathName": "pages/mynews/mynews",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "group",
+					"pathName": "pages/group/group",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "device",
+					"pathName": "pages/device/device",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "weather",
+					"pathName": "pages/weather/weather",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "contact",
+					"pathName": "pages/contact/contact",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "sceneselector",
+					"pathName": "pages/sceneselector/sceneselector",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "hotel",
+					"pathName": "pages/second/hotel/hotel",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "company",
+					"pathName": "pages/second/company/company",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "infrared",
+					"pathName": "pages/infrared/infrared",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "yingshi",
+					"pathName": "pages/second/yingshi/yingshi",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "camera",
+					"pathName": "pages/second/cameralist/cameralist",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "help",
+					"pathName": "pages/help/help",
+					"scene": null
+				}
+			]
+		}
+	}
+}

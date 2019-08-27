@@ -1,0 +1,53 @@
+<import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view class="my-container">
+  <view class="my-header">
+    <view class="userinfo">
+      <block>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <text>{{userphoneNumber}}</text>
+        <text>{{userPassword}}</text>
+      </block>
+    </view>
+  </view>
+  <view class="my-item scan" bindtap='onScan'>
+    <text>{{content.scan}}</text>
+  </view>
+
+  <view class="my-item scan" bindtap='deleteGateway'>
+    <text>{{content.deleteGateway}}</text>
+  </view>
+  <view class="my-item scan" bindtap='onShare'>
+    <text>{{content.share}}</text>
+  </view>
+  <view class="my-item scan" bindtap='onUnShare'>
+    <text>{{content.unshare}}</text>
+  </view>
+  <view wx:if="{{gatewayName!=null}}" class="my-item scan" bindtap='refreshGateway'>
+    <text>{{content.refreshGateway}}</text>
+  </view>
+  <view class="my-main">
+    <view class="my-item" bindtap='myPublish'>
+      <text>{{content.mypublish}}</text>
+    </view>
+    <view class="my-item" bindtap='onContactTap'>
+      <text>{{content.feedback}}</text>
+    </view>
+    <view class="language" bindtap='changeLanuage'>{{content.button}}</view>
+  </view>
+  <template is="shareInformation" data="{{showEdit,content:content2}}">
+  </template>
+    <template is="shareInformation" data="{{showEdit:showAddGateway,content:content5}}">
+  </template>
+  <template is="devices" data="{{showDevice,content:content1,devices:gatewayList,customerId}}">
+  </template>
+  <template is="devices" data="{{showDevice:showGateway,content:content3,devices:gatewayArray,customerId}}">
+  </template>
+
+  <template is="sharedDetail" data="{{showSharedDetail,sharedDetail,content:content4}}">
+  </template>
+</view>

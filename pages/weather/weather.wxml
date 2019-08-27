@@ -1,0 +1,45 @@
+<!--pages/weather/weather.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view class="{{isDay?'day':'night'}}">
+  <view>
+    <view class='title'>{{chooseCity}}</view>
+    <view class="usercontainer">
+      <image src="/imgs/icon/address1.png" class='icon'></image>
+      <picker bindchange="changeRegin" mode="region" value="{{region}}">
+        <view class="address">{{region[0]}} - {{region[1]}} - {{region[2]}}
+        </view>
+      </picker>
+    </view>
+    <view bindtap='search' class='search_view'>{{searchWea}}</view>
+  </view>
+  <view class='weather_detail' wx:if="{{showWeather}}">
+    <view class='city_view'>{{weatherData.currentCity}}</view>
+    <view class='now_weather'>{{weatherData.weather_data[0].weather}}</view>
+    <view class='now_temperature'>{{currentTem}}</view>
+    <block wx:for="{{weatherData.weather_data}}" wx:key='item'>
+      <view class="tr">
+        <view class='td'>{{item.date}}</view>
+        <view wx:if="{{index==0}}" class='weatherPicture td'>
+          <view wx:if="{{isDay}}">
+            <image src='{{item.dayPictureUrl}}'></image>
+          </view>
+          <view wx:else>
+            <image src='{{item.nightPictureUrl}}'></image>
+          </view>
+        </view>
+        <view wx:else class='weatherPicture td'>
+          <image src='{{item.dayPictureUrl}}'></image>
+        </view>
+        <view class='td'>{{item.wind}}</view>
+        <view class='td'>{{item.temperature}}</view>
+      </view>
+    </block>
+
+    <!-- <view class='weather_des' wx:for="{{weatherData.index}}" wx:key='item'>
+    <view>{{item.des}}</view>
+  </view> -->
+  </view>
+</view>
