@@ -46,6 +46,16 @@ App({
       })
   },
 
+  compare: function () {
+    return function (a, b) {
+      if (a["nickname"] != null && b["nickname"] != null)
+        return a["nickname"].localeCompare(b["nickname"]);
+      else {
+        return a["name"].localeCompare(b["name"]);
+      }
+    }
+  },
+
   onShareAppMessage: function (res) {
     return {
       title: '冠川智能',

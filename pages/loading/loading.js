@@ -92,7 +92,7 @@ Page({
                   icon: 'none',
                   duration: 2000,
                 })
-              } else { 
+              } else {
                 app.globalData.openid = answer.openid,
                   app.globalData.unionid = answer.unionid,
                   loading.findOpenid(answer.openid, (res) => {

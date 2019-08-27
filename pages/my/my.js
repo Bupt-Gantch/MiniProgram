@@ -563,7 +563,8 @@ Page({
       gateids: gatewayDetail[0],
       phone: gatewayDetail[1],
     };
-    console.log(param);
+    console.log(param);//13511080938
+    console.log(123);
     my.onOwnerUnShare(param, (res) => {
       console.log(res);
       if (res.status == "success") {

@@ -119,6 +119,9 @@ Page({
 
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.learn;
+    var value = {
+
+    };
 
     this._sendControl(serviceName, methodName, value);
   },
@@ -133,10 +136,12 @@ Page({
 
   //控制
   onPenetrateTap: function(e) {
+
     let value = this.data.id;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
     this._sendControl(serviceName, methodName, value);
+    
   },
 
   //当前设备参数接口

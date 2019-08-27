@@ -22,16 +22,12 @@ Page({
     dimmableLightOneImg: Config.dimmableLightOnUrl,
     gatewayImg: Config.gatewayUrl,
     iASZoneImg: Config.iASZoneUrl,
-    // categoryName: Config.categoryName,
-    // categoryType: Config.categoryType,
     categoryTypeArray: Config.categoryTypeArray,
     bannerImageUrl: Config.bannerImageUrl,
     imgUrl: Config.deviceImgUrl,
     groupSceneImg: Config.otherImg,
     statusTable: {},
     statusTableOne: {},
-    // sceneGroup: ['分组', '场景'],
-    // gatewayGroup: ['所有网关'],
     showModal: false,
     content1: {
       title: "创建设备组",
@@ -156,8 +152,10 @@ Page({
           let status = res[id];
           category.getDeviceById(id, (result) => {
             flag++;
-            result.status = status;
-            gatewayList.push(result);
+            if(result != null && result != undefined && result.length != 0) {
+              result.status = status;
+              gatewayList.push(result);
+            }
             if (flag == len) {
               gatewayList.sort(_this.compare());
               _this.setData({
@@ -192,7 +190,11 @@ Page({
 
   compare: function() {
     return function(a, b) {
-      return a["name"].localeCompare(b["name"]);
+      if(a["nickname"] != null && b["nickname"] != null)
+        return a["nickname"].localeCompare(b["nickname"]);
+      else {
+        return a["name"].localeCompare(b["name"]);
+      }
     }
   },
 

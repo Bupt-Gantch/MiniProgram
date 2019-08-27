@@ -109,7 +109,7 @@ class My extends Base {
       }
     } 
     this.request(params);
-  }
+  } 
 
   /**
    * 获取被分享的网关
@@ -128,7 +128,7 @@ class My extends Base {
   }
 
 /**
- * 客人取消分享
+ * 主人取消分享
  */
   onOwnerUnShare(param,callback){
     var params = {

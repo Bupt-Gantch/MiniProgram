@@ -59,18 +59,18 @@ Page({
       netStatus: app.globalData.netStatus
     });
     var _this = this;
-    // var deviceid = options.deviceid;
-    // var deviceType = options.deviceType;
-    // var deviceName = options.deviceName;
-    // console.log("customerId:" + app.globalData.gatewayCustomerId);
-    // var model = options.model;
+    var deviceid = options.deviceid;
+    var deviceType = options.deviceType;
+    var deviceName = options.deviceName;
+    console.log("customerId:" + app.globalData.gatewayCustomerId);
+    var model = options.model;
 
     //=========测试===============
-    var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
-    var deviceName = "newInfrared_2971";
-    var customerId = 108;
-    var model = "FNB56-ZIR04FB1.2";
-    var deviceType = "newInfrared";
+    // var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
+    // var deviceName = "newInfrared_2971";
+    // var customerId = 108;
+    // var model = "FNB56-ZIR04FB1.2";
+    // var deviceType = "newInfrared";
     //==============================
 
     this._loadData(deviceid);
@@ -725,14 +725,16 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
+    console.log(gatewayId);
     device.getRulesByGatewayId(gatewayId, (res) => {
-      if (res.length == 0) {
+      console.log(res.length);
+      if (res.length == 0 || res === "error") {
         this.setData({
           showLinkage: false,
           showButton: false
         })
       }
-      if (res.length != 0) {
+      else if (res.length != 0) {
         this.setData({
           linkageDetail: res,
           showLinkage: true,
