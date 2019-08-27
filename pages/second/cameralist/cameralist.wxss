@@ -31,6 +31,13 @@
     color: #696969;
     font-size: 14px;
 }
+.cameraMenu-po{
+    position: relative;
+    left: 0;
+    top: 130rpx;
+    right: 0;
+    bottom: 0;
+}
 .cameraMenu{
     background-color: #fff;
     border-bottom: 1rpx solid #e9e9e9;

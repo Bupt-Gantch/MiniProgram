@@ -64,7 +64,7 @@ Page({
       "url": "camera/getDevices"
     };
     camerasShow.getCamerasByUid(param, (res) => {
-      console.log(res.data);
+      console.log(res);
       var _this = this;
       let resCode = res.status
          if (resCode=="200"){

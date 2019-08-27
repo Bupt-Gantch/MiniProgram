@@ -70,7 +70,7 @@
     </cover-view>
     </live-player>  
   </view>
-  <view class='menu-po'>
+  <view class='cameraMenu-po'>
   <!-- 摄像头相关信息 -->
         <view class='cameraMenu' hidden='{{noChoose}}'>
             <view class='cameraMenu-list'>

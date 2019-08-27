@@ -1,4 +1,5 @@
 // pages/help.js
+// pages/help.js
 Page({
 
   /**

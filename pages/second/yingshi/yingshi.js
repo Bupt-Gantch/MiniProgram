@@ -66,9 +66,9 @@ Page({
         };
         yingShiRegister.checkYingShiInfo(param, (res) => {
           console.log(res);
-          let resCode = res.data.status;
-          let msg = res.data.msg;
-          if (resCode=="200" && msg=="注册成功"){
+          let resCode = res.status;
+          let msg = res.msg;
+          if (resCode=="200"){
             wx.redirectTo({
               url: '../cameralist/cameralist',
             })
