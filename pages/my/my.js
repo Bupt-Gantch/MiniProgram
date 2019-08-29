@@ -124,6 +124,29 @@ Page({
     });
   },
 
+  onMyFamily:function() {
+    var customerId = app.globalData.customerId;
+    var gatewayList = new Array();
+    my.getAllDevices(customerId, (res) => {
+      res.data.forEach(function (element) {
+        if (element.deviceType === "Gateway") {
+          gatewayList.push(element)
+        }
+      });
+      if (gatewayList.length == 0) {
+        wx.showToast({
+          title: '您还没有绑定任何网关',
+          icon: 'none',
+          duration: 2000
+        })
+      } else {
+        wx.navigateTo({
+          url: '../family/family',
+        })
+      }
+    })
+  },
+
   onScan: function() {
     var _this = this;
     wx.showActionSheet({
@@ -369,6 +392,7 @@ Page({
    * 主动解绑网关
    */
   unBindGateway: function(e) {
+    console.log(12312131);
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -390,32 +414,71 @@ Page({
           gateids: gatewayid,
           gatewayName: gatewayname
         }
-        console.log(param);
-        my.deleteGateway(param, (res) => {
-          console.log(res);
-          if (res == 1) {
-            app.globalData.gatewayCustomerId = null;
-            app.globalData.getewayId = null;
-            app.globalData.gatewayName = null;
-            app.globalData.status = null;
-            var params = {
-              customerid: app.globalData.customerId,
-              gateid: gatewayid,
-            };
-            //onUnShareAll
-            my.deepDeleteGateway(params, (res) => {
-              wx.showToast({
-                title: '解绑成功',
-              });
-              var customerId = app.globalData.customerId;
-              _this.deleteGateway(customerId);
-            });
-          } else {
-            wx.showToast({
-              title: '解绑失败',
-              icon: 'none',
-              duration: 1000
-            });
+        wx.showActionSheet({
+          itemList: _this.data.content.unBindGateway,
+          success(res) {
+            console.log(res.tapIndex);
+            var number = res.tapIndex;
+            if (number == 0) {
+              my.deleteGateway(param, (res) => {
+                console.log(res);
+                if (res == 1) {
+                  app.globalData.gatewayCustomerId = null;
+                  app.globalData.getewayId = null;
+                  app.globalData.gatewayName = null;
+                  app.globalData.status = null;
+                  var params = {
+                    customerid: app.globalData.customerId,
+                    gateid: gatewayid,
+                  };
+                  //deepDeleteGateway
+                  my.onUnShareAll(params, (res) => {
+                    wx.showToast({
+                      title: '解绑成功',
+                    });
+                    var customerId = app.globalData.customerId;
+                    _this.deleteGateway(customerId);
+                  });
+                } else {
+                  wx.showToast({
+                    title: '解绑失败',
+                    icon: 'none',
+                    duration: 1000
+                  });
+                }
+              })
+            } else if (number == 1) {
+              my.deleteGateway(param, (res) => {
+                console.log(res);
+                if (res == 1) {
+                  app.globalData.gatewayCustomerId = null;
+                  app.globalData.getewayId = null;
+                  app.globalData.gatewayName = null;
+                  app.globalData.status = null;
+                  var params = {
+                    customerid: app.globalData.customerId,
+                    gateid: gatewayid,
+                  };
+                  //
+                  my.onUnShareAll(params, (res) => {
+                    wx.showToast({
+                      title: '解绑成功',
+                    });
+                    var customerId = app.globalData.customerId;
+                    _this.deleteGateway(customerId);
+                  });
+                } else {
+                  wx.showToast({
+                    title: '解绑失败',
+                    icon: 'none',
+                    duration: 1000
+                  });
+                }
+              })
+            }
+          },
+          fail(res) {
+            console.log(res.errMsg)
           }
         })
       } else {

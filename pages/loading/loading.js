@@ -18,7 +18,7 @@ Page({
     imgUrls: [
       '/imgs/swiper/swiper-01.jpg',
       '/imgs/swiper/swiper-02.jpg',
-      '/imgs/swiper/swiper-03.jpg'
+      // '/imgs/swiper/swiper-03.jpg'
     ],
   },
   /**

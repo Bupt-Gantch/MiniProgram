@@ -95,7 +95,7 @@ class My extends Base {
     };
     this.request(param)
   }
-
+ 
   /**
  * 获取分享的网关
  */
@@ -144,7 +144,7 @@ class My extends Base {
  
   /**
    * 主人取消分享
-   */
+   */ 
   onUnShareAll(param, callback) {
     var params = {
       url: 'account/unBindedALLGate',

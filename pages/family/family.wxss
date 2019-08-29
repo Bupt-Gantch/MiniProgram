@@ -1,0 +1,17 @@
+/* pages/family/family.wxss */
+@import "../tpls/base.wxss";
+@import "../tpls/category/category-tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
+@import "../tpls/roll/roll_tpl.wxss";
+
+.interval {
+  margin-top: 30rpx;
+}
+
+.box {
+  background-color:antiquewhite;
+  text-align: left;
+}
+.devicename{
+  font-size: 26rpx !important;
+}
