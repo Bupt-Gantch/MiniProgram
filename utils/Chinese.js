@@ -63,8 +63,8 @@ var Chinese = {
         name: '云报警',
         disabled: true,
         image: '/imgs/index/cloudAlert.png',
-        // url: '../second/alert/alert'
-        url: '../category/category'
+        url: '../second/alert/alert'
+        // url: '../category/category'
       },
       {
         id: 'cloudFireControl',

@@ -5,6 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    imgalist:[
+      'https://smart.gantch.cn/api/v1/wechatPost/download?imageName=icon/qrcode.png',
+      'https://smart.gantch.cn/api/v1/wechatPost/download?imageName=icon/qrcode.png'
+    ],
 
   },
 
@@ -62,5 +66,14 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+
+  previewImage: function (e) {
+    var current = e.target.dataset.src;
+    wx.previewImage({
+      current: current,
+      urls: this.data.imgalist
+    })
+  },
 })

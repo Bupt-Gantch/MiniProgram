@@ -31,7 +31,7 @@ Page({
         url: '/imgs/index/corevalue1.png',
       }
     ],
-    // cores: [
+    cores: [
     //   [{
     //       id: 'smartHome',
     //       name: '智能家居',
@@ -55,14 +55,14 @@ Page({
     //       url: '../second/hotel/hotel'
     //       // url: '../category/category'
     //     },
-    //     {
-    //       id: 'cloudAlert',
-    //       name: '云报警',
-    //       disabled: true,
-    //       image: '/imgs/index/cloudAlert.png',
-    //       // url: '../second/alert/alert'
-    //       url: '../category/category'
-    //     },
+        {
+          id: 'cloudAlert',
+          name: '云报警',
+          disabled: true,
+          image: '/imgs/index/cloudAlert.png',
+          url: '../second/alert/alert'
+          // url: '../category/category'
+        },
     //     {
     //       id: 'cloudFireControl',
     //       name: '云消防',
@@ -150,7 +150,7 @@ Page({
     //       url: '../second/company/company'
     //     },
     //   ],
-    // ],
+    ],
   },
 
   /**

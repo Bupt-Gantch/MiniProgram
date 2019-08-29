@@ -1,4 +1,7 @@
 <!--pages/second/alert/alert.wxml-->
- <view class="poster-view">
-    <image src="/imgs/swiper/bg.jpg" class="poster-image" mode="scaleToFill"></image>
-  </view>
+ <view wx:for="{{imgalist}}" class="poster-view">
+    <!-- <image src="/imgs/swiper/bg.jpg" class="poster-image" mode="scaleToFill"></image> -->
+    <!-- <web-view src="htttps://mp.weixin.qq.com"></web-view> -->
+    <h1>请在公众号搜索"天惠物联"或点击下方二维码长按保存到手机，去微信主页中扫一扫关注</h1>
+    <image src="{{item}}" data-src="{{item}}" mode="widthFix" bindtap="previewImage"></image>
+</view>
