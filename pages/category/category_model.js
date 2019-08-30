@@ -13,6 +13,7 @@ class Category extends Base{
         callback && callback(data);
       }
     };
+    console.log(param);
     this.request(param);
   }
 

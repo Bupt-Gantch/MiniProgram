@@ -50,7 +50,7 @@ Page({
     },
     array: ['大于', '等于', '小于'],
   },
- 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -59,18 +59,21 @@ Page({
       netStatus: app.globalData.netStatus
     });
     var _this = this;
-    // var deviceid = options.deviceid;
-    // var deviceType = options.deviceType;
-    // var deviceName = options.deviceName;
-    // console.log("customerId:" + app.globalData.gatewayCustomerId);
-    // var model = options.model;
+    //============生产========
+    var deviceid = options.deviceid;
+    var deviceType = options.deviceType;
+    var deviceName = options.deviceName;
+    console.log("customerId:" + app.globalData.gatewayCustomerId);
+    var model = options.model;
+
+    //========================
 
     //=========测试===============
-    var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
-    var deviceName = "newInfrared_2971";
-    var customerId = 108;
-    var model = "FNB56-ZIR04FB1.2";
-    var deviceType = "newInfrared";
+    // var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
+    // var deviceName = "newInfrared_2971";
+    // var customerId = 108;
+    // var model = "FNB56-ZIR04FB1.2";
+    // var deviceType = "newInfrared";
     //==============================
 
     this._loadData(deviceid);
@@ -152,7 +155,7 @@ Page({
               dimmableLight: false
             })
           }
-        } 
+        }
         if (keyName[e.key] != undefined && e.value != undefined) {
           var nowts = e.ts;
           e.ts = util.formatTime(new Date(e.ts));
@@ -675,13 +678,13 @@ Page({
         device.createRule1(param, (res) => {
           wx.hideLoading();
           console.log(res);
-          if(res == 'OK') {
+          if (res == 'OK') {
             if (rule_type == "alarm") {
               wx.showModal({
                 title: '提示',
                 content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
                 success(res) {
-                  if (res.confirm) { } else if (res.cancel) { }
+                  if (res.confirm) {} else if (res.cancel) {}
                 }
               })
             } else {
@@ -733,8 +736,7 @@ Page({
           showLinkage: false,
           showButton: false
         })
-      }
-      else if (res.length != 0) {
+      } else if (res.length != 0) {
         this.setData({
           linkageDetail: res,
           showLinkage: true,
