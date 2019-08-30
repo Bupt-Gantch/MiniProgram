@@ -3,7 +3,7 @@
 <!-- <view wx:if="{{!netStatus}}">
   <template is="netAlert" />
 </view> -->
- 
+  
 <!--空调-->
 <block wx:if="{{id=='1'}}">
   <view class='view-main'>

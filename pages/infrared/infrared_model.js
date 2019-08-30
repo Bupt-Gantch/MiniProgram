@@ -2,7 +2,7 @@ import {
   Base
 } from '../../utils/base.js';
 import {
-  Config
+  Config 
 } from '../../utils/config.js';
 
 class Infrared extends Base {
@@ -78,7 +78,7 @@ class Infrared extends Base {
     var that = this;
     var p = new Promise(function (resolve, reject) {
       var param = {
-        url: 'deviceaccess/rpc/' + deviceId + '/' + requestId,
+        url: 'deviceaccess/rpc/' + deviceId + '/' + requestId + "?response=true",
         method: 'POST',
         data: body,
         sCallback: function (res) {

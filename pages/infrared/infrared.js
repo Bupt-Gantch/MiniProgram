@@ -9,7 +9,7 @@ var util = require('../../utils/util.js');
 var infrared = new Infrared();
 const app = getApp();
 Page({
-
+ 
   /**
    * 页面的初始数据
    */
@@ -32,10 +32,11 @@ Page({
     var id = options.id;
     var deviceInfo = JSON.parse(options.deviceInfo);
     this.setData({
+      deviceInfo: deviceInfo,
       deviceId: deviceInfo.id,
       id: id
     });
-    console.log(deviceInfo.id);
+    console.log(deviceInfo);
   },
 
   /**
@@ -57,13 +58,14 @@ Page({
    * =====================================================
    */
   _sendControl: function(serviceName, methodName, value) {
-    var deviceId = deviceInfo.id;
+
+    var deviceId = this.data.deviceInfo.id;
     var requestId = this.data.requestId;
     var _this = this;
     var triad = {
-      deviceType: _this.deviceInfo.deviceType,
-      manufacture: _this.deviceInfo.manufacture,
-      model: _this.deviceInfo.model
+      deviceType: _this.data.deviceInfo.deviceType,
+      manufacture: _this.data.deviceInfo.manufacture,
+      model: _this.data.deviceInfo.model
     }
 
     var data = '';
@@ -71,13 +73,13 @@ Page({
     data = {
       serviceName: serviceName,
       methodName: methodName,
-      deviceId: deviceInfo.id,
+      deviceId: _this.data.deviceInfo.id,
       requestId: requestId,
       triad: triad,
       value: value
     };
     infrared.applyControl(data, (res) => {
-      if (deviceInfo.deviceType == 'infrared' || deviceInfo.deviceType == 'newInfrared') {
+      if (_this.data.deviceInfo.deviceType == 'infrared' || _this.data.deviceInfo.deviceType == 'newInfrared') {
         console.log(res);
       } else {
         if (res.indexOf("device") === -1) { //状态码为200则应用成功
@@ -115,7 +117,6 @@ Page({
 
   //学习
   onLearnTap: function(e) {
-    var deviceId = this.data.deviceId;
 
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.learn;
