@@ -46,7 +46,8 @@ Page({
       data.data.forEach(function(element) {
         if (element.deviceType == "IASZone") {
           var model = element.model;
-          element.model = model.substr(5, 3);
+          var start = model.indexOf("-");
+          element.model = model.substr(start + 1, 3);
           allDevices.push(element);
         } else {
           allDevices.push(element);
