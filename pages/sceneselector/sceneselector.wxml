@@ -31,8 +31,6 @@
     <radio value="{{item.id}}"  checked='true' disabled='true'/>{{item.name}}</label>
     </radio-group>
 
-  <view wx:if="{{item.nickname!=null}}">{{item.nickname}}</view>
-  <view wx:else>{{item.name}}</view>
    <button formType="submit" class="btn-confirm">解绑</button>
     </form>
   </view>

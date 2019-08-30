@@ -1,0 +1,32 @@
+<!--pages/family/family.wxml-->
+<view class="category-detail-box">
+  <scroll-view class="category-main" scroll-y>
+    <view class='category-main-view'>
+      <block wx:for="{{gatewayArray}}" wx:key="{{item.id}}">
+        <!-- 下面存放单个设备的div  -->
+        <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="showGatewayInfo">
+          <view class='group-image'>
+            <image wx:if="{{item.id == nowGateway}}" src='{{gatewayImg[2]}}' mode="aspectFit"></image>
+            <image wx:else src='{{gatewayImg[0]}}' mode="aspectFit"></image>
+          </view>
+          <view class='devicename'>{{item.name}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>
+
+
+<view class="category-detail-box interval">
+  <scroll-view class="category-main" scroll-y>
+    <view class='category-main-view'>
+      <block wx:for="{{showInfo}}" wx:key="{{item.id}}">
+        <!-- 下面存放单个设备的div  -->
+        <view class="category-goods-items {{index%3==1?'middle':''}} box" data-id="{{item.gates}}" data-phone="{{item.phone}}"  bindtap="deleteShare">
+        <view class='devicename'>电话：{{item.phone}}</view>
+        <view class='devicename'>备注：{{item.remark}}</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>

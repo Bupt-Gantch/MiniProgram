@@ -8,6 +8,7 @@
     "pages/messagelist/messagelist",
     "pages/category/category",
     "pages/my/my",
+    "pages/family/family",
     "pages/contact/contact",
     "pages/release/release",
     "pages/publish/publish",

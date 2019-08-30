@@ -34,6 +34,9 @@
     <view class="my-item" bindtap='myPublish'>
       <text>{{content.mypublish}}</text>
     </view>
+    <view class="my-item" bindtap='onMyFamily'>
+      <text>{{content.myfamily}}</text>
+    </view>
     <view class="my-item" bindtap='onContactTap'>
       <text>{{content.feedback}}</text>
     </view>

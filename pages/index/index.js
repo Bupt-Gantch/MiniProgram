@@ -12,15 +12,10 @@ Page({
   data: {
     weatherData: '',
     imgUrls: [
-      '/imgs/swiper/swiper-03.jpg',
+      // '/imgs/swiper/swiper-03.jpg',
       '/imgs/swiper/swiper-02.jpg',
       '/imgs/swiper/swiper-01.jpg'
     ],
-    // goodDetail: [
-    //   { title: '正品霍尼韦尔复合智能移动探测器'},
-    //   {title:'霍尼韦尔光电式烟感探测器'},
-    //   {title:'ZigBee智能家居网关'}
-    // ],
     themeArr: [{
         url: '/imgs/index/corevalue3.png',
       },
@@ -31,126 +26,6 @@ Page({
         url: '/imgs/index/corevalue1.png',
       }
     ],
-    // cores: [
-    //   [{
-    //       id: 'smartHome',
-    //       name: '智能家居',
-    //       disabled: true,
-    //       image: '/imgs/index/smartHome.png',
-    //       // url: '../second/smarthome/smarthome'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'bigData',
-    //       name: '大数据',
-    //       disabled: true,
-    //       image: '/imgs/index/bigData.png',
-    //       url: '../home/home'
-    //     },
-    //     {
-    //       id: 'smartHotel',
-    //       name: '智慧酒店',
-    //       disabled: true,
-    //       image: '/imgs/index/smartHotel.png',
-    //       url: '../second/hotel/hotel'
-    //       // url: '../category/category'
-    //     },
-    //     {
-    //       id: 'cloudAlert',
-    //       name: '云报警',
-    //       disabled: true,
-    //       image: '/imgs/index/cloudAlert.png',
-    //       // url: '../second/alert/alert'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'cloudFireControl',
-    //       name: '云消防',
-    //       disabled: true,
-    //       image: '/imgs/index/cloudFireControl.png',
-    //       // url: '../second/firecontrol/firecontrol'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'farm',
-    //       name: '智慧农场',
-    //       disabled: true,
-    //       image: '/imgs/index/farm.png',
-    //       // url: '../second/farm/farm'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'safeCity',
-    //       name: '平安城市',
-    //       disabled: true,
-    //       image: '/imgs/index/safeCity.png',
-    //       // url: '../second/s-city/s-city'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'smartCommunity',
-    //       name: '智慧社区',
-    //       disabled: true,
-    //       image: '/imgs/index/smartCommunity.png',
-    //       // url: '../second/community/community'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'smartSchool',
-    //       name: '智慧校园',
-    //       disabled: true,
-    //       image: '/imgs/index/smartSchool.png',
-    //       // url: '../second/school/school'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'smartOld',
-    //       name: '智慧养老',
-    //       disabled: true,
-    //       image: '/imgs/index/smartOld.png',
-    //       // url: '../second/old/old'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'smartOffice',
-    //       name: '智慧办公',
-    //       disabled: true,
-    //       image: '/imgs/index/smartOffice.png',
-    //       // url: '../second/office/office'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'smartCity',
-    //       name: '智慧城市',
-    //       disabled: true,
-    //       image: '/imgs/index/smartCity.png',
-    //       // url: '../second/city/city'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'artificialIntelligence',
-    //       name: '人工智能',
-    //       disabled: true,
-    //       image: '/imgs/index/artificialIntelligence.png',
-    //       // url: '../second/ai/ai'
-    //       url: '../category/category'
-    //     },
-    //     {
-    //       id: 'serviceSupport',
-    //       name: '服务支持',
-    //       disabled: true,
-    //       image: '/imgs/index/team.png',
-    //       url: '../second/support/support'
-    //     },
-    //     {
-    //       id: 'companyIntroduction',
-    //       name: '关于冠川',
-    //       disabled: true,
-    //       image: '/imgs/index/company.png',
-    //       url: '../second/company/company'
-    //     },
-    //   ],
-    // ],
   },
 
   /**
