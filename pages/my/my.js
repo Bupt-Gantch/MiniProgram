@@ -431,11 +431,10 @@ Page({
                     customerid: app.globalData.customerId,
                     gateid: gatewayid,
                   };
-                  //deepDeleteGateway
                   my.onUnShareAll(params, (res) => {
                     wx.showToast({
                       title: '解绑成功',
-                    });
+                    }); 
                     var customerId = app.globalData.customerId;
                     _this.deleteGateway(customerId);
                   });
@@ -459,8 +458,7 @@ Page({
                     customerid: app.globalData.customerId,
                     gateid: gatewayid,
                   };
-                  //
-                  my.onUnShareAll(params, (res) => {
+                  my.deepDeleteGateway(params, (res) => {
                     wx.showToast({
                       title: '解绑成功',
                     });

@@ -1,0 +1,37 @@
+<!-- pages/newinfrared/newinfrared.wxml-->
+<import src="../tpls/modal/modal-tpl.wxml" />
+<import src="../tpls/roll/roll_tpl.wxml" />
+
+<view class='detail-container'>
+
+  <view class="category-title">
+    <text>{{learnName}}</text>
+  </view>
+
+  <view>
+      <image class="button-float" src='{{buttonInfrared}}' bindtap='onOwnLearn'></image>
+     </view>
+  <!-- infrared-->
+  <block>
+    <view class="category-detail-box">
+      <scroll-view class="category-main" scroll-y>
+        <view class='infrared-main-view'>
+          <block wx:for="{{infraredImg}}" wx:key="{{item.id}}">
+            <!-- 下面存放单个设备的div  -->
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="goToInfrared">
+              <view class='group-image'>
+                <image src='{{item.img}}' mode="aspectFit"></image>
+              </view>
+              <view class='devicename'>{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+
+
+  </block>
+
+  <template is="addNewLearn" data="{{addNewLearn,content:content}}"></template>
+
+</view>

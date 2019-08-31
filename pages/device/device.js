@@ -16,6 +16,7 @@ Page({
     deviceImgUrl: Config.deviceImgUrl,
     iASZoneImg: Config.iASZoneUrl,
     infraredImg: Config.infraredImg,
+    ownInfrared:Config.ownInfrared,
     bulb: {
       dimmableMinVal: 1,
       dimmableMaxVal: 255,
@@ -28,6 +29,7 @@ Page({
     showEdit: false,
     showLinkage: false,
     showDevice: false,
+    addNewLearn:false,
     deployment: true,
     deploymentStatus: false,
     showPassword: false,
@@ -39,6 +41,7 @@ Page({
     newName: '',
     linkageName: '',
     alarmMessage: '',
+    newLearnName:'',
     password: '',
     content1: {
       title: "添加联动",
@@ -47,6 +50,10 @@ Page({
     content2: {
       title: "远程开锁",
       placeholder: "请输入锁密码",
+    },
+    content3: {
+      title: "自定义学习",
+      placeholder: "请输入按键名称",
     },
     array: ['大于', '等于', '小于'],
   },
@@ -60,6 +67,7 @@ Page({
     });
     var _this = this;
     //============生产========
+
     var deviceid = options.deviceid;
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
@@ -69,8 +77,9 @@ Page({
     //========================
 
     //=========测试===============
-    // var deviceid = "5e88cc40-9806-11e9-9dcf-b55ae51a103e";
-    // var deviceName = "newInfrared_2971";
+    
+    // var deviceid = "c878d0d0-cbde-11e9-a40d-2765042baad2";
+    // var deviceName = "newInfrared_5100";
     // var customerId = 108;
     // var model = "FNB56-ZIR04FB1.2";
     // var deviceType = "newInfrared";
@@ -109,6 +118,11 @@ Page({
       _this.setData({
         cleanId: cleanId
       })
+    } else if (deviceType == 'infrared' || deviceType == 'newInfrared') {
+      // _this._loadInfraredData(deviceid);
+      this.setData({
+        allLearn:1
+      })
     }
   },
 
@@ -118,6 +132,16 @@ Page({
   onUnload: function() {
     var cleanId = this.data.cleanId;
     clearInterval(cleanId);
+  },
+
+  _loadInfraredData:function(deviceid) {
+    device.getAllNewLearn(deviceid, (res) => {
+      console.log(res);
+      this.setData({
+        allLearn:res.data.length,
+        myInfrared:res.data,
+      })
+    })
   },
 
   _loadData: function(deviceid) {
@@ -325,7 +349,7 @@ Page({
       };
     }
     device.applyControl(data, (res) => {
-      if (deviceInfo.deviceType == 'infrared' || deviceInfo.deviceType == 'newInfrared') {
+      if (c) {
         // console.log(res);
       } else {
         if (res.indexOf("device") === -1) { //状态码为200则应用成功
@@ -378,6 +402,7 @@ Page({
       showEdit: false,
       showDevice: false,
       showPassword: false,
+      addNewLearn:false,
     });
   },
   /**
@@ -422,6 +447,11 @@ Page({
       })
       // this._createScene(submitGroupName);
     }
+  },
+
+  inputNewLearnNameChange:function(event) {
+    var inputValue = event.detail.value;
+    this.data.newLearnName = inputValue;
   },
   inputChange: function(event) {
     var inputValue = event.detail.value;
@@ -879,13 +909,37 @@ Page({
     this._sendControl(serviceName, value, this.data.deviceInfo);
   },
 
+  onNewLearnConfirm:function() {
+    this.hideModal();
+    var panelId = this.data.deviceId + this.data.allLearn + 1;
+    var param = {
+      name:this.data.newLearnName,
+      panelId: panelId
+    }
+    var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    console.log(param); 
+    // device.addNewLearn(param,(res) => {
+    //   if(res.data == 1) {
+        wx.navigateTo({
+          url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId 
+        });
+    //   }
+    // })
+  },
+
 
   /**红外宝*/
   goToInfrared: function(e) {
     var id = device.getDataSet(e, 'id');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    wx.navigateTo({
-      url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
-    });
+    if(id == 5) {
+      this.setData({
+        addNewLearn:true
+      })
+    }else {
+      wx.navigateTo({
+        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
+      });
+    }
   },
 })

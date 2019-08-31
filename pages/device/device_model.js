@@ -473,6 +473,32 @@ class Device extends Base {
 
   /**=================END======================= */
 
+//=======创建新的学习面板===========
+  
+  createNewLearn(param, callback) {
+    var params = {
+      url: `deviceaccess/device/${id}`,
+      method: 'POST',
+      data: param,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params);
+  }
+
+  //========根据红外包id获取创建的自定义学习=====
+
+  getAllNewLearn(id, callback) {
+    var params = {
+      url: `deviceaccess/device/${id}`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params);
+  }
+
 };
 
 export {

@@ -77,6 +77,8 @@ Config.otherImg = {
   'group': '../../imgs/test/group.png',
   'scene': '../../imgs/test/scene.png'
 };
+Config.ownInfrared = '../../imgs/test/own.png';
+Config.buttonInfrared = '../../imgs/test/ownLearn.png';
 
 Config.infraredImg = [{
     'img': '../../imgs/test/conditioner.png',

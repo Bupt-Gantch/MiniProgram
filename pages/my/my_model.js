@@ -143,7 +143,7 @@ class My extends Base {
   }
  
   /**
-   * 主人取消分享
+   * 主人解绑取消分享
    */ 
   onUnShareAll(param, callback) {
     var params = {

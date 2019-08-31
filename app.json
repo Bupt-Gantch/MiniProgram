@@ -36,7 +36,8 @@
     "pages/second/support/support",
     "pages/second/yingshi/yingshi",
     "pages/second/cameralist/cameralist",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/newinfrared/newinfrared"
   ],
   "window": {
     "backgroundTextStyle": "light",

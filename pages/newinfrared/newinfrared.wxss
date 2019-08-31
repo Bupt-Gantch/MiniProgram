@@ -1,0 +1,38 @@
+/* pages/newinfrared/newinfrared.wxss */
+@import "../tpls/base.wxss";
+@import "../tpls/category/category-tpl.wxss";
+@import "../tpls/modal/modal-tpl.wxss";
+ @import "../tpls/roll/roll_tpl.wxss";
+
+ page{
+  width: 100%;
+  height: 100%;
+  background-color:#fffef9;
+}
+
+.detail-container {
+  background-color:#fffef9;/*#24292e*/
+  color:#F9F9F9;
+  /* padding: 0rpx 0; */
+  box-sizing: border-box;
+  font-family: "Microsoft Yahei";
+  height: 100vh;
+}
+
+.button-float {
+  position: fixed;
+  display: flex;
+  top: 20rpx;
+  right: 15rpx;
+  width: 89rpx;
+  height: 89rpx;
+}
+
+.infrared-main-view{
+  display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: flex-start;
+align-content: flex-start;
+
+}

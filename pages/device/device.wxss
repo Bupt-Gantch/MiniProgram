@@ -9,6 +9,15 @@ page{
   background-color:#fffef9;
 }
 
+.infrared-main-view{
+  display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: flex-start;
+align-content: flex-start;
+
+}
+
 .detail-container {
   background-color:#fffef9;/*#24292e*/
   color:#F9F9F9;
