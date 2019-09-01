@@ -489,7 +489,30 @@ class Device extends Base {
 
   //========根据红外包id获取创建的自定义学习=====
 
-  getAllNewLearn(id, callback) {
+//获取所有学习面板
+  getAllLearn(id, callback) {
+    var params = {
+      url: `deviceaccess/device/${id}`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params);
+  }
+
+//新建面板
+  addNewLearn(id, callback) {
+    var params = {
+      url: `deviceaccess/device/${id}`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(params);
+  }
+
+  //删除面板
+  deletePanel(id, callback) {
     var params = {
       url: `deviceaccess/device/${id}`,
       sCallback: function (data) {

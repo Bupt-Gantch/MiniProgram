@@ -3,24 +3,22 @@
 <import src="../tpls/roll/roll_tpl.wxml" />
 
 <view class='detail-container'>
-
-  <view class="category-title">
-    <text>{{learnName}}</text>
-  </view>
-
-  <view>
-      <image class="button-float" src='{{buttonInfrared}}' bindtap='onOwnLearn'></image>
-     </view>
+    <view class="category-title">
+      <text>{{learnName}}</text>
+      <image class="button-float" src='{{buttonInfrared}}' bindtap='onOwnLearn'></image>       <view class='name'>{{deviceName}}
+        <image src='/imgs/icon/alert.png' bindtouchstart='showAlert'></image>
+      </view>
+    </view>
   <!-- infrared-->
   <block>
-    <view class="category-detail-box">
+    <view class="category-detail-box detail-box">
       <scroll-view class="category-main" scroll-y>
         <view class='infrared-main-view'>
-          <block wx:for="{{infraredImg}}" wx:key="{{item.id}}">
+          <block wx:for="{{allButton}}" wx:key="{{item.id}}">
             <!-- 下面存放单个设备的div  -->
-            <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="goToInfrared">
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-buttonid="{{item.id}}"  data-name="{{item.name}}" bindtap="onPenetrateTap" bindlongpress="onDeleteButton">
               <view class='group-image'>
-                <image src='{{item.img}}' mode="aspectFit"></image>
+                <image src='../../imgs/test/button.png' mode="aspectFit"></image>
               </view>
               <view class='devicename'>{{item.name}}</view>
             </view>

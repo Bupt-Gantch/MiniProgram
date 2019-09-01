@@ -10,6 +10,14 @@
   background-color:#fffef9;
 }
 
+.name image {
+  position: relative;
+  top: 0rpx;
+  right: 0rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+
 .detail-container {
   background-color:#fffef9;/*#24292e*/
   color:#F9F9F9;
@@ -19,11 +27,8 @@
   height: 100vh;
 }
 
+
 .button-float {
-  position: fixed;
-  display: flex;
-  top: 20rpx;
-  right: 15rpx;
   width: 89rpx;
   height: 89rpx;
 }
@@ -35,4 +40,14 @@ flex-direction: row;
 justify-content: flex-start;
 align-content: flex-start;
 
+}
+
+.category-goods-items {
+  width: 31%;
+  margin-bottom: 20rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }

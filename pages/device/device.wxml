@@ -137,17 +137,18 @@
             <!-- 下面存放单个设备的div  -->
             <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="goToInfrared">
               <view class='group-image'>
-                <image src='{{item.img}}' mode="aspectFit"></image>
+                <image wx:if="{{index == 4}}" src='{{item.img}}' mode="aspectFit"></image>
               </view>
-              <view class='devicename'>{{item.name}}</view>
+              <view wx:if="{{index == 4}}" class='devicename'>{{item.name}}</view>
             </view>
           </block>
         </view>
         <!--自定义学习的模板-->
-         <view class='infrared-main-view'>
+         <view class='panel-main-view'> 
+         <!--  -->
           <block wx:for="{{allOwnInfrared}}" wx:key="{{item.id}}">
             <!-- 下面存放单个设备的div  -->
-            <view class="category-goods-items {{index%3==1?'middle':''}}" data-panelId="{{item.id}}" bindtap="goToInfrared">
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-panelid="{{item.id}}" bindtap="goToInfraredInfo" bindlongpress="onDeletePanel">
               <view class='group-image'>
                 <image src='{{ownInfrared}}' mode="aspectFit"></image>
               </view>

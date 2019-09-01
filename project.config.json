@@ -189,9 +189,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/newinfrared/newinfrared",
+					"id": 25,
+					"name": "newinfrared",
 					"pathName": "pages/newinfrared/newinfrared",
+					"query": "",
 					"scene": null
 				}
 			]

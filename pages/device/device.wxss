@@ -1,33 +1,41 @@
 @import "../tpls/base.wxss";
 @import "../tpls/category/category-tpl.wxss";
 @import "../tpls/modal/modal-tpl.wxss";
- @import "../tpls/roll/roll_tpl.wxss";
+@import "../tpls/roll/roll_tpl.wxss";
 
-page{
+page {
   width: 100%;
   height: 100%;
-  background-color:#fffef9;
+  background-color: #fffef9;
 }
 
-.infrared-main-view{
+.infrared-main-view {
   display: flex;
-flex-wrap: wrap;
-flex-direction: row;
-justify-content: flex-start;
-align-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
 
+.panel-main-view {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+  margin-top: 20rpx;
 }
 
 .detail-container {
-  background-color:#fffef9;/*#24292e*/
-  color:#F9F9F9;
+  background-color: #fffef9; /*#24292e*/
+  color: #f9f9f9;
   /* padding: 0rpx 0; */
   box-sizing: border-box;
   font-family: "Microsoft Yahei";
   height: 100vh;
 }
 
-.detail-header{
+.detail-header {
   background-color: #a8d3ba;
   margin-bottom: 20px;
   height: 60px;
@@ -37,39 +45,44 @@ align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
 }
-.detail-header view.content{
+
+.detail-header view.content {
   margin-left: 10px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.detail-header image{
+
+.detail-header image {
   height: 80rpx;
   width: 80rpx;
   margin: 0 10rpx;
 }
-.detail-header view view{
+
+.detail-header view view {
   margin: 0 10rpx;
 }
-.device-image{
+
+.device-image {
   background-color: #fffef9;
 }
 
-.detail-main{
+.detail-main {
   background-color: #a8d3ba;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
-  justify-content: flex-start;  /*主轴*/
-  
+  align-items: flex-start;
+  justify-content: flex-start; /*主轴*/
 }
-.deviceInfo{
+
+.deviceInfo {
   padding: 10px 0px 10px 0px;
   width: 100%;
 }
-.firstLine,.lines{
+
+.firstLine, .lines {
   width: 95%;
   padding-bottom: 10px;
   display: flex;
@@ -79,20 +92,23 @@ align-content: flex-start;
 }
 
 /*table */
-.IASZtable{
-  margin-bottom: 20px; 
+
+.IASZtable {
+  margin-bottom: 20px;
   background-color: #a8d3ba;
 }
+
 .tr {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
 }
+
 .td {
-    width:40%;
-    justify-content: center;
-    text-align: center;
+  width: 40%;
+  justify-content: center;
+  text-align: center;
 }
 
 .th {
@@ -102,16 +118,18 @@ align-content: flex-start;
   display: flex;
   height: 2rem;
   align-items: center;
-} 
+}
+
 /* end*/
-.detail-main view.status{
+
+.detail-main view.status {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
 
-.detail-main view.bottom{
+.detail-main view.bottom {
   margin: 10px; /* 上右下左*/
   margin-right: 10px;
   display: flex;
@@ -120,16 +138,19 @@ align-content: flex-start;
   align-items: center;
   width: 95%;
 }
-.warningRecord{
+
+.warningRecord {
   margin-left: 0px;
   margin-right: 0px;
 }
-.msgPublish{
+
+.msgPublish {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
-.msgPublish view{
+
+.msgPublish view {
   margin: 0px 10px;
 }
 
@@ -137,19 +158,19 @@ align-content: flex-start;
   background-color: wheat;
 }
 
-.curtain-btn{
-  width:95%;
-  height:200rpx;
-  display:flex;
-  text-align:center;
-  justify-content:space-around;
-  align-items:center;
-  flex-direction:row;
+.curtain-btn {
+  width: 95%;
+  height: 200rpx;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
 }
 
-.viewfooter{
-   display:flex;
-   justify-content: center;
+.viewfooter {
+  display: flex;
+  justify-content: center;
 }
 
 .view_footer button {
@@ -160,7 +181,7 @@ align-content: flex-start;
   margin: 30rpx;
 }
 
-.disarming{
+.disarming {
   background-color: red;
   color: #f9f9f9;
 }
@@ -183,8 +204,8 @@ align-content: flex-start;
   flex-direction: column;
 }
 
-.deviceDetail text{
-  font-size: 40rpx
+.deviceDetail text {
+  font-size: 40rpx;
 }
 
 .btn-confirm {
@@ -196,46 +217,57 @@ align-content: flex-start;
   margin-bottom: 20rpx;
 }
 
-.scroll-view{
+.scroll-view {
   display: block;
-  margin-top:80rpx
+  margin-top: 80rpx;
 }
 
-.linkage-view{
+.linkage-view {
   display: block;
   margin-top: 20rpx;
   height: 500rpx;
 }
 
-.linkageDetail{
+.linkageDetail {
   width: 100%;
   height: 60rpx;
-  border-bottom: 5rpx solid #E3E3E3;
+  border-bottom: 5rpx solid #e3e3e3;
   font-size: 40rpx;
   color: #f9f9f9;
   margin: 10rpx;
 }
 
-.linkageDetail image{
+.linkageDetail image {
   position: absolute;
   right: 0rpx;
   width: 50rpx;
   height: 50rpx;
 }
 
-.name image{
+.name image {
   position: relative;
-  top:0rpx;
+  top: 0rpx;
   right: 0rpx;
   width: 30rpx;
   height: 30rpx;
 }
 
-.deployment{
+.deployment {
   color: green;
   font-size: 30rpx;
 }
-.unDeployment{
+
+.unDeployment {
   color: red;
   font-size: 30rpx;
+}
+
+.category-goods-items {
+  width: 31%;
+  margin-bottom: 20rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }

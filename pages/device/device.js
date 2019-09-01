@@ -53,7 +53,7 @@ Page({
     },
     content3: {
       title: "自定义学习",
-      placeholder: "请输入按键名称",
+      placeholder: "请输入遥控器名称",
     },
     array: ['大于', '等于', '小于'],
   },
@@ -71,7 +71,6 @@ Page({
     var deviceid = options.deviceid;
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
-    console.log("customerId:" + app.globalData.gatewayCustomerId);
     var model = options.model;
 
     //========================
@@ -135,11 +134,11 @@ Page({
   },
 
   _loadInfraredData:function(deviceid) {
-    device.getAllNewLearn(deviceid, (res) => {
+    device.getAllLearn(deviceid, (res) => {
       console.log(res);
       this.setData({
         allLearn:res.data.length,
-        myInfrared:res.data,
+        allOwnInfrared:res.data,
       })
     })
   },
@@ -758,9 +757,7 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    console.log(gatewayId);
     device.getRulesByGatewayId(gatewayId, (res) => {
-      console.log(res.length);
       if (res.length == 0 || res === "error") {
         this.setData({
           showLinkage: false,
@@ -910,22 +907,41 @@ Page({
   },
 
   onNewLearnConfirm:function() {
-    this.hideModal();
-    var panelId = this.data.deviceId + this.data.allLearn + 1;
-    var param = {
-      name:this.data.newLearnName,
-      panelId: panelId
-    }
-    var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    console.log(param); 
-    // device.addNewLearn(param,(res) => {
-    //   if(res.data == 1) {
-        wx.navigateTo({
-          url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId 
-        });
+    if(this.data.newLearnName.length == 0) {
+      wx.showToast({
+        title: '名称不能为空',
+        icon: 'none',
+        duration: 2000
+      });
+    } else {
+      this.hideModal();
+      var index = this.data.allLearn + 1;
+      var panelId = this.data.deviceId + index;
+      var param = {
+        name: this.data.newLearnName,
+        panelId: panelId
+      }
+      var deviceInfo = JSON.stringify(this.data.deviceInfo);
+      console.log(param);
+      // device.addNewLearn(param,(res) => {
+      //   if(res.data == 1) {
+      wx.navigateTo({
+        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+      });
     //   }
     // })
+    }
+
   },
+
+//长按删除面板
+  onDeletePanel: function (e) {
+    var panelId = device.getDataSet(e, 'panelid');
+    console.log(panelId);
+    // device.deletePanel(panelId,(res) => {
+
+    // })
+    },
 
 
   /**红外宝*/
@@ -942,4 +958,14 @@ Page({
       });
     }
   },
+
+//面板详细信息
+  goToInfraredInfo:function(e) {
+    var panelId = device.getDataSet(e, 'panelid');
+    var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    wx.navigateTo({
+      url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+    });
+
+  }
 })

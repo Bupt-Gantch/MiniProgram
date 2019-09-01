@@ -1,4 +1,4 @@
-var Chinese = {
+var Chinese = { 
   register: "注册",
   button: "English",
   mypublish: "我发布的",

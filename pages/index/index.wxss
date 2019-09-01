@@ -8,6 +8,8 @@ page {
   /* background-color: #A5C0ED; */
 }
 
+
+
 .title_view {
   height: 70rpx;
   display: flex;
