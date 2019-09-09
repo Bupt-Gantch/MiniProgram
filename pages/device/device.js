@@ -136,13 +136,13 @@ Page({
   _loadInfraredData: function (deviceid) {
     device.getAllLearn(deviceid, (res) => {
       console.log(res);
-      if (res.data.msg != "haven`t create any panel yet!" ) {
-        var ans = res.data.data;
+      if (res.msg != "haven`t create any panel yet!" ) {
+        var ans = res.data;
         console.log(ans);
         var jsObject = JSON.parse(ans);
         console.log(jsObject);
         this.setData({
-          // allLearn:res.data.length,
+          // allLearn:res.length,
           allOwnInfrared: jsObject,
         })
       }
@@ -930,8 +930,8 @@ Page({
       console.log(param);
       device.addNewLearn(deviceId, param, (res) => {
         console.log(res);
-        if (res.data.msg === "success") {
-          var panelId = res.data.data;
+        if (res.msg === "success") {
+          var panelId = res.data;
           wx.navigateTo({
             url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
           });

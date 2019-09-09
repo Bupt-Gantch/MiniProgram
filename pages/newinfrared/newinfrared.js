@@ -75,7 +75,7 @@ Page({
     newinfrared.getPanelName(deviceId,panelId,(res) => {
       console.log(res);
 
-      var info = JSON.parse(res.data.data);
+      var info = JSON.parse(res.data);
       console.log(info);
       this.setData({
         panelId:info.id,
@@ -83,10 +83,10 @@ Page({
       })
     });
     newinfrared.getPanelInfo(panelId, (res) => {
-      var keyInfo = JSON.parse(res.data.data);
+      var keyInfo = JSON.parse(res.data);
       console.log(res);
       console.log(keyInfo);
-      if(res.data.msg != "success") {
+      if(res.msg != "success") {
         wx.showToast({
           title: '还没有学习任何按键',
           icon: 'none',
@@ -147,7 +147,7 @@ Page({
       this._sendControl(serviceName, methodName, value);
       this.hideModal();
       wx.showLoading({
-        title: '请按下对应的按钮',
+        title: '请按下对应按键',
         mask:true,
       })
 

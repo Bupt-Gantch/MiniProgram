@@ -169,42 +169,36 @@ class NewInfrared extends Base {
 //获取面板详细信息
   getPanelInfo(id, callback) {
     var param = {
-      // url: `infrared/keys/get/${id}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/keys/get/${id}`,
+      url: `infrared/keys/get/${id}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(param);
-    this.request_test(param);
+    this.request(param);
   }
 
   //获取面板详细信息
   getPanelName(deviceId,panelId,callback) {
     var param = {
-      // url: `infrared/keys/get/${id}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/panel/get/${deviceId}/${panelId}`,
+      url: `infrared/panel/get/${deviceId}/${panelId}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(param);
-    this.request_test(param);
+    this.request(param);
   }
 
 
   //获取面板详细信息
   deleteButton(panelId, keyId, callback) {
     var param = {
-      // url: `infrared/keys/get/${id}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/key/del/${panelId}/${keyId}`,
+      url: `infrared/key/del/${panelId}/${keyId}`,
       method:"DELETE",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(param);
-    this.request_test(param);
+    this.request(param);
   }
 
 };
