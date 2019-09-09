@@ -16,7 +16,7 @@
         <view class='infrared-main-view'>
           <block wx:for="{{allButton}}" wx:key="{{item.id}}">
             <!-- 下面存放单个设备的div  -->
-            <view class="category-goods-items {{index%3==1?'middle':''}}" data-keyid="{{item.id}}"  data-name="{{item.name}}" bindtap="onPenetrateTap" bindlongpress="onDeleteButton">
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-name="{{item.name}}" data-key="{{item.key}}" bindtap="onPenetrateTap" bindlongpress="onDeleteButton">
               <view class='group-image'>
                 <image src='../../imgs/test/button.png' mode="aspectFit"></image>
               </view>
