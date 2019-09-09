@@ -142,7 +142,7 @@ class NewInfrared extends Base {
           for (let key in body) {
             if (body[key] === undefined) {
               body[key] = data.value[key];
-              break;
+              console.log(data.value[key]);
             }
           }
           console.log(body);
@@ -164,96 +164,47 @@ class NewInfrared extends Base {
       });
   }
 
-  //infrared
-
-  /**获取红外包的设备shortAddress和endPoint */
-  getInfraredInfo(data, sCallback, fCallback) {
-    var that = this;
-    var _data = {};
-    var serviceName = data.serviceName;
-    this.getDeviceAttr(data.deviceId)
-      //获取设备属性
-      .then(function (res) {
-        console.log(res);
-        if (res) {
-          _data.attr = res;
-          return that.getService(data.triad);
-        } else {
-          wx.showToast({
-            title: '应用失败',
-            image: '../../imgs/icon/pay@error.png',
-            duration: 1000,
-            // mask: true
-          });
-        }
-      })
-      //获取设备服务
-      .then(function (res) {
-        console.log(res);
-        if (res) {
-          var abilityDes = null;
-          for (let i = 0; i < res.length; i++) {
-            let _abilityDes = JSON.parse(res[i].abilityDes);
-            let _serviceName = _abilityDes.serviceName;
-            if (_serviceName === serviceName) {
-              abilityDes = _abilityDes;
-              break;
-            }
-          }
-          _data.service = abilityDes;
-          var serviceBody = abilityDes.serviceBody;
-          var params = serviceBody.params;
-
-          //根据键值查设备属性值
-          var getAttrVal = function (key, list) {
-            for (let i = 0; i < list.length; i++) {
-              if (list[i].key == key)
-                return list[i].value;
-            }
-            return undefined;
-          }
-          var body = {
-            serviceName: abilityDes.serviceName,
-            methodName: serviceBody.methodName
-          }
-          params.forEach(function (e) {
-            body[e.key] = getAttrVal(e.key, _data.attr);
-          });
-          for (let key in body) {
-            if (body[key] === undefined) {
-              body[key] = data.value;
-              break;
-            }
-          }
-          console.log(body);
-          return body;
-        } else {
-          wx.showToast({
-            title: '应用失败',
-            image: '../../imgs/icon/pay@error.png',
-            duration: 1000,
-            // mask: true
-          });
-        }
-      })
-      .then((res) => {
-        sCallback && sCallback(res);
-      })
-      .catch((err) => {
-        fCallback && fCallback(err);
-      });
-  }
   /**=================END======================= */
 
 //获取面板详细信息
   getPanelInfo(id, callback) {
     var param = {
-      url: `deviceaccess/device/${id}`,
+      // url: `infrared/keys/get/${id}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/keys/get/${id}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(param);
+    // this.request(param);
+    this.request_test(param);
+  }
+
+  //获取面板详细信息
+  getPanelName(deviceId,panelId,callback) {
+    var param = {
+      // url: `infrared/keys/get/${id}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/panel/get/${deviceId}/${panelId}`,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    // this.request(param);
+    this.request_test(param);
+  }
+
+
+  //获取面板详细信息
+  deleteButton(panelId, keyId, callback) {
+    var param = {
+      // url: `infrared/keys/get/${id}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/key/del/${panelId}/${keyId}`,
+      method:"DELETE",
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    // this.request(param);
+    this.request_test(param);
   }
 
 };

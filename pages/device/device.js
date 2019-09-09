@@ -16,7 +16,7 @@ Page({
     deviceImgUrl: Config.deviceImgUrl,
     iASZoneImg: Config.iASZoneUrl,
     infraredImg: Config.infraredImg,
-    ownInfrared:Config.ownInfrared,
+    ownInfrared: Config.ownInfrared,
     bulb: {
       dimmableMinVal: 1,
       dimmableMaxVal: 255,
@@ -29,7 +29,7 @@ Page({
     showEdit: false,
     showLinkage: false,
     showDevice: false,
-    addNewLearn:false,
+    addNewLearn: false,
     deployment: true,
     deploymentStatus: false,
     showPassword: false,
@@ -41,7 +41,7 @@ Page({
     newName: '',
     linkageName: '',
     alarmMessage: '',
-    newLearnName:'',
+    newLearnName: '',
     password: '',
     content1: {
       title: "添加联动",
@@ -61,7 +61,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -76,7 +76,7 @@ Page({
     //========================
 
     //=========测试===============
-    
+
     // var deviceid = "c878d0d0-cbde-11e9-a40d-2765042baad2";
     // var deviceName = "newInfrared_5100";
     // var customerId = 108;
@@ -97,7 +97,7 @@ Page({
     });
   },
 
-  onShow: function() {
+  onShow: function () {
     var _this = this;
     this.setData({
       netStatus: app.globalData.netStatus
@@ -111,16 +111,16 @@ Page({
       deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
       _this._loadLatestData(deviceid);
       var cleanId = setInterval(
-        function() {
+        function () {
           _this._loadLatestData(deviceid);
         }, 5000)
       _this.setData({
         cleanId: cleanId
       })
     } else if (deviceType == 'infrared' || deviceType == 'newInfrared') {
-      // _this._loadInfraredData(deviceid);
+      _this._loadInfraredData(deviceid);
       this.setData({
-        allLearn:1
+        allLearn: 1
       })
     }
   },
@@ -128,22 +128,28 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
     var cleanId = this.data.cleanId;
     clearInterval(cleanId);
   },
 
-  _loadInfraredData:function(deviceid) {
+  _loadInfraredData: function (deviceid) {
     device.getAllLearn(deviceid, (res) => {
       console.log(res);
-      this.setData({
-        allLearn:res.data.length,
-        allOwnInfrared:res.data,
-      })
+      if (res.data.msg != "haven`t create any panel yet!" ) {
+        var ans = res.data.data;
+        console.log(ans);
+        var jsObject = JSON.parse(ans);
+        console.log(jsObject);
+        this.setData({
+          // allLearn:res.data.length,
+          allOwnInfrared: jsObject,
+        })
+      }
     })
   },
 
-  _loadData: function(deviceid) {
+  _loadData: function (deviceid) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -155,7 +161,7 @@ Page({
   },
 
 
-  _loadLatestData: function(deviceId) {
+  _loadLatestData: function (deviceId) {
     var _this = this;
     device.getlatestData(deviceId, (res) => {
       console.log(res);
@@ -167,7 +173,7 @@ Page({
       var alarmFlag2 = false;
       var surpervisionFlag2 = false;
       var ts = 0;
-      sensorData.forEach(function(e) {
+      sensorData.forEach(function (e) {
         if (e.key === 'status') {
           if (e.value === 'true' || e.value === true) {
             _this.setData({
@@ -194,7 +200,7 @@ Page({
           var question = test.toString();
           var value = question.split("|");
           var answer = '';
-          value.forEach(function(element, index) {
+          value.forEach(function (element, index) {
             if (valueName[element] != undefined) {
               if (index != 1 && index != 0) {
                 answer += ',';
@@ -250,7 +256,7 @@ Page({
         test.value = "正常";
         sensorData.push(test);
       }
-      sensorData.forEach(function(e, index) {
+      sensorData.forEach(function (e, index) {
         if (e.key == 'alarm' || e.key == 'surpervision') {
           sensorData.splice(index, 1);
         }
@@ -264,7 +270,7 @@ Page({
    * =================dimmableLight=======================
    * =====================================================
    */
-  onSliderChange: function(event) {
+  onSliderChange: function (event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -272,7 +278,7 @@ Page({
     let serviceName = this.data.serviceName.controlDimmableLight;
     this._sendControl(serviceName, value, this.data.deviceInfo);
   },
-  onSwitchChange: function(event) {
+  onSwitchChange: function (event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -289,7 +295,7 @@ Page({
    * =====================================================
    */
 
-  onCurtainTap: function(event) {
+  onCurtainTap: function (event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -305,7 +311,7 @@ Page({
    * =====================================================
    */
 
-  onSoundLightAlarm: function(event) {
+  onSoundLightAlarm: function (event) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -318,7 +324,7 @@ Page({
    * ====================sendControl==========================
    * =====================================================
    */
-  _sendControl: function(serviceName, value, deviceInfo) {
+  _sendControl: function (serviceName, value, deviceInfo) {
     var deviceId = deviceInfo.id;
     var requestId = this.data.requestId;
     var triad = {
@@ -383,7 +389,7 @@ Page({
   },
 
   /**修改别名*/
-  onChangeName: function() {
+  onChangeName: function () {
     this.setData({
       showEdit: true,
       newName: ''
@@ -392,28 +398,28 @@ Page({
   /**
    * 弹出框蒙层截断touchmove事件
    */
-  preventTouchMove: function() {},
+  preventTouchMove: function () { },
   /**
    * 隐藏模态对话框
    */
-  hideModal: function() {
+  hideModal: function () {
     this.setData({
       showEdit: false,
       showDevice: false,
       showPassword: false,
-      addNewLearn:false,
+      addNewLearn: false,
     });
   },
   /**
    * 对话框取消按钮点击事件
    */
-  onCancel: function() {
+  onCancel: function () {
     this.hideModal();
   },
   /**
    * 场景对话框确认按钮点击事件
    */
-  onEditConfirm: function() {
+  onEditConfirm: function () {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -448,31 +454,31 @@ Page({
     }
   },
 
-  inputNewLearnNameChange:function(event) {
+  inputNewLearnNameChange: function (event) {
     var inputValue = event.detail.value;
     this.data.newLearnName = inputValue;
   },
-  inputChange: function(event) {
+  inputChange: function (event) {
     var inputValue = event.detail.value;
     this.data.newName = inputValue;
   },
 
-  inputNameChange: function(event) {
+  inputNameChange: function (event) {
     var inputValue = event.detail.value;
     this.data.linkageName = inputValue;
   },
 
-  inputAlarmChange: function(event) {
+  inputAlarmChange: function (event) {
     var inputValue = event.detail.value;
     this.data.alarmMessage = inputValue;
   },
 
-  inputPasswordChange: function(event) {
+  inputPasswordChange: function (event) {
     var inputValue = event.detail.value;
     this.data.password = inputValue;
   },
 
-  showAlert: function() {
+  showAlert: function () {
     wx.showToast({
       title: '长按设备名可对设备名进行更改',
       icon: 'none',
@@ -483,7 +489,7 @@ Page({
   //==========联动==========//
 
   // 添加联动
-  addLinkage: function() {
+  addLinkage: function () {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -492,7 +498,7 @@ Page({
     var parentdeviceId = app.globalData.gatewayId;
     device.getAllSonDevices(parentdeviceId, (res) => {
       var allDevices = new Array();
-      res.forEach(function(element) {
+      res.forEach(function (element) {
         if (element.deviceType === "switch" || element.deviceType === "curtain" || element.deviceType === "dimmableLight" || element.deviceType === "SoundLightAlarm") {
           allDevices.push(element);
         };
@@ -507,7 +513,7 @@ Page({
     })
   },
 
-  onAddLinkage: function(e) {
+  onAddLinkage: function (e) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -551,7 +557,7 @@ Page({
       if (key[0] === '*')
         deviceArr.push(answer[key]);
     };
-    devices.forEach(function(element) {
+    devices.forEach(function (element) {
       var obj = {};
       var e = element.split(",");
       obj.id = e[0];
@@ -675,7 +681,7 @@ Page({
                 title: '提示',
                 content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
                 success(res) {
-                  if (res.confirm) {} else if (res.cancel) {}
+                  if (res.confirm) { } else if (res.cancel) { }
                 }
               })
             } else {
@@ -713,7 +719,7 @@ Page({
                 title: '提示',
                 content: '规则创建成功，您需要关注‘天慧云谷’公众号并重新登录小程序来接收报警信息',
                 success(res) {
-                  if (res.confirm) {} else if (res.cancel) {}
+                  if (res.confirm) { } else if (res.cancel) { }
                 }
               })
             } else {
@@ -742,7 +748,7 @@ Page({
   },
 
   //查看联动详情
-  gotoLinkageDetail: function(e) {
+  gotoLinkageDetail: function (e) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -753,7 +759,7 @@ Page({
   },
 
   // 根据gatewayId获取所有用户规则
-  _loadLinkage: function(gatewayId) {
+  _loadLinkage: function (gatewayId) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -775,7 +781,7 @@ Page({
 
 
   //查询网关下的规则是否处于报警状态
-  _loadAlarmStatus: function(gatewayId) {
+  _loadAlarmStatus: function (gatewayId) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -793,7 +799,7 @@ Page({
     })
   },
   //布防
-  deployment: function() {
+  deployment: function () {
     this.setData({
       netStatus: app.globalData.netStatus,
       deploymentStatus: true
@@ -828,7 +834,7 @@ Page({
   },
 
   //撤防
-  disarming: function() {
+  disarming: function () {
     this.setData({
       netStatus: app.globalData.netStatus,
       deploymentStatus: true
@@ -847,7 +853,7 @@ Page({
     })
   },
 
-  remoteUnlock: function() {
+  remoteUnlock: function () {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -867,7 +873,7 @@ Page({
     })
   },
 
-  remoteLock: function() {
+  remoteLock: function () {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -887,7 +893,7 @@ Page({
     })
   },
 
-  onPasswordConfirm: function() {
+  onPasswordConfirm: function () {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -906,8 +912,8 @@ Page({
     this._sendControl(serviceName, value, this.data.deviceInfo);
   },
 
-  onNewLearnConfirm:function() {
-    if(this.data.newLearnName.length == 0) {
+  onNewLearnConfirm: function () {
+    if (this.data.newLearnName.length == 0) {
       wx.showToast({
         title: '名称不能为空',
         icon: 'none',
@@ -915,57 +921,69 @@ Page({
       });
     } else {
       this.hideModal();
-      var index = this.data.allLearn + 1;
-      var panelId = this.data.deviceId + index;
+      var deviceId = this.data.deviceId;
       var param = {
         name: this.data.newLearnName,
-        panelId: panelId
+        type: 5
       }
       var deviceInfo = JSON.stringify(this.data.deviceInfo);
       console.log(param);
-      // device.addNewLearn(param,(res) => {
-      //   if(res.data == 1) {
-      wx.navigateTo({
-        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
-      });
-    //   }
-    // })
-    }
-
-  },
-
-//长按删除面板
-  onDeletePanel: function (e) {
-    var panelId = device.getDataSet(e, 'panelid');
-    console.log(panelId);
-    // device.deletePanel(panelId,(res) => {
-
-    // })
-    },
-
-
-  /**红外宝*/
-  goToInfrared: function(e) {
-    var id = device.getDataSet(e, 'id');
-    var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    if(id == 5) {
-      this.setData({
-        addNewLearn:true
+      device.addNewLearn(deviceId, param, (res) => {
+        console.log(res);
+        if (res.data.msg === "success") {
+          var panelId = res.data.data;
+          wx.navigateTo({
+            url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+          });
+        }
       })
-    }else {
-      wx.navigateTo({
-        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
-      });
     }
+
   },
 
-//面板详细信息
-  goToInfraredInfo:function(e) {
+  //长按删除面板
+  onDeletePanel: function (e) {
+    var _this = this;
+    var panelId = device.getDataSet(e, 'panelid');
+    var deviceId = this.data.deviceId;
+    console.log(panelId);
+    wx.showModal({
+      title: '删除遥控器面板',
+      content: '点击确定将删除该遥控器！',
+      success: function (res) {
+        if (res.confirm) {
+          device.deletePanel(deviceId,panelId,(res) => {
+            console.log(res);
+            _this._loadInfraredData(deviceId);
+          })
+        }
+      }
+    })
+  },
+
+  //面板详细信息
+  goToInfraredInfo: function (e) {
     var panelId = device.getDataSet(e, 'panelid');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
     wx.navigateTo({
       url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
     });
 
-  }
+  },
+
+
+  /**红外宝*/
+  goToInfrared: function (e) {
+    var id = device.getDataSet(e, 'id');
+    var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    if (id == 5) {
+      this.setData({
+        addNewLearn: true
+      })
+    } else {
+      wx.navigateTo({
+        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
+      });
+    }
+  },
 })

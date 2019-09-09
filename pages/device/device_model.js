@@ -492,34 +492,43 @@ class Device extends Base {
 //获取所有学习面板
   getAllLearn(id, callback) {
     var params = {
-      url: `deviceaccess/device/${id}`,
+      // url: `infrared/panels/${id}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/panels/get/${id}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(params);
+    // this.request(params);
+    this.request_test(params);
   }
 
 //新建面板
-  addNewLearn(id, callback) {
+  addNewLearn(id,param, callback) {
     var params = {
-      url: `deviceaccess/device/${id}`,
+      // url: `infrared/panel/add/${id}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/panel/add/${id}`,
+      method:"POST",
+      data: param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(params);
+    // this.request(params);
+    this.request_test(params);
   }
 
   //删除面板
-  deletePanel(id, callback) {
+  deletePanel(deviceId, panelId,callback) {
     var params = {
-      url: `deviceaccess/device/${id}`,
+      // url: `infrared/panel/del/${deviceId}/${panelId}`,
+      url: `http://47.104.8.164:8800/api/v1/infrared/panel/del/${deviceId}/${panelId}`,
+      method:"DELETE",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    this.request(params);
+    // this.request(params);
+    this.request_test(params);
   }
 
 };

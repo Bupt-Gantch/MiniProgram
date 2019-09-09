@@ -31,9 +31,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(options);
     var _this = this;
     var id = options.id;
     var deviceInfo = JSON.parse(options.deviceInfo);
+    console.log(deviceInfo);
     var learnName = options.learnName;
     var panelId = options.panelId;
     this.setData({
@@ -42,12 +44,8 @@ Page({
       id: id,
       learnName:learnName,
       panelId:panelId,
-      // deviceInfo: "deviceInfo",
-      // deviceId: "deviceInfo.id",
-      // learnName: "learnName",
-      // panelId: "panelId",
     });
-    // this._loadPanelInfo();
+    this._loadPanelInfo(panelId);
   },
 
   /**
@@ -65,18 +63,48 @@ Page({
   },
 
   _loadPanelInfo: function() {
-    var param = {
-      panelId: this.data.panelId
-    }
-    newinfrared.getPanelInfo(id, (res) => {
+    var panelId = this.data.panelId;
+    var deviceId = this.data.deviceId;
+    newinfrared.getPanelName(deviceId,panelId,(res) => {
+      console.log(res);
 
+      var info = JSON.parse(res.data.data);
+      console.log(info);
+      this.setData({
+        panelId:info.id,
+        learnName:info.name
+      })
+    });
+    newinfrared.getPanelInfo(panelId, (res) => {
+      console.log(res);
+      if(res.data.msg == "") {
+        wx.showToast({
+          title: '还没有学习任何按键',
+          icon: 'none',
+          duration: 2000
+        });
+      }
     });
   },
 
   //删除按键
   onDeleteButton: function(e) {
-    var buttonid = newinfrared.getDataSet(e, 'buttonid');
-    var name = newinfrared.getDataSet(e, 'name');
+    var keyId = newinfrared.getDataSet(e, 'keyid');
+    var panelId = this.data.panelId;
+
+    console.log(panelId);
+    wx.showModal({
+      title: '删除遥控器面板',
+      content: '点击确定将删除该遥控器！',
+      success: function (res) {
+        if (res.confirm) {
+          newinfrared.deleteButton(panelId, keyId, (res) => {
+            _this._loadInfraredData(deviceId);
+          });
+        }
+      }
+    })
+
   },
 
 
@@ -92,9 +120,10 @@ Page({
       });
     } else {
       var value = {
-        "matchType": 5,
-        "name": newButtonName,
-        "id": id,
+        "type": 5,
+        "keyName": newButtonName,
+        "panelId": this.data.panelId,
+        "number":10,
       };
 
       let serviceName = this.data.serviceName.controlIR;
@@ -133,6 +162,7 @@ Page({
     var deviceId = this.data.deviceInfo.id;
     var requestId = this.data.requestId;
     var _this = this;
+    console.log(_this.data.deviceInfo.deviceType)
     var triad = {
       deviceType: _this.data.deviceInfo.deviceType,
       manufacture: _this.data.deviceInfo.manufacture,
@@ -149,6 +179,7 @@ Page({
       triad: triad,
       value: value
     };
+    console.log(data);
     newinfrared.applyControl(data, (res) => {
       console.log(res);
       if (res.indexOf("device") === -1) { //状态码为200则应用成功
