@@ -84,6 +84,8 @@ Page({
     });
     newinfrared.getPanelInfo(panelId, (res) => {
       console.log(res);
+      var keyInfo = JSON.parse(res.data);
+      console.log(keyInfo);
       if(res.msg != "success") {
         wx.showToast({
           title: '还没有学习任何按键',
@@ -104,16 +106,21 @@ Page({
   //删除按键
   onDeleteButton: function(e) {
     var _this = this;
-    var key = newinfrared.getDataSet(e, 'key');
+    var id = newinfrared.getDataSet(e, 'id');
     var panelId = this.data.panelId;
 
     console.log(panelId);
+    console.log("onDeleteButton");
     wx.showModal({
       title: '删除按键',
       content: '点击确定将删除该按键！',
       success: function (res) {
-        if (res.confirm) {
-          newinfrared.deleteButton(panelId, key, (res) => {
+        console.log(res);
+        if (res.msg == "success") {
+          newinfrared.deleteButton(panelId,id, (res) => {
+            console.log("panelId");
+            console.log(res);
+            console.log("panelId");
             _this._loadPanelInfo();
           });
         }
@@ -162,7 +169,7 @@ Page({
 
   //控制
   onPenetrateTap: function(e) {
-
+    console.log("onPenetrateTap");
     var key = newinfrared.getDataSet(e, 'key');
     var value = {
       "key": key,
@@ -171,7 +178,7 @@ Page({
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
     this._sendControl(serviceName, methodName, value);
-
+    console.log("after sendControl");
   },
 
 

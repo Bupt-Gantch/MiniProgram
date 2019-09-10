@@ -963,6 +963,7 @@ Page({
 
   //面板详细信息
   goToInfraredInfo: function (e) {
+    console.log("Hello1");
     var panelId = device.getDataSet(e, 'panelid');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
     wx.navigateTo({
@@ -974,6 +975,7 @@ Page({
 
   /**红外宝*/
   goToInfrared: function (e) {
+    console.log("Hello2");
     var id = device.getDataSet(e, 'id');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
     if (id == 5) {
