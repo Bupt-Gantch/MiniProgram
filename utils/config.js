@@ -220,7 +220,8 @@ Config.methodName = {
   currentKey: 'currentKey',
   deleteKey: 'deleteKey',
   deleteAllKey: 'deleteAllKey',
-  exit: 'exit'
+  exit: 'exit',
+  getVersion:'getVersion'
 };
 
 Config.keyName = {

@@ -45,7 +45,14 @@ Page({
       learnName:learnName,
       panelId:panelId,
     });
-    this._loadPanelInfo(panelId);
+
+    let serviceName = this.data.serviceName.controlIR;
+    let methodName = this.data.methodName.getVersion;
+    var value = {
+
+    };
+    this._sendControl(serviceName, methodName, value);
+    this._loadPanelInfo();
   },
 
   /**
@@ -68,7 +75,7 @@ Page({
     newinfrared.getPanelName(deviceId,panelId,(res) => {
       console.log(res);
 
-      var info = JSON.parse(res.data.data);
+      var info = JSON.parse(res.data);
       console.log(info);
       this.setData({
         panelId:info.id,
@@ -76,32 +83,40 @@ Page({
       })
     });
     newinfrared.getPanelInfo(panelId, (res) => {
+      var keyInfo = JSON.parse(res.data);
       console.log(res);
-      if (res.data.msg == "key not exist, check for params!") {
+      console.log(keyInfo);
+      if(res.msg != "success") {
         wx.showToast({
           title: '还没有学习任何按键',
           icon: 'none',
           duration: 2000
         });
+      }else {
+        this.setData({
+          allButton:keyInfo
+        })
       }
     });
   },
 
   //删除按键
   onDeleteButton: function(e) {
-    var keyId = newinfrared.getDataSet(e, 'keyid');
+    var _this = this;
+    var key = newinfrared.getDataSet(e, 'key');
     var panelId = this.data.panelId;
 
     console.log(panelId);
     wx.showModal({
-      title: '删除遥控器面板',
-      content: '点击确定将删除该遥控器！',
+      title: '删除按键',
+      content: '点击确定将删除该按键！',
       success: function (res) {
         if (res.confirm) {
-          newinfrared.deleteButton(panelId, keyId, (res) => {
-            _this._loadInfraredData(deviceId);
+          newinfrared.deleteButton(panelId, key, (res) => {
+            _this._loadPanelInfo();
           });
         }
+
       }
     })
 
@@ -111,6 +126,7 @@ Page({
   //下发学习指令
   onNewLearnConfirm: function() {
     var newButtonName = this.data.newButtonName;
+    var _this = this;
     console.log(newButtonName);
     if (newButtonName.length == 0) {
       wx.showToast({
@@ -129,8 +145,16 @@ Page({
       let serviceName = this.data.serviceName.controlIR;
       let methodName = this.data.methodName.learn;
       this._sendControl(serviceName, methodName, value);
-
       this.hideModal();
+      wx.showLoading({
+        title: '请按下对应按键',
+        mask:true,
+      })
+
+      setTimeout(function () {
+        wx.hideLoading();
+        _this._loadPanelInfo();
+      },5000)
     }
   },
 
@@ -138,12 +162,10 @@ Page({
   //控制
   onPenetrateTap: function(e) {
 
-    var buttonid = newinfrared.getDataSet(e, 'buttonid');
-    var name = newinfrared.getDataSet(e, 'name');
-
+    var key = newinfrared.getDataSet(e, 'key');
     var value = {
-      "matchType": buttonid,
-      "name": name
+      "key": key,
+      "type":5,
     };
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
@@ -183,12 +205,12 @@ Page({
     newinfrared.applyControl(data, (res) => {
       console.log(res);
       if (res.indexOf("device") === -1) { //状态码为200则应用成功
-        wx.showToast({
-          title: '应用成功',
-          icon: 'success',
-          duration: 1000,
-          // mask: true
-        });
+        // wx.showToast({
+        //   title: '应用成功',
+        //   icon: 'success',
+        //   duration: 1000,
+        //   // mask: true
+        // });
         this.hideModal();
       } else { //状态码不是200  应用失败
         wx.showToast({

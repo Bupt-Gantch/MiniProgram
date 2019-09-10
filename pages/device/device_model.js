@@ -492,43 +492,37 @@ class Device extends Base {
 //获取所有学习面板
   getAllLearn(id, callback) {
     var params = {
-      // url: `infrared/panels/${id}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/panels/get/${id}`,
+      url: `infrared/panels/get/${id}`,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(params);
-    this.request_test(params);
+    this.request(params);
   }
 
 //新建面板
   addNewLearn(id,param, callback) {
     var params = {
-      // url: `infrared/panel/add/${id}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/panel/add/${id}`,
+      url: `infrared/panel/add/${id}`,
       method:"POST",
       data: param,
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(params);
-    this.request_test(params);
+    this.request(params);
   }
 
   //删除面板
   deletePanel(deviceId, panelId,callback) {
     var params = {
-      // url: `infrared/panel/del/${deviceId}/${panelId}`,
-      url: `http://47.104.8.164:8800/api/v1/infrared/panel/del/${deviceId}/${panelId}`,
+      url: `infrared/panel/del/${deviceId}/${panelId}`,
       method:"DELETE",
       sCallback: function (data) {
         callback && callback(data);
       }
     };
-    // this.request(params);
-    this.request_test(params);
+    this.request(params);
   }
 
 };
