@@ -77,7 +77,7 @@ Page({
     });
     newinfrared.getPanelInfo(panelId, (res) => {
       console.log(res);
-      if(res.data.msg == "") {
+      if (res.data.msg == "key not exist, check for params!") {
         wx.showToast({
           title: '还没有学习任何按键',
           icon: 'none',
