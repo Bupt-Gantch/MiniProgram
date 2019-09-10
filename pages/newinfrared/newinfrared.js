@@ -83,9 +83,7 @@ Page({
       })
     });
     newinfrared.getPanelInfo(panelId, (res) => {
-      var keyInfo = JSON.parse(res.data);
       console.log(res);
-      console.log(keyInfo);
       if(res.msg != "success") {
         wx.showToast({
           title: '还没有学习任何按键',
@@ -93,6 +91,9 @@ Page({
           duration: 2000
         });
       }else {
+        var keyInfo = JSON.parse(res.data);
+        console.log(res);
+        console.log(keyInfo);
         this.setData({
           allButton:keyInfo
         })
@@ -154,7 +155,7 @@ Page({
       setTimeout(function () {
         wx.hideLoading();
         _this._loadPanelInfo();
-      },5000)
+      },10000)
     }
   },
 
