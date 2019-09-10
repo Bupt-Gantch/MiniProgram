@@ -74,7 +74,6 @@ Page({
     var deviceId = this.data.deviceId;
     newinfrared.getPanelName(deviceId,panelId,(res) => {
       console.log(res);
-
       var info = JSON.parse(res.data);
       console.log(info);
       this.setData({
@@ -84,9 +83,10 @@ Page({
     });
     newinfrared.getPanelInfo(panelId, (res) => {
       console.log(res);
-      var keyInfo = JSON.parse(res.data);
-      console.log(keyInfo);
-      if(res.msg != "success") {
+      if (res.msg != "success" || res.data.length == 0) {
+        this.setData({
+          allButton: null
+        })
         wx.showToast({
           title: '还没有学习任何按键',
           icon: 'none',
@@ -108,19 +108,22 @@ Page({
     var _this = this;
     var id = newinfrared.getDataSet(e, 'id');
     var panelId = this.data.panelId;
-
-    console.log(panelId);
-    console.log("onDeleteButton");
     wx.showModal({
       title: '删除按键',
       content: '点击确定将删除该按键！',
       success: function (res) {
         console.log(res);
-        if (res.msg == "success") {
+        if (res.confirm) {
           newinfrared.deleteButton(panelId,id, (res) => {
-            console.log("panelId");
             console.log(res);
-            console.log("panelId");
+            if (res.msg == "success") {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration: 1000,
+                mask: true
+              });
+            }
             _this._loadPanelInfo();
           });
         }

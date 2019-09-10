@@ -136,14 +136,17 @@ Page({
   _loadInfraredData: function (deviceid) {
     device.getAllLearn(deviceid, (res) => {
       console.log(res);
-      if (res.msg != "haven`t create any panel yet!" ) {
+      if (res.msg == "success" && res.data.length > 0) {
         var ans = res.data;
         console.log(ans);
         var jsObject = JSON.parse(ans);
         console.log(jsObject);
         this.setData({
-          // allLearn:res.length,
           allOwnInfrared: jsObject,
+        })
+      } else {
+        this.setData({
+          allOwnInfrared: null,
         })
       }
     })
@@ -954,6 +957,14 @@ Page({
         if (res.confirm) {
           device.deletePanel(deviceId,panelId,(res) => {
             console.log(res);
+            if (res.msg == "success") {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration: 1000,
+                mask: true
+              });
+            }
             _this._loadInfraredData(deviceId);
           })
         }
@@ -963,19 +974,17 @@ Page({
 
   //面板详细信息
   goToInfraredInfo: function (e) {
-    console.log("Hello1");
     var panelId = device.getDataSet(e, 'panelid');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    wx.navigateTo({
-      url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
-    });
+      wx.navigateTo({
+        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+      });
 
   },
 
 
   /**红外宝*/
   goToInfrared: function (e) {
-    console.log("Hello2");
     var id = device.getDataSet(e, 'id');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
     if (id == 5) {
