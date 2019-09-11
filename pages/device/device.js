@@ -25,6 +25,7 @@ Page({
     keyName: Config.keyName,
     valueName: Config.valueName,
     serviceName: Config.serviceName,
+    methodName: Config.methodName,
     requestId: 1000000, //请求id100w 递减
     showEdit: false,
     showLinkage: false,
@@ -72,6 +73,16 @@ Page({
     var deviceType = options.deviceType;
     var deviceName = options.deviceName;
     var model = options.model;
+    var deviceInfo = JSON.parse(options.deviceInfo);
+    console.log(deviceType);
+
+    this.setData({
+      deviceType: deviceType,
+      deviceId: deviceid,
+      deviceName: deviceName,
+      model: model,
+      deviceInfo: deviceInfo
+    });
 
     //========================
 
@@ -84,17 +95,18 @@ Page({
     // var deviceType = "newInfrared";
     //==============================
 
-    this._loadData(deviceid);
+    // this._loadData(deviceid);
     if (deviceType === 'Gateway') {
       this._loadLinkage(deviceid);
       this._loadAlarmStatus(deviceid);
     }
-    this.setData({
-      deviceType: deviceType,
-      deviceId: deviceid,
-      deviceName: deviceName,
-      model: model
-    });
+    if (deviceType == 'infrared' || deviceType == "newInfrared") {
+      let serviceName = this.data.serviceName.controlIR;
+      let methodName = this.data.methodName.getVersion;
+      var value = {
+      };
+      this._sendControl(serviceName, methodName, value);
+    }
   },
 
   onShow: function () {
@@ -119,9 +131,6 @@ Page({
       })
     } else if (deviceType == 'infrared' || deviceType == 'newInfrared') {
       _this._loadInfraredData(deviceid);
-      this.setData({
-        allLearn: 1
-      })
     }
   },
 
@@ -279,7 +288,8 @@ Page({
     });
     let value = event.detail.value.toString();
     let serviceName = this.data.serviceName.controlDimmableLight;
-    this._sendControl(serviceName, value, this.data.deviceInfo);
+    var methodName = "";
+    this._sendControl(serviceName, methodName, value);
   },
   onSwitchChange: function (event) {
     this.setData({
@@ -290,7 +300,8 @@ Page({
     })
     let value = event.detail.value.toString();
     let serviceName = this.data.serviceName.controlSwitch;
-    this._sendControl(serviceName, value, this.data.deviceInfo);
+    var methodName = "";
+    this._sendControl(serviceName, methodName, value);
   },
 
   /**
@@ -304,7 +315,8 @@ Page({
     });
     let value = device.getDataSet(event, 'value');
     let serviceName = this.data.serviceName.controlCurtain;
-    this._sendControl(serviceName, value, this.data.deviceInfo);
+    var methodName = "";
+    this._sendControl(serviceName, methodName, value);
   },
 
 
@@ -320,16 +332,20 @@ Page({
     });
     let value = device.getDataSet(event, 'value');
     let serviceName = this.data.serviceName.controlSoundLightAlarm;
-    this._sendControl(serviceName, value, this.data.deviceInfo);
+    var methodName = "";
+    this._sendControl(serviceName,methodName,value);
   },
+
 
   /**
    * ====================sendControl==========================
    * =====================================================
    */
-  _sendControl: function (serviceName, value, deviceInfo) {
-    var deviceId = deviceInfo.id;
+  _sendControl: function (serviceName, methodName,value) {
+
     var requestId = this.data.requestId;
+    var deviceInfo = this.data.deviceInfo;
+    var _this = this;
     var triad = {
       deviceType: deviceInfo.deviceType,
       manufacture: deviceInfo.manufacture,
@@ -350,16 +366,43 @@ Page({
     } else {
       data = {
         serviceName: serviceName,
+        methodName: methodName,
         deviceId: deviceInfo.id,
         requestId: requestId,
         triad: triad,
         value: value
       };
     }
-    device.applyControl(data, (res) => {
-      if (c) {
-        // console.log(res);
-      } else {
+    if (deviceInfo.deviceType == "infrared" || deviceInfo.deviceType == "newInfrared") {
+      device.applyControler(data, (res) => {
+        if (res.indexOf("device") === -1) { //状态码为200则应用成功
+          // wx.showToast({
+          //   title: '应用成功',
+          //   icon: 'success',
+          //   duration: 1000,
+          //   // mask: true
+          // });
+          this.hideModal();
+        } else { //状态码不是200  应用失败
+          // wx.showToast({
+          //   title: '应用失败',
+          //   image: '../../imgs/icon/pay@error.png',
+          //   duration: 1000,
+          //   // mask: true
+          // });
+        }
+      }, (err) => {
+        // wx.showToast({
+        //   title: '应用失败',
+        //   image: '../../imgs/icon/pay@error.png',
+        //   duration: 1000,
+        //   // mask: true
+        // });
+        console.log(err);
+      });
+    } else {
+      device.applyControl(data, (res) => {
+        console.log(res);
         if (res.indexOf("device") === -1) { //状态码为200则应用成功
           wx.showToast({
             title: '应用成功',
@@ -376,20 +419,26 @@ Page({
             // mask: true
           });
         }
-      }
-    }, (err) => {
-      wx.showToast({
-        title: '应用失败',
-        image: '../../imgs/icon/pay@error.png',
-        duration: 1000,
-        // mask: true
+      }, (err) => {
+        wx.showToast({
+          title: '应用失败',
+          image: '../../imgs/icon/pay@error.png',
+          duration: 1000,
+          // mask: true
+        });
+        console.log(err);
       });
-      // console.log(err);
-    });
+    }
 
     this.data.requestId--;
 
   },
+
+
+
+
+
+
 
   /**修改别名*/
   onChangeName: function () {
@@ -911,8 +960,10 @@ Page({
       npassword: npassword,
       statusValue: statusValue
     }
+    var deviceInfo = this.data.deviceInfo;
     var serviceName = this.data.serviceName.controlLock;
-    this._sendControl(serviceName, value, this.data.deviceInfo);
+    var methodName = "";
+    this._sendControl(serviceName, methodName, value);
   },
 
   onNewLearnConfirm: function () {
@@ -925,18 +976,19 @@ Page({
     } else {
       this.hideModal();
       var deviceId = this.data.deviceId;
+      var type = this.data.type;
       var param = {
         name: this.data.newLearnName,
-        type: 5
+        type: type
       }
       var deviceInfo = JSON.stringify(this.data.deviceInfo);
-      console.log(param);
+      console.log(deviceInfo);
       device.addNewLearn(deviceId, param, (res) => {
         console.log(res);
         if (res.msg === "success") {
           var panelId = res.data;
           wx.navigateTo({
-            url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+            url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
           });
         }
       })
@@ -976,8 +1028,10 @@ Page({
   goToInfraredInfo: function (e) {
     var panelId = device.getDataSet(e, 'panelid');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    console.log(deviceInfo);
+    var type = device.getDataSet(e, 'type');
       wx.navigateTo({
-        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&id=' + 5 + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
       });
 
   },
@@ -985,15 +1039,32 @@ Page({
 
   /**红外宝*/
   goToInfrared: function (e) {
-    var id = device.getDataSet(e, 'id');
+    var _this = this;
+    var type = device.getDataSet(e, 'type');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
-    if (id == 5) {
-      this.setData({
-        addNewLearn: true
+    if (type == 5) {
+      wx.showActionSheet({
+        itemList: ['空调', '电视','机顶盒','其他'],
+        success(res) {
+          console.log(res.tapIndex);
+          var number = res.tapIndex;
+          if(number == 3) {
+            number += 2;
+          }else {
+            number += 1;
+          }
+          _this.setData({
+            addNewLearn: true,
+            type:number
+          })
+        },
+        fail(res) {
+          console.log(res.errMsg)
+        }
       })
     } else {
       wx.navigateTo({
-        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&id=' + id
+        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&type=' + type
       });
     }
   },

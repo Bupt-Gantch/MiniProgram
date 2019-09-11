@@ -133,13 +133,13 @@
     <view class="category-detail-box">
       <scroll-view class="category-main" scroll-y>
         <view class='infrared-main-view'>
-          <block wx:for="{{infraredImg}}" wx:key="{{item.id}}">
+          <block wx:for="{{infraredImg}}" wx:key="{{item.type}}">
             <!-- 下面存放单个设备的div  -->
-            <view class="category-goods-items {{index%3==1?'middle':''}}" data-id="{{item.id}}" bindtap="goToInfrared">
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-type="{{item.type}}" bindtap="goToInfrared">
               <view class='group-image'>
-                <image src='{{item.img}}' mode="aspectFit"></image>
+                <image wx:if="{{item.type != 4}}" src='{{item.img}}' mode="aspectFit"></image>
               </view>
-              <view class='devicename'>{{item.name}}</view>
+              <view wx:if="{{item.type != 4}}" class='devicename'>{{item.name}}</view>
             </view>
           </block>
         </view>
