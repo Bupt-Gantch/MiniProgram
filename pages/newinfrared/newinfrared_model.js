@@ -142,7 +142,6 @@ class NewInfrared extends Base {
           for (let key in body) {
             if (body[key] === undefined) {
               body[key] = data.value[key];
-              console.log(data.value[key]);
             }
           }
           console.log(body);

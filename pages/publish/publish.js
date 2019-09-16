@@ -29,8 +29,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(option) {
-  },
+  onLoad: function(option) {},
 
   onShow: function() {
     info = [];
@@ -60,8 +59,8 @@ Page({
       _this.setData({
         infoList: res.data
       });
-      if (_this.data.infoList.length!=undefined){
-        _this.data.infoList.forEach(function (element) {
+      if (_this.data.infoList.length != undefined) {
+        _this.data.infoList.forEach(function(element) {
           if (element.image != null) {
             if (element.image[0] == "[") {
               var newimage = element.image.substr(1, element.image.length - 2);
@@ -79,10 +78,10 @@ Page({
         });
       }
       _this.setData({
-        infoList:newinfoList
+        infoList: newinfoList
       })
-      if (_this.data.infoList.length%9!=0||_this.data.infoList.length===0){
-        page=page-1
+      if (_this.data.infoList.length % 9 != 0 || _this.data.infoList.length === 0) {
+        page = page - 1
         this.setData({
           end: true
         })
@@ -99,9 +98,17 @@ Page({
    * 跳转到发布信息页
    */
   addNews: function(e) {
-    wx.navigateTo({
-      url: '/pages/release/release'
-    })
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/release/release'
+      })
+    }
   },
   //搜索获取数据
   searchNews: function(e) {
@@ -136,8 +143,8 @@ Page({
     var infoid = e.currentTarget.dataset.infoid;
     var index = e.currentTarget.dataset.index;
     this.setData({
-      infoid:infoid,
-      index:index
+      infoid: infoid,
+      index: index
     })
     if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
       this.data.commentTable[infoid] = true;
@@ -152,7 +159,7 @@ Page({
   /**
    * 点赞
    */
-  clickUp: function(e){
+  clickUp: function(e) {
     this.setData({
       netStatus: app.globalData.netStatus
     });
@@ -161,22 +168,22 @@ Page({
       this.data.statusTable[infoid] = true;
       var addUp = {
         pId: infoid,
-        num:1,
+        num: 1,
         nickName: app.globalData.userInfo.nickName,
         avator: app.globalData.userInfo.avatarUrl,
       };
       publish.addUp(addUp, (res) => {
-        if(res===1){
-        var index = e.currentTarget.dataset.index;
-        this.data.infolist[index].favoritenum++;
-        var newinfolist = this.data.infolist
-        this.setData({
-          infolist: newinfolist
-        })
-        }else{
+        if (res === 1) {
+          var index = e.currentTarget.dataset.index;
+          this.data.infolist[index].favoritenum++;
+          var newinfolist = this.data.infolist
+          this.setData({
+            infolist: newinfolist
+          })
+        } else {
           wx.showToast({
             title: '操作失败',
-            icon:'none',
+            icon: 'none',
             duration: 1500,
           })
         }
@@ -185,13 +192,13 @@ Page({
       this.data.statusTable[infoid] = false;
       var deleteUp = {
         pId: infoid,
-        num:-1,
+        num: -1,
         nickName: app.globalData.userInfo.nickName,
         avator: app.globalData.userInfo.avatarUrl,
       }
       console.log(deleteUp);
       publish.addUp(deleteUp, (res) => {
-        if (res===1) {
+        if (res === 1) {
           var index = e.currentTarget.dataset.index;
           this.data.infolist[index].favoritenum--;
           var newinfolist = this.data.infolist
@@ -228,7 +235,7 @@ Page({
     var comment = {
       nickName: app.globalData.userInfo.nickName,
       avator: app.globalData.userInfo.avatarUrl,
-      openid:app.globalData.openid,
+      openid: app.globalData.openid,
       cContent: e.detail.value,
       pId: infoid,
     }
@@ -238,15 +245,15 @@ Page({
       var index = this.data.index
       var ans = {
         nickName: comment.nickName,
-        cContent:comment.cContent,
+        cContent: comment.cContent,
       }
-      if(res===1){
+      if (res === 1) {
         this.data.infolist[index].comments.push(ans)
         var newinfolist = this.data.infolist
         this.setData({
           infolist: newinfolist
         })
-      }else{
+      } else {
         wx.showToast({
           title: '操作失败',
           icon: 'none',
@@ -280,7 +287,7 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    if(!this.data.end){
+    if (!this.data.end) {
       page = page + 1;
       // 显示加载图标
       wx.showLoading({

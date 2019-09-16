@@ -33,7 +33,7 @@ Page({
   onLoad: function(options) {
     console.log(options);
     var _this = this;
-    var id = options.id;
+    var type = options.type;
     var deviceInfo = JSON.parse(options.deviceInfo);
     console.log(deviceInfo);
     var learnName = options.learnName;
@@ -41,17 +41,11 @@ Page({
     this.setData({
       deviceInfo: deviceInfo,
       deviceId: deviceInfo.id,
-      id: id,
+      type: type,
       learnName:learnName,
       panelId:panelId,
     });
 
-    let serviceName = this.data.serviceName.controlIR;
-    let methodName = this.data.methodName.getVersion;
-    var value = {
-
-    };
-    this._sendControl(serviceName, methodName, value);
     this._loadPanelInfo();
   },
 
@@ -70,6 +64,13 @@ Page({
   },
 
   _loadPanelInfo: function() {
+
+    // let serviceName = this.data.serviceName.controlIR;
+    // let methodName = this.data.methodName.getVersion;
+    // var value = {
+    // };
+    // this._sendControl(serviceName, methodName, value);
+
     var panelId = this.data.panelId;
     var deviceId = this.data.deviceId;
     newinfrared.getPanelName(deviceId,panelId,(res) => {
@@ -78,7 +79,8 @@ Page({
       console.log(info);
       this.setData({
         panelId:info.id,
-        learnName:info.name
+        learnName:info.name,
+        type:info.type
       })
     });
     newinfrared.getPanelInfo(panelId, (res) => {
@@ -137,6 +139,8 @@ Page({
   //下发学习指令
   onNewLearnConfirm: function() {
     var newButtonName = this.data.newButtonName;
+    var type = this.data.type;
+    var panelId = this.data.panelId;
     var _this = this;
     console.log(newButtonName);
     if (newButtonName.length == 0) {
@@ -147,9 +151,9 @@ Page({
       });
     } else {
       var value = {
-        "type": 5,
+        "type": type,
         "keyName": newButtonName,
-        "panelId": this.data.panelId,
+        "panelId": panelId,
         "number":10,
       };
 
@@ -174,9 +178,10 @@ Page({
   onPenetrateTap: function(e) {
     console.log("onPenetrateTap");
     var key = newinfrared.getDataSet(e, 'key');
+    var type = this.data.type;
     var value = {
       "key": key,
-      "type":5,
+      "type": type,
     };
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
@@ -194,8 +199,8 @@ Page({
 
     var deviceId = this.data.deviceInfo.id;
     var requestId = this.data.requestId;
+    var deviceInfo = this.data.deviceInfo;
     var _this = this;
-    console.log(_this.data.deviceInfo.deviceType)
     var triad = {
       deviceType: _this.data.deviceInfo.deviceType,
       manufacture: _this.data.deviceInfo.manufacture,
@@ -285,7 +290,6 @@ Page({
       content: '点击左侧按钮进行按键学习，点击下方功能按键进行控制，长按下方功能按键删除按键',
       showCancel:false,
       confirmText:'我知道了',
-
     })
   },
 

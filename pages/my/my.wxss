@@ -11,6 +11,12 @@ page {
   background-color: #fffef9
 }
 
+.my-login {
+  text-align: center;
+  font-size: 70%;
+  color: #1392ec;
+}
+
 .my-container {
   background-color: #ededed;
   height: 100vh;

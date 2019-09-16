@@ -400,6 +400,7 @@ Page({
       netStatus: app.globalData.netStatus
     });
     var deviceInfo = category.getDataSet(event, 'deviceinfo');
+    var deviceInfoString = JSON.stringify(deviceInfo);
     var deviceid = category.getDataSet(event, 'deviceid');
     var customerId = deviceInfo.customerId;
     var deviceType = deviceInfo.deviceType;
@@ -416,7 +417,7 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName + '&customerId=' + customerId + '&model=' + model
+        url: '../device/device?deviceid=' + deviceid + '&deviceType=' + deviceType + '&deviceName=' + deviceName + '&customerId=' + customerId + '&model=' + model + '&deviceInfo=' + deviceInfoString
       });
     }
     // }

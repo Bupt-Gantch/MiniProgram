@@ -82,27 +82,27 @@ Config.buttonInfrared = '../../imgs/test/ownLearn.png';
 
 Config.infraredImg = [{
     'img': '../../imgs/test/conditioner.png',
-    'id': '1',
+    'type': '1',
     'name': '空调',
   },
   {
     'img': '../../imgs/test/tv.png',
-    'id': '2',
+    'type': '2',
     'name': '电视',
   },
   {
     'img': '../../imgs/test/slingbox.png',
-    'id': '3',
+    'type': '3',
     'name': '机顶盒',
   },
   {
     'img': '../../imgs/test/DVD.png',
-    'id': '4',
+    'type': '4',
     'name': 'DVD'
   },
   {
     'img': '../../imgs/test/learn.png',
-    'id': '5',
+    'type': '5',
     'name': '自定义学习'
   }
 ];
