@@ -15,6 +15,7 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
+    loginImg: "../../imgs/icon/login.png",
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     showEdit: false,
     showAddGateway: false,
@@ -94,28 +95,19 @@ Page({
       gatewayName: app.globalData.gatewayName
     })
   },
-  //获取用户信息
-  getUserInfo: function(e) {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
 
   myPublish: function(e) {
-    wx.navigateTo({
-      url: '/pages/mypublish/mypublish',
-    })
-  },
-
-  myNews: function(e) {
-    wx.navigateTo({
-      url: '/pages/mynews/mynews',
-    })
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/mypublish/mypublish',
+      })
+    }
   },
 
   onContactTap: function(event) {
@@ -124,49 +116,66 @@ Page({
     });
   },
 
-  onMyFamily:function() {
+  onMyFamily: function() {
     var customerId = app.globalData.customerId;
-    var gatewayList = new Array();
-    my.getAllDevices(customerId, (res) => {
-      res.data.forEach(function (element) {
-        if (element.deviceType === "Gateway") {
-          gatewayList.push(element)
+    if (customerId == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      var gatewayList = new Array();
+      my.getAllDevices(customerId, (res) => {
+        res.data.forEach(function(element) {
+          if (element.deviceType === "Gateway") {
+            gatewayList.push(element)
+          }
+        });
+        if (gatewayList.length == 0) {
+          wx.showToast({
+            title: '您还没有绑定任何网关',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          wx.navigateTo({
+            url: '../family/family',
+          })
         }
-      });
-      if (gatewayList.length == 0) {
-        wx.showToast({
-          title: '您还没有绑定任何网关',
-          icon: 'none',
-          duration: 2000
-        })
-      } else {
-        wx.navigateTo({
-          url: '../family/family',
-        })
-      }
-    })
+      })
+    }
   },
 
   onScan: function() {
-    var _this = this;
-    wx.showActionSheet({
-      // itemList: ['扫一扫', '手动绑定'],
-      itemList: this.data.content.bindGateway,
-      success(res) {
-        console.log(res.tapIndex);
-        var number = res.tapIndex;
-        if (number == 0) {
-          _this.onScanTest();
-        } else if (number == 1) {
-          _this.setData({
-            showAddGateway: true,
-          });
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+
+      var _this = this;
+      wx.showActionSheet({
+        // itemList: ['扫一扫', '手动绑定'],
+        itemList: this.data.content.bindGateway,
+        success(res) {
+          console.log(res.tapIndex);
+          var number = res.tapIndex;
+          if (number == 0) {
+            _this.onScanTest();
+          } else if (number == 1) {
+            _this.setData({
+              showAddGateway: true,
+            });
+          }
+        },
+        fail(res) {
+          console.log(res.errMsg)
         }
-      },
-      fail(res) {
-        console.log(res.errMsg)
-      }
-    })
+      })
+    }
   },
 
   //扫码添加网关
@@ -235,139 +244,156 @@ Page({
    * 设备入网
    */
   refreshGateway: function() {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var gatewayName = app.globalData.gatewayName;
-    var param = {
-      customerId: app.globalData.gatewayCustomerId,
-      gateway_user: gatewayName
-    };
-    //待完善
-    my.refresh(gatewayName, (res) => {
-      if (res == 'success') {
-        wx.showToast({
-          title: '设备入网中',
-          icon: 'none',
-          duration: 2000,
-        })
-        setTimeout(function() {
-          my.addDevice(param, (res) => {
-            console.log(res);
-            if (res.data == 1) {
-              wx.showToast({
-                title: '设备入网成功',
-                duration: 2000,
-              })
-            } else {
-              wx.showToast({
-                title: '设备入网成功',
-                icon: 'none',
-                duration: 2000
-              })
-            }
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        netStatus: app.globalData.netStatus
+      });
+      var gatewayName = app.globalData.gatewayName;
+      var param = {
+        customerId: app.globalData.gatewayCustomerId,
+        gateway_user: gatewayName
+      };
+      //待完善
+      my.refresh(gatewayName, (res) => {
+        if (res == 'success') {
+          wx.showToast({
+            title: '设备入网中',
+            icon: 'none',
+            duration: 2000,
           })
-        }, 60000)
-      } else {
-        wx.showToast({
-          title: '设备入网失败，请检查网关网络状况',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    })
+          setTimeout(function() {
+            my.addDevice(param, (res) => {
+              console.log(res);
+              if (res.data == 1) {
+                wx.showToast({
+                  title: '设备入网成功',
+                  duration: 2000,
+                })
+              } else {
+                wx.showToast({
+                  title: '设备入网成功',
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            })
+          }, 60000)
+        } else {
+          wx.showToast({
+            title: '设备入网失败，请检查网关网络状况',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    }
   },
 
   /**
    * 删除网关
    *  */
   deleteGateway: function() {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var _this = this
-    var gatewayList = new Array();
-    var customerId = app.globalData.customerId;
-    var param = {
-      customerid: customerId
-    };
-    my.getSharedGateway(param, (res) => {
-      if (res.status === "success") {
-        var gatewayFirst = res.data;
-        console.log(gatewayFirst);
-        gatewayFirst.forEach(function(e, index) {
-          var gatewayData = e.split(",")
-          if (gatewayData.length != 0) {
-            gatewayData.forEach(function(element) {
-              if (element != "") {
-                my.getDeviceById(element, (res) => {
-                  if (res.id != undefined) {
-                    gatewayList.push(res);
-                  };
-                  _this.setData({
-                    gatewayArray: gatewayList
-                  });
-                })
-              }
-            })
-          };
-          if (gatewayFirst.length - 1 == index) {
-            my.getAllDevices(customerId, (res) => {
-              res.data.forEach(function(element) {
-                if (element.deviceType === "Gateway") {
-                  gatewayList.push(element)
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        netStatus: app.globalData.netStatus
+      });
+      var _this = this
+      var gatewayList = new Array();
+      var customerId = app.globalData.customerId;
+      var param = {
+        customerid: customerId
+      };
+      my.getSharedGateway(param, (res) => {
+        if (res.status === "success") {
+          var gatewayFirst = res.data;
+          console.log(gatewayFirst);
+          gatewayFirst.forEach(function(e, index) {
+            var gatewayData = e.split(",")
+            if (gatewayData.length != 0) {
+              gatewayData.forEach(function(element) {
+                if (element != "") {
+                  my.getDeviceById(element, (res) => {
+                    if (res.id != undefined) {
+                      gatewayList.push(res);
+                    };
+                    _this.setData({
+                      gatewayArray: gatewayList
+                    });
+                  })
                 }
-              });
-              _this.setData({
-                gatewayArray: gatewayList
-              });
-              if (gatewayList.length == 0) {
-                _this.setData({
-                  showGateway: false,
+              })
+            };
+            if (gatewayFirst.length - 1 == index) {
+              my.getAllDevices(customerId, (res) => {
+                res.data.forEach(function(element) {
+                  if (element.deviceType === "Gateway") {
+                    gatewayList.push(element)
+                  }
                 });
-                wx.showToast({
-                  title: '您还没有绑定任何网关',
-                  icon: 'none',
-                  duration: 2000
-                })
-              } else {
                 _this.setData({
-                  showGateway: true,
+                  gatewayArray: gatewayList
                 });
-              }
-            })
-          }
-        })
-      } else {
-        my.getAllDevices(customerId, (res) => {
-          res.data.forEach(function(element) {
-            if (element.deviceType === "Gateway") {
-              gatewayList.push(element)
+                if (gatewayList.length == 0) {
+                  _this.setData({
+                    showGateway: false,
+                  });
+                  wx.showToast({
+                    title: '您还没有绑定任何网关',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                } else {
+                  _this.setData({
+                    showGateway: true,
+                  });
+                }
+              })
             }
-          });
-          _this.setData({
-            gatewayArray: gatewayList
-          });
-          if (gatewayList.length == 0) {
-            _this.setData({
-              showGateway: false,
+          })
+        } else {
+          my.getAllDevices(customerId, (res) => {
+            res.data.forEach(function(element) {
+              if (element.deviceType === "Gateway") {
+                gatewayList.push(element)
+              }
             });
-            wx.showToast({
-              title: '您还没有绑定任何网关',
-              icon: 'none',
-              duration: 2000
-            })
-          } else {
             _this.setData({
-              showGateway: true,
+              gatewayArray: gatewayList
             });
-          }
-        })
-      }
-    })
+            if (gatewayList.length == 0) {
+              _this.setData({
+                showGateway: false,
+              });
+              wx.showToast({
+                title: '您还没有绑定任何网关',
+                icon: 'none',
+                duration: 2000
+              })
+            } else {
+              _this.setData({
+                showGateway: true,
+              });
+            }
+          })
+        }
+      })
+    }
   },
 
   onDeleteRule: function() {
+
     var ruleId = this.data.ruleId;
     rule.deleteRule(ruleId, (res) => {
       console.log(res);
@@ -392,119 +418,126 @@ Page({
    * 主动解绑网关
    */
   unBindGateway: function(e) {
-    console.log(12312131);
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var _this = this;
-    var unbindGateway = e.detail.value.gateway;
-    if (unbindGateway.length == 0) {
+    if (app.globalData.openid == null) {
       wx.showToast({
-        title: '您还没有选择网关',
-        icon: 'none'
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
       })
     } else {
-      var gatewayArr = unbindGateway.split(",");
-      var gatewayid = gatewayArr[0];
-      var customerId = Number(gatewayArr[1]);
-      var gatewayname = gatewayArr[2];
-      if (customerId === app.globalData.customerId) {
-        var param = {
-          customerid: app.globalData.customerId,
-          gateids: gatewayid,
-          gatewayName: gatewayname
-        }
-        wx.showActionSheet({
-          itemList: _this.data.content.unBindGateway,
-          success(res) {
-            console.log(res.tapIndex);
-            var number = res.tapIndex;
-            if (number == 0) {
-              my.deleteGateway(param, (res) => {
-                console.log(res);
-                if (res == 1) {
-                  app.globalData.gatewayCustomerId = null;
-                  app.globalData.getewayId = null;
-                  app.globalData.gatewayName = null;
-                  app.globalData.status = null;
-                  var params = {
-                    customerid: app.globalData.customerId,
-                    gateid: gatewayid,
-                  };
-                  my.onUnShareAll(params, (res) => {
-                    wx.showToast({
-                      title: '解绑成功',
-                    }); 
-                    var customerId = app.globalData.customerId;
-                    _this.deleteGateway(customerId);
-                  });
-                } else {
-                  wx.showToast({
-                    title: '解绑失败',
-                    icon: 'none',
-                    duration: 1000
-                  });
-                }
-              })
-            } else if (number == 1) {
-              my.deleteGateway(param, (res) => {
-                console.log(res);
-                if (res == 1) {
-                  app.globalData.gatewayCustomerId = null;
-                  app.globalData.getewayId = null;
-                  app.globalData.gatewayName = null;
-                  app.globalData.status = null;
-                  var params = {
-                    customerid: app.globalData.customerId,
-                    gateid: gatewayid,
-                  };
-                  my.deepDeleteGateway(params, (res) => {
-                    wx.showToast({
-                      title: '解绑成功',
-                    });
-                    var customerId = app.globalData.customerId;
-                    _this.deleteGateway(customerId);
-                  });
-                } else {
-                  wx.showToast({
-                    title: '解绑失败',
-                    icon: 'none',
-                    duration: 1000
-                  });
-                }
-              })
-            }
-          },
-          fail(res) {
-            console.log(res.errMsg)
-          }
+      this.setData({
+        netStatus: app.globalData.netStatus
+      });
+      var _this = this;
+      var unbindGateway = e.detail.value.gateway;
+      if (unbindGateway.length == 0) {
+        wx.showToast({
+          title: '您还没有选择网关',
+          icon: 'none'
         })
       } else {
-        var param = {
-          customerid: app.globalData.customerId,
-          gateids: gatewayid
-        };
-        console.log(param);
-        my.onGuestUnShare(param, (res) => {
-          if (res.status == "success") {
-
-            app.globalData.gatewayCustomerId = null;
-            app.globalData.getewayId = null;
-            app.globalData.gatewayName = null;
-            app.globalData.status = null;
-            wx.showToast({
-              title: '解绑成功',
-            });
-            var customerId = app.globalData.customerId;
-            _this.deleteGateway(customerId);
-          } else {
-            wx.showToast({
-              title: '解绑失败',
-              icon: 'none',
-              duration: 1000
-            })
+        var gatewayArr = unbindGateway.split(",");
+        var gatewayid = gatewayArr[0];
+        var customerId = Number(gatewayArr[1]);
+        var gatewayname = gatewayArr[2];
+        if (customerId === app.globalData.customerId) {
+          var param = {
+            customerid: app.globalData.customerId,
+            gateids: gatewayid,
+            gatewayName: gatewayname
           }
-        })
+          wx.showActionSheet({
+            itemList: _this.data.content.unBindGateway,
+            success(res) {
+              console.log(res.tapIndex);
+              var number = res.tapIndex;
+              if (number == 0) {
+                my.deleteGateway(param, (res) => {
+                  console.log(res);
+                  if (res == 1) {
+                    app.globalData.gatewayCustomerId = null;
+                    app.globalData.getewayId = null;
+                    app.globalData.gatewayName = null;
+                    app.globalData.status = null;
+                    var params = {
+                      customerid: app.globalData.customerId,
+                      gateid: gatewayid,
+                    };
+                    my.onUnShareAll(params, (res) => {
+                      wx.showToast({
+                        title: '解绑成功',
+                      });
+                      var customerId = app.globalData.customerId;
+                      _this.deleteGateway(customerId);
+                    });
+                  } else {
+                    wx.showToast({
+                      title: '解绑失败',
+                      icon: 'none',
+                      duration: 1000
+                    });
+                  }
+                })
+              } else if (number == 1) {
+                my.deleteGateway(param, (res) => {
+                  console.log(res);
+                  if (res == 1) {
+                    app.globalData.gatewayCustomerId = null;
+                    app.globalData.getewayId = null;
+                    app.globalData.gatewayName = null;
+                    app.globalData.status = null;
+                    var params = {
+                      customerid: app.globalData.customerId,
+                      gateid: gatewayid,
+                    };
+                    my.deepDeleteGateway(params, (res) => {
+                      wx.showToast({
+                        title: '解绑成功',
+                      });
+                      var customerId = app.globalData.customerId;
+                      _this.deleteGateway(customerId);
+                    });
+                  } else {
+                    wx.showToast({
+                      title: '解绑失败',
+                      icon: 'none',
+                      duration: 1000
+                    });
+                  }
+                })
+              }
+            },
+            fail(res) {
+              console.log(res.errMsg)
+            }
+          })
+        } else {
+          var param = {
+            customerid: app.globalData.customerId,
+            gateids: gatewayid
+          };
+          console.log(param);
+          my.onGuestUnShare(param, (res) => {
+            if (res.status == "success") {
+
+              app.globalData.gatewayCustomerId = null;
+              app.globalData.getewayId = null;
+              app.globalData.gatewayName = null;
+              app.globalData.status = null;
+              wx.showToast({
+                title: '解绑成功',
+              });
+              var customerId = app.globalData.customerId;
+              _this.deleteGateway(customerId);
+            } else {
+              wx.showToast({
+                title: '解绑失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          })
+        }
       }
     }
   },
@@ -513,131 +546,163 @@ Page({
    * 分享网关
    */
   onShare: function() {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var _this = this
-    var gatewayList = new Array();
-    var customerId = app.globalData.customerId
-    my.getAllDevices(customerId, (res) => {
-      res.data.forEach(function(element) {
-        if (element.deviceType === "Gateway") {
-          gatewayList.push(element);
-        }
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        netStatus: app.globalData.netStatus
       });
-      if (gatewayList.length == 0) {
-        wx.showToast({
-          title: '您还没有绑定任何网关',
-          icon: 'none',
-          duration: 2000
-        })
-      } else {
-        this.setData({
-          gatewayList: gatewayList,
-          showDevice: true
-        })
-      }
-    })
+      var _this = this
+      var gatewayList = new Array();
+      var customerId = app.globalData.customerId
+      my.getAllDevices(customerId, (res) => {
+        res.data.forEach(function(element) {
+          if (element.deviceType === "Gateway") {
+            gatewayList.push(element);
+          }
+        });
+        if (gatewayList.length == 0) {
+          wx.showToast({
+            title: '您还没有绑定任何网关',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          this.setData({
+            gatewayList: gatewayList,
+            showDevice: true
+          })
+        }
+      })
+    }
   },
 
   /**
    * 分享网关
    */
   shareGateway: function(e) {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var gatewayArrs = e.detail.value.gateway;
-    console.log(e.detail);
-    console.log(gatewayArrs);
-    if (gatewayArrs.length == 0) {
+    if (app.globalData.openid == null) {
       wx.showToast({
-        title: '请选择网关',
+        title: '请先登陆',
         icon: 'none',
-        duration: 1000
+        duration: 2000
       })
     } else {
-      this.hideModal();
-      var gatewayArr = gatewayArrs.join(",");
       this.setData({
-        gateids: gatewayArr,
-        showEdit: true
-      })
+        netStatus: app.globalData.netStatus
+      });
+      var gatewayArrs = e.detail.value.gateway;
+      console.log(e.detail);
+      console.log(gatewayArrs);
+      if (gatewayArrs.length == 0) {
+        wx.showToast({
+          title: '请选择网关',
+          icon: 'none',
+          duration: 1000
+        })
+      } else {
+        this.hideModal();
+        var gatewayArr = gatewayArrs.join(",");
+        this.setData({
+          gateids: gatewayArr,
+          showEdit: true
+        })
+      }
     }
   },
 
   onUnShare: function() {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var _this = this;
-    var param = {
-      customerid: app.globalData.customerId
-    };
-    var gates = Array();
-    my.getShareGateway(param, (res) => {
-      var shareList = res.data;
-      console.log(shareList);
-      if (shareList == null || shareList.length == 0) {
-        this.hideModal();
-        wx.showToast({
-          title: '您还没有分享过网关',
-          icon: 'none'
-        })
-      } else {
-        shareList.forEach(function(element) {
-          var gatewayFirst = element.gates;
-          var gatewayData = gatewayFirst.split(",")
-          if (gatewayData.length != 0) {
-            gatewayData.forEach(function(e) {
-              if (e != "") {
-                my.getDeviceById(e, (res) => {
-                  if (res.id != undefined) {
-                    res.phone = element.phone;
-                    res.remark = element.remark;
-                    gates.push(res);
-                    _this.setData({
-                      sharedDetail: gates
-                    });
-                  }
-                })
-              }
-            })
-          };
-        });
-        console.log(gates);
-        this.setData({
-          showSharedDetail: true,
-        });
-      }
-    })
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        netStatus: app.globalData.netStatus
+      });
+      var _this = this;
+      var param = {
+        customerid: app.globalData.customerId
+      };
+      var gates = Array();
+      my.getShareGateway(param, (res) => {
+        var shareList = res.data;
+        console.log(shareList);
+        if (shareList == null || shareList.length == 0) {
+          this.hideModal();
+          wx.showToast({
+            title: '您还没有分享过网关',
+            icon: 'none'
+          })
+        } else {
+          shareList.forEach(function(element) {
+            var gatewayFirst = element.gates;
+            var gatewayData = gatewayFirst.split(",")
+            if (gatewayData.length != 0) {
+              gatewayData.forEach(function(e) {
+                if (e != "") {
+                  my.getDeviceById(e, (res) => {
+                    if (res.id != undefined) {
+                      res.phone = element.phone;
+                      res.remark = element.remark;
+                      gates.push(res);
+                      _this.setData({
+                        sharedDetail: gates
+                      });
+                    }
+                  })
+                }
+              })
+            };
+          });
+          console.log(gates);
+          this.setData({
+            showSharedDetail: true,
+          });
+        }
+      })
+    }
   },
 
   unGatewaySelector: function(event) {
-    this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    var deleteGateway = event.detail.value.gateway;
-    var gatewayDetail = deleteGateway.split(",");
-    var param = {
-      customerid: app.globalData.customerId,
-      gateids: gatewayDetail[0],
-      phone: gatewayDetail[1],
-    };
-    console.log(param);//13511080938
-    console.log(123);
-    my.onOwnerUnShare(param, (res) => {
-      console.log(res);
-      if (res.status == "success") {
-        this.onUnShare();
-      } else {
-        wx.showToast({
-          title: '解绑失败',
-          icon: 'none',
-          duration: 1000
-        })
-      }
-    })
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        netStatus: app.globalData.netStatus
+      });
+      var deleteGateway = event.detail.value.gateway;
+      var gatewayDetail = deleteGateway.split(",");
+      var param = {
+        customerid: app.globalData.customerId,
+        gateids: gatewayDetail[0],
+        phone: gatewayDetail[1],
+      };
+      console.log(param); //13511080938
+      console.log(123);
+      my.onOwnerUnShare(param, (res) => {
+        console.log(res);
+        if (res.status == "success") {
+          this.onUnShare();
+        } else {
+          wx.showToast({
+            title: '解绑失败',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      })
+    }
   },
   /**
    * 弹出框蒙层截断touchmove事件
@@ -785,5 +850,86 @@ Page({
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
-  }
+  },
+
+  userLogin: function() {
+    console.log("2123");
+  },
+
+  /**
+   * 获取用户信息接口后的处理逻辑
+   */
+  getUserInfo: function(e) {
+    var _this = this;
+    _this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    // 将获取的用户信息赋值给全局 userInfo 变量
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      wx.login({
+        success: function(res) {
+          wx.showLoading({
+              title: '登录中',
+            }),
+            //发送请求获取openid
+            wx.request({
+              url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
+              data: {
+                JSCODE: res.code,
+              },
+              method: 'POST',
+              header: {
+                'content-type': 'application/json' //默认值
+              },
+              success: function(res) {
+                // console.log("res:" + JSON.stringify(res))
+                wx.hideLoading();
+                var answer = res.data;
+                if (answer == undefined || answer == "" || answer == null) {
+                  wx.showToast({
+                    title: '请求错误',
+                    icon: 'none',
+                    duration: 2000,
+                  })
+                } else {
+                  app.globalData.openid = answer.openid,
+                    app.globalData.unionid = answer.unionid,
+                    my.findOpenid(answer.openid, (res) => {
+                      if (res.status === "success") {
+                        app.globalData.customerId = res.data.id;
+                        app.globalData.phoneNumber = res.data.phone;
+                        wx.reLaunch({
+                          url: '../index/index',
+                        })
+                      } else {
+                        wx.showModal({
+                          title: '登录失败',
+                          content: '未查询到相关用户信息,请先注册',
+                          success: function(res) {
+                            if (res.confirm) {
+                              wx.navigateTo({
+                                url: '../register/register',
+                              })
+                            }
+                          }
+                        })
+                      }
+                    })
+                }
+              },
+              fail: function(err) {
+                wx.hideLoading();
+                wx.showToast({
+                  title: '请求错误',
+                  icon: 'none',
+                  duration: 2000,
+                })
+              }
+            })
+        }
+      })
+    }
+  },
+
 })

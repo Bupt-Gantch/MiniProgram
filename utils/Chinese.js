@@ -1,5 +1,6 @@
 var Chinese = { 
   register: "注册",
+  login: "登陆",
   button: "English",
   mypublish: "我发布的",
   myfamily:"我的家人",

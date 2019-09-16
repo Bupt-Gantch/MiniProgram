@@ -9,6 +9,22 @@ class My extends Base {
     super()
   }
 
+  //查询用户表，是否存在openid
+  findOpenid(openid, callback) {
+    var param = {
+      url: 'account/userLogin',
+      data: {
+        openid: openid
+      },
+      method: 'POST',
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request(param);
+  }
+  
+
   //添加设备
   addDevice(param, callback) {
     var params = {

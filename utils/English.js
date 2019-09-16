@@ -1,5 +1,6 @@
 var English = {
   register: "Register",
+  login: "Login",
   button: "中文",
   mypublish: "Album",
   myfamily:"My Family",
