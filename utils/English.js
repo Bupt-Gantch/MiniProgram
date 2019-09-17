@@ -160,7 +160,7 @@ var English = {
         name: 'Video',
         disabled: true,
         image: '/imgs/index/video.png',
-        url: '../second/yingshi/yingshi'
+        url: '../second/cameralist/cameralist'
       }
     ],
   ],

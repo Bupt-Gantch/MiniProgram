@@ -160,7 +160,7 @@ var Chinese = {
         name: '视频接入',
         disabled: true,
         image: '/imgs/index/video.png',
-        url: '../second/yingshi/yingshi'
+        url: '../second/cameralist/cameralist'
       },
     ],
   ],
