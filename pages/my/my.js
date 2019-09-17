@@ -109,6 +109,19 @@ Page({
       })
     }
   },
+  myNews: function (e) {
+    if (app.globalData.openid == null) {
+      wx.showToast({
+        title: '请先登陆',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/messagelist/messagelist',
+      })
+    }
+  },
 
   onContactTap: function(event) {
     wx.navigateTo({
