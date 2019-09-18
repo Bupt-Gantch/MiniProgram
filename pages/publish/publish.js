@@ -97,14 +97,10 @@ Page({
   /**
    * 跳转到发布信息页
    */
-  addNews: function(e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
-    } else {
+  getUserInfo: function(e) {
+    console.log(e.detail);
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
       wx.navigateTo({
         url: '/pages/release/release'
       })

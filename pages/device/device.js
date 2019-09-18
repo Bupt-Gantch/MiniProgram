@@ -870,6 +870,7 @@ Page({
       openid: app.globalData.openid
     };
     device.judgeFollow(param, (res) => {
+      console.log(res);
       if (res == '1') {
         device.activateAlarmRule(gatewayId, (res) => {
           if (res == 'ActivateAllRule') {
@@ -900,7 +901,8 @@ Page({
     });
     var gatewayId = this.data.deviceId;
     device.suspendAlarmRule(gatewayId, (res) => {
-      if (res == 'SuspendAllRule') {
+      console.log(res);
+      if (res == 'SuspendAllRule' || res == "") {
         wx.showToast({
           title: '撤防成功',
           duration: 2000

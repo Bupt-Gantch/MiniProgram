@@ -52,6 +52,7 @@ Page({
   //首次加载
   onLoad: function() {
     var password = app.globalData.phoneNumber.substring(3, 7);
+    console.log(app.globalData.userInfo);
     this.setData({
       netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language),
@@ -94,6 +95,32 @@ Page({
       content: app.getLanuage(app.globalData.language),
       gatewayName: app.globalData.gatewayName
     })
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse) {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
 
   myPublish: function(e) {
@@ -867,82 +894,6 @@ Page({
 
   userLogin: function() {
     console.log("2123");
-  },
-
-  /**
-   * 获取用户信息接口后的处理逻辑
-   */
-  getUserInfo: function(e) {
-    var _this = this;
-    _this.setData({
-      netStatus: app.globalData.netStatus
-    });
-    // 将获取的用户信息赋值给全局 userInfo 变量
-    if (e.detail.userInfo) {
-      app.globalData.userInfo = e.detail.userInfo;
-      wx.login({
-        success: function(res) {
-          wx.showLoading({
-              title: '登录中',
-            }),
-            //发送请求获取openid
-            wx.request({
-              url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
-              data: {
-                JSCODE: res.code,
-              },
-              method: 'POST',
-              header: {
-                'content-type': 'application/json' //默认值
-              },
-              success: function(res) {
-                // console.log("res:" + JSON.stringify(res))
-                wx.hideLoading();
-                var answer = res.data;
-                if (answer == undefined || answer == "" || answer == null) {
-                  wx.showToast({
-                    title: '请求错误',
-                    icon: 'none',
-                    duration: 2000,
-                  })
-                } else {
-                  app.globalData.openid = answer.openid,
-                    app.globalData.unionid = answer.unionid,
-                    my.findOpenid(answer.openid, (res) => {
-                      if (res.status === "success") {
-                        app.globalData.customerId = res.data.id;
-                        app.globalData.phoneNumber = res.data.phone;
-                        wx.reLaunch({
-                          url: '../index/index',
-                        })
-                      } else {
-                        wx.showModal({
-                          title: '登录失败',
-                          content: '未查询到相关用户信息,请先注册',
-                          success: function(res) {
-                            if (res.confirm) {
-                              wx.navigateTo({
-                                url: '../register/register',
-                              })
-                            }
-                          }
-                        })
-                      }
-                    })
-                }
-              },
-              fail: function(err) {
-                wx.hideLoading();
-                wx.showToast({
-                  title: '请求错误',
-                  icon: 'none',
-                  duration: 2000,
-                })
-              }
-            })
-        }
-      })
-    }
   },
 
 })

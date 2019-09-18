@@ -84,6 +84,8 @@
     <text>End</text>
   </view>
   <view>
-    <image class="circle-float" src='/imgs/icon/insert.png' bindtap='addNews'></image>
+  <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class="userinfo-avatar">
+    <image class="circle-float" src='/imgs/icon/insert.png'></image>
+    </button>
   </view>
 </view>

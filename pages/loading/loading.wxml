@@ -4,7 +4,7 @@
     <template is="netAlert"/>
   </view>
 <view class="enter-container">
-  <button class="enter-button" bindtap="goToIndex">
+  <button class="enter-button" bindtap='goToIndex'>
     <image src="/imgs/swiper/logo.jpg" class="poster-image" mode="scaleToFill"></image>
   </button>
 </view>
