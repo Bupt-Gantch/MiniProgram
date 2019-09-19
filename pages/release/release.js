@@ -3,7 +3,7 @@ import {
   Config
 } from '../../utils/config.js';
 var util = require('../../utils/util.js');
-import {
+import { 
   Release
 } from 'release_model.js';
 var chinese = require("../../utils/Chinese.js")

@@ -3,7 +3,7 @@ import {
   Device
 } from 'device_model.js';
 import {
-  Config
+  Config 
 } from '../../utils/config.js';
 var util = require('../../utils/util.js');
 var device = new Device();

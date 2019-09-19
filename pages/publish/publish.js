@@ -55,6 +55,7 @@ Page({
     var _this = this
     var newinfoList = new Array();
     publish.getInfoList(page, (res) => {
+      console.log(res);
       console.log(res.data);
       _this.setData({
         infoList: res.data
