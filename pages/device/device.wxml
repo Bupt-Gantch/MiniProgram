@@ -132,7 +132,7 @@
   <block wx:if="{{deviceType === 'infrared'||deviceType === 'newInfrared'}}">
     <view class="category-detail-box">
       <scroll-view class="category-main" scroll-y>
-        <view class='infrared-main-view'>
+        <view class='infrared-main-view'> 
           <block wx:for="{{infraredImg}}" wx:key="{{item.type}}">
             <!-- 下面存放单个设备的div  -->
             <view class="category-goods-items {{index%3==1?'middle':''}}" data-type="{{item.type}}" bindtap="goToInfrared">

@@ -5,7 +5,7 @@
 </view> -->
   
 <!--空调-->
-<block wx:if="{{id=='1'}}">
+<block wx:if="{{type=='1'}}">
   <view class='view-main'>
     <view class='view-top'>
       <view class='view-top-img'>
@@ -44,7 +44,7 @@
         <image src='{{conditionerImg[6].img}}'></image>
         <view>{{conditionerImg[6].name}}</view>
       </view>
-      <view class='view-top-img' bindtap='onLearnTap' >
+      <view class='view-top-img' bindtap='onMatchTap' >
         <image src='{{conditionerImg[7].img}}'></image>
         <view>{{conditionerImg[7].name}}</view>
       </view>
@@ -53,7 +53,7 @@
 </block>
 
 <!--电视-->
-<block wx:if="{{id=='2'}}">
+<block wx:if="{{type=='2'}}">
   <view class='view-main'>
     <view class='view-top'>
       <view class='view-top-img'>
@@ -99,21 +99,14 @@
 </block>
 
 <!--机顶盒-->
-<block wx:if="{{id=='3'}}">
+<block wx:if="{{type=='3'}}">
   <view></view>
   <view></view>
   <view></view>
 </block>
 
 <!--DVD-->
-<block wx:if="{{id=='4'}}">
-  <view></view>
-  <view></view>
-  <view></view>
-</block>
-
-<!--自定义学习-->
-<block wx:if="{{id=='5'}}">
+<block wx:if="{{type=='4'}}">
   <view></view>
   <view></view>
   <view></view>

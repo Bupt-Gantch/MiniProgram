@@ -276,6 +276,20 @@ getJsonValue(obj, name) {
   return result;
 }
 
+  userLogin(){
+  wx.showModal({
+    title: '注册',
+    content: '您是否想要注册天慧云谷账号',
+    success: function (res) {
+      if (res.confirm) {
+        wx.navigateTo({
+          url: '../register/register',
+        })
+      }
+    }
+  })
+}
+
 }
 
 export {

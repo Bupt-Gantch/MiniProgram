@@ -124,12 +124,8 @@ Page({
   },
 
   myPublish: function(e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       wx.navigateTo({
         url: '/pages/mypublish/mypublish',
@@ -137,12 +133,8 @@ Page({
     }
   },
   myNews: function (e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       wx.navigateTo({
         url: '/pages/messagelist/messagelist',
@@ -159,11 +151,7 @@ Page({
   onMyFamily: function() {
     var customerId = app.globalData.customerId;
     if (customerId == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+      my.userLogin();
     } else {
       var gatewayList = new Array();
       my.getAllDevices(customerId, (res) => {
@@ -188,12 +176,8 @@ Page({
   },
 
   onScan: function() {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
 
       var _this = this;
@@ -284,12 +268,8 @@ Page({
    * 设备入网
    */
   refreshGateway: function() {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -339,12 +319,8 @@ Page({
    * 删除网关
    *  */
   deleteGateway: function() {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -458,12 +434,8 @@ Page({
    * 主动解绑网关
    */
   unBindGateway: function(e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -586,12 +558,8 @@ Page({
    * 分享网关
    */
   onShare: function() {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -625,12 +593,8 @@ Page({
    * 分享网关
    */
   shareGateway: function(e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -656,12 +620,8 @@ Page({
   },
 
   onUnShare: function() {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -711,12 +671,8 @@ Page({
   },
 
   unGatewaySelector: function(event) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
+    if (app.globalData.customerId == null) {
+      my.userLogin();
     } else {
       this.setData({
         netStatus: app.globalData.netStatus
@@ -890,10 +846,6 @@ Page({
     this.setData({
       content: app.getLanuage(app.globalData.language)
     })
-  },
-
-  userLogin: function() {
-    console.log("2123");
   },
 
 })

@@ -73,6 +73,7 @@ Page({
       phone:e.detail.value.phone,
       address: this.data.region[0] + this.data.region[1] + this.data.region[2]
     })
+
     var params = {
         data:{
         openid:app.globalData.openid,

@@ -42,7 +42,7 @@ Page({
 
   onShareAppMessage: function(res) {
     return {
-      title: '冠川智能',
+      title: '天慧云谷',
       path: '/pages/loading/loading',
       success: function() {},
       fail: function() {}
@@ -58,10 +58,7 @@ Page({
 
   goToIndex: function() {
     wx.login({
-      success: function(res) {
-        wx.showLoading({
-            title: '登录中',
-          }),
+      success: function (res) {
           //发送请求获取openid
           wx.request({
             url: 'https://smart.gantch.cn/api/v1/wechatPost/getOpenId',
@@ -72,7 +69,7 @@ Page({
             header: {
               'content-type': 'application/json' //默认值
             },
-            success: function(res) {
+            success: function (res) {
               // console.log("res:" + JSON.stringify(res))
               wx.hideLoading();
               var answer = res.data;
@@ -93,22 +90,14 @@ Page({
                         url: '../index/index',
                       })
                     } else {
-                      wx.showModal({
-                        title: '登录失败',
-                        content: '未查询到相关用户信息,请先注册',
-                        success: function(res) {
-                          if (res.confirm) {
-                            wx.navigateTo({
-                              url: '../register/register',
-                            })
-                          }
-                        }
+                      wx.reLaunch({
+                        url: '../index/index',
                       })
                     }
                   })
               }
             },
-            fail: function(err) {
+            fail: function (err) {
               wx.hideLoading();
               wx.showToast({
                 title: '请求错误',

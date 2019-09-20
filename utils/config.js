@@ -168,14 +168,14 @@ Config.conditionerImg = [
     'name': '电源',
   },
   {
-    'img': '../../imgs/icon/hot.png',
+    'img': '../../imgs/icon/wind_high.png',
     'id': '2',
-    'name': '制热'
+    'name': '风力加'
   },
   {
-    'img': '../../imgs/icon/cold.png',
+    'img': '../../imgs/icon/wind_low.png',
     'id': '3',
-    'name': '制冷'
+    'name': '风力减'
   },
   {
     'img': '../../imgs/icon/model.png',
@@ -193,14 +193,14 @@ Config.conditionerImg = [
     'name': '温度减',
   },
   {
-    'img': '../../imgs/icon/wind.png',
+    'img': '../../imgs/icon/wind_dir.png',
     'key': '7',
-    'name': '风力',
+    'name': '风向',
   },
   {
     'img': '../../imgs/icon/mate.png',
     'id': '8',
-    'name': '学习'
+    'name': '匹配'
   },
 ];
 
