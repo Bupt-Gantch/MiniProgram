@@ -34,11 +34,6 @@
         <view>
           <text class='info-detail'>{{item.pContent}}</text>
         </view>
-        <!-- <view class='showPic'>
-      <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img" class='picture-view'>
-        <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
-      </block>
-    </view> -->
         <view class="category-detail-box">
           <view class="category-main">
             <view class='category-main-view'>
@@ -57,9 +52,14 @@
       </view>
       <view class='info-footer'>
         <view class='info-uc'>
-          <image wx:if="{{statusTable[item.pId]}}" src="/imgs/icon/up@success.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-infoid="{{item.pId}}"></image>
-          <image wx:else src="/imgs/icon/up.png" class='info-up' catchtap='clickUp' data-index="{{index}}" data-infoid="{{item.pId}}"></image>
-          <image src='/imgs/icon/comment.png' class='info-comment' bindtap='clickComment' data-infoid="{{item.pId}}" data-index="{{index}}"></image>
+          <button open-type='getUserInfo' bindgetuserinfo='clickUp' class="infobutton" data-index="{{index}}" data-infoid="{{item.pId}}">
+            <image wx:if="{{statusTable[item.pId]}}" src="/imgs/icon/up@success.png" class='info-up'></image>
+            <image wx:else src="/imgs/icon/up.png" class='info-up'></image>
+          </button>
+
+          <button open-type='getUserInfo' bindgetuserinfo='clickComment' class="infobutton" data-infoid="{{item.pId}}" data-index="{{index}}">
+            <image src='/imgs/icon/comment.png' class='info-comment'></image>
+          </button>
         </view>
       </view>
 
@@ -84,6 +84,8 @@
     <text>End</text>
   </view>
   <view>
-    <image class="circle-float" src='/imgs/icon/insert.png' bindtap='addNews'></image>
+    <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class="userinfo-avatar">
+      <image class="circle-float" src='/imgs/icon/insert.png'></image>
+    </button>
   </view>
 </view>

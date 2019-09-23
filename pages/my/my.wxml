@@ -6,12 +6,12 @@
 <view class="my-container">
   <view class="my-header">
     <view class="userinfo">
-      <block wx:if="{{customerId == undefined}}" class="userinfo">
+      <!-- <block wx:if="{{customerId == undefined}}" class="userinfo">
         <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class="userinfo-avatar">
           <text class="my-login">{{content.login}}</text>
         </button>
-      </block>
-      <block wx:else>
+      </block> -->
+      <block>
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
         <text>{{userphoneNumber}}</text>
@@ -38,6 +38,9 @@
   <view class="my-main">
     <view class="my-item" bindtap='myPublish'>
       <text>{{content.mypublish}}</text>
+    </view>
+        <view class="my-item" bindtap='myNews'>
+      <text>{{content.mynews}}</text>
     </view>
     <view class="my-item" bindtap='onMyFamily'>
       <text>{{content.myfamily}}</text>

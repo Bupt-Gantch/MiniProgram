@@ -197,7 +197,122 @@ class Device extends Base {
   }
 
 
+  newAddRule(res, k, data) {
+    var that = this;
+    var transform = {};
+    var deviceArr = data.deviceArr;
+    var element = deviceArr[k];
 
+      var _data = {};
+      var serviceName = '';
+      if (element.deviceType === "curtain") {
+        serviceName = "control curtain";
+      } else if (element.deviceType === "dimmableLight") {
+        serviceName = "control switch";
+      } else if (element.deviceType === "switch") {
+        serviceName = "control switch";
+      } else if (element.deviceType === "SoundLightAlarm") {
+        serviceName = "control SoundLightAlarm";
+      };
+      that.getDeviceAttr(element.id)
+        //获取设备属性
+        .then(function (res) {
+          if (res) {
+            _data.attr = res;
+            var triad = {
+              manufacture: element.manufacture,
+              model: element.model,
+              deviceType: element.deviceType,
+            };
+            return that.getService(triad);
+          } else {
+            return;
+          }
+        })
+        //获取设备服务
+        .then(function (res) {
+          if (res) {
+            var abilityDes = null;
+            for (let i = 0; i < res.length; i++) {
+              let _abilityDes = JSON.parse(res[i].abilityDes);
+              let _serviceName = _abilityDes.serviceName;
+              if (_serviceName === serviceName) {
+                abilityDes = _abilityDes;
+                break;
+              }
+            }
+            _data.service = abilityDes;
+            var serviceBody = abilityDes.serviceBody;
+            var params = serviceBody.params;
+            //根据键值查设备属性值
+            var getAttrVal = function (key, list) {
+              for (let i = 0; i < list.length; i++) {
+                if (list[i].key == key)
+                  return list[i].value;
+              }
+              return undefined;
+            }
+            var body = {
+              serviceName: abilityDes.serviceName,
+              methodName: serviceBody.methodName
+            };
+            params.forEach(function (e) {
+              body[e.key] = getAttrVal(e.key, _data.attr);
+            });
+            for (var p in body) {
+              var status = '';
+              if (body[p] === undefined) {
+                if (element.deviceType === "curtain") {
+                  if (element.status) {
+                    status = 1;
+                  } else {
+                    status = 0;
+                  }
+                } else if (element.deviceType === "switch") {
+                  if (element.status) {
+                    status = true;
+                  } else {
+                    status = false;
+                  }
+                } else if (element.deviceType === "dimmableLight") {
+                  if (element.status === true) {
+                    status = true;
+                  } else {
+                    status = false;
+                  }
+                } else if (element.deviceType === "SoundLightAlarm") {
+                  if (element.status) {
+                    status = '01';
+                  } else {
+                    status = '00';
+                  }
+                };
+                body[p] = status;
+              }
+            };
+            var transform = {
+              "name": "RestfulPlugin",
+              "url": "http://restfulplugin:8600/api/v1/restfulplugin/sendRequest",
+              "method": "POST",
+              "requestBody": {
+                "method": "POST",
+                "url": `http://deviceaccess:8100/api/v1/deviceaccess/rpc/${element.id}/76`,
+              }
+            };
+            transform.requestBody.body = body;
+            res.push(transform);
+            if (++k < deviceArr.length) {
+              
+             that.newAddRule(res,k,data);
+            } else {
+              console.log(res);
+              return res;
+            }
+          } else {
+           return;
+          }
+        })
+  }
 
 
   //创建规则接口

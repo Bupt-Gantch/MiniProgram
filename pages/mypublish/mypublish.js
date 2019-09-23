@@ -69,7 +69,8 @@ Page({
         _this.data.infoList.forEach(function (element) {
           if (element.image != null) {
             if (element.image[0] == "[") {
-              var newimage = element.image.substr(1, element.image.length - 2);
+              var newimage1 = element.image.substr(1, element.image.length - 2);
+              var newimage = newimage1.replace(/\s*/g, "");
             } else {
               var newimage = element.image;
             }

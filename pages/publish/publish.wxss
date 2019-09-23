@@ -244,3 +244,9 @@ swiper image {
   width: 220rpx;
   border-radius: 0;
 }
+
+.infobutton{
+  background-color:transparent;	/*按钮背景透明*/
+	border-style:none;	/*边框透明*/
+	/* outline:none;	 */
+}

@@ -62,12 +62,6 @@
         "selectedIconPath": "imgs/toolbar/publish@selected.png"
       },
       {
-        "pagePath": "pages/messagelist/messagelist",
-        "text": "",
-        "iconPath": "imgs/toolbar/messagelist.png",
-        "selectedIconPath": "imgs/toolbar/messagelist@selected.png"
-      },
-      {
         "pagePath": "pages/my/my",
         "text": "",
         "iconPath": "imgs/toolbar/my.png",

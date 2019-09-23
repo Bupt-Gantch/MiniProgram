@@ -13,7 +13,7 @@ page {
 
 .my-login {
   text-align: center;
-  font-size: 70%;
+  font-size: 80%;
   color: #1392ec;
 }
 

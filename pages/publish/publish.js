@@ -55,6 +55,7 @@ Page({
     var _this = this
     var newinfoList = new Array();
     publish.getInfoList(page, (res) => {
+      console.log(res);
       console.log(res.data);
       _this.setData({
         infoList: res.data
@@ -63,7 +64,8 @@ Page({
         _this.data.infoList.forEach(function(element) {
           if (element.image != null) {
             if (element.image[0] == "[") {
-              var newimage = element.image.substr(1, element.image.length - 2);
+              var newimage1 = element.image.substr(1, element.image.length - 2);
+              var newimage = newimage1.replace(/\s*/g, "");
             } else {
               var newimage = element.image;
             }
@@ -97,17 +99,17 @@ Page({
   /**
    * 跳转到发布信息页
    */
-  addNews: function(e) {
-    if (app.globalData.openid == null) {
-      wx.showToast({
-        title: '请先登陆',
-        icon: 'none',
-        duration: 2000
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/release/release'
-      })
+  getUserInfo: function(e) {
+    console.log(e.detail);
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      if (app.globalData.customerId == null) {
+        publish.userLogin();
+      } else {
+        wx.navigateTo({
+          url: '/pages/release/release'
+        })
+      }
     }
   },
   //搜索获取数据
@@ -140,21 +142,29 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    var infoid = e.currentTarget.dataset.infoid;
-    var index = e.currentTarget.dataset.index;
-    this.setData({
-      infoid: infoid,
-      index: index
-    })
-    if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
-      this.data.commentTable[infoid] = true;
-    } else {
-      this.data.commentTable[infoid] = false;
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      if (app.globalData.customerId == null) {
+        publish.userLogin();
+      } else {
+        var infoid = e.currentTarget.dataset.infoid;
+        var index = e.currentTarget.dataset.index;
+        this.setData({
+          infoid: infoid,
+          index: index
+        })
+        if (this.data.commentTable[infoid] === undefined || this.data.commentTable[infoid] === false) {
+          this.data.commentTable[infoid] = true;
+        } else {
+          this.data.commentTable[infoid] = false;
+        }
+        var newcommentTable = this.data.commentTable;
+        this.setData({
+          commentTable: newcommentTable
+        })
+      }
     }
-    var newcommentTable = this.data.commentTable;
-    this.setData({
-      commentTable: newcommentTable
-    })
+    
   },
   /**
    * 点赞
@@ -163,61 +173,68 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    var infoid = e.currentTarget.dataset.infoid;
-    if (this.data.statusTable[infoid] === undefined || this.data.statusTable[infoid] === false) {
-      this.data.statusTable[infoid] = true;
-      var addUp = {
-        pId: infoid,
-        num: 1,
-        nickName: app.globalData.userInfo.nickName,
-        avator: app.globalData.userInfo.avatarUrl,
-      };
-      publish.addUp(addUp, (res) => {
-        if (res === 1) {
-          var index = e.currentTarget.dataset.index;
-          this.data.infolist[index].favoritenum++;
-          var newinfolist = this.data.infolist
-          this.setData({
-            infolist: newinfolist
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo;
+      if (app.globalData.customerId == null) {
+        publish.userLogin();
+      } else {
+        var infoid = e.currentTarget.dataset.infoid;
+        if (this.data.statusTable[infoid] === undefined || this.data.statusTable[infoid] === false) {
+          this.data.statusTable[infoid] = true;
+          var addUp = {
+            pId: infoid,
+            num: 1,
+            nickName: app.globalData.userInfo.nickName,
+            avator: app.globalData.userInfo.avatarUrl,
+          };
+          publish.addUp(addUp, (res) => {
+            if (res === 1) {
+              var index = e.currentTarget.dataset.index;
+              this.data.infolist[index].favoritenum++;
+              var newinfolist = this.data.infolist
+              this.setData({
+                infolist: newinfolist
+              })
+            } else {
+              wx.showToast({
+                title: '操作失败',
+                icon: 'none',
+                duration: 1500,
+              })
+            }
           })
         } else {
-          wx.showToast({
-            title: '操作失败',
-            icon: 'none',
-            duration: 1500,
+          this.data.statusTable[infoid] = false;
+          var deleteUp = {
+            pId: infoid,
+            num: -1,
+            nickName: app.globalData.userInfo.nickName,
+            avator: app.globalData.userInfo.avatarUrl,
+          }
+          console.log(deleteUp);
+          publish.addUp(deleteUp, (res) => {
+            if (res === 1) {
+              var index = e.currentTarget.dataset.index;
+              this.data.infolist[index].favoritenum--;
+              var newinfolist = this.data.infolist
+              this.setData({
+                infolist: newinfolist
+              })
+            } else {
+              wx.showToast({
+                title: '操作失败',
+                icon: 'none',
+                duration: 1500,
+              })
+            }
           })
         }
-      })
-    } else {
-      this.data.statusTable[infoid] = false;
-      var deleteUp = {
-        pId: infoid,
-        num: -1,
-        nickName: app.globalData.userInfo.nickName,
-        avator: app.globalData.userInfo.avatarUrl,
+        var newStatusTable = this.data.statusTable;
+        this.setData({
+          statusTable: newStatusTable
+        })
       }
-      console.log(deleteUp);
-      publish.addUp(deleteUp, (res) => {
-        if (res === 1) {
-          var index = e.currentTarget.dataset.index;
-          this.data.infolist[index].favoritenum--;
-          var newinfolist = this.data.infolist
-          this.setData({
-            infolist: newinfolist
-          })
-        } else {
-          wx.showToast({
-            title: '操作失败',
-            icon: 'none',
-            duration: 1500,
-          })
-        }
-      })
     }
-    var newStatusTable = this.data.statusTable;
-    this.setData({
-      statusTable: newStatusTable
-    })
   },
   /**
    * 发表评论

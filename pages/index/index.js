@@ -32,7 +32,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.getWeather();
+    this.getWeather();
     var content = app.getLanuage(app.globalData.language);
     this.setData({
       cores: content.cores,

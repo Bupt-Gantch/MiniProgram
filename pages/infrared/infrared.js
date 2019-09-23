@@ -29,12 +29,12 @@ Page({
       netStatus: app.globalData.netStatus
     });
     var _this = this;
-    var id = options.id;
+    var type = options.type;
     var deviceInfo = JSON.parse(options.deviceInfo);
     this.setData({
       deviceInfo: deviceInfo,
       deviceId: deviceInfo.id,
-      id: id
+      type: type
     });
     console.log(deviceInfo);
   },
@@ -116,7 +116,7 @@ Page({
   onLearnTap: function(e) {
 
     let value = {
-      "matchType": this.data.id
+      "matchType": this.data.type
     };
 
     let serviceName = this.data.serviceName.controlIR;
@@ -126,7 +126,7 @@ Page({
 
   //匹配
   onMatchTap: function(e) {
-    let value = this.data.id;
+    let value = this.data.type;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.match;
     this._sendControl(serviceName, methodName, value);
@@ -136,7 +136,7 @@ Page({
   onPenetrateTap: function(e) {
 
     let value = {
-      "matchType":this.data.id
+      "matchType": this.data.type
     };
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.penetrate;
@@ -146,7 +146,7 @@ Page({
 
   //当前设备参数接口
   onCurrentKeyTap: function(e) {
-    let value = this.data.id;
+    let value = this.data.type;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.currentKey;
     this._sendControl(serviceName, methodName, value);
@@ -154,7 +154,7 @@ Page({
 
   //删除按键
   onDeleteKeyTap: function(e) {
-    let value = this.data.id;
+    let value = this.data.type;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.deleteKey;
     this._sendControl(serviceName, methodName, value);
@@ -162,7 +162,7 @@ Page({
 
   //删除全部按键
   onDeleteAllKeyTap: function(e) {
-    let value = this.data.id;
+    let value = this.data.type;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.deleteAllKey;
     this._sendControl(serviceName, methodName, value);
@@ -170,7 +170,7 @@ Page({
 
   //退出
   onExitTap: function(e) {
-    let value = this.data.id;
+    let value = this.data.type;
     let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.exit;
     this._sendControl(serviceName, methodName, value);

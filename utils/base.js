@@ -28,6 +28,7 @@ class Base {
           'token': wx.getStorageSync('token')
         },
         success: function(res) {
+          // console.log(res);
           var code = res.statusCode.toString();
           var startChar = code.charAt(0);
           if (startChar == '2') {
@@ -273,6 +274,20 @@ getJsonValue(obj, name) {
     }
   }
   return result;
+}
+
+  userLogin(){
+  wx.showModal({
+    title: '注册',
+    content: '您是否想要注册天慧云谷账号',
+    success: function (res) {
+      if (res.confirm) {
+        wx.navigateTo({
+          url: '../register/register',
+        })
+      }
+    }
+  })
 }
 
 }
