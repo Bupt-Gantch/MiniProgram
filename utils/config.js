@@ -80,30 +80,36 @@ Config.otherImg = {
 Config.ownInfrared = '../../imgs/test/own.png';
 Config.buttonInfrared = '../../imgs/test/ownLearn.png';
 
-Config.infraredImg = [{
-    'img': '../../imgs/test/conditioner.png',
-    'type': '1',
-    'name': '空调',
-  },
-  {
-    'img': '../../imgs/test/tv.png',
-    'type': '2',
-    'name': '电视',
-  },
-  {
-    'img': '../../imgs/test/slingbox.png',
-    'type': '3',
-    'name': '机顶盒',
-  },
-  {
-    'img': '../../imgs/test/DVD.png',
-    'type': '4',
-    'name': 'DVD'
-  },
+Config.infraredImg = [
+  // {
+  //   'img': '../../imgs/test/conditioner.png',
+  //   'type': '1',
+  //   'name': '空调',
+  // },
+  // {
+  //   'img': '../../imgs/test/tv.png',
+  //   'type': '2',
+  //   'name': '电视',
+  // },
+  // {
+  //   'img': '../../imgs/test/slingbox.png',
+  //   'type': '3',
+  //   'name': '机顶盒',
+  // },
+  // {
+  //   'img': '../../imgs/test/DVD.png',
+  //   'type': '4',
+  //   'name': 'DVD'
+  // },
   {
     'img': '../../imgs/test/learn.png',
     'type': '5',
     'name': '自定义学习'
+  },
+    {
+    'img': '../../imgs/test/match.png',
+    'type': '6',
+    'name': '自定义匹配'
   }
 ];
 

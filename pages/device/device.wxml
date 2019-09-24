@@ -148,7 +148,7 @@
          <!--  -->
           <block wx:for="{{allOwnInfrared}}" wx:key="{{item.id}}">
             <!-- 下面存放单个设备的div  -->
-            <view class="category-goods-items {{index%3==1?'middle':''}}" data-panelid="{{item.id}}" data-type="{{item.type}}" bindtap="goToInfraredInfo" bindlongpress="onDeletePanel">
+            <view class="category-goods-items {{index%3==1?'middle':''}}" data-panelid="{{item.id}}" data-type="{{item.type}}" data-condition="{{item.condition}}" bindtap="goToInfraredInfo" bindlongpress="onDeletePanel">
               <view class='group-image'>
                 <image src='{{ownInfrared}}' mode="aspectFit"></image>
               </view>
@@ -168,6 +168,7 @@
 <template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
 <template is="changePassword" data="{{showPassword,content:content2}}"></template>
 <template is="addNewLearn" data="{{addNewLearn,content:content3}}"></template>
+<template is="addNewMatch" data="{{addNewMatch,content:content4}}"></template>
 <!-- <template is="changePassword" data="{{showPassword,content:content3}}">
 </template> -->
 

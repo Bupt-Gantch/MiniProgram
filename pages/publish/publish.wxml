@@ -1,5 +1,5 @@
-<!--pages/publish/publish.wxml-->
-<import src="../tpls/roll/roll_tpl.wxml" />
+<!-- pages/publish/publish.wxml -->
+<!-- <import src="../tpls/roll/roll_tpl.wxml" />
 <view wx:if="{{!netStatus}}">
   <template is="netAlert" />
 </view>
@@ -38,7 +38,7 @@
           <view class="category-main">
             <view class='category-main-view'>
               <block wx:for="{{item.image}}" wx:for-item="img" wx:key="img">
-                <!-- 下面存放单个设备的div  -->
+                下面存放单个设备的div 
                 <view class="category-goods-items {{index%3==1?'middle':''}}">
                   <view class='group-image'>
                     <image bindtap='imageClick' src='{{img}}' data-src='{{img}}' data-pictures='{{item}}' mode="aspectFill"></image>
@@ -88,4 +88,18 @@
       <image class="circle-float" src='/imgs/icon/insert.png'></image>
     </button>
   </view>
+</view> -->
+
+<view class='container'>
+  <view class='contact-title'>
+    <text>相关内容整改中，敬请期待！</text>
+  </view>
+  <view class='contact-email'>
+    <view class='title'></view>
+    <text class='address' selectable='true'>gckj2008@126.com</text>
+  </view>
+  <view class='contact-bottom'>
+    <text class='create'>Created By Sky Smart</text> 
+  </view>
+  
 </view>

@@ -36,12 +36,12 @@
     <text>{{content.refreshGateway}}</text>
   </view>
   <view class="my-main">
-    <view class="my-item" bindtap='myPublish'>
+    <!-- <view class="my-item" bindtap='myPublish'>
       <text>{{content.mypublish}}</text>
     </view>
         <view class="my-item" bindtap='myNews'>
       <text>{{content.mynews}}</text>
-    </view>
+    </view> -->
     <view class="my-item" bindtap='onMyFamily'>
       <text>{{content.myfamily}}</text>
     </view>

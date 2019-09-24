@@ -8,46 +8,46 @@
 <block wx:if="{{type=='1'}}">
   <view class='view-main'>
     <view class='view-top'>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="power" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[0].img}}'></image>
         <view>{{conditionerImg[0].name}}</view>
       </view>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="model" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[3].img}}'></image>
         <view>{{conditionerImg[3].name}}</view>
       </view>
     </view>
 
     <view class='view-top'>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="windUp" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[1].img}}'></image>
         <view>{{conditionerImg[1].name}}</view>
       </view>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="windDown" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[2].img}}'></image>
         <view>{{conditionerImg[2].name}}</view>
       </view>
     </view>
     <view class='view-top'>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="temUp" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[4].img}}'></image>
         <view>{{conditionerImg[4].name}}</view>
       </view>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="temDown" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[5].img}}'></image>
         <view>{{conditionerImg[5].name}}</view>
       </view>
     </view>
 
     <view class='view-top'>
-      <view class='view-top-img'>
+      <view class='view-top-img' data-operation="windDir" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[6].img}}'></image>
         <view>{{conditionerImg[6].name}}</view>
       </view>
-      <view class='view-top-img' bindtap='onMatchTap' >
+      <!-- <view class='view-top-img' bindtap='onMatchTap' >
         <image src='{{conditionerImg[7].img}}'></image>
         <view>{{conditionerImg[7].name}}</view>
-      </view>
+      </view> -->
     </view>
   </view>
 </block>

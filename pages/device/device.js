@@ -31,10 +31,12 @@ Page({
     showLinkage: false,
     showDevice: false,
     addNewLearn: false,
+    addNewMatch:false,
     deployment: true,
     deploymentStatus: false,
     showPassword: false,
     addRule: false,
+
     content: {
       title: "修改设备名",
       placeholder: "请输入设备名"
@@ -43,6 +45,7 @@ Page({
     linkageName: '',
     alarmMessage: '',
     newLearnName: '',
+    newMatchName: '',
     password: '',
     content1: {
       title: "添加联动",
@@ -54,6 +57,10 @@ Page({
     },
     content3: {
       title: "自定义学习",
+      placeholder: "请输入遥控器名称",
+    },
+    content4: {
+      title: "自定义匹配",
       placeholder: "请输入遥控器名称",
     },
     array: ['大于', '等于', '小于'],
@@ -467,6 +474,7 @@ Page({
       showDevice: false,
       showPassword: false,
       addNewLearn: false,
+      addNewMatch:false,
     });
   },
   /**
@@ -516,6 +524,10 @@ Page({
   inputNewLearnNameChange: function(event) {
     var inputValue = event.detail.value;
     this.data.newLearnName = inputValue;
+  },
+  inputNewMatchNameChange: function (event) {
+    var inputValue = event.detail.value;
+    this.data.newMatchName = inputValue;
   },
   inputChange: function(event) {
     var inputValue = event.detail.value;
@@ -1036,12 +1048,21 @@ Page({
   //面板详细信息
   goToInfraredInfo: function(e) {
     var panelId = device.getDataSet(e, 'panelid');
+    var condition = device.getDataSet(e, 'condition');
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
+    
     console.log(deviceInfo);
     var type = device.getDataSet(e, 'type');
-    wx.navigateTo({
-      url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
-    });
+    if(condition != null) {
+      wx.navigateTo({
+        url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+      });
+    } else {
+      wx.navigateTo({
+        url: '../newinfrared/newinfrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
+      });
+    }
+
 
   },
 
@@ -1071,10 +1092,78 @@ Page({
           console.log(res.errMsg)
         }
       })
+    } else if(type == 6){
+      wx.showActionSheet({
+        itemList: ['空调'],
+        success(res) {
+          console.log(res.tapIndex);
+          var number = res.tapIndex;
+          number += 1;
+
+          _this.setData({
+            addNewMatch: true,
+            matchType: number
+          })
+        },
+        fail(res) {
+          console.log(res.errMsg)
+        }
+      })
     } else {
       wx.navigateTo({
         url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&type=' + type
       });
     }
   },
+
+  onNewMatchConfirm: function () {
+    var deviceId = this.data.deviceId;
+    if (this.data.newMatchName.length == 0) {
+      wx.showToast({
+        title: '名称不能为空',
+        icon: 'none',
+        duration: 2000
+      });
+    } else {
+      //匹配
+      var type = this.data.matchType;
+        console.log(type);
+        var value = {
+          "type": type,
+        };
+
+        let serviceName = this.data.serviceName.controlIR;
+        let methodName = this.data.methodName.match;
+
+        this._sendControl(serviceName, methodName, value);
+
+        wx.showLoading({
+          title: '请按下开关',
+          mask: true,
+        })
+
+
+
+        setTimeout(function () {
+          wx.hideLoading();
+          device.getlatestData(deviceId, (res) => {
+            console.log(res);
+            var match = device.getMatch(res);
+            console.log(match);
+            if(match == 0) {
+              this._loadInfraredData(deviceId);
+            } else {
+              wx.showToast({
+                title: '匹配失败',
+                icon: 'none',
+                duration: 2000
+              })
+            }
+
+          })
+        }, 10000)
+    }
+
+  },
+
 })

@@ -290,6 +290,20 @@ getJsonValue(obj, name) {
   })
 }
 
+getMatch(res) {
+  var answer = 1;
+  if(res == null || res.length == 0) {
+    return answer;
+  } else {
+    res.forEach(function (e) {
+      if(e.key == "match") {
+        answer = e.value;
+      }
+    })
+  }
+  return answer;
+}
+
 }
 
 export {

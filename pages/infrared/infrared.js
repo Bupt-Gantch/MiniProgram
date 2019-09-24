@@ -53,6 +53,46 @@ Page({
 
   },
 
+  _loadPanelInfo: function() {
+
+    var deviceId = this.data.deviceId;
+    infrared.getlatestData(deviceId,(res) => {
+      console.log(res);
+    })
+    var panelId = this.data.panelId;
+    var deviceId = this.data.deviceId;
+    infrared.getPanelName(deviceId, panelId, (res) => {
+      console.log(res);
+      var info = JSON.parse(res.data);
+      console.log(info);
+      this.setData({
+        panelId: info.id,
+        learnName: info.name,
+        type: info.type
+      })
+    });
+    infrared.getPanelInfo(panelId, (res) => {
+      console.log(res);
+      if (res.msg != "success" || res.data.length == 0) {
+        this.setData({
+          allButton: null
+        })
+        wx.showToast({
+          title: '还没有学习任何按键',
+          icon: 'none',
+          duration: 2000
+        });
+      } else {
+        var keyInfo = JSON.parse(res.data);
+        console.log(res);
+        console.log(keyInfo);
+        this.setData({
+          allButton: keyInfo
+        })
+      }
+    });
+  },
+
   /**
    * ====================sendControl==========================
    * =====================================================
@@ -61,6 +101,7 @@ Page({
 
     var deviceId = this.data.deviceInfo.id;
     var requestId = this.data.requestId;
+    var deviceInfo = this.data.deviceInfo;
     var _this = this;
     var triad = {
       deviceType: _this.data.deviceInfo.deviceType,
@@ -78,16 +119,16 @@ Page({
       triad: triad,
       value: value
     };
+    console.log(data);
     infrared.applyControl(data, (res) => {
       console.log(res);
       if (res.indexOf("device") === -1) { //状态码为200则应用成功
-        wx.showToast({
-          title: '应用成功',
-          icon: 'success',
-          duration: 1000,
-          // mask: true
-        });
-        this.hideModal();
+        // wx.showToast({
+        //   title: '应用成功',
+        //   icon: 'success',
+        //   duration: 1000,
+        //   // mask: true
+        // });
       } else { //状态码不是200  应用失败
         wx.showToast({
           title: '应用失败',
@@ -112,44 +153,237 @@ Page({
 
   /**红外宝*/
 
-  //学习
-  onLearnTap: function(e) {
-
-    let value = {
-      "matchType": this.data.type
+  //匹配
+  onMatchTap: function(e) {
+    var type = this.data.type;
+    var value = {
+      "type": type,
     };
 
     let serviceName = this.data.serviceName.controlIR;
-    let methodName = this.data.methodName.learn;
-    this._sendControl(serviceName, methodName, value);
-  },
-
-  //匹配
-  onMatchTap: function(e) {
-    let value = this.data.type;
-    let serviceName = this.data.serviceName.controlIR;
     let methodName = this.data.methodName.match;
+
     this._sendControl(serviceName, methodName, value);
+
+    wx.showLoading({
+      title: '请按下开关',
+      mask: true,
+    })
+
+    setTimeout(function() {
+      wx.hideLoading();
+      this._loadPanelInfo();
+    }, 10000)
   },
 
   //控制
   onPenetrateTap: function(e) {
+    console.log("onPenetrateTap");
 
-    let value = {
-      "matchType": this.data.type
+    var type = this.data.type;
+    var operation = infrared.getDataSet(e, 'operation');
+
+    var airTem = app.globalData.airTem;
+    var airModel = app.globalData.airModel;
+    var airWindDir = app.globalData.airWindDir;
+    var airWindLev = app.globalData.airWindLev;
+    var airPower = app.globalData.airPower;
+
+    var param = {
+      "power": airPower,
+      "mode": airModel,
+      "windLevel": airWindLev,
+      "windDirection": airWindDir,
+      "tem": airTem
+    }
+
+    var value = {
+      "key": 1,
+      "type": type
     };
-    let serviceName = this.data.serviceName.controlIR;
-    let methodName = this.data.methodName.penetrate;
-    this._sendControl(serviceName, methodName, value);
+    if(operation == "power") {
+      if (airPower == "开机") {
+        value.key = 1;
+        app.globalData.airPower = "关机";
 
-  },
+        let serviceName = this.data.serviceName.controlIR;
+        let methodName = this.data.methodName.penetrate;
+        this._sendControl(serviceName, methodName, value);
 
-  //当前设备参数接口
-  onCurrentKeyTap: function(e) {
-    let value = this.data.type;
-    let serviceName = this.data.serviceName.controlIR;
-    let methodName = this.data.methodName.currentKey;
-    this._sendControl(serviceName, methodName, value);
+      } else {
+        app.globalData.airPower = "开机";
+        param.power = "开机";
+        console.log(param);
+        infrared.getKey(param,(res)=> {
+          console.log(res);
+          value.key = res;
+
+          let serviceName = this.data.serviceName.controlIR;
+          let methodName = this.data.methodName.penetrate;
+          this._sendControl(serviceName, methodName, value);
+        })
+        param.power = "关机";
+      }
+    } else {
+      if (operation == 'model') {
+        if(airModel == "制热") {
+          app.globalData.airModel = "制冷";
+          param.mode = "制冷";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.power = "制热";
+        } else {
+          app.globalData.airModel = "制热";
+          param.mode = "制热";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.power = "制冷";
+        }
+      } else if (operation == 'windUp') {
+        if (airWindLev == "低") {
+          app.globalData.airWindLev = "中";
+          param.windLevel = "中";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "低";
+        } else if (airWindLev == "中"){
+          app.globalData.airWindLev = "高";
+          param.windLevel = "高";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "中";
+        } else {
+          app.globalData.airWindLev = "低";
+          param.windLevel = "低";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "高";
+        }
+      } else if (operation == 'windDown') {
+        if (airWindLev == "高") {
+          app.globalData.airWindLev = "中";
+          param.windLevel = "中";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "高";
+        } else if (airWindLev == "中") {
+          app.globalData.airWindLev = "低";
+          param.windLevel = "低";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "中";
+        } else {
+          app.globalData.airWindLev = "高";
+          param.windLevel = "高";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.windLevel = "低";
+        }
+      } else if (operation == 'temUp') {
+        if(airTem == 30) {
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+        } else {
+          param.tem = airTem + 1;
+          app.globalData.airTem = airTem + 1;
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.tem = airTem;
+        }
+      } else if (operation == 'temDown') {
+        if (airTem == 16) {
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+        } else {
+          param.tem = airTem - 1;
+          app.globalData.airTem = airTem - 1;
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.tem = airTem;
+        }
+      }
+    }
   },
 
   //删除按键

@@ -78,5 +78,11 @@ App({
     gatewayId: null,
     netStatus:true,
     phoneNumber:null,
+    
+    airPower:"关机",
+    airModel:"制冷",
+    airWindDir:"自动",
+    airWindLev:"自动",
+    airTem:26
   },
 })
