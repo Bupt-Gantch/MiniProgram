@@ -10,7 +10,8 @@
     <view class='view-top'>
       <view class='view-top-img' data-operation="power" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[0].img}}'></image>
-        <view>{{conditionerImg[0].name}}</view>
+        <view wx:if="{{powStatus == '开机'}}">关机</view>
+        <view wx:else>开机</view>
       </view>
       <view class='view-top-img' data-operation="model" bindtap="onPenetrateTap">
         <image src='{{conditionerImg[3].img}}'></image>

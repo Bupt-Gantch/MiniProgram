@@ -885,7 +885,9 @@ Page({
     device.judgeFollow(param, (res) => {
       console.log(res);
       if (res == '1') {
+        console.log(gatewayId);
         device.activateAlarmRule(gatewayId, (res) => {
+          console.log(res);
           if (res == 'ActivateAllRule') {
             wx.showToast({
               title: '布防成功',
@@ -913,6 +915,7 @@ Page({
       deploymentStatus: true
     });
     var gatewayId = this.data.deviceId;
+    console.log(gatewayId);
     device.suspendAlarmRule(gatewayId, (res) => {
       console.log(res);
       if (res == 'SuspendAllRule' || res == "") {

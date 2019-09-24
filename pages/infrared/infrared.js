@@ -34,7 +34,8 @@ Page({
     this.setData({
       deviceInfo: deviceInfo,
       deviceId: deviceInfo.id,
-      type: type
+      type: type,
+      powStatus:app.globalData.airPower
     });
     console.log(deviceInfo);
   },
@@ -205,24 +206,24 @@ Page({
       if (airPower == "开机") {
         value.key = 1;
         app.globalData.airPower = "关机";
+        this.setData({
+          powStatus:"关机"
+        })
 
         let serviceName = this.data.serviceName.controlIR;
         let methodName = this.data.methodName.penetrate;
         this._sendControl(serviceName, methodName, value);
 
       } else {
+        value.key = 2;
         app.globalData.airPower = "开机";
-        param.power = "开机";
-        console.log(param);
-        infrared.getKey(param,(res)=> {
-          console.log(res);
-          value.key = res;
-
-          let serviceName = this.data.serviceName.controlIR;
-          let methodName = this.data.methodName.penetrate;
-          this._sendControl(serviceName, methodName, value);
+        this.setData({
+          powStatus: "开机"
         })
-        param.power = "关机";
+
+        let serviceName = this.data.serviceName.controlIR;
+        let methodName = this.data.methodName.penetrate;
+        this._sendControl(serviceName, methodName, value);
       }
     } else {
       if (operation == 'model') {
