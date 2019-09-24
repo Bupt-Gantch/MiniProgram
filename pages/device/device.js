@@ -135,6 +135,7 @@ Page({
       this._loadAlarmStatus(deviceid);
     } else if (deviceType === 'temperature' || deviceType === 'PM2.5' ||
       deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
+        console.log(deviceid);
       _this._loadLatestData(deviceid);
       var cleanId = setInterval(
         function() {
@@ -191,105 +192,105 @@ Page({
     var _this = this;
     device.getlatestData(deviceId, (res) => {
       console.log(res);
-      var sensorData = res;
-      var valueName = this.data.valueName;
-      var keyName = this.data.keyName;
-      var alarmFlag1 = false;
-      var surpervisionFlag1 = false;
-      var alarmFlag2 = false;
-      var surpervisionFlag2 = false;
-      var ts = 0;
-      sensorData.forEach(function(e) {
-        if (e.key === 'status') {
-          if (e.value === 'true' || e.value === true) {
-            _this.setData({
-              dimmableLight: true
-            })
-          } else {
-            _this.setData({
-              dimmableLight: false
-            })
-          }
-        }
-        if (keyName[e.key] != undefined && e.value != undefined) {
-          var nowts = e.ts;
-          e.ts = util.formatTime(new Date(e.ts));
-          e.key = keyName[e.key];
-          var test = ''
-          if (_this.data.deviceType == 'IASZone') {
-            test = e.value + '*';
-          } else if (_this.data.deviceType == 'lock' && e.key == '操作') {
-            test = e.value + '**';
-          } else {
-            test = e.value;
-          }
-          var question = test.toString();
-          var value = question.split("|");
-          var answer = '';
-          value.forEach(function(element, index) {
-            if (valueName[element] != undefined) {
-              if (index != 1 && index != 0) {
-                answer += ',';
-              }
-              answer += valueName[element];
-            } else if (element != '') {
-              answer = element;
-            }
-          })
-          if (e.key == 'alarm') {
-            alarmFlag1 = true;
-            if (nowts > ts) {
-              ts = nowts;
-            }
-            if (answer == '报警') {
-              alarmFlag2 = true;
-            }
-          }
-          if (e.key == 'surpervision') {
-            surpervisionFlag1 = true;
-            if (nowts > ts) {
-              ts = nowts;
-            }
-            if (answer == '正常') {
-              surpervisionFlag2 = true;
-            }
-          }
-          e.value = answer;
-        } else {
-          e.ts = '';
-          e.key = '',
-            e.value = ''
-        }
-      })
-      if (alarmFlag1) {
-        if (alarmFlag2) {
-          var test = new Object();
-          test.ts = util.formatTime(new Date(ts));
-          test.key = '状态值';
-          test.value = "报警";
-          sensorData.push(test);
-        } else {
-          var test = new Object();
-          test.ts = util.formatTime(new Date(ts));
-          test.key = '状态值';
-          test.value = "正常";
-          sensorData.push(test);
-        };
-      } else if (this.data.deviceType == "IASZone") {
-        var test = new Object();
-        test.ts = util.formatTime(new Date(ts));
-        test.key = '状态值';
-        test.value = "正常";
-        sensorData.push(test);
-      }
-      sensorData.forEach(function(e, index) {
-        if (e.key == 'alarm' || e.key == 'surpervision') {
-          sensorData.splice(index, 1);
-        }
-      })
-      _this.setData({
-        lastRtData: sensorData,
-      });
+      // var sensorData = res;
+      // var valueName = this.data.valueName;
+      // var keyName = this.data.keyName;
+      // var alarmFlag1 = false;
+      // var surpervisionFlag1 = false;
+      // var alarmFlag2 = false;
+      // var surpervisionFlag2 = false;
+      // var ts = 0;
+      // sensorData.forEach(function(e) {
+      //   if (e.key === 'status') {
+      //     if (e.value === 'true' || e.value === true) {
+      //       _this.setData({
+      //         dimmableLight: true
+      //       })
+      //     } else {
+      //       _this.setData({
+      //         dimmableLight: false
+      //       })
+      //     }
+      //   }
+      //   if (keyName[e.key] != undefined && e.value != undefined) {
+      //     var nowts = e.ts;
+      //     e.ts = util.formatTime(new Date(e.ts));
+      //     e.key = keyName[e.key];
+      //     var test = ''
+      //     if (_this.data.deviceType == 'IASZone') {
+      //       test = e.value + '*';
+      //     } else if (_this.data.deviceType == 'lock' && e.key == '操作') {
+      //       test = e.value + '**';
+      //     } else {
+      //       test = e.value;
+      //     }
+      //     var question = test.toString();
+      //     var value = question.split("|");
+      //     var answer = '';
+      //     value.forEach(function(element, index) {
+      //       if (valueName[element] != undefined) {
+      //         if (index != 1 && index != 0) {
+      //           answer += ',';
+      //         }
+      //         answer += valueName[element];
+      //       } else if (element != '') {
+      //         answer = element;
+      //       }
+      //     })
+      //     if (e.key == 'alarm') {
+      //       alarmFlag1 = true;
+      //       if (nowts > ts) {
+      //         ts = nowts;
+      //       }
+      //       if (answer == '报警') {
+      //         alarmFlag2 = true;
+      //       }
+      //     }
+      //     if (e.key == 'surpervision') {
+      //       surpervisionFlag1 = true;
+      //       if (nowts > ts) {
+      //         ts = nowts;
+      //       }
+      //       if (answer == '正常') {
+      //         surpervisionFlag2 = true;
+      //       }
+      //     }
+      //     e.value = answer;
+      //   } else {
+      //     e.ts = '';
+      //     e.key = '',
+      //       e.value = ''
+      //   }
+      // })
+      // if (alarmFlag1) {
+      //   if (alarmFlag2) {
+      //     var test = new Object();
+      //     test.ts = util.formatTime(new Date(ts));
+      //     test.key = '状态值';
+      //     test.value = "报警";
+      //     sensorData.push(test);
+      //   } else {
+      //     var test = new Object();
+      //     test.ts = util.formatTime(new Date(ts));
+      //     test.key = '状态值';
+      //     test.value = "正常";
+      //     sensorData.push(test);
+      //   };
+      // } else if (this.data.deviceType == "IASZone") {
+      //   var test = new Object();
+      //   test.ts = util.formatTime(new Date(ts));
+      //   test.key = '状态值';
+      //   test.value = "正常";
+      //   sensorData.push(test);
+      // }
+      // sensorData.forEach(function(e, index) {
+      //   if (e.key == 'alarm' || e.key == 'surpervision') {
+      //     sensorData.splice(index, 1);
+      //   }
+      // })
+      // _this.setData({
+      //   lastRtData: sensorData,
+      // });
     })
   },
   /**
