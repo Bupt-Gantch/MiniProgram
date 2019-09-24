@@ -1116,8 +1116,10 @@ Page({
   },
 
   onNewMatchConfirm: function () {
+    var _this = this;
     var deviceId = this.data.deviceId;
-    if (this.data.newMatchName.length == 0) {
+    var newMatchName = this.data.newMatchName;
+    if (newMatchName.length == 0) {
       wx.showToast({
         title: '名称不能为空',
         icon: 'none',
@@ -1134,7 +1136,7 @@ Page({
         let serviceName = this.data.serviceName.controlIR;
         let methodName = this.data.methodName.match;
 
-        this._sendControl(serviceName, methodName, value);
+      _this._sendControl(serviceName, methodName, value);
 
         wx.showLoading({
           title: '请按下开关',
@@ -1148,9 +1150,25 @@ Page({
           device.getlatestData(deviceId, (res) => {
             console.log(res);
             var match = device.getMatch(res);
-            console.log(match);
+            console.log(newMatchName);
             if(match == 0) {
-              this._loadInfraredData(deviceId);
+              var param = {
+                name: newMatchName,
+                type: type
+              }
+              device.addNewLearn(deviceId, param, (res) => {
+                console.log(res);
+                if (res.msg === "success") {
+                  _this._loadInfraredData(deviceId);
+                } else {
+                  wx.showToast({
+                    title: '匹配失败',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }
+              })
+              
             } else {
               wx.showToast({
                 title: '匹配失败，不支持该类型设备',
