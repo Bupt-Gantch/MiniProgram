@@ -56,12 +56,6 @@
         "selectedIconPath": "imgs/toolbar/home@selected.png"
       },
       {
-        "pagePath": "pages/publish/publish",
-        "text": "",
-        "iconPath": "imgs/toolbar/publish.png",
-        "selectedIconPath": "imgs/toolbar/publish@selected.png"
-      },
-      {
         "pagePath": "pages/my/my",
         "text": "",
         "iconPath": "imgs/toolbar/my.png",
