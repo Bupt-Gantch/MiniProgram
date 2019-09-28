@@ -1057,7 +1057,7 @@ Page({
     
     console.log(deviceInfo);
     var type = device.getDataSet(e, 'type');
-    if(type == 1) {
+    if(type == 1 || type == 2) {
       wx.navigateTo({
         url: '../infrared/infrared?deviceInfo=' + deviceInfo + '&type=' + type + '&learnName=' + this.data.newLearnName + '&panelId=' + panelId
       });
@@ -1076,14 +1076,14 @@ Page({
     var deviceInfo = JSON.stringify(this.data.deviceInfo);
     if (type == 5) {
       wx.showActionSheet({
-        itemList: ['电视', '机顶盒', '其他'],
+        itemList: ['机顶盒', '其他'],
         success(res) {
           console.log(res.tapIndex);
           var number = res.tapIndex;
-          if (number == 2) {
-            number += 3;
+          if (number == 1) {
+            number += 4;
           } else {
-            number += 2;
+            number += 3;
           }
           _this.setData({
             addNewLearn: true,
@@ -1096,7 +1096,7 @@ Page({
       })
     } else if(type == 6){
       wx.showActionSheet({
-        itemList: ['空调'],
+        itemList: ['空调','电视'],
         success(res) {
           console.log(res.tapIndex);
           var number = res.tapIndex;

@@ -28,14 +28,14 @@ Page({
     this.setData({
       netStatus: app.globalData.netStatus
     });
-    var _this = this;
     var type = options.type;
     var deviceInfo = JSON.parse(options.deviceInfo);
     this.setData({
       deviceInfo: deviceInfo,
       deviceId: deviceInfo.id,
       type: type,
-      powStatus:app.globalData.airPower
+      powStatus:app.globalData.airPower,
+      tvPower: app.globalData.tvPower
     });
     console.log(deviceInfo);
   },
@@ -209,7 +209,6 @@ Page({
         this.setData({
           powStatus:"关机"
         })
-
         let serviceName = this.data.serviceName.controlIR;
         let methodName = this.data.methodName.penetrate;
         this._sendControl(serviceName, methodName, value);
@@ -385,6 +384,31 @@ Page({
         }
       }
     }
+  },
+
+  tvPenetrateTap:function(e) {
+    var key = infrared.getDataSet(e,'key');
+    var type = this.data.type;
+
+    var value = {
+      "key": key,
+      "type": type
+    };
+
+    if(this.data.tvPower == "开机") {
+      this.setData({
+        tvPower:"关机"
+      })
+    } else {
+      this.setData({
+        tvPower: "开机"
+      })
+    }
+
+    console.log(key);
+    let serviceName = this.data.serviceName.controlIR;
+    let methodName = this.data.methodName.penetrate;
+    this._sendControl(serviceName, methodName, value);
   },
 
   //删除按键
