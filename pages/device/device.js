@@ -570,13 +570,15 @@ Page({
     var parentdeviceId = app.globalData.gatewayId;
     device.getAllSonDevices(parentdeviceId, (res) => {
       var allDevices = new Array();
+      var allDimmableLight = new Array();
       res.forEach(function(element) {
-        if (element.deviceType === "switch" || element.deviceType === "curtain" || element.deviceType === "dimmableLight" || element.deviceType === "SoundLightAlarm") {
+        if (element.deviceType === "switch" || element.deviceType === "curtain" || element.deviceType === "SoundLightAlarm" || element.deviceType === "dimmableLight" || element.deviceType === "outlet" ) {
           allDevices.push(element);
-        };
+        }
       });
       _this.setData({
-        devices: allDevices
+        devices: allDevices,
+        // allDimmableLights: allDimmableLight
       });
       this.setData({
         showDevice: true
@@ -605,7 +607,7 @@ Page({
       alarmMessage = '家居状态反常，请及时进行处理'
     };
     var answer = e.detail.value;
-    // console.log(answer);
+    console.log(answer);
     var rule_type = [];
     var deviceArr = [];
     var linkageDevices = this.data.devices;
@@ -639,6 +641,7 @@ Page({
       obj.deviceType = e[4];
       controlDevices.push(obj);
     });
+    console.log(controlDevices);
     param.rule = {
       "tenantId": "2",
       "additional_info": "",

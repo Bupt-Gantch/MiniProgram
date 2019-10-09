@@ -494,7 +494,7 @@
               <view>温度</view>
               <radio-group name="condition1">
                 <label>
-                  <radio value="大于" checked="true"/>大于</label>
+                  <radio value="大于" checked="true" />大于</label>
                 <label>
                   <radio value="等于" />等于</label>
                 <label>
@@ -504,7 +504,7 @@
               <view>湿度</view>
               <radio-group name="condition2">
                 <label>
-                  <radio value="大于" checked="true"/>大于</label>
+                  <radio value="大于" checked="true" />大于</label>
                 <label>
                   <radio value="等于" />等于</label>
                 <label>
@@ -520,7 +520,7 @@
                 <view wx:if="{{model == 'BOT'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -528,7 +528,7 @@
                 <view wx:if="{{model == 'SMF'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -536,7 +536,7 @@
                 <view wx:if="{{model == 'WTS'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -544,7 +544,7 @@
                 <view wx:if="{{model == 'SOS'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -552,7 +552,7 @@
                 <view wx:if="{{model == 'GAS'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -560,7 +560,7 @@
                 <view wx:if="{{model == 'DOS'}}">
                   <radio-group name="condition2">
                     <label>
-                      <radio value="1" checked="true"/>报警</label>
+                      <radio value="1" checked="true" />报警</label>
                     <label>
                       <radio value="0" />正常</label>
                   </radio-group>
@@ -574,7 +574,7 @@
                   <label>
                     <radio value="1" />关门</label>
                   <label>
-                    <radio value="2" checked="true"/>开门</label>
+                    <radio value="2" checked="true" />开门</label>
                   <label>
                     <radio value="3" />非法操作</label>
                   <label>
@@ -584,7 +584,7 @@
               <view wx:else>
                 <radio-group name="condition3">
                   <label>
-                    <radio value="大于" checked="true"/>大于</label>
+                    <radio value="大于" checked="true" />大于</label>
                   <label>
                     <radio value="等于" />等于</label>
                   <label>
@@ -602,6 +602,10 @@
           </view>
           <view class='section_gap'>
             <view class='section__title sceneDeviceName'>联动操作</view>
+
+
+
+
             <checkbox-group name="linkage">
               <view wx:for="{{devices}}" wx:key="item" class="sectiongap">
                 <label wx:if="{{item.nickname!=null}}">
@@ -609,7 +613,10 @@
                 <label wx:else>
                   <checkbox value="{{item.id}},{{index}},{{item.manufacture}},{{item.model}},{{item.deviceType}}" />{{item.name}}</label>
                 <label>
-                  <switch name="*witch{{index}}" />
+                <view wx:if="{{item.deviceType == 'dimmableLight'}}">
+                   <slider min="1" max="255" name="*witch{{index}}" value='1' show-value/>
+                </view>
+                <view wx:else><switch name="*witch{{index}}" /></view>
                 </label>
               </view>
             </checkbox-group>

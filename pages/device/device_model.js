@@ -72,8 +72,8 @@ class Device extends Base {
       if (element.deviceType === "curtain") {
         serviceName = "control curtain";
       } else if (element.deviceType === "dimmableLight") {
-        serviceName = "control switch";
-      } else if (element.deviceType === "switch") {
+        serviceName = "control dimmableLight";
+      } else if (element.deviceType === "switch" || element.deviceType === "outlet") {
         serviceName = "control switch";
       } else if (element.deviceType === "SoundLightAlarm") {
         serviceName = "control SoundLightAlarm";
@@ -137,18 +137,14 @@ class Device extends Base {
                   } else {
                     status = 0;
                   }
-                } else if (element.deviceType === "switch") {
+                } else if (element.deviceType === "switch" || element.deviceType === "outlet") {
                   if (element.status) {
                     status = true;
                   } else {
                     status = false;
                   }
                 } else if (element.deviceType === "dimmableLight") {
-                  if (element.status === true) {
-                    status = true;
-                  } else {
-                    status = false;
-                  }
+                    status = element.status;
                 } else if (element.deviceType === "SoundLightAlarm") {
                   if (element.status) {
                     status = '01';
@@ -209,7 +205,7 @@ class Device extends Base {
         serviceName = "control curtain";
       } else if (element.deviceType === "dimmableLight") {
         serviceName = "control switch";
-      } else if (element.deviceType === "switch") {
+      } else if (element.deviceType === "switch" || element.deviceType === "outlet") {
         serviceName = "control switch";
       } else if (element.deviceType === "SoundLightAlarm") {
         serviceName = "control SoundLightAlarm";
@@ -268,7 +264,7 @@ class Device extends Base {
                   } else {
                     status = 0;
                   }
-                } else if (element.deviceType === "switch") {
+                } else if (element.deviceType === "switch" || element.deviceType === "outlet") {
                   if (element.status) {
                     status = true;
                   } else {
@@ -568,6 +564,7 @@ class Device extends Base {
               break;
             }
           }
+          console.log(body);
           return that.sendControl(data.deviceId, data.requestId, body);
         } else {
           wx.showToast({
