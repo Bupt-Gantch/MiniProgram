@@ -31,7 +31,7 @@
   </template>
 
   <!-- 传感器 -->
-  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5' || deviceType === 'lightSensor' || deviceType === 'IASZone' || deviceType === 'lock'}}">
+  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5' || deviceType === 'lightSensor' || deviceType === 'IASZone' || deviceType === 'lock' ||deviceType == 'smoke_detector'}}">
     <view class='detail-main'>
       <view class='deviceInfo'>
 
