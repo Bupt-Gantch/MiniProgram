@@ -3,7 +3,7 @@
 <!-- <view wx:if="{{!netStatus}}">
   <template is="netAlert" />
 </view> -->
-  
+
 <!--空调-->
 <block wx:if="{{type=='1'}}">
   <view class='view-main'>
@@ -45,10 +45,6 @@
         <image src='{{conditionerImg[6].img}}'></image>
         <view>{{conditionerImg[6].name}}</view>
       </view>
-      <!-- <view class='view-top-img' bindtap='onMatchTap' >
-        <image src='{{conditionerImg[7].img}}'></image>
-        <view>{{conditionerImg[7].name}}</view>
-      </view> -->
     </view>
   </view>
 </block>
@@ -58,42 +54,53 @@
   <view class='view-main'>
     <view class='view-top'>
       <view class='view-top-img'>
-        <image src='{{tvImg[0].img}}'></image>
-        <view>{{tvImg[0].name}}</view>
+        <image src='{{tvImg[0].img}}' data-key="001" bindtap="tvPenetrateTap"></image>
+        <view wx:if="{{tvPower == '开机'}}">关机</view>
+        <view wx:else>开机</view>
       </view>
       <view class='view-top-img'>
-        <image src='{{tvImg[1].img}}'></image>
+        <image src='{{tvImg[1].img}}' data-key="002" bindtap="tvPenetrateTap"></image>
         <view>{{tvImg[1].name}}</view>
       </view>
     </view>
     <view class='view-middle'>
       <view class='view-middle-img'>
-        <image src='{{tvImg[2].img}}'></image>
+        <image src='{{tvImg[2].img}}' data-key="019" bindtap="tvPenetrateTap"></image>
       </view>
       <view class='view-middle-img'>
-        <image src='{{tvImg[4].img}}'></image>
-        <image src='{{tvImg[5].img}}'></image>
+        <image src='{{tvImg[4].img}}' data-key="021" bindtap="tvPenetrateTap"></image>
+        <image src='{{tvImg[5].img}}' data-key="022" bindtap="tvPenetrateTap"></image>
       </view>
       <view class='view-middle-img'>
-        <image src='{{tvImg[3].img}}'></image>
+        <image src='{{tvImg[3].img}}' data-key="020" bindtap="tvPenetrateTap"></image>
       </view>
     </view>
     <view class='view-down'>
       <view class='view-top-img'>
-        <image src='{{tvImg[6].img}}'></image>
+        <image src='{{tvImg[6].img}}' data-key="017" bindtap="tvPenetrateTap"></image>
       </view>
       <view class='view-top-img'>
-        <image src='{{tvImg[7].img}}'></image>
+        <image src='{{tvImg[7].img}}' data-key="018" bindtap="tvPenetrateTap"></image>
       </view>
     </view>
     <view class='view-down'>
       <view class='view-top-img'>
-        <image src='{{tvImg[8].img}}'></image>
+        <image src='{{tvImg[8].img}}' data-key="015" bindtap="tvPenetrateTap"></image>
         <view>{{tvImg[8].name}}</view>
       </view>
       <view class='view-top-img'>
-        <image src='{{tvImg[9].img}}'></image>
+        <image src='{{tvImg[11].img}}' data-key="016" bindtap="tvPenetrateTap"></image>
+        <view>{{tvImg[11].name}}</view>
+      </view>
+    </view>
+    <view class='view-down'>
+      <view class='view-top-img'>
+        <image src='{{tvImg[9].img}}' data-key="013" bindtap="tvPenetrateTap"></image>
         <view>{{tvImg[9].name}}</view>
+      </view>
+      <view class='view-top-img'>
+        <image src='{{tvImg[10].img}}' data-key="023" bindtap="tvPenetrateTap"></image>
+        <view>{{tvImg[10].name}}</view>
       </view>
     </view>
   </view>

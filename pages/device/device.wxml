@@ -165,7 +165,7 @@
   </block>
 </view>
 
-<template is="onAddLinkage" data="{{showDevice,content:content1,array,devices,deviceType,model}}"></template>
+<template is="onAddLinkage" data="{{showDevice,allDimmableLights,content:content1,array,devices,deviceType,model}}"></template>
 <template is="changePassword" data="{{showPassword,content:content2}}"></template>
 <template is="addNewLearn" data="{{addNewLearn,content:content3}}"></template>
 <template is="addNewMatch" data="{{addNewMatch,content:content4}}"></template>

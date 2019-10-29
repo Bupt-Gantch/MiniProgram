@@ -72,7 +72,8 @@ Page({
         rule.getDeviceById(alarmId, (res) => {
           if (res.deviceType == "IASZone") {
             var model = res.model;
-            var newModel = model.substr(5, 3);
+            var start = model.indexOf("-");
+            var newModel = model.substr(start + 1, 3);
             _this.setData({
               model: newModel
             })
@@ -108,7 +109,12 @@ Page({
             } else {
               name = res.name
             }
-            operation.status = status;
+            if (res.deviceType == 'dimmableLight') {
+              operation.status = requestBody.body.bright;
+            } else {
+              operation.status = status;
+            }
+            
             operation.name = name;
             operation.deviceType = res.deviceType;
             operations.push(operation);

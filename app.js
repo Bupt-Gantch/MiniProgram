@@ -83,6 +83,9 @@ App({
     airModel:"制冷",
     airWindDir:"自动",
     airWindLev:"自动",
-    airTem:26
+    airTem:26,
+
+
+    tvPower:"关机"
   },
 })

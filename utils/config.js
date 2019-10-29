@@ -28,13 +28,11 @@ Config.dimmableLightOnUrl = ['../../imgs/test/bump2.png', '../../imgs/test/bump2
   Config.findComment = 'findComment',
   Config.addComment = 'addComment',
   Config.deleteComment = 'deleteComment',
-  // Config.categoryName = [content.alldevice, content.bulb, content.swi, content.curtain, content.socket, content.monitor, content.lock, content.infrared,content.sensor,  content.othertypes];
   Config.categoryType = {
     '灯泡': ['dimmableLight'],
     '开关': ['switch'],
     '窗帘': ['curtain'],
     '插座': ['outlet'],
-    // '监控': ['monitor'],
     '门锁': ['lock'],
     '红外宝': ['infrared', 'newInfrared'],
     '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
@@ -46,12 +44,10 @@ Config.homeCategoryType = {
   '窗帘': ['curtain'],
   '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
   '开关': ['switch'],
-  // '监控': ['monitor'],
   '门锁': ['lock'],
   '红外宝': ['infrared', 'newInfrared'],
 };
 
-// Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5', 'IASZone', 'lightSensor', 'switch', 'monitor', 'lock', 'infrared', 'newInfrared'];
 Config.categoryTypeArray = ['dimmableLight', 'outlet', 'curtain', 'temperature', 'PM2.5', 'IASZone', 'lightSensor', 'switch', 'lock', 'infrared', 'newInfrared'];
 
 Config.deviceImgUrl = {
@@ -161,9 +157,19 @@ Config.tvImg = [
     'name': '静音',
   },
   {
-    'img': '../../imgs/icon/mate.png',
+    'img': '../../imgs/icon/back.png',
     'id': '10',
-    'name': '匹配',
+    'name': '返回',
+  },
+  {
+    'img': '../../imgs/icon/certain.png',
+    'id': '11',
+    'name': '确定',
+  },
+  {
+    'img': '../../imgs/icon/menu.png',
+    'id': '12',
+    'name': '菜单',
   }
 ];
 

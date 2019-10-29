@@ -50,9 +50,12 @@
           <view wx:if="{{item.status}}">操作:打开开关</view>
           <view wx:else>操作:关闭开关</view>
         </view>
+                <view wx:if="{{item.deviceType=='outlet'}}">设备名:{{item.name}}
+          <view wx:if="{{item.status}}">操作:打开开关</view>
+          <view wx:else>操作:关闭开关</view>
+        </view>
         <view wx:if="{{item.deviceType=='dimmableLight'}}">设备名:{{item.name}}
-          <view wx:if="{{item.status}}">操作:打开调光灯</view>
-          <view wx:else>操作:关闭调光灯</view>
+          <view wx:if="{{item.status}}">亮度:{{item.status}}</view>
         </view>
         <view wx:if="{{item.deviceType=='SoundLightAlarm'}}">设备名:{{item.name}}
           <view wx:if="{{item.status}}=='01'">操作:声光报警</view>
