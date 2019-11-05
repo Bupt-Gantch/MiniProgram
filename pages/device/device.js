@@ -134,7 +134,7 @@ Page({
       this._loadLinkage(deviceid);
       this._loadAlarmStatus(deviceid);
     } else if (deviceType === 'temperature' || deviceType === 'PM2.5' ||
-      deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock') {
+      deviceType === 'IASZone' || deviceType === 'dimmableLight' || deviceType === 'lightSensor' || deviceType === 'lock' || deviceType == 'smoke_detector') {
         console.log(deviceid);
       _this._loadLatestData(deviceid);
       var cleanId = setInterval(
@@ -192,7 +192,9 @@ Page({
     var _this = this;
     device.getlatestData(deviceId, (res) => {
       console.log(res);
+      console.log("hello");
       var sensorData = res;
+      var sensorDataShow = [];
       var valueName = this.data.valueName;
       var keyName = this.data.keyName;
       var alarmFlag1 = false;
@@ -200,6 +202,41 @@ Page({
       var alarmFlag2 = false;
       var surpervisionFlag2 = false;
       var ts = 0;
+      if (_this.data.deviceType === "smoke_detector") {
+        sensorData.forEach(function (e){
+          console.log(e);
+          console.log("hello1");
+          var test = new Object();
+          if (e.key === "isSmoking") {
+            if (e.value === true || e.value === "true") {
+              test.key = '烟雾情况';
+              test.value = "有烟";
+              test.ts = util.formatTime(new Date(e.ts));
+            }
+            else {
+              test.key = '烟雾情况';
+              test.value = "无烟";
+              test.ts = util.formatTime(new Date(e.ts));
+            }
+            sensorDataShow.push(test);
+          }else if (e.key === "status") {
+            if (e.value === "normal") {
+              test.key = '状态值';
+              test.value = "正常";
+              test.ts = util.formatTime(new Date(e.ts));
+            }
+            else if (e.value === "low") {
+              test.key = '状态值';
+              test.value = "低浓度";
+              test.ts = util.formatTime(new Date(e.ts));
+            }
+            sensorDataShow.push(test);
+          }
+        })
+        _this.setData({
+          lastRtData: sensorDataShow,
+        })
+      }else{
       sensorData.forEach(function(e) {
         if (e.key === 'status') {
           if (e.value === 'true' || e.value === true) {
@@ -290,7 +327,7 @@ Page({
       })
       _this.setData({
         lastRtData: sensorData,
-      });
+      });}
     })
   },
   /**
