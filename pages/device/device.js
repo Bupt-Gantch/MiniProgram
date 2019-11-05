@@ -731,12 +731,12 @@ Page({
         } else if (deviceType == 'PM2.5') {
           key = 'PM2.5';
         } else if (deviceType == 'IASZone') {
-          // var filter = {
-          //   "type": "",
-          //   "name": `${name}`,
-          //   "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
-          // };
-          // filters.push(filter);
+          var filter = {
+            "type": "",
+            "name": `${name}`,
+            "jsCode": `function filter(deviceId, name, manufacture, deviceType, model, ts, key, value){if(deviceId==\'${deviceId}\'&&key=='surpervision'&& value===0){return true;}  else{return false;}}`
+          };
+          filters.push(filter);
           key = 'alarm';
           condition3 = '===';
           condition2 = answer.condition2;
