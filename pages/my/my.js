@@ -679,7 +679,7 @@ my.userLogin();
       });
       var deleteGateway = event.detail.value.gateway;
       var gatewayDetail = deleteGateway.split(",");
-      var param = {
+      var param = { 
         customerid: app.globalData.customerId,
         gateids: gatewayDetail[0],
         phone: gatewayDetail[1],

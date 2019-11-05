@@ -170,6 +170,7 @@ class My extends Base {
         callback && callback(data);
       }
     };
+    console.log(params);
     this.request(params)
   }
   /*

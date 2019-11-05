@@ -70,7 +70,7 @@ Page({
               'content-type': 'application/json' //默认值
             },
             success: function (res) {
-              // console.log("res:" + JSON.stringify(res))
+              console.log("res:" + JSON.stringify(res))
               wx.hideLoading();
               var answer = res.data;
               if (answer == undefined || answer == "" || answer == null) {
@@ -83,6 +83,7 @@ Page({
                 app.globalData.openid = answer.openid,
                   app.globalData.unionid = answer.unionid,
                   loading.findOpenid(answer.openid, (res) => {
+                    console.log(res);
                     if (res.status === "success") {
                       app.globalData.customerId = res.data.id;
                       app.globalData.phoneNumber = res.data.phone;
