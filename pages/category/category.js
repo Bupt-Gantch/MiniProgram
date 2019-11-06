@@ -74,8 +74,12 @@ Page({
       content: content,
       message: content.gatewayMessage,
     });
+    if (app.globalData.customerId == null) {
+      category.userLogin();
+    } else {
+      this._loadAllGateway();
+    }
     this._loadBaannerTitle(name);
-    this._loadAllGateway();
   },
 
   onHide: function() {
