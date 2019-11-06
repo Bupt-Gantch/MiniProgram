@@ -1107,8 +1107,13 @@ Page({
       });
     }
   },
-
-
+  /**烟感设备手机绑定面板*/
+  phoneBind:function(e){
+    console.log(this.data.deviceId);
+    wx.navigateTo({
+      url: '/pages/smokeDetectorPhone/smokeDetectorPhone?deviceId=' + this.data.deviceId
+    });
+  },
   /**红外宝*/
   goToInfrared: function(e) {
     var _this = this;

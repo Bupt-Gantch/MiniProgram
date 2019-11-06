@@ -1,0 +1,37 @@
+<!--pages/smokeDetectorPhone/smokeDetectorPhone.wxml-->
+<import src="../tpls/roll/roll_tpl.wxml" />
+<view wx:if="{{!netStatus}}">
+  <template is="netAlert" />
+</view>
+<view>
+  <scroll-view scroll-y="true" bindscrolltolower="onReachBottom" bindscrolltoupper="onReachTop" scroll-with-animation="true" lower-threshold="0" upper-threshold="10" class='scroll-view'>
+    <view class='items-list' wx:for="{{infolist}}" wx:key="item" wx:for-index="index" data-index="{{index}}">
+      <view class='info-content'>
+        <view>
+          <image src='/imgs/icon/phone.png' class='info-phone'></image>
+          <text class='info-detail'>{{item}}</text>
+        </view>
+      </view>
+      <view class='info-footer'>
+        <view class='info-uc'>
+          <button open-type='getUserInfo' bindgetuserinfo='del' class="infobutton" data-infoid="{{index}}" data-index="{{index}}">
+            <image src='/imgs/icon/choose3.png' class='info-comment'></image>
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="endbox" wx:if="{{end}}">
+    <text>End</text>
+  </view>
+  <view>
+    <button open-type='getUserInfo' bindgetuserinfo='add' class="userinfo-avatar">
+      <image class="circle-float" src='/imgs/icon/insert.png'></image>
+    </button>
+  </view>
+  <view class='addBindPhone'>
+      <modal hidden="{{hiddenAddBindPhone}}" title="请输入手机号" confirm-text="提交" cancel-text="取消"                   bindcancel="cancelAddBindPhone" bindconfirm="confirmAddBindPhone"> 
+        <input type='text' placeholder="这里输入手机号" focus="{{getAddBindPhoneFocus}}" bindinput="setPhone"/>
+      </modal>
+    </view>
+</view>

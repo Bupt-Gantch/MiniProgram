@@ -18,7 +18,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function(options) { //options获取url的参数（？之后）
     var content = app.getLanuage(app.globalData.language);
     this.setData({
       netStatus: app.globalData.netStatus,

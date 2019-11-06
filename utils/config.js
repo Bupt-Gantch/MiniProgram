@@ -14,21 +14,21 @@ Config.wsUrl = 'wss://smart.gantch.cn/api/v1/deviceaccess/websocket';
 Config.switchOnUrl = ['../../imgs/test/switch@on.png', '../../imgs/test/socket@on.png']; //开关和插座亮时的图片
 Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curtain-closed.png']; //开关和插座亮时的图片
 Config.dimmableLightOnUrl = ['../../imgs/test/bump2.png', '../../imgs/test/bump2@on.png'], //开关和插座亮时的图片
-  Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curtain-closed.png'], //开关和插座亮时的图片
-  Config.gatewayUrl = ['../../imgs/test/default.png', '../../imgs/test/gateway.png', '../../imgs/test/nowgateway.png', '../../imgs/test/nowgateway1.png'],
-  Config.iASZoneUrl = ['../../imgs/test/infrared.png', '../../imgs/test/smoke.png', '../../imgs/test/flooding.png', '../../imgs/test/dos.png', '../../imgs/test/sos.png','../../imgs/test/gas.png'],
-  Config.categoryImgUrl = '../../imgs/category/',
-  Config.findAllPosts = 'findAllPosts',
-  Config.findAllPostsByOpenId = 'findAllPostsByOpenId',
-  Config.search = 'search',
-  Config.addPost = 'addPost',
-  Config.deletePost = 'deletePost',
-  Config.updatePost = 'updatePost',
-  Config.favorite = 'favorite',
-  Config.findComment = 'findComment',
-  Config.addComment = 'addComment',
-  Config.deleteComment = 'deleteComment',
-  Config.categoryType = {
+Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curtain-closed.png'], //开关和插座亮时的图片
+Config.gatewayUrl = ['../../imgs/test/default.png', '../../imgs/test/gateway.png', '../../imgs/test/nowgateway.png', '../../imgs/test/nowgateway1.png'],
+Config.iASZoneUrl = ['../../imgs/test/infrared.png', '../../imgs/test/smoke.png', '../../imgs/test/flooding.png', '../../imgs/test/dos.png', '../../imgs/test/sos.png','../../imgs/test/gas.png'],
+Config.categoryImgUrl = '../../imgs/category/',
+Config.findAllPosts = 'findAllPosts',
+Config.findAllPostsByOpenId = 'findAllPostsByOpenId',
+Config.search = 'search',
+Config.addPost = 'addPost',
+Config.deletePost = 'deletePost',
+Config.updatePost = 'updatePost',
+Config.favorite = 'favorite',
+Config.findComment = 'findComment',
+Config.addComment = 'addComment',
+Config.deleteComment = 'deleteComment',
+Config.categoryType = {
     '灯泡': ['dimmableLight'],
     '开关': ['switch'],
     '窗帘': ['curtain'],
@@ -37,7 +37,7 @@ Config.dimmableLightOnUrl = ['../../imgs/test/bump2.png', '../../imgs/test/bump2
     '红外宝': ['infrared', 'newInfrared'],
     '传感器': ['temperature', 'PM2.5', 'IASZone', 'lightSensor'],
     '场景开关': ['dimmableLight', 'curtain', 'switch'],
-  };
+};
 Config.homeCategoryType = {
   '灯泡': ['dimmableLight'],
   '插座': ['outlet'],
