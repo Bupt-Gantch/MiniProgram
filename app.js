@@ -1,4 +1,7 @@
-//app.js
+//app.js全局入口 app.json全局配置 app.wxss全局样式
+//Chinese.js English.js 用到的常量
+//base.js http封装
+//config.js
 var chinese = require("/utils/Chinese.js")
 var english = require("/utils/English.js")
 App({

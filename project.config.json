@@ -32,7 +32,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 25,
+			"current": 26,
 			"list": [
 				{
 					"id": -1,
@@ -193,6 +193,12 @@
 					"name": "newinfrared",
 					"pathName": "pages/newinfrared/newinfrared",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "smokeDetectorPhone",
+					"pathName": "pages/smokeDetectorPhone/smokeDetectorPhone",
 					"scene": null
 				}
 			]

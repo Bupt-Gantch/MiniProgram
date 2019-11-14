@@ -1,4 +1,4 @@
-<!--pages/loading/loading.wxml-->
+<!--pages/loading/loading.wxml 启动未来页面-->
 <import src="../tpls/roll/roll_tpl.wxml" />
   <view wx:if="{{!netStatus}}">
     <template is="netAlert"/>

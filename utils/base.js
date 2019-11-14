@@ -58,7 +58,7 @@ class Base {
         'token': wx.getStorageSync('token')
       },
       success: function(res) {
-        params.sCallback && params.sCallback(res);
+        params.sCallback && params.sCallback(res); //if sCallback then sCallback(res)
       },
       fail: function(err) {
         console.log(err);
@@ -192,13 +192,13 @@ class Base {
 
   /*获得元素绑定的值*/
   getDataSet(event, key) {
-    return event.currentTarget.dataset[key];
+    return event.currentTarget.dataset[key]; //当前组件内的属性 获得data-key对应的value
   }
   getDataSet2(event, key) {
-    return event.target.dataset[key];
+    return event.target.dataset[key]; //事件源组件内的属性
   }
 
-  getDataSet1(event, key) {
+  getDataSet1(event, key) { //组件的值如input
     return event.detail.value[key];
   }
 

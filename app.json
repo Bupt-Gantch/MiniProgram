@@ -37,7 +37,8 @@
     "pages/second/yingshi/yingshi",
     "pages/second/cameralist/cameralist",
     "pages/help/help",
-    "pages/newinfrared/newinfrared"
+    "pages/newinfrared/newinfrared",
+    "pages/smokeDetectorPhone/smokeDetectorPhone"
   ],
   "window": {
     "backgroundTextStyle": "light",
