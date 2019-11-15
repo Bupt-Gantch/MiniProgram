@@ -542,6 +542,16 @@ class Category extends Base{
     };
     this.request_test(params)
   }
+  //添加nb设备
+  addNbDevice(param, callback) {
+    var params = {
+      url: Config.restUrl+'nbiotDeviceaccess/updateNbiotDevice/' + param.parentDeviceId + '/' + param.mac,
+      sCallback: function (data) {
+        callback && callback(data);
+      }
+    };
+    this.request_test(params)
+  }
 }
 
 export {Category};

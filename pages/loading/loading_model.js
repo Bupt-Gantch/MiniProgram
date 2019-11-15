@@ -4,7 +4,6 @@ class Loading extends Base {
   constructor() {
     super()
   }
- 
   getOpenid(callback) {
     var _this = this
     wx.login({
