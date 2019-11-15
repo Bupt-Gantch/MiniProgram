@@ -403,14 +403,20 @@ Page({
   },
 
   onLoad: function(options) {
-    var customerId = app.globalData.customerId;
     this.setData({
-      theCustomerId: customerId,
       netStatus: app.globalData.netStatus
     });
+    if (app.globalData.customerId == null) {
+      home.userLogin();
+    } else {
+      var customerId = app.globalData.customerId;
+      this.setData({
+        theCustomerId: customerId
+      });
 
-    this._selectComponent();
-    this._loadAllDevices(customerId);
+      this._selectComponent();
+      this._loadAllDevices(customerId);
+    }
   },
 
   onUnload: function() {

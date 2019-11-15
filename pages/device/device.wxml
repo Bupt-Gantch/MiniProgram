@@ -31,7 +31,7 @@
   </template>
 
   <!-- 传感器 -->
-  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5' || deviceType === 'lightSensor' || deviceType === 'IASZone' || deviceType === 'lock' ||deviceType == 'smoke_detector'}}">
+  <block wx:if="{{deviceType === 'temperature' || deviceType === 'PM2.5' || deviceType === 'lightSensor' || deviceType === 'IASZone' || deviceType === 'lock'}}">
     <view class='detail-main'>
       <view class='deviceInfo'>
 
@@ -60,7 +60,31 @@
       <button bindtap='addLinkage'>添加联动</button>
     </view>
   </block>
-
+  <!-- smoke_detector -->
+  <block wx:if="{{deviceType == 'smoke_detector'}}">
+    <view class='detail-main'>
+      <view class='deviceInfo'>
+        <view class="table">
+          <view class="tr bg-w">
+            <view class="th">最后更新时间</view>
+            <view class="th">键</view>
+            <view class="th ">值</view>
+          </view>
+          <block wx:for="{{lastRtData}}" wx:key="{{item.key}}">
+            <view class="tr">
+              <view class="td">{{item.ts}}</view>
+              <view class="td">{{item.key}}</view>
+              <view class="td">{{item.value}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{deviceType == 'smoke_detector'}}" class='view_footer'>
+      <button bindtap='phoneBind'>手机绑定</button>
+      <button bindtap='addLinkage'>添加联动</button>
+    </view>
+  </block>
   <!-- dimmableLight -->
   <block wx:if="{{deviceType === 'dimmableLight'}}">
     <view class='detail-main'>

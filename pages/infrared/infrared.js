@@ -239,6 +239,45 @@ Page({
             this._sendControl(serviceName, methodName, value);
           })
           param.power = "制热";
+        } else if (airModel == "制冷") {
+          app.globalData.airModel = "抽湿";
+          param.mode = "抽湿";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.power = "制冷";
+        } else if (airModel == "抽湿") {
+          app.globalData.airModel = "送风";
+          param.mode = "送风";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.power = "抽湿";
+        } else if (airModel == "送风") {
+          app.globalData.airModel = "自动";
+          param.mode = "自动";
+          console.log(param);
+          infrared.getKey(param, (res) => {
+            console.log(res);
+            value.key = res;
+
+            let serviceName = this.data.serviceName.controlIR;
+            let methodName = this.data.methodName.penetrate;
+            this._sendControl(serviceName, methodName, value);
+          })
+          param.power = "送风";
         } else {
           app.globalData.airModel = "制热";
           param.mode = "制热";
@@ -251,7 +290,7 @@ Page({
             let methodName = this.data.methodName.penetrate;
             this._sendControl(serviceName, methodName, value);
           })
-          param.power = "制冷";
+          param.power = "自动";
         }
       } else if (operation == 'windUp') {
         if (airWindLev == "低") {
