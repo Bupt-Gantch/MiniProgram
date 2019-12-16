@@ -60,6 +60,7 @@ var Chinese = {
         image: '/imgs/index/smartHotel.png',
         url: '../second/hotel/hotel'
         // url: '../category/category'
+        
       },
       {
         id: 'cloudAlert',
@@ -67,7 +68,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/cloudAlert.png',
         // url: '../second/alert/alert'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'cloudFireControl',
@@ -75,7 +77,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/cloudFireControl.png',
         // url: '../second/firecontrol/firecontrol'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'farm',
@@ -83,7 +86,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/farm.png',
         // url: '../second/farm/farm'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'safeCity',
@@ -91,7 +95,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/safeCity.png',
         // url: '../second/s-city/s-city'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'smartCommunity',
@@ -99,7 +104,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/smartCommunity.png',
         // url: '../second/community/community'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'smartSchool',
@@ -107,7 +113,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/smartSchool.png',
         // url: '../second/school/school'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'smartOld',
@@ -115,7 +122,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/smartOld.png',
         // url: '../second/old/old'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'smartOffice',
@@ -123,7 +131,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/smartOffice.png',
         // url: '../second/office/office'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'smartCity',
@@ -131,7 +140,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/smartCity.png',
         // url: '../second/city/city'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'artificialIntelligence',
@@ -139,7 +149,8 @@ var Chinese = {
         disabled: true,
         image: '/imgs/index/artificialIntelligence.png',
         // url: '../second/ai/ai'
-        url: '../category/category'
+        // url: '../category/category'
+        url: '../second/support/support'
       },
       {
         id: 'serviceSupport',
@@ -153,7 +164,8 @@ var Chinese = {
         name: '关于天慧',
         disabled: true,
         image: '/imgs/index/company.png',
-        url: '../second/company/company'
+        // url: '../second/company/company'
+        url: '../second/support/support'
       },
       {
         id: 'videoInterface',
