@@ -19,6 +19,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.login({
+      success: function (res) {
+        //发送请求
+        wx.request({
+          url: '47.108.8.164:30000/api/v1/wechatPost/getOpenId',
+          data: {
+            JSCODE: res.code
+          }
+        })
+      }
+    })
     this.setData({
       netStatus: app.globalData.netStatus,
       content: app.getLanuage(app.globalData.language)

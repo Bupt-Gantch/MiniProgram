@@ -144,6 +144,13 @@
   width: 89rpx;
   height: 89rpx;
 } 
+.circle-float-left {
+  position: fixed;
+  display: flex;
+  top: 40rpx;
+  width: 89rpx;
+  height: 89rpx;
+} 
 
 .delete-view{
   position:relative;

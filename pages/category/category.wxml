@@ -54,7 +54,7 @@
       <!--动画效果，需要N个同样的模板，加载哪个显示哪个，不加载时用-n*100vh隐藏-->
       <block wx:for="{{categoryName}}" wx:key="*this">
         <view class='foods-type-box'>
-          <template wx:if="{{index == 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,statusTableOne,showDelete,gatewayStatus}}"></template>
+          <template wx:if="{{index == 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryAllDevices,currentId,statusTable,statusTableOne,showDelete,showAdd,gatewayStatus}}"></template>
           <template wx:if="{{index != 0}}" is="categorytop" data="{{switchOnImg,curtainOnImg,dimmableLightOneImg,imgUrl,iASZoneImg,bannerTitle,categoryProducts:categoryDevices,currentId,statusTable,statusTableOne,gatewayStatus}}"></template>
           <!-- <status表示开关或插座的状态> -->
         </view>

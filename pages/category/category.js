@@ -42,6 +42,7 @@ Page({
     },
     sceneName: '',
     showDelete: true,
+    showAdd:true,
     showDetail: false,
     hiddenPicker: true,
     pickerValueArr: [0],
@@ -1015,9 +1016,35 @@ Page({
       })
     }
   },
+  onAddDevice: function () {
+    this.setData({
+      netStatus: app.globalData.netStatus
+    });
+    wx.scanCode({
+      success(res){
+        console.log(res.result.split(';')[0]);
+        console.log(app.globalData.gatewayId)
+        var param = {
+          "parentDeviceId": app.globalData.gatewayId,
+          "mac": res.result.split(';')[0]+'0'
+        };
+        category.addNbDevice(param, (res) => {
+          console.log(res)
+        });
+      }
+    })
+    this.setData({
+      showAdd: false,
+    })
+  },
   onCancelDelete: function() {
     this.setData({
       showDelete: true,
+    })
+  },
+  onCancelAdd: function () {
+    this.setData({
+      showAdd: true,
     })
   },
 

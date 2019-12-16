@@ -4,6 +4,10 @@
     <!-- <view class="category-header">
       <image src='{{topInfo.url}}' mode="aspectFill"></image>
     </view> -->
+    <view>
+      <image wx:if="{{showAdd}}" class="circle-float-left" src='/imgs/icon/choose2.png' bindtap='onAddDevice'></image>
+      <image wx:if="{{showAdd==false}}" class="circle-float-left" src='/imgs/icon/choose2.png' bindtap='onCancelAdd'></image>
+    </view>
     <view class="category-title">
       <text>{{bannerTitle}}</text>
     </view>
