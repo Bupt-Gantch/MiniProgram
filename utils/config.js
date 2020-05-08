@@ -18,6 +18,7 @@ Config.curtainOnUrl = ['../../imgs/test/curtain-open.png', '../../imgs/test/curt
 Config.gatewayUrl = ['../../imgs/test/default.png', '../../imgs/test/gateway.png', '../../imgs/test/nowgateway.png', '../../imgs/test/nowgateway1.png'],
 Config.iASZoneUrl = ['../../imgs/test/infrared.png', '../../imgs/test/smoke.png', '../../imgs/test/flooding.png', '../../imgs/test/dos.png', '../../imgs/test/sos.png','../../imgs/test/gas.png'],
 Config.categoryImgUrl = '../../imgs/category/',
+Config.categoryImgUrl = '../../imgs/icon/fourSwitch.png',
 Config.findAllPosts = 'findAllPosts',
 Config.findAllPostsByOpenId = 'findAllPostsByOpenId',
 Config.search = 'search',

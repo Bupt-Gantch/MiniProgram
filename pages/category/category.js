@@ -49,7 +49,12 @@ Page({
     pickeredGroup: {},
     socketTasks: [],
     requestId: 1000000, //请求id100w 递减
-
+    //四联开关数据
+    fourOutlet: [],
+    otherOutlet: [],
+    isDetail:false,
+    detailItem:[],
+    isDetail2: false,
     // gatewayTest: [{ "name": "b" }, { "name": "c" }, { "name": "d" }, { "name": "a" }],
   },
 
@@ -116,7 +121,19 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {},
-
+  clickFourSwitch:function(e){
+    this.setData({
+      detailItem: e.currentTarget.dataset.item,
+      isDetail:true
+    })
+  },
+  clickFourDetail: function (e) {
+    console.log(e)
+    this.setData({
+      detailItem: e.currentTarget.dataset.item,
+      isDetail2:true
+    })
+  },
   //加载所有网关
   _loadAllGateway: function() {
     var _this = this;
@@ -247,6 +264,9 @@ Page({
       netStatus: app.globalData.netStatus
     });
     var _this = this;
+    var fourTemp = [];
+    var fourOutletTemp = [];
+    var allDevicesTemp = [];
     var parentdeviceId = event.target.dataset.deviceid;
     var gatewayName = event.target.dataset.deviceinfo.name;
     var gatewayCustomerId = event.target.dataset.deviceinfo.customerId;
@@ -284,9 +304,30 @@ Page({
         });
       });
       allDevices.sort(_this.compare());
+      allDevices.forEach(function (element) {
+        if (element.deviceType == 'switch') {//outlet
+          fourTemp.push(element);
+          if (fourTemp.length == 4) {
+            fourOutletTemp.push(fourTemp);
+            fourTemp = [];
+          }
+        }
+        else {
+          allDevicesTemp.push(element);
+        }
+      });
+      if (fourTemp.length > 1) {
+        fourOutletTemp.push(fourTemp);
+      }
       console.log(allDevices);
+      // _this.setData({
+      //   categoryAllDevices: allDevices
+      // });
       _this.setData({
-        categoryAllDevices: allDevices
+        categoryAllDevices: allDevices,
+        allDevicesNoSwitch: allDevicesTemp,
+        fourOutlet: fourOutletTemp,
+        otherOutlet: fourTemp
       });
       _this._loadAllGroup();
       _this._loadAllScene(gatewayName);
@@ -325,7 +366,9 @@ Page({
     var name = category.getDataSet(event, 'name');
     this.setData({
       currentTabsIndex: index,
-      currentBottomIndex: -1
+      currentBottomIndex: -1,
+      isDetail:false,
+      isDetail2:false
     });
     this._loadBaannerTitle(name); //加载本地banner和标题
     this._loadCateDevices(index); //点击时获取数据
@@ -342,7 +385,13 @@ Page({
     index = Number(index);
     var gatewayList = _this.data.gatewayDevice;
     var parentdeviceId = app.globalData.gatewayId;
+    var fourTemp = [];
+    var fourOutletTemp = [];
+    var allDevicesTemp=[];
     if (index == 0) {
+      fourTemp = [];
+      fourOutletTemp = [];
+      allDevicesTemp = [];
       category.getAllSonDevices(parentdeviceId, (res) => {
         var allDevices = new Array();
         res.forEach(function(element) {
@@ -363,9 +412,27 @@ Page({
           });
         });
         allDevices.sort(_this.compare());
+        allDevices.forEach(function (element) {
+          if (element.deviceType == 'switch') {//outlet
+            fourTemp.push(element);
+            if (fourTemp.length == 4) {
+              fourOutletTemp.push(fourTemp);
+              fourTemp = [];
+            }
+          }
+          else{
+            allDevicesTemp.push(element);
+          }
+        });
+        if (fourTemp.length > 1) {
+          fourOutletTemp.push(fourTemp);
+        }
         _this.setData({
-          categoryAllDevices: allDevices
-        })
+          categoryAllDevices: allDevices,
+          allDevicesNoSwitch: allDevicesTemp,
+          fourOutlet: fourOutletTemp,
+          otherOutlet: fourTemp
+        });
       })
     } else if (index == _this.data.categoryName.length - 1) {
       /* 对未知设备类型进行归类  */
@@ -381,6 +448,8 @@ Page({
       });
     } else {
       /*========对所有设备按类型分类=============*/
+      fourTemp = [];
+      fourOutletTemp = [];
       var currentType = _this.data.categoryName[index];
       var _arrayType = _this.data.categoryType[currentType];
       var typeDevices = new Array();
@@ -388,11 +457,25 @@ Page({
         if (category.inArray(element.deviceType, _arrayType)) {
           typeDevices.push(element);
         }
+        if (element.deviceType == 'switch') {//outlet
+          fourTemp.push(element);
+          if (fourTemp.length ==4){
+            fourOutletTemp.push(fourTemp);
+            fourTemp=[];
+          }
+        }
       });
+      if (fourTemp.length>1){
+        fourOutletTemp.push(fourTemp);
+      }
       _this.setData({
-        categoryDevices: typeDevices
+        categoryDevices: typeDevices,
+        fourOutlet:fourOutletTemp,
+        otherOutlet: fourTemp
       });
-
+      console.log("Hello")
+      console.log(fourOutletTemp)
+      console.log(fourTemp)
       /* ===========end================= */
     }
   },

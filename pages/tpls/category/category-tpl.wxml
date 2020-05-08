@@ -62,12 +62,21 @@
           </view>
           <!-- end -->
         </block>
+        <block wx:for="{{fourOutlet}}" wx:key="{{index}}">
+          <!-- 下面存放单个设备的div  -->
+          <view bindtap="clickFourDetail" data-item="{{item}}" class="category-goods-items {{index%3==1?'middle':''}}">
+            <view class='image_switch'>
+              <block>
+                <image  src='../../imgs/icon/fourSwitch.png'></image>
+              </block>
+            </view>
+          </view>
+          <!-- end -->
+        </block>
       </view>
     </scroll-view>
   </view>
 </template>
-
-
 
 <!--网关模板-->
 <template name="gateway">
